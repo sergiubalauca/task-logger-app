@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "WorkLogging",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

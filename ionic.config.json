@@ -1,0 +1,7 @@
+{
+  "name": "WorkLogging",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

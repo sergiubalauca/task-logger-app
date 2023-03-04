@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Test Comp </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ng-container #itemsContainer></ng-container>
+  <ng-template #item let-item="item">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle
+          ><ion-avatar> <img src="{{ item.picture.medium }}" /> </ion-avatar
+          >{{ item.name.first }}</ion-card-subtitle
+        >
+        <ion-card-title>{{ item.name.last }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ item.email }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+</ion-content>

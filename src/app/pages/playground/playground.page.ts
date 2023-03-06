@@ -12,8 +12,8 @@ import { lazyArray } from 'src/app/shared/lazy-rendering.operator';
 import { RandomUser } from 'src/app/shared/models/random-user';
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  templateUrl: 'playground.page.html',
+  styleUrls: ['playground.page.scss'],
 })
 export class HomePage implements OnInit {
   public data$: Observable<any>;

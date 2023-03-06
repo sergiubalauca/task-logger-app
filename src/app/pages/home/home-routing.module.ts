@@ -1,16 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePage } from './home.page';
+import { HomeComponent } from './home.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomePage,
-  }
+    component: HomeComponent,
+  },
+  {
+    path: 'log-work',
+    loadChildren: async () => {
+      const logWorkModule = await import('../log-work/log-work.module');
+      return logWorkModule.LogWorkModule;
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class HomePageRoutingModule {}

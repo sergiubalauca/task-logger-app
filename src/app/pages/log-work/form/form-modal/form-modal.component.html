@@ -35,18 +35,21 @@
             </ion-row>
             <ion-row>
                 <ion-col size="12">
-                    <!-- <ion-item>
-                        <ion-input
-                            label="Start time"
-                            labelPlacement="floating"
-                            formControlName="startTime"
-                        >
-                            <ion-datetime presentation="time"></ion-datetime>
-                        </ion-input>
-                    </ion-item> -->
                     <app-date-picker
+                        [chosenDate]="chosenDate"
                         formControlName="startTime"
                         [form]="logWorkForm"
+                        [label]="'Start Time'"
+                    ></app-date-picker>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12">
+                    <app-date-picker
+                        [chosenDate]="chosenDate"
+                        formControlName="endTime"
+                        [form]="logWorkForm"
+                        [label]="'End Time'"
                     ></app-date-picker>
                 </ion-col>
             </ion-row>

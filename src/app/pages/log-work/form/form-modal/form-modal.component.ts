@@ -8,6 +8,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class FormModalComponent implements OnInit {
     public logWorkForm: FormGroup;
+    // public componentProps: any;
+    public chosenDate: string;
 
     constructor() {}
 

@@ -29,6 +29,9 @@ import {
 })
 export class DatePickerComponent implements OnInit, ControlValueAccessor {
     @Input() public form: FormGroup;
+    @Input() chosenDate: string;
+    @Input() label: string;
+
     public dateDisplayFormat: string;
     public customPickerOptions: Partial<PickerOptions>;
     public showDatetimePicker = true;
@@ -59,8 +62,16 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
     public async openModal() {
         try {
+            const transformedDatethis = new Date(this.chosenDate);
+            if (this.displayDate) {
+                transformedDatethis.setHours(
+                    Number(this.displayDate.split(':')[0]),
+                    Number(this.displayDate.split(':')[1])
+                );
+            }
+
             const formattedDate = this.displayDate
-                ? formatISO(new Date(this.displayDate))
+                ? formatISO(new Date(transformedDatethis))
                 : formatISO(this.dateTimeService.getCurrentDateTime());
             await this.modalService.createAndShow(
                 DatePickerModalComponent,

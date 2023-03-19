@@ -18,7 +18,9 @@ export class LogWorkComponent implements OnInit {
     this.modalService.createAndShow(
       FormModalComponent,
       '',
-      {},
+      {
+        chosenDate: event.detail.value
+      },
       true
     );
   }

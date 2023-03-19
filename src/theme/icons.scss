@@ -1,0 +1,112 @@
+@font-face {
+	font-family: 'icomoon';
+	src: url('../assets/fonts/Icons/icomoon.eot?pk00jq');
+	src: url('../assets/fonts/Icons/icomoon.eot?pk00jq#iefix') format('embedded-opentype'),
+		url('../assets/fonts/Icons/icomoon.ttf?pk00jq') format('truetype'),
+		url('../assets/fonts/Icons/icomoon.woff?pk00jq') format('woff'),
+		url('../assets/fonts/Icons/icomoon.svg?pk00jq#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+[class^='icon-'],
+[class*=' icon-'] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'icomoon' !important;
+	speak: never;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-Add:before {
+	content: '\e900';
+}
+.icon-Archived:before {
+	content: '\e901';
+}
+.icon-Arrow-Down:before {
+	content: '\e902';
+}
+.icon-Arrow-Left:before {
+	content: '\e903';
+}
+.icon-Arrow-Right:before {
+	content: '\e904';
+}
+.icon-Arrow-Up:before {
+	content: '\e905';
+}
+.icon-Ascending:before {
+	content: '\e906';
+}
+.icon-Check:before {
+	content: '\e907';
+}
+.icon-Close:before {
+	content: '\e908';
+}
+.icon-Collapse:before {
+	content: '\e909';
+}
+.icon-Datepicker:before {
+	content: '\e90a';
+}
+.icon-Delete:before {
+	content: '\e90b';
+}
+.icon-Descending:before {
+	content: '\e90c';
+}
+.icon-Duplicate:before {
+	content: '\e90d';
+}
+.icon-Edit:before {
+	content: '\e90e';
+}
+.icon-Email:before {
+	content: '\e90f';
+}
+.icon-Expand:before {
+	content: '\e910';
+}
+.icon-Filter:before {
+	content: '\e911';
+}
+.icon-Hide:before {
+	content: '\e912';
+}
+.icon-Logout:before {
+	content: '\e913';
+}
+.icon-Menu:before {
+	content: '\e914';
+}
+.icon-More:before {
+	content: '\e915';
+}
+.icon-Save:before {
+	content: '\e916';
+}
+.icon-Search:before {
+	content: '\e917';
+}
+.icon-Show:before {
+	content: '\e918';
+}
+.icon-Sort:before {
+	content: '\e919';
+}
+.icon-Standard:before {
+	content: '\e91a';
+}
+.icon-Warning:before {
+	content: '\e91b';
+}

@@ -1,3 +1,7 @@
-<p>
-  log-work works!
-</p>
+<app-header [title]="'Sinziana'" [backBtnEnabled]="true"></app-header>
+
+<ion-content>
+    <ion-datetime (ionChange)="selectDate($event)"></ion-datetime>
+
+    <!-- <app-form></app-form> -->
+</ion-content>

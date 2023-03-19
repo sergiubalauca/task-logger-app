@@ -1,52 +1,49 @@
 :host {
-	ion-header {
-		margin-top: 10px;
-		margin-bottom: 10px;
-		padding-left: var(--ion-app-inner-padding);
-		padding-right: var(--ion-app-inner-padding);
+    ion-header {
+        margin-top: 10px;
+        margin-bottom: 50px;
+        padding-left: var(--ion-app-inner-padding);
+        padding-right: var(--ion-app-inner-padding);
 
-		ion-toolbar {
-			--background: var(--ion-color-background);
-			--padding-bottom: 0;
-			--padding-end: 0;
-			--padding-start: 0;
-			--padding-top: 0;
+        ion-toolbar {
+            --background: var(--ion-color-background);
+            --padding-bottom: 0;
+            --padding-end: 0;
+            --padding-start: 0;
+            --padding-top: 0;
 
-			ion-buttons {
-				ion-button,
-				ion-menu-button {
-					margin-inline-start: 0;
-					margin-inline-end: 0;
-					--padding-start: 0;
-					--padding-end: 0;
+            ion-buttons {
+                ion-button,
+                ion-menu-button {
+                    margin-inline-start: 0;
+                    margin-inline-end: 0;
+                    --padding-start: 0;
+                    --padding-end: 0;
+                    --color: black;
+                    --background: transparent;
+                    //   ion-icon {
+                    //     color: black;
+                    // 	--color: black;
+                    // 	--background: black;
+                    // 	background-color: black;
+                    // 	background: black;
+                    //   }
+                }
+            }
 
-					ion-icon {
-						color: var(--ion-color-dark-06);
-					}
-				}
-			}
+            &.title {
+                ion-buttons {
+                    ion-icon {
+                        font-size: 28px;
+                    }
+                }
 
-			&.title {
-				ion-buttons {
-					ion-icon {
-						font-size: 28px;
-					}
-				}
-
-				ion-title {
-					--color: var(--ion-color-dark-06);
-					font-size: 16px;
-					font-family: var(--ion-font-family-bold);
-				}
-			}
-
-			&.subtitle {
-				--min-height: 25px;
-
-				ion-title {
-					font-family: var(--ion-font-family);
-				}
-			}
-		}
-	}
+                ion-title {
+                    --color: var(--ion-color-dark-06);
+                    font-size: 16px;
+                    font-family: var(--ion-font-family-bold);
+                }
+            }
+        }
+    }
 }

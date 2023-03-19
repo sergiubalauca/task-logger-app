@@ -1,0 +1,33 @@
+:host {
+	ion-input {
+		--padding-start: 7px;
+		--padding-end: 35px;
+
+		// border-radius: 8px;
+		// border: solid 2px;
+		// border-color: var(--ion-color-light-09);
+		font-size: 13px;
+		color: var(--ion-color-grey);
+		font-family: var(--ion-font-family-bold);
+
+		&.error-class {
+			border-color: var(--ion-color-error);
+		}
+		&.disabled-class {
+			color: var(--ion-color-light-04);
+			border-color: var(--ion-color-light-07);
+		}
+	}
+
+	ion-icon {
+		position: absolute;
+		top: 10px;
+		right: 7px;
+		font-size: 10px;
+		color: var(--ion-color-dark-04);
+
+		&.disabled-class {
+			color: var(--ion-color-light-09);
+		}
+	}
+}

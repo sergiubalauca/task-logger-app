@@ -1,0 +1,39 @@
+:host {
+	div {
+		color: var(--ion-color-dark-02);
+
+		ion-datetime {
+			button {
+				font-size: 23px;
+			}
+
+			ion-buttons {
+				width: 260px;
+				display: flex;
+				justify-content: space-between;
+
+				ion-button {
+					display: flex;
+					font-family: var(--ion-font-family-semibold);
+					font-size: 14px;
+					text-transform: capitalize;
+					color: var(--ion-color-dark-04);
+					--background: none;
+					--ripple-color: transparent;
+
+					&.cancel-button {
+						color: var(--ion-color-primary-tint);
+					}
+
+					&.save-button {
+						color: var(--ion-color-light-08);
+						--background: var(--ion-color-primary-tint);
+						--border-radius: 22px;
+						width: 120px;
+						height: 50px;
+					}
+				}
+			}
+		}
+	}
+}

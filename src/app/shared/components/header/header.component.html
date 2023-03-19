@@ -1,5 +1,14 @@
 <ion-header [translucent]="true" no-border no-shadow class="ion-no-border">
-  <ion-toolbar>
+  <ion-toolbar class="title">
+    <ion-buttons slot="start">
+			<!-- <ion-menu-button *ngIf="!backBtnEnabled">
+				<ion-icon class="icon-Menu"></ion-icon>
+			</ion-menu-button> -->
+			<ion-button *ngIf="backBtnEnabled" (click)="goBack()">
+				<!-- <ion-icon size="large" color="primary" name="!backBtnIconClose ? 'chevron-back-outline' : 'close-outline'"></ion-icon> -->
+        <ion-icon name="chevron-back-outline" size="large" color="primary"></ion-icon>
+			</ion-button>
+		</ion-buttons>
     <ion-title>{{ title }}</ion-title>
   </ion-toolbar>
 </ion-header>

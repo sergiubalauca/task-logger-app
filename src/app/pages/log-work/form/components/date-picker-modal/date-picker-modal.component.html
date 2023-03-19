@@ -1,0 +1,34 @@
+<div class="inner-content">
+    <ion-datetime
+        mode="md"
+        hour-cycle="h12"
+        [value]="date"
+        presentation="time"
+        (ionChange)="handleDate($event)"
+    >
+        <ion-buttons slot="buttons">
+            <ion-button
+                data-cy="cancelButton"
+                item-start
+                class="cancel-button ion-no-padding ion-no-margin"
+                expand="block"
+                (click)="cancelModal()"
+                fill="clear"
+                size="large"
+            >
+                Clear
+            </ion-button>
+            <ion-button
+                data-cy="saveButton"
+                item-end
+                class="save-button ion-no-margin"
+                expand="block"
+                (click)="confirm()"
+                fill="solid"
+                size="large"
+            >
+                Done
+            </ion-button>
+        </ion-buttons>
+    </ion-datetime>
+</div>

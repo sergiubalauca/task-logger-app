@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from '@shared';
+import { FormModalComponent } from './form/form-modal/form-modal.component';
 
 @Component({
   selector: 'app-log-work',
@@ -7,8 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogWorkComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: ModalService) { }
 
   ngOnInit() {}
 
+  public selectDate(event: any) {
+    console.log('select date: ', event.detail.value);
+    this.modalService.createAndShow(
+      FormModalComponent,
+      '',
+      {},
+      true
+    );
+  }
 }

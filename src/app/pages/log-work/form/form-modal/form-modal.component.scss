@@ -1,0 +1,136 @@
+:host {
+    ion-item-group {
+        ion-grid {
+            padding: 0px 10px;
+
+            ion-row {
+                app-search-select-input {
+                    width: 100%;
+                }
+
+                ion-item {
+                    border-radius: 8px;
+                    border: solid 2px;
+                    border-color: var(--ion-color-light-09);
+                }
+            }
+        }
+    }
+
+    ion-footer {
+		position: fixed;
+		bottom: 200px;
+		width: 100%;
+		justify-content: center;
+
+		ion-fab {
+			ion-fab-button {
+				--background: var(--ion-color-primary-tint);
+				position: relative;
+				transform: translate(-40px, 20px);
+
+				ion-icon {
+					--color: var(--ion-color-light-08);
+				}
+			}
+		}
+	}
+}
+
+// :host {
+// 	ion-item-group {
+// 		ion-grid {
+// 			padding: 0px 10px;
+
+// 			ion-row {
+// 				display: flex;
+
+// 				&.inputElement {
+// 					align-items: center;
+// 				}
+
+// 				&.textArea {
+// 					flex-direction: column;
+// 				}
+
+// 				&:first-child {
+// 					ion-col {
+// 						display: flex;
+// 						margin-top: 10px;
+
+// 						app-search-select-input {
+// 							width: 100%;
+// 						}
+
+// 						app-date-picker {
+// 							width: 100%;
+// 							height: 44px;
+// 						}
+
+// 						ion-label {
+// 							--color: var(--ion-color-primary-tint);
+// 							font-family: var(--ion-font-family-medium);
+// 							font-size: 13px;
+// 							text-overflow: unset;
+// 							white-space: unset;
+// 						}
+
+// 						&:last-child {
+// 							ion-input,
+// 							ion-textarea {
+// 								--padding-start: 7px;
+// 								--padding-end: 7px;
+
+// 								border-radius: 8px;
+// 								border: solid 2px;
+// 								border-color: var(--ion-color-light-09);
+// 								font-size: 13px;
+// 								color: var(--ion-color-grey);
+// 								font-family: var(--ion-font-family-bold);
+
+// 								&.error-class {
+// 									border-color: var(--ion-color-error);
+// 								}
+
+// 								&.disabled-class {
+// 									color: var(--ion-color-light-04);
+// 									border-color: var(--ion-color-light-07);
+// 								}
+// 							}
+
+// 							ion-checkbox {
+// 								width: 28px;
+// 								height: 28px;
+// 								--border-color: var(--ion-color-light-09);
+// 								--background-checked: var(--ion-color-primary-tint);
+// 								--border-color-checked: var(--ion-color-primary-tint);
+// 								--checkmark-color: var(--ion-color-light-08);
+// 								--border-radius: 8px;
+
+// 								&.checkbox-checked {
+// 									--border-width: 5px;
+// 								}
+// 							}
+// 						}
+// 					}
+// 				}
+
+// 				&:last-child {
+// 					ion-col {
+// 						&:last-child {
+// 							display: flex;
+// 							flex-direction: column;
+// 							margin-top: 3px;
+
+// 							ion-note {
+// 								font-family: var(--ion-font-family-medium);
+// 								font-size: 9px;
+// 								--color: var(--ion-color-error);
+// 							}
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }

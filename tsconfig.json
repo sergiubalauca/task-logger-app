@@ -1,55 +1,29 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "ES2022",
-    "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "paths": {
-			// "@database/workspace": ["src/database/workspace-database/index.ts"],
-			// "@database/utils": ["./src/database/utils/index.ts"],
-			// "@database/central": ["./src/database/central-database/index.ts"],
-			// "@database/models": ["./src/database/models/index.ts"],
-			// "@database/infrastructure": ["./src/database/infrastructure/index.ts"],
-			"@shared": ["./src/app/shared/index.ts"],
-			// "@shared/logging": ["./src/shared/logging/index.ts"],
-			// "@domain/file-importer": ["./src/domain/file-importer/index.ts"],
-			// "@domain/file-exporter": ["./src/domain/file-exporter/index.ts"],
-			// "@domain/routing": ["./src/domain/routing/index.ts"],
-			// "@domain/localization": ["./src/domain/localization/index.ts"],
-			// "@domain/dynamic-form": ["./src/domain/dynamic-form/index.ts"],
-			// "@domain/business-layer": ["./src/domain/business-layer/index.ts"],
-			// "@domain/time-bomb": ["./src/domain/time-bomb/index.ts"],
-			// "@domain/sorting": ["./src/domain/sorting/index.ts"],
-			// "@shared/plugins": ["./src/shared/plugins/index.ts"],
-			// "@pages/workspace": ["./src/pages/workspace/index.ts"],
-			// "@pages/project": ["./src/pages/project/index.ts"],
-			// "@pages/home": ["./src/pages/home/index.ts"],
-			// "@pages/login": ["./src/pages/login/index.ts"],
-			// "@pages/entity": ["./src/pages/entity/index.ts"],
-			// "@pages/entry-add-edit": ["./src/pages/entryadd-edit/index.ts"],
-			// "@pages/entity-details": ["./src/pages/entity-details/index.ts"],
-			// "@pages/smart-components": ["./src/pages/smart-components/index.ts"],
-			// "@pages/testing-playground": ["./src/pages/testing-playground/index.ts"],
-			// "@pages/export": ["./src/pages/export/index.ts"],
-		},
-    "useDefineForClassFields": false
-  },
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "target": "ES2022",
+        "module": "es2020",
+        "lib": ["es2018", "dom", "ES2021.WeakRef"],
+        "paths": {
+            "@shared": ["./src/app/shared/index.ts"],
+            "@database": ["./src/app/database/index.ts"]
+        },
+        "strictNullChecks": false,
+        "useDefineForClassFields": false
+    },
+    "angularCompilerOptions": {
+        "enableI18nLegacyMessageIdFormat": false,
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true
+    }
 }

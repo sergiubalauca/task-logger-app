@@ -1,17 +1,24 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 
 @Component({
     selector: 'app-form-modal',
     templateUrl: './form-modal.component.html',
     styleUrls: ['./form-modal.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormModalComponent implements OnInit {
     public logWorkForm: FormGroup;
     // public componentProps: any;
     public chosenDate: string;
 
-    constructor() {}
+    constructor(private modalController: ModalController) {}
 
     ngOnInit() {
         this.initForm();
@@ -19,6 +26,10 @@ export class FormModalComponent implements OnInit {
 
     public onSubmit() {
         console.log('submit: ', this.logWorkForm.value);
+        this.modalController.dismiss({
+            dismissed: true,
+            formValue: this.logWorkForm.value,
+        });
     }
     private initForm() {
         this.logWorkForm = new FormGroup({

@@ -35,6 +35,17 @@
             </ion-row>
             <ion-row>
                 <ion-col size="12">
+                    <ion-item>
+                        <ion-input
+                            label="Nume Lucrare"
+                            labelPlacement="floating"
+                            formControlName="workItem"
+                        ></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12">
                     <app-date-picker
                         [chosenDate]="chosenDate"
                         formControlName="startTime"
@@ -60,6 +71,7 @@
     <ion-fab horizontal="end" vertical="bottom" class="ion-margin">
         <ion-fab-button
             type="submit"
+            [disabled]="!logWorkForm.valid"
             appThrottleButtonDirective
             (click)="onSubmit()"
             throttleTime="2000"

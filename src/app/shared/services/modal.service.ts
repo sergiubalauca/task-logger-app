@@ -19,8 +19,6 @@ export class ModalService {
             cssClass,
             componentProps,
             backdropDismiss,
-			breakpoints: [0, 0.5, 0.8],
-			initialBreakpoint: 0.8,
         });
 
         await this.modal.present();

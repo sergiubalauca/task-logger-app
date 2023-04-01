@@ -12,4 +12,4 @@ import { Test2Component } from './test2/test2.component';
   imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule],
   declarations: [HomePage, TestComponent, Test2Component],
 })
-export class HomePageModule {}
+export class PlaygroundModule {}

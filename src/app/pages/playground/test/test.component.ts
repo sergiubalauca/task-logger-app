@@ -25,8 +25,8 @@ export class TestComponent implements OnInit {
   }
 
   private buildData(length: number) {
-    const ITEMS_RENDERED_AT_ONCE = 200;
-    const INTERVAL_IN_MS = 10;
+    const ITEMS_RENDERED_AT_ONCE = 20;
+    const INTERVAL_IN_MS = 5000;
     let item: {
       id: {
         name: string;

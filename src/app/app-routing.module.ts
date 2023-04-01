@@ -6,7 +6,7 @@ const routes: Routes = [
     path: 'playground',
     loadChildren: () =>
       import('./pages/playground/playground.module').then(
-        (m) => m.HomePageModule
+        (m) => m.PlaygroundModule
       ),
   },
   {

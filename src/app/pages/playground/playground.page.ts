@@ -18,7 +18,7 @@ import { RandomUser } from 'src/app/shared/models/random-user';
 export class HomePage implements OnInit {
   public data$: Observable<any>;
   public data2$: Observable<any>;
-  public results = 20;
+  public results = 200;
   public data: RandomUser = {
     info: {
       results: 0,
@@ -38,7 +38,7 @@ export class HomePage implements OnInit {
       .pipe(map((data: any) => data as RandomUser));
     this.data2$ = this.httpService.get(this.url).pipe(
       map((data: any) => data.results),
-      lazyArray(200, 10),
+      lazyArray(3000, 10),
       map((data: any) => data as RandomUser)
     );
   }

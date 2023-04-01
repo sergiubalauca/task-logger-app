@@ -14,6 +14,13 @@ const routes: Routes = [
       return logWorkModule.LogWorkModule;
     },
   },
+  {
+    path: 'playground',
+    loadChildren: async () => {
+      const playgroundModule = await import('../playground/playground.module');
+      return playgroundModule.PlaygroundModule;
+    }
+  }
 ];
 
 @NgModule({

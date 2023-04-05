@@ -4,18 +4,16 @@ import {
     Input,
     OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-
 @Component({
     selector: 'app-form-modal',
     templateUrl: './form-modal.component.html',
     styleUrls: ['./form-modal.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormModalComponent implements OnInit {
     public logWorkForm: FormGroup;
-    // public componentProps: any;
     public chosenDate: string;
 
     constructor(private modalController: ModalController) {}

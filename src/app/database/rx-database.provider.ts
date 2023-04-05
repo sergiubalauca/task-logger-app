@@ -82,7 +82,7 @@ export class RxDatabaseProvider {
                     },
                 }).exec();
                 if (has != null) {
-                    alert('another hero already has the patient ' + patient);
+                    // alert('another hero already has the patient ' + patient);
                     throw new Error('patient already there');
                 }
                 return rxDatabase.collections[LOGWORK_COLLECTION_NAME];

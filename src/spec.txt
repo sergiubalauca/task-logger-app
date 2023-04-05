@@ -1,0 +1,34 @@
+- pacient = unic pe zi
+
+zi
+|
+ ---medic
+        |
+        ---
+            pacient
+                   |
+                    --- lucrare + nr element
+                    --- lucrare + nr element
+                    ........................
+            pacient
+                   |
+                    --- lucrare + nr element
+                    --- lucrare + nr element
+                    ........................
+---medic
+        |
+        ---
+            pacient
+                   |
+                    --- lucrare + nr element
+                    --- lucrare + nr element
+                    ........................
+            pacient
+                   |
+                    --- lucrare + nr element
+                    --- lucrare + nr element
+                    ........................
+
+startime - endtime
+
+

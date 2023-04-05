@@ -4,6 +4,9 @@ import {
     forwardRef,
     HostListener,
     Inject,
+    ChangeDetectorRef,
+    Output,
+    EventEmitter,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -31,13 +34,14 @@ import { PlatformName, PlatformProvider } from '@shared';
 })
 export class SearcheableSelectInputComponent implements ControlValueAccessor {
     @Input() public form: FormGroup;
-
+    @Output() public itemSelected: EventEmitter<boolean> = new EventEmitter(false);
     public selectedValue: string | null;
 
     public constructor(
         private modalCtrl: ModalController,
         private platformProvider: PlatformProvider,
-        @Inject(DOCUMENT) private document: Document
+        @Inject(DOCUMENT) private document: Document,
+        private cdr: ChangeDetectorRef
     ) {}
 
     @HostListener('window:resize', ['$event'])
@@ -47,6 +51,7 @@ export class SearcheableSelectInputComponent implements ControlValueAccessor {
 
     public writeValue(value: string): void {
         this.selectedValue = value;
+        // this.cdr.markForCheck();
     }
     public registerOnChange(fn: any): void {
         this.propagateChange = fn;
@@ -96,7 +101,9 @@ export class SearcheableSelectInputComponent implements ControlValueAccessor {
 		}
     }
 
-    private propagateChange = (_: any) => {};
+    private propagateChange = (_: any) => {
+        this.itemSelected.emit(true);
+    };
 
     private getMaxBreakpoint(): number {
         const docHeaderHeight =

@@ -1,0 +1,46 @@
+<ion-content>
+    <form [formGroup]="multiForm">
+        <swiper-container
+            #swiperContainer
+            pagination="true"
+            (slidechange)="onSlideChange()"
+            effect="cube"
+        >
+            <swiper-slide>
+                <ion-item-group [formGroup]="doctorFormGroup">
+                    <ion-grid formArrayName="doctor">
+                        <ion-row
+                            class="doctor-list"
+                            *ngFor="
+                                let doctorControl of doctorFormGroupControls;
+                                let i = index
+                            "
+                        >
+                            <ion-item [formGroupName]="i">
+                                <app-search-select-input
+                                    formControlName="doctor"
+                                    [form]="doctorFormGroup"
+                                    (itemSelected)="onDoctorSelected($event)"
+                                ></app-search-select-input>
+                            </ion-item>
+                            <ion-button
+                                color="danger"
+                                (click)="removeDoctorControl(i)"
+                            >
+                                <ion-icon name="remove"></ion-icon>
+                            </ion-button>
+                        </ion-row>
+
+                        <ion-button (click)="addDoctorControl()">
+                            <ion-icon name="add"></ion-icon>
+                        </ion-button>
+                    </ion-grid>
+                </ion-item-group>
+            </swiper-slide>
+            <swiper-slide>
+                <app-form-modal></app-form-modal>
+            </swiper-slide>
+            <swiper-slide><app-form-modal></app-form-modal></swiper-slide>
+        </swiper-container>
+    </form>
+</ion-content>

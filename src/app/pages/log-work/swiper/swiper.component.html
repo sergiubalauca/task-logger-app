@@ -1,18 +1,18 @@
 <ion-content>
-    <form [formGroup]="multiForm">
-        <swiper-container
-            #swiperContainer
-            pagination="true"
-            (slidechange)="onSlideChange()"
-            effect="cube"
-        >
-            <swiper-slide>
-                <ion-item-group [formGroup]="doctorFormGroup">
-                    <ion-grid formArrayName="doctor">
+    <swiper-container
+        #swiperContainer
+        pagination="true"
+        (slidechange)="onSlideChange()"
+        effect="coverflow"
+    >
+        <swiper-slide>
+            <form [formGroup]="multiForm">
+                <ion-item-group formGroupName="doctorGroup">
+                    <ion-grid formArrayName="doctorArray">
                         <ion-row
                             class="doctor-list"
                             *ngFor="
-                                let doctorControl of doctorFormGroupControls;
+                                let doctorControlGroup of doctorFormGroupControls;
                                 let i = index
                             "
                         >
@@ -20,7 +20,7 @@
                                 <app-search-select-input
                                     formControlName="doctor"
                                     [form]="doctorFormGroup"
-                                    (itemSelected)="onDoctorSelected($event)"
+                                    (change)="onDoctorSelected($event)"
                                 ></app-search-select-input>
                             </ion-item>
                             <ion-button
@@ -36,11 +36,11 @@
                         </ion-button>
                     </ion-grid>
                 </ion-item-group>
-            </swiper-slide>
-            <swiper-slide>
-                <app-form-modal></app-form-modal>
-            </swiper-slide>
-            <swiper-slide><app-form-modal></app-form-modal></swiper-slide>
-        </swiper-container>
-    </form>
+            </form>
+        </swiper-slide>
+        <swiper-slide>
+            <app-form-modal></app-form-modal>
+        </swiper-slide>
+        <swiper-slide><app-form-modal></app-form-modal></swiper-slide>
+    </swiper-container>
 </ion-content>

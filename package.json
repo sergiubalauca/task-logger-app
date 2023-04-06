@@ -41,7 +41,7 @@
     "@angular-eslint/eslint-plugin": "~13.0.1",
     "@angular-eslint/eslint-plugin-template": "~13.0.1",
     "@angular-eslint/template-parser": "~13.0.1",
-    "@angular/cli": "^16.0.0-next.6",
+    "@angular/cli": "^15.2.4",
     "@angular/compiler": "^15.2.1",
     "@angular/compiler-cli": "^15.2.1",
     "@angular/language-service": "^15.2.1",

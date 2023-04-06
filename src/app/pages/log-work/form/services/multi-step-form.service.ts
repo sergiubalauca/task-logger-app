@@ -1,40 +1,38 @@
 import { Injectable } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+    FormArray,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 
 @Injectable()
 export class MultiStepFormService {
     private multiStepLogWorkForm: FormGroup;
 
-    constructor() {}
+    constructor(private fb: FormBuilder) {}
 
     public initMultiStepForm() {
         if (this.multiStepLogWorkForm) {
-            console.log('GSB return existing');
             return this.multiStepLogWorkForm;
         }
 
-        this.multiStepLogWorkForm = new FormGroup({
-            doctorGroup: new FormGroup({
-                doctor: new FormArray([]),
-                patientGroup: new FormGroup({
-                    patient: new FormArray(
-                        [
-                            new FormControl(null, {
-                                validators: [Validators.required],
-                            }),
-                        ],
-                        {
-                            validators: [Validators.required],
-                        }
-                    ),
-                    workItemGroup: new FormGroup({
-                        workItemAndNumber: new FormArray(
+        this.multiStepLogWorkForm = this.fb.group({
+            doctorGroup: this.fb.group({
+                doctorArray: this.fb.array([]),
+                patientGroup: this.fb.group({
+                    patient: this.fb.array([], {
+                        validators: [Validators.required],
+                    }),
+                    workItemGroup: this.fb.group({
+                        workItemAndNumber: this.fb.array(
                             [
-                                new FormGroup({
-                                    workItem: new FormControl(null, {
+                                this.fb.group({
+                                    workItem: this.fb.control(null, {
                                         validators: [Validators.required],
                                     }),
-                                    numberOfWorkItems: new FormControl(null, {
+                                    numberOfWorkItems: this.fb.control(null, {
                                         validators: [Validators.required],
                                     }),
                                 }),
@@ -46,11 +44,11 @@ export class MultiStepFormService {
                     }),
                 }),
             }),
-            timeGroup: new FormGroup({
-                startTime: new FormControl(null, {
+            timeGroup: this.fb.group({
+                startTime: this.fb.control(null, {
                     validators: [Validators.required],
                 }),
-                endTime: new FormControl(null, {
+                endTime: this.fb.control(null, {
                     validators: [Validators.required],
                 }),
             }),
@@ -63,15 +61,20 @@ export class MultiStepFormService {
         return this.multiStepLogWorkForm.get('doctorGroup') as FormGroup;
     }
     public getDoctorFormGroupControls() {
-        return (this.getDoctorFormGroup().controls.doctor as FormArray)
+        return (this.getDoctorFormGroup().controls.doctorArray as FormArray)
             .controls;
     }
 
-    public createNewDoctorControl() {
-        return new FormGroup({
-            doctor: new FormControl(null, {
-                validators: [Validators.required],
-            }),
-        });
+    public getdoctorArray() {
+        return this.getDoctorFormGroup().get('doctorArray') as FormArray;
     }
+
+    public addDoctorControl() {
+        return this.getdoctorArray().push(this.newDoctor());
+    }
+
+    newDoctor = () =>
+        this.fb.group({
+            doctor: '',
+        });
 }

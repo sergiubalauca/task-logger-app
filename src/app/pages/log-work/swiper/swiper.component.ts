@@ -41,10 +41,7 @@ export class SwiperComponent implements OnInit {
         this.doctorFormGroupControls =
             this.multiStepFormService.getDoctorFormGroupControls();
         this.doctorFormGroup = this.multiStepFormService.getDoctorFormGroup();
-
-        this.doctorFormGroupControls.push(
-            this.multiStepFormService.createNewDoctorControl()
-        );
+        this.multiStepFormService.addDoctorControl();
 
         this.multiForm.valueChanges.subscribe((value) => {
             console.log('multiForm valueChanges: ', value);
@@ -58,9 +55,7 @@ export class SwiperComponent implements OnInit {
     }
 
     public addDoctorControl() {
-        this.doctorFormGroupControls.push(
-            this.multiStepFormService.createNewDoctorControl()
-        );
+        this.multiStepFormService.addDoctorControl();
     }
 
     public removeDoctorControl(index: number) {

@@ -17,6 +17,8 @@ export class ModalService {
         this.modal = await this.modalController.create({
             component: componentRef,
             cssClass,
+            initialBreakpoint: 0.9,
+            breakpoints: [0, 0.5, 0.9],
             componentProps,
             backdropDismiss,
         });

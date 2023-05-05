@@ -1,35 +1,43 @@
 :host {
-  ion-content {
-    ion-list {
-      ion-item {
-        ion-card {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
+    ion-content {
+        @import "cropperjs/dist/cropper.css";
 
-          border-radius: 10px;
-          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-          margin-bottom: 10px;
-          padding: 10px;
+        img {
+            display: block;
 
-          ion-card-header {
-            ion-card-title {
-              font-size: 1.5rem;
-            }
-          }
-
-          ion-card-content {
-            display: flex;
-            // flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 10px;
-          }
+            /* This rule is very important, please don't ignore this */
+            max-width: 100%;
         }
-      }
+        ion-list {
+            ion-item {
+                ion-card {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+
+                    border-radius: 10px;
+                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                    margin-bottom: 10px;
+                    padding: 10px;
+
+                    ion-card-header {
+                        ion-card-title {
+                            font-size: 1.5rem;
+                        }
+                    }
+
+                    ion-card-content {
+                        display: flex;
+                        // flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        padding: 10px;
+                    }
+                }
+            }
+        }
     }
-  }
 }

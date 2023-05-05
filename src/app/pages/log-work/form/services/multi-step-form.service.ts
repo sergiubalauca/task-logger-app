@@ -21,28 +21,6 @@ export class MultiStepFormService {
         this.multiStepLogWorkForm = this.fb.group({
             doctorGroup: this.fb.group({
                 doctorArray: this.fb.array([]),
-                patientGroup: this.fb.group({
-                    patient: this.fb.array([], {
-                        validators: [Validators.required],
-                    }),
-                    workItemGroup: this.fb.group({
-                        workItemAndNumber: this.fb.array(
-                            [
-                                this.fb.group({
-                                    workItem: this.fb.control(null, {
-                                        validators: [Validators.required],
-                                    }),
-                                    numberOfWorkItems: this.fb.control(null, {
-                                        validators: [Validators.required],
-                                    }),
-                                }),
-                            ],
-                            {
-                                validators: [Validators.required],
-                            }
-                        ),
-                    }),
-                }),
             }),
             timeGroup: this.fb.group({
                 startTime: this.fb.control(null, {
@@ -60,6 +38,7 @@ export class MultiStepFormService {
     public getDoctorFormGroup() {
         return this.multiStepLogWorkForm.get('doctorGroup') as FormGroup;
     }
+
     public getDoctorFormGroupControls() {
         return (this.getDoctorFormGroup().controls.doctorArray as FormArray)
             .controls;
@@ -73,8 +52,89 @@ export class MultiStepFormService {
         return this.getdoctorArray().push(this.newDoctor());
     }
 
-    newDoctor = () =>
+    public removeDoctorControl(index: number) {
+        return this.getDoctorFormGroupControls().splice(index, 1);
+    }
+
+    public newDoctor = () =>
         this.fb.group({
-            doctor: '',
+            doctor: this.fb.control(null, {
+                validators: [Validators.required],
+            }),
+            patientGroup: this.fb.group({
+                patientArray: this.fb.array(
+                    [
+                        this.fb.group({
+                            patient: this.fb.control(null, {
+                                validators: [Validators.required],
+                            }),
+                            workItemGroup: this.fb.group({
+                                workItemAndNumber: this.fb.array(
+                                    [
+                                        this.fb.group({
+                                            workItem: this.fb.control(null, {
+                                                validators: [
+                                                    Validators.required,
+                                                ],
+                                            }),
+                                            numberOfWorkItems: this.fb.control(
+                                                null,
+                                                {
+                                                    validators: [
+                                                        Validators.required,
+                                                    ],
+                                                }
+                                            ),
+                                        }),
+                                    ],
+                                    {
+                                        validators: [Validators.required],
+                                    }
+                                ),
+                            }),
+                        }),
+                    ],
+                    {
+                        validators: [Validators.required],
+                    }
+                ),
+            }),
+        });
+
+    public getTimeFormGroup() {
+        return this.multiStepLogWorkForm.get('timeGroup') as FormGroup;
+    }
+
+    public getPatientGroupFormGroup(doctorIndex?: number) {
+        const doctorArray = this.getDoctorFormGroup().controls
+            .doctorArray as FormArray;
+        const doctorFormGroup = doctorArray.controls[doctorIndex] as FormGroup;
+        return doctorFormGroup.controls.patientGroup as FormGroup;
+    }
+
+    public getPatientControls(index?: number) {
+        return (
+            this.getPatientGroupFormGroup(index).controls
+                .patientArray as FormArray
+        ).controls;
+    }
+
+    public getPatientArray(index: number) {
+        return this.getPatientGroupFormGroup(index).get(
+            'patientArray'
+        ) as FormArray;
+    }
+
+    public addPatientControl(index: number) {
+        return this.getPatientArray(index).push(this.newPatient());
+    }
+
+    public removePatientControl(doctorIndex: number, pacientIndex: number) {
+        return this.getPatientArray(doctorIndex).removeAt(pacientIndex);
+    }
+
+    public newPatient = () =>
+        this.fb.group({
+            patient: '',
         });
 }

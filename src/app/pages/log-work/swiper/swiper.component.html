@@ -6,41 +6,16 @@
         effect="coverflow"
     >
         <swiper-slide>
-            <form [formGroup]="multiForm">
-                <ion-item-group formGroupName="doctorGroup">
-                    <ion-grid formArrayName="doctorArray">
-                        <ion-row
-                            class="doctor-list"
-                            *ngFor="
-                                let doctorControlGroup of doctorFormGroupControls;
-                                let i = index
-                            "
-                        >
-                            <ion-item [formGroupName]="i">
-                                <app-search-select-input
-                                    formControlName="doctor"
-                                    [form]="doctorFormGroup"
-                                    (change)="onDoctorSelected($event)"
-                                ></app-search-select-input>
-                            </ion-item>
-                            <ion-button
-                                color="danger"
-                                (click)="removeDoctorControl(i)"
-                            >
-                                <ion-icon name="remove"></ion-icon>
-                            </ion-button>
-                        </ion-row>
-
-                        <ion-button (click)="addDoctorControl()">
-                            <ion-icon name="add"></ion-icon>
-                        </ion-button>
-                    </ion-grid>
-                </ion-item-group>
-            </form>
+            <app-doctor
+                [multiForm]="multiForm"
+                [chosenDate]="chosenDate"
+                (doctorSelected)="onDoctorSelected($event)"
+                (goToDoctor)="onGoToDoctor($event)"
+            ></app-doctor>
         </swiper-slide>
         <swiper-slide>
-            <app-form-modal></app-form-modal>
+            <app-pacient></app-pacient>
         </swiper-slide>
-        <swiper-slide><app-form-modal></app-form-modal></swiper-slide>
+        <swiper-slide></swiper-slide>
     </swiper-container>
 </ion-content>

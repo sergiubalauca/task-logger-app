@@ -1,0 +1,57 @@
+<div *ngIf="doctorGroupControls | async; let dgc">
+    <form [formGroup]="multiForm">
+        <ion-item-group formGroupName="doctorGroup">
+            <ion-grid formArrayName="doctorArray">
+                <ion-row
+                    *ngFor="
+                        let doctorControlGroup of dgc.doctorFormGroupControls;
+                        let i = index
+                    "
+                >
+                    <ion-item [formGroupName]="i">
+                        <app-search-select-input
+                            formControlName="doctor"
+                            [form]="dgc.doctorFormGroup"
+                            (itemSelected)="onDoctorSelected($event, i)"
+                        ></app-search-select-input>
+                    </ion-item>
+
+                    <ion-button (click)="onGoToDoctor(i)">
+                        <ion-icon name="arrow-forward-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button color="danger" (click)="removeDoctorControl(i)">
+                        <ion-icon name="remove"></ion-icon>
+                    </ion-button>
+                </ion-row>
+
+                <ion-button
+                    (click)="
+                        addDoctorControl()
+                    "
+                >
+                    <ion-icon name="add"></ion-icon>
+                </ion-button>
+            </ion-grid>
+        </ion-item-group>
+        <ion-item-group [formGroup]="dgc.timeGroup">
+            <ion-grid>
+                <ion-row>
+                    <app-date-picker
+                        [chosenDate]="chosenDate"
+                        formControlName="startTime"
+                        [form]="dgc.timeGroup"
+                        [label]="'Start Time'"
+                    ></app-date-picker>
+                </ion-row>
+                <ion-row>
+                    <app-date-picker
+                        [chosenDate]="chosenDate"
+                        formControlName="endTime"
+                        [form]="dgc.timeGroup"
+                        [label]="'End Time'"
+                    ></app-date-picker>
+                </ion-row>
+            </ion-grid>
+        </ion-item-group>
+    </form>
+</div>

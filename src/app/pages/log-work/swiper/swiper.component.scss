@@ -1,6 +1,27 @@
-ion-content {
-    .doctor-list {
-        display: flex;
-        align-items: center;
+:host {
+    ion-content {
+        swiper-slide {
+            // form {
+            //     display: flex;
+            //     flex-direction: column;
+
+            //     ion-item-group {
+            //         :first-of-type {
+            //             max-height: 50vh;
+            //             overflow: scroll;
+            //         }
+            //         ion-grid {
+            //             ion-row {
+            //                 display: flex;
+            //                 align-items: center;
+
+            //                 app-date-picker {
+            //                     flex: 1;
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+        }
     }
 }

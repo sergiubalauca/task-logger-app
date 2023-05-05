@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '@shared';
 import { RxCollection, RxDatabase } from 'rxdb';
 import { RxDatabaseProvider } from 'src/app/database/rx-database.provider';
-import { FormModalComponent } from './form/form-modal/form-modal.component';
 import { SwiperComponent } from './swiper/swiper.component';
 
 @Component({
@@ -24,7 +23,7 @@ export class LogWorkComponent implements OnInit {
             SwiperComponent,
             '',
             {
-                formValue: event.detail.value,
+                chosenDate: event.detail.value,
             },
             true
         );

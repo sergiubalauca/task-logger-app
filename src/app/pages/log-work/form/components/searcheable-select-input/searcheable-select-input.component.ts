@@ -16,9 +16,9 @@ import {
     FormGroup,
 } from '@angular/forms';
 import { SearcheableSelectComponent } from '../searcheable-select/searcheable-select.component';
-import { SearcheableSelectModel } from '../searcheable-select/searcheable-select.model';
+// import { SearcheableSelectModel } from '../searcheable-select/searcheable-select.model';
 import { DOCUMENT } from '@angular/common';
-import { PlatformName, PlatformProvider } from '@shared';
+import { PlatformName, PlatformProvider, SearcheableSelectModel } from '@shared';
 
 @Component({
     selector: 'app-search-select-input',
@@ -34,7 +34,7 @@ import { PlatformName, PlatformProvider } from '@shared';
 })
 export class SearcheableSelectInputComponent implements ControlValueAccessor {
     @Input() public form: FormGroup;
-    @Output() public itemSelected: EventEmitter<boolean> = new EventEmitter(false);
+    @Output() public itemSelected: EventEmitter<SearcheableSelectModel> = new EventEmitter();
     public selectedValue: string | null;
 
     public constructor(
@@ -61,21 +61,22 @@ export class SearcheableSelectInputComponent implements ControlValueAccessor {
     public setDisabledState?(isDisabled: boolean): void {}
 
     public async onOpenSelect(): Promise<void> {
-        const selectOptions: SearcheableSelectModel[] = [{
-            description: 'Un medic pretentios',
-            id: '1',
-            displayBoth: true,
-            isSelected: false,
-            value: 'Scarlatescu',
-        },
-		{
-            description: 'Medic nou',
-            id: '2',
-            displayBoth: true,
-            isSelected: false,
-            value: 'Bordea',
-        }
-	];
+        const selectOptions: SearcheableSelectModel[] = [
+            {
+                description: 'Un medic pretentios',
+                id: '1',
+                displayBoth: true,
+                isSelected: false,
+                value: 'Scarlatescu',
+            },
+            {
+                description: 'Medic nou',
+                id: '2',
+                displayBoth: true,
+                isSelected: false,
+                value: 'Bordea',
+            },
+        ];
         const maxBreakpoint = this.getMaxBreakpoint();
 
         const modal = await this.modalCtrl.create({
@@ -87,23 +88,22 @@ export class SearcheableSelectInputComponent implements ControlValueAccessor {
             componentProps: {
                 selectOptions,
                 selectedItemId: selectOptions.find(
-					(item) => item.value === this.selectedValue
-				)?.id,
+                    (item) => item.value === this.selectedValue
+                )?.id,
                 controlLabel: 'Medic',
             },
             showBackdrop: false,
         });
         await modal.present();
-		const { data } = await modal.onWillDismiss();
-		if (data) {
-			this.selectedValue = data.value;
-			this.propagateChange(data);
-		}
+        const { data } = await modal.onWillDismiss();
+        if (data) {
+            this.selectedValue = data.value;
+            this.propagateChange(data);
+            this.itemSelected.emit(data);
+        }
     }
 
-    private propagateChange = (_: any) => {
-        this.itemSelected.emit(true);
-    };
+    private propagateChange = (_: any) => {};
 
     private getMaxBreakpoint(): number {
         const docHeaderHeight =

@@ -72,9 +72,6 @@ export class DoctorComponent implements OnInit {
     }
 
     public removeDoctorControl(index: number): void {
-        // this.removeDoctor.emit(index);
-        // this.doctorFormGroupControls.splice(index, 1);
-
         this.doctorGroupControls = of(
             this.multiStepFormService.removeDoctorControl(index)
         ).pipe(

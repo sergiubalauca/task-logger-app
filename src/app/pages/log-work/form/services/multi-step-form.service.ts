@@ -113,16 +113,19 @@ export class MultiStepFormService {
     }
 
     public getPatientControls(index?: number) {
-        return (
+        const patientControls = (
             this.getPatientGroupFormGroup(index).controls
                 .patientArray as FormArray
         ).controls;
+        return patientControls;
     }
 
     public getPatientArray(index: number) {
-        return this.getPatientGroupFormGroup(index).get(
+        const x = this.getPatientGroupFormGroup(index).get(
             'patientArray'
         ) as FormArray;
+        // const x = this.getPatientControls(index);
+        return x;
     }
 
     public addPatientControl(index: number) {
@@ -130,7 +133,10 @@ export class MultiStepFormService {
     }
 
     public removePatientControl(doctorIndex: number, pacientIndex: number) {
-        return this.getPatientArray(doctorIndex).removeAt(pacientIndex);
+        return this.getPatientArray(doctorIndex).controls.splice(
+            pacientIndex,
+            1
+        );
     }
 
     public newPatient = () =>

@@ -4,6 +4,7 @@
             <ion-row
                 *ngFor="let pacientControl of pgc.patientControls; let j = index"
             >
+            
                 <ion-item [formGroupName]="j">
                     <ion-input
                         formControlName="patient"
@@ -13,7 +14,8 @@
                     >
                     </ion-input>
                 </ion-item>
-                <ion-button color="danger" (click)="removePatientControl(j)">
+                <!-- {{pgc.doctorIdx}} -->
+                <ion-button color="danger" (click)="removePatientControl(j, pgc.doctorIdx)">
                     <ion-icon name="remove"></ion-icon>
                 </ion-button>
             </ion-row>

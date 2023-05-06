@@ -13,7 +13,7 @@ export class PacientComponent implements OnInit {
         patientGroup: FormGroup;
         patientControls: AbstractControl[];
         doctorIdx: number;
-    }> = of(null);
+    }>;
 
     constructor(
         private multiStepFormService: MultiStepFormService,
@@ -46,24 +46,53 @@ export class PacientComponent implements OnInit {
             );
     }
 
-    public removePatientControl(index: number) {
-        this.patientGroupControls = this.patientGroupControls.pipe(
-            map(
-                (controls: {
-                    patientGroup: FormGroup<any>;
-                    patientControls: AbstractControl<any, any>[];
-                    doctorIdx: number;
-                }) => {
-                    // controls.patientControls.splice(index, 1);
-                    this.multiStepFormService.removePatientControl(controls.doctorIdx, index);
-                    return controls;
-                }
-            )
-        );
-        // this.multiStepFormService.removePatientControl(index);
+    public removePatientControl(index: number, doctorIdx: number) {
+        this.multiStepFormService.removePatientControl(doctorIdx, index);
+        // this.patientGroupControls = this.formSwiperState
+        //     .getCurrentDoctor()
+        //     .pipe(
+        //         switchMap((idx: { index: number }) => {
+        //             this.multiStepFormService.removePatientControl(
+        //                 idx.index,
+        //                 index
+        //             );
+
+        //             return of({
+        //                 doctorIdx: idx.index,
+        //                 patientGroup:
+        //                     this.multiStepFormService.getPatientGroupFormGroup(
+        //                         idx.index
+        //                     ),
+        //                 patientControls:
+        //                     this.multiStepFormService.getPatientControls(
+        //                         idx.index
+        //                     ),
+        //             });
+        //         })
+        //     );
     }
 
-    public addPatientControl(docIdx: number) {
-        this.multiStepFormService.addPatientControl(docIdx);
+    public addPatientControl(doctorIdx: number) {
+        this.multiStepFormService.addPatientControl(doctorIdx);
+        // this.patientGroupControls = of(
+        //     this.multiStepFormService.addPatientControl(doctorIdx)
+        // ).pipe(
+        //     switchMap(() =>
+        //         // this.multiStepFormService.addPatientControl(doctorIdx);
+        //         of({
+        //             doctorIdx,
+        //             patientGroup:
+        //                 this.multiStepFormService.getPatientGroupFormGroup(
+        //                     doctorIdx
+        //                 ),
+        //             patientControls:
+        //                 this.multiStepFormService.getPatientControls(doctorIdx),
+        //         })
+        //     )
+        // );
+
+        // this.patientGroupControls.subscribe((res) => {
+        //     console.log('GSB: ', res);
+        // });
     }
 }

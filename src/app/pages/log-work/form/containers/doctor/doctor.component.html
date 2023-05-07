@@ -1,5 +1,5 @@
 <div *ngIf="doctorGroupControls | async; let dgc">
-    <form [formGroup]="multiForm">
+    <form [formGroup]="dgc.form">
         <ion-item-group formGroupName="doctorGroup">
             <ion-grid formArrayName="doctorArray">
                 <ion-row
@@ -19,16 +19,16 @@
                     <ion-button (click)="onGoToDoctor(i)">
                         <ion-icon name="arrow-forward-outline"></ion-icon>
                     </ion-button>
-                    <ion-button color="danger" (click)="removeDoctorControl(i)">
+                    <ion-button
+                        *ngIf="dgc.doctorFormGroupControls.length > 1"
+                        color="danger"
+                        (click)="removeDoctorControl(i)"
+                    >
                         <ion-icon name="remove"></ion-icon>
                     </ion-button>
                 </ion-row>
 
-                <ion-button
-                    (click)="
-                        addDoctorControl()
-                    "
-                >
+                <ion-button (click)="addDoctorControl()">
                     <ion-icon name="add"></ion-icon>
                 </ion-button>
             </ion-grid>

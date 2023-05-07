@@ -1,3 +1,12 @@
+<ion-header [translucent]="true" no-border no-shadow class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (click)="close()">
+                <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 <ion-content>
     <swiper-container
         #swiperContainer
@@ -7,15 +16,16 @@
     >
         <swiper-slide>
             <app-doctor
-                [multiForm]="multiForm"
                 [chosenDate]="chosenDate"
                 (doctorSelected)="onDoctorSelected($event)"
                 (goToDoctor)="onGoToDoctor($event)"
             ></app-doctor>
         </swiper-slide>
         <swiper-slide>
-            <app-pacient></app-pacient>
+            <app-pacient (goToWorkItem)="onGoToWorkItem()"></app-pacient>
         </swiper-slide>
-        <swiper-slide></swiper-slide>
+        <swiper-slide>
+            <app-work-item></app-work-item>
+        </swiper-slide>
     </swiper-container>
 </ion-content>

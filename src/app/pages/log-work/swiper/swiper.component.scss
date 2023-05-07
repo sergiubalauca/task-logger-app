@@ -1,4 +1,25 @@
 :host {
+    ion-header {
+        // transparent background
+        --background: transparent;
+        ion-toolbar {
+            --background: transparent;
+
+            ion-buttons {
+                ion-button,
+                ion-menu-button {
+                    --color: var(--ion-color-dark-06);
+                    --background: transparent;
+                    margin-inline-start: 0;
+                    margin-inline-end: 0;
+                    ion-icon {
+                        --color: var(--ion-color-dark-06);
+                        font-size: 28px;
+                    }
+                }
+            }
+        };
+    }
     ion-content {
         swiper-slide {
             // form {

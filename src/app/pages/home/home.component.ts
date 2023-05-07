@@ -11,7 +11,11 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {}
 
-    public async openLogWork() {
-        await this.navController.navigateForward('/home/log-work');
+    public async openLogWork(): Promise<boolean> {
+        return await this.navController.navigateForward('/home/log-work');
+    }
+
+    public async openSetup(): Promise<boolean> {
+        return await this.navController.navigateForward('/home/setup');
     }
 }

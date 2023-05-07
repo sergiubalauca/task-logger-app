@@ -17,6 +17,7 @@ import { DatePickerModalComponent } from './form/components/date-picker-modal';
 import { SwiperComponent } from './swiper/swiper.component';
 import { DoctorComponent, PacientComponent } from './form/containers';
 import { FormSwipeStateService } from './form/services';
+import { WorkItemComponent } from './form/containers/work-item/work-item.component';
 @NgModule({
     declarations: [
         LogWorkComponent,
@@ -26,7 +27,8 @@ import { FormSwipeStateService } from './form/services';
         DatePickerModalComponent,
         SwiperComponent,
         DoctorComponent,
-        PacientComponent
+        PacientComponent,
+        WorkItemComponent
     ],
     imports: [
         CommonModule,

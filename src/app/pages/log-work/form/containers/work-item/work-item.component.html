@@ -1,0 +1,53 @@
+<div *ngIf="workItemGroupControls | async; let wig">
+    <form [formGroup]="wig.workItemGroup">
+        <ion-grid formArrayName="workItemAndNumber">
+            <ion-row
+                *ngFor="
+                    let workItemControl of wig.workItemControls;
+                    let j = index
+                "
+            >
+                <!-- <ion-item [formGroupName]="j">
+                    <ion-input
+                        formControlName="workItem"
+                        type="text"
+                        label="WorkItem"
+                        labelPlacement="floating"
+                    >
+                    </ion-input>
+                </ion-item> -->
+
+                <ion-item [formGroupName]="j">
+                    <app-search-select-input
+                        formControlName="workItem"
+                        [form]="wig.workItemGroup"
+                    ></app-search-select-input>
+                </ion-item>
+
+                <ion-item [formGroupName]="j">
+                    <ion-input
+                        formControlName="numberOfWorkItems"
+                        type="text"
+                        label="No of WorkItems"
+                        labelPlacement="floating"
+                    >
+                    </ion-input>
+                </ion-item>
+                <!-- {{pgc.doctorIdx}} -->
+                <ion-button
+                    color="danger"
+                    (click)="
+                        removeWorkItemControl(j, wig.doctorIdx, wig.pacientIdx)
+                    "
+                >
+                    <ion-icon name="remove"></ion-icon>
+                </ion-button>
+            </ion-row>
+            <ion-button
+                (click)="addWorkItemControl(wig.doctorIdx, wig.pacientIdx)"
+            >
+                <ion-icon name="add"></ion-icon>
+            </ion-button>
+        </ion-grid>
+    </form>
+</div>

@@ -2,9 +2,11 @@
     <form [formGroup]="pgc.patientGroup">
         <ion-grid formArrayName="patientArray">
             <ion-row
-                *ngFor="let pacientControl of pgc.patientControls; let j = index"
+                *ngFor="
+                    let pacientControl of pgc.patientControls;
+                    let j = index
+                "
             >
-            
                 <ion-item [formGroupName]="j">
                     <ion-input
                         formControlName="patient"
@@ -15,8 +17,15 @@
                     </ion-input>
                 </ion-item>
                 <!-- {{pgc.doctorIdx}} -->
-                <ion-button color="danger" (click)="removePatientControl(j, pgc.doctorIdx)">
+                <ion-button
+                    color="danger"
+                    *ngIf="pgc.patientControls.length > 1"
+                    (click)="removePatientControl(j, pgc.doctorIdx)"
+                >
                     <ion-icon name="remove"></ion-icon>
+                </ion-button>
+                <ion-button (click)="onGoToWorkItem(pgc.doctorIdx, j)">
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
                 </ion-button>
             </ion-row>
             <ion-button (click)="addPatientControl(pgc.doctorIdx)">

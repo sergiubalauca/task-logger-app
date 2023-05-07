@@ -6,11 +6,14 @@ import {
     DoCheck,
     ElementRef,
     Input,
+    OnDestroy,
     OnInit,
     ViewChild,
 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import { SearcheableSelectModel } from '@shared';
+import { Observable, of } from 'rxjs';
 import { SwiperOptions } from 'swiper';
 import { register } from 'swiper/element/bundle';
 import { FormSwipeStateService } from '../form/services';
@@ -27,22 +30,16 @@ const initSwiper = () => {
     providers: [MultiStepFormService],
     // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SwiperComponent implements OnInit {
+export class SwiperComponent implements OnInit, OnDestroy {
     @Input() public chosenDate: string;
     @ViewChild('swiperContainer') swiperContainer: ElementRef | undefined;
-
-    public doctorFormGroupControls: AbstractControl[];
-    public doctorFormGroup: FormGroup;
-    public timeGroup: FormGroup;
-    public multiForm: FormGroup;
-    public patientGroup: FormGroup;
 
     private swiperElement: any;
 
     constructor(
-        private multiStepFormService: MultiStepFormService,
-        private cdr: ChangeDetectorRef,
-        private formSwiperState: FormSwipeStateService
+        private formSwiperState: FormSwipeStateService,
+        private modalController: ModalController,
+        private formService: MultiStepFormService,
     ) {
         initSwiper();
     }
@@ -58,8 +55,8 @@ export class SwiperComponent implements OnInit {
 
         this.swiperElement.allowSlideNext = false;
         // swiperEl.allowSlidePrev = false;
-        this.multiForm = this.multiStepFormService.initMultiStepForm();
-        this.multiStepFormService.addDoctorControl();
+        // this.multiForm = of(this.multiStepFormService.initMultiStepForm());
+        // this.multiStepFormService.addDoctorControl();
     }
 
     public onSlideChange() {}
@@ -68,8 +65,8 @@ export class SwiperComponent implements OnInit {
         value: SearcheableSelectModel;
         formIndex: number;
     }) {
+        // this.formSwiperState.setCurrentPacient(0);
         if (event.value && event.value.value !== '') {
-            this.formSwiperState.setCurrentDoctor(event.formIndex);
             this.swiperElement.allowSlideNext = true;
             this.swiperElement.swiper.slideNext();
             this.swiperElement.allowSlideNext = false;
@@ -77,9 +74,32 @@ export class SwiperComponent implements OnInit {
     }
 
     public onGoToDoctor(index: number) {
+        this.formSwiperState.setCurrentPacient(0);
         this.swiperElement.allowSlideNext = true;
-        this.formSwiperState.setCurrentDoctor(index);
+        // this.formSwiperState.setCurrentDoctor(index);
         this.swiperElement.swiper.slideNext();
         this.swiperElement.allowSlideNext = false;
+    }
+
+    public onGoToWorkItem() {
+        this.swiperElement.allowSlideNext = true;
+        this.swiperElement.swiper.slideNext();
+        this.swiperElement.allowSlideNext = false;
+    }
+
+    public ngOnDestroy() {
+        this.formSwiperState.setCurrentPacient(0);
+        this.formSwiperState.setCurrentDoctor(0);
+    }
+
+    public async close() {
+        this.formSwiperState.setCurrentPacient(0);
+        this.formSwiperState.setCurrentDoctor(0);
+
+        const x =this.formService.getForm().value;
+
+        return await this.modalController.dismiss({
+            gsb: x,
+        });
     }
 }

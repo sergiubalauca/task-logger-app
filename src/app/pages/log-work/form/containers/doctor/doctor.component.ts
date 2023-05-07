@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { SearcheableSelectModel } from '@shared';
-import { Observable, of, switchMap } from 'rxjs';
+import { map, Observable, of, switchMap } from 'rxjs';
 import { FormSwipeStateService, MultiStepFormService } from '../../services';
 
 @Component({
@@ -18,7 +18,7 @@ import { FormSwipeStateService, MultiStepFormService } from '../../services';
     // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DoctorComponent implements OnInit {
-    @Input() public multiForm: FormGroup;
+    // @Input() public multiForm: FormGroup;
     @Input() public chosenDate: string;
 
     @Output() doctorSelected: EventEmitter<{
@@ -28,10 +28,17 @@ export class DoctorComponent implements OnInit {
     @Output() goToDoctor: EventEmitter<number> = new EventEmitter<number>();
 
     public doctorGroupControls: Observable<{
+        form: FormGroup;
         doctorFormGroup: FormGroup;
         doctorFormGroupControls: AbstractControl[];
         timeGroup: FormGroup;
-    }> = of(null);
+    }> = of({
+        form: this.multiStepFormService.initMultiStepForm(),
+        doctorFormGroup: this.multiStepFormService.getDoctorFormGroup(),
+        doctorFormGroupControls:
+            this.multiStepFormService.getDoctorFormGroupControls(),
+        timeGroup: this.multiStepFormService.getTimeFormGroup(),
+    });
 
     constructor(
         private formSwipeState: FormSwipeStateService,
@@ -39,60 +46,42 @@ export class DoctorComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.doctorGroupControls = of({
-            doctorFormGroup: this.multiStepFormService.getDoctorFormGroup(),
-            doctorFormGroupControls:
-                this.multiStepFormService.getDoctorFormGroupControls(),
-            timeGroup: this.multiStepFormService.getTimeFormGroup(),
-        });
+        this.multiStepFormService.addDoctorControl();
+        // this.doctorGroupControls = of({
+        //     form: this.multiStepFormService.initMultiStepForm(),
+        //     doctorFormGroup: this.multiStepFormService.getDoctorFormGroup(),
+        //     doctorFormGroupControls:
+        //         this.multiStepFormService.getDoctorFormGroupControls(),
+        //     timeGroup: this.multiStepFormService.getTimeFormGroup(),
+        // });
     }
 
     public addDoctorControl() {
-        // this.multiStepFormService.addDoctorControl();
-        // this.formSwipeState.setCurrentDoctor(docIdx);
-        this.doctorGroupControls = of(
-            this.multiStepFormService.addDoctorControl()
-        ).pipe(
-            switchMap(() => {
-                const result: {
-                    doctorFormGroup: FormGroup;
-                    doctorFormGroupControls: AbstractControl[];
-                    timeGroup: FormGroup;
-                } = {
-                    doctorFormGroup:
-                        this.multiStepFormService.getDoctorFormGroup(),
-                    doctorFormGroupControls:
-                        this.multiStepFormService.getDoctorFormGroupControls(),
-                    timeGroup: this.multiStepFormService.getTimeFormGroup(),
-                };
+        this.formSwipeState.setCurrentPacient(0);
+        this.multiStepFormService.addDoctorControl();
 
-                return of(result);
-            })
-        );
+        // this.doctorGroupControls = of({
+        //     form: this.multiStepFormService.initMultiStepForm(),
+        //     doctorFormGroup: this.multiStepFormService.getDoctorFormGroup(),
+        //     doctorFormGroupControls:
+        //         this.multiStepFormService.getDoctorFormGroupControls(),
+        //     timeGroup: this.multiStepFormService.getTimeFormGroup(),
+        // });
     }
 
     public removeDoctorControl(index: number): void {
-        this.doctorGroupControls = of(
-            this.multiStepFormService.removeDoctorControl(index)
-        ).pipe(
-            switchMap(() => {
-                const result: {
-                    doctorFormGroup: FormGroup;
-                    doctorFormGroupControls: AbstractControl[];
-                    timeGroup: FormGroup;
-                    doctorIdx: number;
-                } = {
-                    doctorIdx: index,
-                    doctorFormGroup:
-                        this.multiStepFormService.getDoctorFormGroup(),
-                    doctorFormGroupControls:
-                        this.multiStepFormService.getDoctorFormGroupControls(),
-                    timeGroup: this.multiStepFormService.getTimeFormGroup(),
-                };
-
-                return of(result);
-            })
-        );
+        this.formSwipeState.setCurrentDoctor(0);
+        this.formSwipeState.setCurrentPacient(0);
+        this.multiStepFormService.removeDoctorControl(index);
+        // this.doctorGroupControls = this.doctorGroupControls.pipe(
+        //     map((dgc) => ({
+        //         ...dgc,
+        //         doctorFormGroup: this.multiStepFormService.getDoctorFormGroup(),
+        //         doctorFormGroupControls:
+        //             this.multiStepFormService.getDoctorFormGroupControls(),
+        //         timeGroup: this.multiStepFormService.getTimeFormGroup(),
+        //     }))
+        // );
     }
 
     public onDoctorSelected(
@@ -100,11 +89,14 @@ export class DoctorComponent implements OnInit {
         formIndex: number
     ): void {
         if (event.value && event.value !== '') {
+            this.formSwipeState.setCurrentDoctor(formIndex);
             this.doctorSelected.emit({ value: event, formIndex });
         }
     }
 
     public onGoToDoctor(index: number): void {
+        this.formSwipeState.setCurrentDoctor(index);
+
         this.goToDoctor.emit(index);
     }
 }

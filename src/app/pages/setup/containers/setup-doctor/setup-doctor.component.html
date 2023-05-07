@@ -1,0 +1,25 @@
+<app-header [title]="'Setup Doctor'" [backBtnEnabled]="true"></app-header>
+
+<ion-content>
+    <ion-list>
+        <ion-card *ngFor="let doctor of doctors">
+            <ion-card-header>
+                <ion-card-title>{{ doctor.name }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-list>
+                    <ion-item>
+                        <ion-label>{{ doctor.phone }}</ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+    </ion-list>
+
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" class="ion-margin">
+        <ion-fab-button>
+            <!-- <ion-icon class="add-outline"></ion-icon> -->
+            <ion-icon name="add-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

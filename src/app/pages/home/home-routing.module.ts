@@ -3,28 +3,37 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent,
-  },
-  {
-    path: 'log-work',
-    loadChildren: async () => {
-      const logWorkModule = await import('../log-work/log-work.module');
-      return logWorkModule.LogWorkModule;
+    {
+        path: '',
+        component: HomeComponent,
     },
-  },
-  {
-    path: 'playground',
-    loadChildren: async () => {
-      const playgroundModule = await import('../playground/playground.module');
-      return playgroundModule.PlaygroundModule;
-    }
-  }
+    {
+        path: 'log-work',
+        loadChildren: async () => {
+            const logWorkModule = await import('../log-work/log-work.module');
+            return logWorkModule.LogWorkModule;
+        },
+    },
+    {
+        path: 'setup',
+        loadChildren: async () => {
+            const setupModule = await import('../setup/setup.module');
+            return setupModule.SetupModule;
+        },
+    },
+    {
+        path: 'playground',
+        loadChildren: async () => {
+            const playgroundModule = await import(
+                '../playground/playground.module'
+            );
+            return playgroundModule.PlaygroundModule;
+        },
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
 export class HomePageRoutingModule {}

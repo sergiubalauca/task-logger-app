@@ -1,14 +1,23 @@
 import { Injectable } from '@angular/core';
-import { DATABASE_NAME, LOGWORK_COLLECTION_NAME } from '@shared';
+import {
+    DATABASE_NAME,
+    DOCTOR_COLLECTION_NAME,
+    LOGWORK_COLLECTION_NAME,
+} from '@shared';
 import { createRxDatabase, RxDatabase } from 'rxdb';
 import {
     RxLogWorkDocument,
     RxLogWorkCollections,
     RxLogWorkDatabase,
 } from './rx-custom-types.ts';
-import { LOGWORK_SCHEMA, LOGWORK_SCHEMA_LITERAL, RxLogWorkDocumentType } from './schemas';
+import {
+    LOGWORK_SCHEMA,
+    LOGWORK_SCHEMA_LITERAL,
+    RxLogWorkDocumentType,
+} from './schemas';
 import { isRxDatabase } from 'rxdb';
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
+import { DOCTOR_SCHEMA, DOCTOR_SCHEMA_LITERAL } from './schemas/doctor.schema';
 
 @Injectable()
 export class RxDatabaseProvider {
@@ -25,6 +34,9 @@ export class RxDatabaseProvider {
             //     },
             // },
             // sync: true,
+        },
+        [DOCTOR_COLLECTION_NAME]: {
+            schema: DOCTOR_SCHEMA_LITERAL,
         },
     };
 

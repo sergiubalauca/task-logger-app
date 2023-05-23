@@ -1,5 +1,6 @@
 import type { RxDocument, RxCollection, RxDatabase } from 'rxdb';
 import { RxLogWorkDocumentType } from '../schemas';
+import { RxDoctorDocumentType } from '../schemas/doctor.schema';
 
 // ORM methods
 type RxLogWorkDocMethods = {
@@ -17,9 +18,12 @@ export type RxLogWorkCollection = RxCollection<
     null
 >;
 
+export type RxDoctorDocument = RxDocument<RxDoctorDocumentType>;
+export type RxDoctorCollection = RxCollection<RxDoctorDocumentType>;
+
 export type RxLogWorkCollections = {
     logWork: RxLogWorkCollection;
-    // logWork: RxCollection;
+    doctor: RxDoctorCollection;
 };
 
 export type RxLogWorkDatabase = RxDatabase<RxLogWorkCollections>;

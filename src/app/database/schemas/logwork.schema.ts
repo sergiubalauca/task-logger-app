@@ -24,33 +24,69 @@ export const LOGWORK_SCHEMA_LITERAL = {
         doctor: {
             type: 'object',
             properties: {
-                description: {
-                    type: 'string',
-                    default: '',
-                    maxLength: 100,
-                },
+                // description: {
+                //     type: 'string',
+                //     default: '',
+                //     maxLength: 100,
+                // },
                 id: {
                     type: 'string',
                     default: '',
                     maxLength: 100,
                 },
-                value: {
-                    type: 'string',
-                    default: '',
-                    maxLength: 100,
+                // value: {
+                //     type: 'string',
+                //     default: '',
+                //     maxLength: 100,
+                // },
+                patient: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            name: {
+                                type: 'string',
+                                default: '',
+                                maxLength: 100,
+                            },
+                            workItemAndNumber: {
+                                type: 'array',
+                                items: {
+                                    type: 'object',
+                                    properties: {
+                                        workItem: {
+                                            type: 'object',
+                                            properties: {
+                                                id: {
+                                                    type: 'string',
+                                                    default: '',
+                                                    maxLength: 100,
+                                                },
+                                            },
+                                        },
+                                        numberOfWorkItems: {
+                                            type: 'string',
+                                            default: '',
+                                            maxLength: 100,
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
                 },
             },
         },
-        patient: {
-            type: 'string',
-        },
-        workItem: {
-            type: 'string',
-        },
-        numberOfWorkItems: {
-            type: 'string',
-            default: '',
-        },
+        // patient: {
+        //     type: 'string',
+        // },
+        // workItem: {
+        //     type: 'string',
+        // },
+        // numberOfWorkItems: {
+        //     type: 'string',
+        //     default: '',
+        // },
         startTime: {
             type: 'string',
             default: '',
@@ -59,12 +95,12 @@ export const LOGWORK_SCHEMA_LITERAL = {
             type: 'string',
             default: '',
         },
-        hp: {
-            type: 'number',
-            minimum: 0,
-            maximum: 100,
-            default: 100,
-        },
+        // hp: {
+        //     type: 'number',
+        //     minimum: 0,
+        //     maximum: 100,
+        //     default: 100,
+        // },
     },
     // required: ['name', 'color', 'hp'],
 };

@@ -2,10 +2,10 @@
 
 zi
 |
- ---medic
+ ---medic (name)
         |
         ---
-            pacient
+            pacient (name, culoare dinti (A1-A2-A3-A3.5-A4, B1-2-3-4, C-1-2-3-4, D-2-3-4 + free input), pozitie dinti)
                    |
                     --- lucrare + nr element
                     --- lucrare + nr element

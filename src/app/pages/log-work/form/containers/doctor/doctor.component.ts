@@ -6,16 +6,30 @@ import {
     OnInit,
     Output,
 } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearcheableSelectModel } from '@shared';
 import { map, Observable, of, switchMap } from 'rxjs';
 import { FormSwipeStateService, MultiStepFormService } from '../../services';
+import { DatePickerComponent } from '../../components/date-picker/date-picker.component';
+import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
+import { IonicModule } from '@ionic/angular';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'app-doctor',
     templateUrl: './doctor.component.html',
     styleUrls: ['./doctor.component.scss'],
-    // changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+        IonicModule,
+        NgFor,
+        SearcheableSelectInputComponent,
+        DatePickerComponent,
+        AsyncPipe,
+    ],
 })
 export class DoctorComponent implements OnInit {
     // @Input() public multiForm: FormGroup;

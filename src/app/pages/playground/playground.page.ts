@@ -13,10 +13,13 @@ import { Observable } from 'rxjs';
 import { lazyArray } from 'src/app/shared/lazy-rendering.operator';
 import { RandomUser } from 'src/app/shared/models/random-user';
 import Cropper from 'cropperjs';
+import { IonicModule } from '@ionic/angular';
 @Component({
     selector: 'app-home',
     templateUrl: 'playground.page.html',
     styleUrls: ['playground.page.scss'],
+    standalone: true,
+    imports: [IonicModule],
 })
 export class HomePage implements OnInit, AfterViewInit {
     @ViewChild('cropperContainer') cropperContainer: ElementRef;

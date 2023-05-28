@@ -1,12 +1,23 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { map, Observable, of, switchMap } from 'rxjs';
 import { FormSwipeStateService, MultiStepFormService } from '../../services';
+import { IonicModule } from '@ionic/angular';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'app-pacient',
     templateUrl: './pacient.component.html',
     styleUrls: ['./pacient.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+        IonicModule,
+        NgFor,
+        AsyncPipe,
+    ],
 })
 export class PacientComponent implements OnInit {
     @Output() goToWorkItem: EventEmitter<{

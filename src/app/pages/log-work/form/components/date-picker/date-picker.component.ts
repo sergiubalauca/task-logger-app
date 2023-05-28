@@ -14,6 +14,7 @@ import {
     DatePickerPresentationTypeEnum,
     DatePickerRoleTypeEnum,
 } from '../../models';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
     selector: 'app-date-picker',
@@ -26,6 +27,8 @@ import {
             multi: true,
         },
     ],
+    standalone: true,
+    imports: [IonicModule],
 })
 export class DatePickerComponent implements OnInit, ControlValueAccessor {
     @Input() public form: FormGroup;

@@ -9,9 +9,8 @@ describe('LogWorkComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LogWorkComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), LogWorkComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(LogWorkComponent);
     component = fixture.componentInstance;

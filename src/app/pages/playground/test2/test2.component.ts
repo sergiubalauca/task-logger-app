@@ -6,12 +6,20 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RandomUser } from 'src/app/shared/models/random-user';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-test2',
-  templateUrl: './test2.component.html',
-  styleUrls: ['./test2.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-test2',
+    templateUrl: './test2.component.html',
+    styleUrls: ['./test2.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgFor,
+        AsyncPipe,
+    ],
 })
 export class Test2Component implements OnInit {
   @Input() data: Observable<any>;

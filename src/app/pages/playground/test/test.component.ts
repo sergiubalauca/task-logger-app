@@ -6,11 +6,14 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.scss'],
+    selector: 'app-test',
+    templateUrl: './test.component.html',
+    styleUrls: ['./test.component.scss'],
+    standalone: true,
+    imports: [IonicModule],
 })
 export class TestComponent implements OnInit {
   @ViewChild('itemsContainer', { read: ViewContainerRef })

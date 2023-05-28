@@ -9,9 +9,8 @@ describe('WorkItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ WorkItemComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), WorkItemComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(WorkItemComponent);
     component = fixture.componentInstance;

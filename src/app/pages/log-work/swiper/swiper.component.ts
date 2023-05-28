@@ -11,13 +11,16 @@ import {
     ViewChild,
 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
 import { SearcheableSelectModel } from '@shared';
 import { Observable, of } from 'rxjs';
 import { SwiperOptions } from 'swiper';
 import { register } from 'swiper/element/bundle';
 import { FormSwipeStateService } from '../form/services';
 import { MultiStepFormService } from '../form/services/multi-step-form.service';
+import { WorkItemComponent } from '../form/containers/work-item/work-item.component';
+import { PacientComponent } from '../form/containers/pacient/pacient.component';
+import { DoctorComponent } from '../form/containers/doctor/doctor.component';
 
 const initSwiper = () => {
     console.log('initSwiper');
@@ -28,7 +31,13 @@ const initSwiper = () => {
     templateUrl: './swiper.component.html',
     styleUrls: ['./swiper.component.scss'],
     providers: [MultiStepFormService],
-    // changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        IonicModule,
+        DoctorComponent,
+        PacientComponent,
+        WorkItemComponent,
+    ],
 })
 export class SwiperComponent implements OnInit, OnDestroy {
     @Input() public chosenDate: string;

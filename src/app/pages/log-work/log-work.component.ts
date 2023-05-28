@@ -3,11 +3,15 @@ import { ModalService } from '@shared';
 import { RxCollection, RxDatabase } from 'rxdb';
 import { RxDatabaseProvider } from 'src/app/database/rx-database.provider';
 import { SwiperComponent } from './swiper/swiper.component';
+import { IonicModule } from '@ionic/angular';
+import { HeaderComponent } from '../../shared/components/header/header.component';
 
 @Component({
     selector: 'app-log-work',
     templateUrl: './log-work.component.html',
     styleUrls: ['./log-work.component.scss'],
+    standalone: true,
+    imports: [HeaderComponent, IonicModule],
 })
 export class LogWorkComponent implements OnInit {
     constructor(

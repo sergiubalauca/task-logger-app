@@ -1,4 +1,4 @@
-import { IonDatetime, ModalController } from '@ionic/angular';
+import { IonDatetime, ModalController, IonicModule } from '@ionic/angular';
 import { Component, Input, ViewChild } from '@angular/core';
 import {
     DatePickerPresentationTypeEnum,
@@ -9,6 +9,8 @@ import {
     selector: 'app-date-picker-modal',
     templateUrl: './date-picker-modal.component.html',
     styleUrls: ['./date-picker-modal.component.scss'],
+    standalone: true,
+    imports: [IonicModule],
 })
 export class DatePickerModalComponent {
     @Input() public date: string;

@@ -1,12 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, AbstractControl } from '@angular/forms';
+import { FormGroup, AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest, Observable, of, switchMap } from 'rxjs';
 import { FormSwipeStateService, MultiStepFormService } from '../../services';
+import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
+import { IonicModule } from '@ionic/angular';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'app-work-item',
     templateUrl: './work-item.component.html',
     styleUrls: ['./work-item.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+        IonicModule,
+        NgFor,
+        SearcheableSelectInputComponent,
+        AsyncPipe,
+    ],
 })
 export class WorkItemComponent implements OnInit {
     public workItemGroupControls: Observable<{

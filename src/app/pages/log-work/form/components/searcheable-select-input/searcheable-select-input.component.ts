@@ -8,13 +8,9 @@ import {
     Output,
     EventEmitter,
 } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import {
-    ControlValueAccessor,
-    NG_VALUE_ACCESSOR,
-    FormGroup,
-} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroup, FormsModule } from '@angular/forms';
 import { SearcheableSelectComponent } from '../searcheable-select/searcheable-select.component';
 // import { SearcheableSelectModel } from '../searcheable-select/searcheable-select.model';
 import { DOCUMENT } from '@angular/common';
@@ -31,6 +27,8 @@ import { PlatformName, PlatformProvider, SearcheableSelectModel } from '@shared'
             multi: true,
         },
     ],
+    standalone: true,
+    imports: [IonicModule, FormsModule],
 })
 export class SearcheableSelectInputComponent implements ControlValueAccessor {
     @Input() public form: FormGroup;

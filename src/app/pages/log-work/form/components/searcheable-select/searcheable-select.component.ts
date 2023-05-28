@@ -1,11 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SearcheableSelectModel } from './searcheable-select.model';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
+import { NgIf, NgFor, NgClass } from '@angular/common';
 
 @Component({
-	selector: 'app-search-select',
-	templateUrl: './searcheable-select.component.html',
-	styleUrls: ['./searcheable-select.component.scss']
+    selector: 'app-search-select',
+    templateUrl: './searcheable-select.component.html',
+    styleUrls: ['./searcheable-select.component.scss'],
+    standalone: true,
+    imports: [IonicModule, NgIf, NgFor, NgClass]
 })
 export class SearcheableSelectComponent implements OnInit {
 	@Input() public selectOptions: SearcheableSelectModel[];

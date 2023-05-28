@@ -1,12 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import {
-    DateTimeService,
-    ModalService,
-    PlatformProvider,
-    SharedModule,
-} from '@shared';
+import { DateTimeService, ModalService, PlatformProvider } from '@shared';
 import { LogWorkComponent } from './log-work.component';
 import { LogWorkRoutingModule } from './log-work-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,25 +14,22 @@ import { DoctorComponent, PacientComponent } from './form/containers';
 import { FormSwipeStateService } from './form/services';
 import { WorkItemComponent } from './form/containers/work-item/work-item.component';
 @NgModule({
-    declarations: [
-        LogWorkComponent,
-        SearcheableSelectInputComponent,
-        SearcheableSelectComponent,
-        DatePickerComponent,
-        DatePickerModalComponent,
-        SwiperComponent,
-        DoctorComponent,
-        PacientComponent,
-        WorkItemComponent
-    ],
     imports: [
-        CommonModule,
-        IonicModule,
-        LogWorkRoutingModule,
-        SharedModule,
-        ReactiveFormsModule,
-        FormsModule,
-    ],
+    CommonModule,
+    IonicModule,
+    LogWorkRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    LogWorkComponent,
+    SearcheableSelectInputComponent,
+    SearcheableSelectComponent,
+    DatePickerComponent,
+    DatePickerModalComponent,
+    SwiperComponent,
+    DoctorComponent,
+    PacientComponent,
+    WorkItemComponent,
+],
     providers: [PlatformProvider, ModalService, DateTimeService, FormSwipeStateService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

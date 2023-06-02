@@ -12,6 +12,7 @@
                         <app-search-select-input
                             formControlName="doctor"
                             [form]="dgc.doctorFormGroup"
+                            [strategy]="strategy"
                             (itemSelected)="onDoctorSelected($event, i)"
                         ></app-search-select-input>
                     </ion-item>

@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    CUSTOM_ELEMENTS_SCHEMA,
     DoCheck,
     ElementRef,
     Input,
@@ -38,6 +39,7 @@ const initSwiper = () => {
         PacientComponent,
         WorkItemComponent,
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SwiperComponent implements OnInit, OnDestroy {
     @Input() public chosenDate: string;

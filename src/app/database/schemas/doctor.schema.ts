@@ -16,21 +16,16 @@ export const DOCTOR_SCHEMA_LITERAL = {
             maxLength: 100,
             primary: true,
         },
-        doctor: {
-            type: 'object',
-            properties: {
-                id: {
-                    type: 'string',
-                    default: '',
-                    maxLength: 100,
-                },
-                name: {
-                    type: 'string',
-                    default: '',
-                    maxLength: 100,
-                },
-            },
+        name: {
+            type: 'string',
+            default: '',
+            maxLength: 100,
         },
+        phone: {
+            type: 'string',
+            default: '',
+            maxLength: 100,
+        }
     },
 };
 

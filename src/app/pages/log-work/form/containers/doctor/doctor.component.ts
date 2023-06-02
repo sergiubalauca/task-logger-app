@@ -7,7 +7,7 @@ import {
     Output,
 } from '@angular/core';
 import { AbstractControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SearcheableSelectModel } from '@shared';
+import { DOCTOR_COLLECTION_NAME, SearcheableSelectModel } from '@shared';
 import { map, Observable, of, switchMap } from 'rxjs';
 import { FormSwipeStateService, MultiStepFormService } from '../../services';
 import { DatePickerComponent } from '../../components/date-picker/date-picker.component';
@@ -53,6 +53,8 @@ export class DoctorComponent implements OnInit {
             this.multiStepFormService.getDoctorFormGroupControls(),
         timeGroup: this.multiStepFormService.getTimeFormGroup(),
     });
+
+    public readonly strategy = DOCTOR_COLLECTION_NAME;
 
     constructor(
         private formSwipeState: FormSwipeStateService,

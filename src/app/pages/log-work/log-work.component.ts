@@ -5,6 +5,7 @@ import { RxDatabaseProvider } from 'src/app/database/rx-database.provider';
 import { SwiperComponent } from './swiper/swiper.component';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../shared/components/header/header.component';
+import { LogWorkRepository } from 'src/app/database/repositories/logwork.repository';
 
 @Component({
     selector: 'app-log-work',
@@ -12,11 +13,13 @@ import { HeaderComponent } from '../../shared/components/header/header.component
     styleUrls: ['./log-work.component.scss'],
     standalone: true,
     imports: [HeaderComponent, IonicModule],
+    providers: [LogWorkRepository],
 })
 export class LogWorkComponent implements OnInit {
     constructor(
         private modalService: ModalService,
-        private databaseProvider: RxDatabaseProvider
+        private databaseProvider: RxDatabaseProvider,
+        private logWorkRepository: LogWorkRepository
     ) {}
 
     ngOnInit() {}
@@ -36,17 +39,11 @@ export class LogWorkComponent implements OnInit {
 
         console.log('GSB modal data: ', modalData);
 
-        if (modalData.data && modalData.data.dismissed) {
-            // eslint-disable-next-line @typescript-eslint/dot-notation
-            const x = this.databaseProvider?.rxDatabaseInstance[
-                // eslint-disable-next-line @typescript-eslint/dot-notation
-                'logwork'
-            ] as RxCollection;
-
-            // x.insert(modalData.data.formValue);
-
-            // eslint-disable-next-line @typescript-eslint/dot-notation
-            await x.insert(modalData.data.formValue);
+        if (modalData.data
+            // && modalData.data.dismissed
+        ) {
+            this.logWorkRepository.editDailyWork(modalData.data.formValue);
+            // await x.insert(modalData.data.formValue);
         }
     }
 }

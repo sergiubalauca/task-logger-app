@@ -1,0 +1,43 @@
+<app-header [title]="'Setup Work Item'" [backBtnEnabled]="false"></app-header>
+
+<ion-content>
+    <form [formGroup]="workItemForm">
+        <ion-item>
+            <ion-input
+                label="Name"
+                labelPlacement="floating"
+                formControlName="name"
+            >
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input
+                label="Price"
+                labelPlacement="floating"
+                formControlName="price"
+            >
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input
+                label="Description"
+                labelPlacement="floating"
+                formControlName="description"
+            >
+            </ion-input>
+        </ion-item>
+    </form>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <ion-fab horizontal="end" vertical="bottom" class="ion-margin">
+        <ion-fab-button
+            type="submit"
+            appThrottleButtonDirective
+            (click)="onSubmit()"
+            throttleTime="2000"
+        >
+            <ion-icon class="icon-Save"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-footer>

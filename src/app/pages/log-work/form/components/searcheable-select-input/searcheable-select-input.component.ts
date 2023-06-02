@@ -4,17 +4,29 @@ import {
     forwardRef,
     HostListener,
     Inject,
-    ChangeDetectorRef,
     Output,
     EventEmitter,
 } from '@angular/core';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroup, FormsModule } from '@angular/forms';
+import {
+    ControlValueAccessor,
+    NG_VALUE_ACCESSOR,
+    FormGroup,
+    FormsModule,
+} from '@angular/forms';
 import { SearcheableSelectComponent } from '../searcheable-select/searcheable-select.component';
-// import { SearcheableSelectModel } from '../searcheable-select/searcheable-select.model';
 import { DOCUMENT } from '@angular/common';
-import { PlatformName, PlatformProvider, SearcheableSelectModel } from '@shared';
+import {
+    CollectionNames,
+    Doctor,
+    DOCTOR_COLLECTION_NAME,
+    PlatformName,
+    PlatformProvider,
+    SearcheableSelectModel,
+    WORK_ITEM_COLLECTION_NAME,
+} from '@shared';
+import { DoctorRepository, WorkItemRepository } from '@database';
 
 @Component({
     selector: 'app-search-select-input',
@@ -26,20 +38,36 @@ import { PlatformName, PlatformProvider, SearcheableSelectModel } from '@shared'
             useExisting: forwardRef(() => SearcheableSelectInputComponent),
             multi: true,
         },
+        DoctorRepository,
+        WorkItemRepository,
     ],
     standalone: true,
     imports: [IonicModule, FormsModule],
 })
 export class SearcheableSelectInputComponent implements ControlValueAccessor {
     @Input() public form: FormGroup;
-    @Output() public itemSelected: EventEmitter<SearcheableSelectModel> = new EventEmitter();
+    @Input() public strategy: CollectionNames;
+    @Output() public itemSelected: EventEmitter<SearcheableSelectModel> =
+        new EventEmitter();
+
+    public inputLabel = {
+        [DOCTOR_COLLECTION_NAME]: 'Doctor',
+        [WORK_ITEM_COLLECTION_NAME]: 'Work Item',
+    };
+
     public selectedValue: string | null;
+    private dropdownDataStrategies = {
+        [DOCTOR_COLLECTION_NAME]: this.doctorRepository,
+        [WORK_ITEM_COLLECTION_NAME]: this.workItemRepository,
+    };
+    private dataSourceSubscription: Subscription;
 
     public constructor(
         private modalCtrl: ModalController,
         private platformProvider: PlatformProvider,
         @Inject(DOCUMENT) private document: Document,
-        private cdr: ChangeDetectorRef
+        private doctorRepository: DoctorRepository,
+        private workItemRepository: WorkItemRepository
     ) {}
 
     @HostListener('window:resize', ['$event'])
@@ -59,46 +87,48 @@ export class SearcheableSelectInputComponent implements ControlValueAccessor {
     public setDisabledState?(isDisabled: boolean): void {}
 
     public async onOpenSelect(): Promise<void> {
-        const selectOptions: SearcheableSelectModel[] = [
-            {
-                description: 'Un medic pretentios',
-                id: '1',
-                displayBoth: true,
-                isSelected: false,
-                value: 'Scarlatescu',
-            },
-            {
-                description: 'Medic nou',
-                id: '2',
-                displayBoth: true,
-                isSelected: false,
-                value: 'Bordea',
-            },
-        ];
-        const maxBreakpoint = this.getMaxBreakpoint();
-
-        const modal = await this.modalCtrl.create({
-            component: SearcheableSelectComponent,
-            cssClass: 'custom-searcheable-select',
-            backdropDismiss: true,
-            // breakpoints: [0, 0.5, maxBreakpoint],
-            initialBreakpoint: 0.8, //maxBreakpoint,
-            componentProps: {
-                selectOptions,
-                selectedItemId: selectOptions.find(
-                    (item) => item.value === this.selectedValue
-                )?.id,
-                controlLabel: 'Medic',
-            },
-            showBackdrop: false,
-        });
-        await modal.present();
-        const { data } = await modal.onWillDismiss();
-        if (data) {
-            this.selectedValue = data.value;
-            this.propagateChange(data);
-            this.itemSelected.emit(data);
+        if (this.dataSourceSubscription) {
+            this.dataSourceSubscription.unsubscribe();
         }
+        const strategy = this.dropdownDataStrategies[this.strategy];
+        this.dataSourceSubscription = strategy
+            .getAll$()
+            .subscribe(async (items: any[]) => {
+                const selectOptions = items.map(
+                    (item: { id: string; name: string; description: string }) =>
+                        new SearcheableSelectModel({
+                            id: item.id,
+                            value: item.name,
+                            description: item.description ?? '',
+                            displayBoth: true,
+                        })
+                );
+
+                const maxBreakpoint = this.getMaxBreakpoint();
+
+                const modal = await this.modalCtrl.create({
+                    component: SearcheableSelectComponent,
+                    cssClass: 'custom-searcheable-select',
+                    backdropDismiss: true,
+                    // breakpoints: [0, 0.5, maxBreakpoint],
+                    initialBreakpoint: 0.8, //maxBreakpoint,
+                    componentProps: {
+                        selectOptions,
+                        selectedItemId: selectOptions.find(
+                            (item) => item.value === this.selectedValue
+                        )?.id,
+                        controlLabel: this.strategy,
+                    },
+                    showBackdrop: false,
+                });
+                await modal.present();
+                const { data } = await modal.onWillDismiss();
+                if (data) {
+                    this.selectedValue = data.value;
+                    this.propagateChange(data);
+                    this.itemSelected.emit(data);
+                }
+            });
     }
 
     private propagateChange = (_: any) => {};

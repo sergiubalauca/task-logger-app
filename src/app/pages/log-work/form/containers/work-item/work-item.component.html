@@ -7,19 +7,10 @@
                     let j = index
                 "
             >
-                <!-- <ion-item [formGroupName]="j">
-                    <ion-input
-                        formControlName="workItem"
-                        type="text"
-                        label="WorkItem"
-                        labelPlacement="floating"
-                    >
-                    </ion-input>
-                </ion-item> -->
-
                 <ion-item [formGroupName]="j">
                     <app-search-select-input
                         formControlName="workItem"
+                        [strategy]="strategy"
                         [form]="wig.workItemGroup"
                     ></app-search-select-input>
                 </ion-item>
@@ -33,7 +24,7 @@
                     >
                     </ion-input>
                 </ion-item>
-                <!-- {{pgc.doctorIdx}} -->
+
                 <ion-button
                     color="danger"
                     (click)="

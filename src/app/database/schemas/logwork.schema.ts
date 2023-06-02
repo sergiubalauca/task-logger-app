@@ -8,11 +8,12 @@ export const LOGWORK_SCHEMA_LITERAL = {
     description: 'describes a simple log work',
     version: 0,
     keyCompression: false,
-    primaryKey: {
-        key: 'id',
-        fields: ['patient', 'workItem'],
-        separator: '|',
-    },
+    // primaryKey: {
+    //     key: 'id',
+    //     fields: ['patient', 'workItem'],
+    //     separator: '|',
+    // },
+    primaryKey: 'id',
     type: 'object',
     properties: {
         // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -58,6 +59,11 @@ export const LOGWORK_SCHEMA_LITERAL = {
                                             type: 'object',
                                             properties: {
                                                 id: {
+                                                    type: 'string',
+                                                    default: '',
+                                                    maxLength: 100,
+                                                },
+                                                name: {
                                                     type: 'string',
                                                     default: '',
                                                     maxLength: 100,

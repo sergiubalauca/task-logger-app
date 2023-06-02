@@ -5,6 +5,7 @@ import { FormSwipeStateService, MultiStepFormService } from '../../services';
 import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { WORK_ITEM_COLLECTION_NAME } from '@shared';
 
 @Component({
     selector: 'app-work-item',
@@ -22,6 +23,7 @@ import { NgIf, NgFor, AsyncPipe } from '@angular/common';
     ],
 })
 export class WorkItemComponent implements OnInit {
+    public readonly strategy = WORK_ITEM_COLLECTION_NAME;
     public workItemGroupControls: Observable<{
         workItemGroup: FormGroup;
         workItemControls: AbstractControl[];
@@ -64,37 +66,6 @@ export class WorkItemComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        // this.workItemGroupControls = combineLatest([
-        //     this.formSwiperState.getCurrentDoctor(),
-        //     this.formSwiperState.getCurrentPacient(),
-        // ]).pipe(
-        //     switchMap(
-        //         (
-        //             doctorPacientIndexes: [{ index: number }, { index: number }]
-        //         ) => {
-        //             const result: {
-        //                 workItemGroup: FormGroup;
-        //                 workItemControls: AbstractControl[];
-        //                 doctorIdx: number;
-        //                 pacientIdx: number;
-        //             } = {
-        //                 doctorIdx: doctorPacientIndexes[0].index,
-        //                 pacientIdx: doctorPacientIndexes[1].index,
-        //                 workItemGroup:
-        //                     this.multiStepFormService.getWorkItemGroupFormGroup(
-        //                         doctorPacientIndexes[0].index,
-        //                         doctorPacientIndexes[1].index
-        //                     ),
-        //                 workItemControls:
-        //                     this.multiStepFormService.getWorkItemControls(
-        //                         doctorPacientIndexes[0].index,
-        //                         doctorPacientIndexes[1].index
-        //                     ),
-        //             };
-        //             return of(result);
-        //         }
-        //     )
-        // );
     }
 
     public removeWorkItemControl(
@@ -176,8 +147,4 @@ export class WorkItemComponent implements OnInit {
             )
         );
     }
-
-    // public onWorkItemSelected() {
-
-    // }
 }

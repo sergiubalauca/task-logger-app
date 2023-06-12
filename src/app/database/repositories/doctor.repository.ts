@@ -17,6 +17,7 @@ export class DoctorRepository {
         return null;
     }
 
+    // gsb solve this any issue, use appropriate type
     public async addDoctor(doctor: any): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
         if (database) {

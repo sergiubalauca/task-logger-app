@@ -50,7 +50,7 @@ export class SwiperComponent implements OnInit, OnDestroy {
     constructor(
         private formSwiperState: FormSwipeStateService,
         private modalController: ModalController,
-        private formService: MultiStepFormService,
+        private formService: MultiStepFormService
     ) {
         initSwiper();
     }
@@ -107,10 +107,10 @@ export class SwiperComponent implements OnInit, OnDestroy {
         this.formSwiperState.setCurrentPacient(0);
         this.formSwiperState.setCurrentDoctor(0);
 
-        const x =this.formService.getForm().value;
+        const formValue = this.formService.getForm().value;
 
         return await this.modalController.dismiss({
-            gsb: x,
+            formValue,
         });
     }
 }

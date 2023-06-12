@@ -14,7 +14,7 @@ export interface DailyWork {
                     patient: string;
                     workItemGroup: {
                         workItemAndNumber: {
-                            numberOfWorkedItems: number;
+                            numberOfWorkItems: number;
                             workItem: {
                                 description: string;
                                 displayBoth: boolean;

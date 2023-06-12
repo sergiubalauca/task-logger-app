@@ -86,24 +86,25 @@ export class RxDatabaseProvider {
     public async setDatabaseHooks(
         rxDatabase: RxDatabase<RxLogWorkCollections>
     ): Promise<void> {
-        return await rxDatabase.collections[LOGWORK_COLLECTION_NAME].preInsert(
-            async (docObj: RxLogWorkDocumentType) => {
-                // eslint-disable-next-line @typescript-eslint/dot-notation
-                const patient = docObj['patient'];
-                const has = await rxDatabase.collections[
-                    LOGWORK_COLLECTION_NAME
-                ].findOne({
-                    selector: {
-                        patient,
-                    },
-                }).exec();
-                if (has != null) {
-                    // alert('another hero already has the patient ' + patient);
-                    throw new Error('patient already there');
-                }
-                return rxDatabase.collections[LOGWORK_COLLECTION_NAME];
-            },
-            false
-        );
+        return null;
+        // return await rxDatabase.collections[LOGWORK_COLLECTION_NAME].preInsert(
+        //     async (docObj: RxLogWorkDocumentType) => {
+        //         // eslint-disable-next-line @typescript-eslint/dot-notation
+        //         const patient = docObj['patient'];
+        //         const has = await rxDatabase.collections[
+        //             LOGWORK_COLLECTION_NAME
+        //         ].findOne({
+        //             selector: {
+        //                 patient,
+        //             },
+        //         }).exec();
+        //         if (has != null) {
+        //             // alert('another hero already has the patient ' + patient);
+        //             throw new Error('patient already there');
+        //         }
+        //         return rxDatabase.collections[LOGWORK_COLLECTION_NAME];
+        //     },
+        //     false
+        // );
     }
 }

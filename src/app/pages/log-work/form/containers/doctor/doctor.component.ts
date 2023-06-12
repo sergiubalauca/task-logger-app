@@ -6,7 +6,12 @@ import {
     OnInit,
     Output,
 } from '@angular/core';
-import { AbstractControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+    AbstractControl,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+} from '@angular/forms';
 import { DOCTOR_COLLECTION_NAME, SearcheableSelectModel } from '@shared';
 import { map, Observable, of, switchMap } from 'rxjs';
 import { FormSwipeStateService, MultiStepFormService } from '../../services';
@@ -14,6 +19,7 @@ import { DatePickerComponent } from '../../components/date-picker/date-picker.co
 import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { LogWorkRepository } from '@database';
 
 @Component({
     selector: 'app-doctor',
@@ -30,6 +36,7 @@ import { NgIf, NgFor, AsyncPipe } from '@angular/common';
         DatePickerComponent,
         AsyncPipe,
     ],
+    providers: [LogWorkRepository],
 })
 export class DoctorComponent implements OnInit {
     // @Input() public multiForm: FormGroup;
@@ -47,7 +54,7 @@ export class DoctorComponent implements OnInit {
         doctorFormGroupControls: AbstractControl[];
         timeGroup: FormGroup;
     }> = of({
-        form: this.multiStepFormService.initMultiStepForm(),
+        form: this.multiStepFormService.initMultiStepForm(null),
         doctorFormGroup: this.multiStepFormService.getDoctorFormGroup(),
         doctorFormGroupControls:
             this.multiStepFormService.getDoctorFormGroupControls(),
@@ -58,18 +65,30 @@ export class DoctorComponent implements OnInit {
 
     constructor(
         private formSwipeState: FormSwipeStateService,
-        private multiStepFormService: MultiStepFormService
+        private multiStepFormService: MultiStepFormService,
+        private logWorkRepository: LogWorkRepository
     ) {}
 
     ngOnInit() {
+        const dailyWorkId = new Date(this.chosenDate).getDate().toString();
+        this.doctorGroupControls = this.logWorkRepository
+            .getDailyWork$(dailyWorkId)
+            .pipe(
+                switchMap((dailyWork) =>
+                    of({
+                        form: this.multiStepFormService.initMultiStepForm(
+                            dailyWork
+                        ),
+                        doctorFormGroup:
+                            this.multiStepFormService.getDoctorFormGroup(),
+                        doctorFormGroupControls:
+                            this.multiStepFormService.getDoctorFormGroupControls(),
+                        timeGroup: this.multiStepFormService.getTimeFormGroup(),
+                    })
+                )
+            );
+
         this.multiStepFormService.addDoctorControl();
-        // this.doctorGroupControls = of({
-        //     form: this.multiStepFormService.initMultiStepForm(),
-        //     doctorFormGroup: this.multiStepFormService.getDoctorFormGroup(),
-        //     doctorFormGroupControls:
-        //         this.multiStepFormService.getDoctorFormGroupControls(),
-        //     timeGroup: this.multiStepFormService.getTimeFormGroup(),
-        // });
     }
 
     public addDoctorControl() {

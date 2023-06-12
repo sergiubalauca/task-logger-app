@@ -8,6 +8,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { Observable, of } from 'rxjs';
+import { RxLogWorkDocumentType } from 'src/app/database/schemas';
 
 @Injectable()
 export class MultiStepFormService {
@@ -15,19 +16,19 @@ export class MultiStepFormService {
 
     constructor(private fb: FormBuilder) {}
 
-    public setDoctorForm(): Observable<{
-        form: FormGroup<any>;
-        doctorFormGroup: FormGroup<any>;
-        doctorFormGroupControls: AbstractControl<any, any>[];
-        timeGroup: FormGroup<any>;
-    }> {
-        return of({
-            form: this.initMultiStepForm(),
-            doctorFormGroup: this.getDoctorFormGroup(),
-            doctorFormGroupControls: this.getDoctorFormGroupControls(),
-            timeGroup: this.getTimeFormGroup(),
-        });
-    }
+    // public setDoctorForm(): Observable<{
+    //     form: FormGroup<any>;
+    //     doctorFormGroup: FormGroup<any>;
+    //     doctorFormGroupControls: AbstractControl<any, any>[];
+    //     timeGroup: FormGroup<any>;
+    // }> {
+    //     return of({
+    //         form: this.initMultiStepForm(),
+    //         doctorFormGroup: this.getDoctorFormGroup(),
+    //         doctorFormGroupControls: this.getDoctorFormGroupControls(),
+    //         timeGroup: this.getTimeFormGroup(),
+    //     });
+    // }
 
     public setPacientForm(doctorIdx: number): Observable<{
         doctorIdx: number;
@@ -41,7 +42,7 @@ export class MultiStepFormService {
         });
     }
 
-    public initMultiStepForm() {
+    public initMultiStepForm(dailyWork: RxLogWorkDocumentType) {
         if (this.multiStepLogWorkForm) {
             return this.multiStepLogWorkForm;
         }
@@ -51,10 +52,10 @@ export class MultiStepFormService {
                 doctorArray: this.fb.array([]),
             }),
             timeGroup: this.fb.group({
-                startTime: this.fb.control(null, {
+                startTime: this.fb.control(dailyWork?.startTime ?? null, {
                     validators: [Validators.required],
                 }),
-                endTime: this.fb.control(null, {
+                endTime: this.fb.control(dailyWork?.endTime ?? null, {
                     validators: [Validators.required],
                 }),
             }),

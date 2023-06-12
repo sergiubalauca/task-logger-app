@@ -11,44 +11,8 @@
             <ion-title size="large">Blank</ion-title>
         </ion-toolbar>
     </ion-header>
-    <!-- <div *ngIf="data2$ | async; let users">
-    <ion-card *ngFor="let user of users; trackBy: trackById">
-      <ion-card-header>
-        <ion-card-subtitle
-          ><ion-avatar> <img src="{{ user.picture.medium }}" /> </ion-avatar>{{
-          user.name.first }}</ion-card-subtitle
-        >
-        <ion-card-title>{{ user.name.last }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>{{ user.email }}</p>
-      </ion-card-content>
-    </ion-card>
-  </div> -->
 
     <!-- <app-test *ngIf="data$ | async; let d" [data]="d"></app-test> -->
-    <!-- <app-test2 [data]="data2$"></app-test2> -->
-    <input
-        #imageInput
-        type="file"
-        accept="image/*"
-        (change)="selectFile($event)"
-    />
-    <div>
-        <img
-            id="image"
-            src="https://upcoimages.s3-eu-west-1.amazonaws.com/images/product-image/avoca.png"
-            #cropperContainer
-        />
-    </div>
-
-    <div>
-        <img
-            crossorigin
-            #image
-            src="https://upcoimages.s3-eu-west-1.amazonaws.com/images/product-image/avoca.png"
-        />
-    </div>
-
-    <img [src]="imageDestination" />
+    <app-test2 [data]="data2$"></app-test2>
+ 
 </ion-content>

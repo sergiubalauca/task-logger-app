@@ -1,31 +1,22 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    OnInit,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { lazyArray } from 'src/app/shared/lazy-rendering.operator';
 import { RandomUser } from 'src/app/shared/models/random-user';
-import Cropper from 'cropperjs';
+
 import { IonicModule } from '@ionic/angular';
+import { TestComponent } from './test/test.component';
+import { CommonModule } from '@angular/common';
+import { Test2Component } from './test2/test2.component';
 @Component({
     selector: 'app-home',
     templateUrl: 'playground.page.html',
     styleUrls: ['playground.page.scss'],
     standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule, TestComponent, CommonModule, Test2Component],
 })
 export class HomePage implements OnInit, AfterViewInit {
-    @ViewChild('cropperContainer') cropperContainer: ElementRef;
-    // @ViewChild('image') public imageElement: ElementRef;
-    public cropper: Cropper;
-    public imgSrc: string | ArrayBuffer;
     public data$: Observable<any>;
     public data2$: Observable<any>;
     public results = 200;
@@ -44,32 +35,8 @@ export class HomePage implements OnInit, AfterViewInit {
 
     constructor(private httpService: HttpClient) {}
 
-    ngAfterViewInit() {
-        const image = document.getElementById('image') as HTMLImageElement;
-        this.cropper = new Cropper(image, {});
+    ngAfterViewInit() {}
 
-        console.log('GSB: ', this.cropper.getCanvasData().height);
-    }
-
-    getCanvasData() {
-        const baseOptions: Cropper.GetCroppedCanvasOptions = {
-            width: 128,
-            height: 128,
-            imageSmoothingEnabled: true,
-        };
-
-        // hack because of TS error when setting imageSmoothingQuality value
-        const allOptions: any = {
-            ...baseOptions,
-            imageSmoothingQuality: 'high',
-        };
-        const canvasData = this.cropper.getCroppedCanvas(allOptions);
-
-        const dataURL = canvasData.toDataURL('image/jpeg');
-
-        // this.previewSrc = dataURL;
-        // this.croppedImgSrc.emit(dataURL);
-    }
     public ngOnInit(): void {
         this.data$ = this.httpService
             .get(this.url)
@@ -91,19 +58,5 @@ export class HomePage implements OnInit, AfterViewInit {
         }
     ) {
         return item.id.value;
-    }
-
-    selectFile(event: any) {
-        //Angular 11, for stricter type
-        if (!event.target.files[0] || event.target.files[0].length == 0) {
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.readAsDataURL(event.target.files[0]);
-
-        reader.onload = (_event) => {
-            this.imgSrc = reader.result;
-        };
     }
 }

@@ -38,12 +38,15 @@ export class LogWorkComponent implements OnInit {
         const modalData = await this.modalService.onDidDismiss();
 
         console.log('GSB modal data: ', modalData);
-
-        if (modalData.data
+        const docId = new Date(event.detail.value).getDate().toString();
+        if (
+            modalData.data
             // && modalData.data.dismissed
         ) {
-            this.logWorkRepository.editDailyWork(modalData.data.formValue);
-            // await x.insert(modalData.data.formValue);
+            this.logWorkRepository.editDailyWork(
+                modalData.data.formValue,
+                docId
+            );
         }
     }
 }

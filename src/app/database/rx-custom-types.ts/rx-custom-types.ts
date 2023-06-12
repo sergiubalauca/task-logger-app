@@ -8,24 +8,18 @@ type RxLogWorkDocMethods = {
     hpPercent(): number;
 };
 
-export type RxLogWorkDocument = RxDocument<
-    RxLogWorkDocumentType,
-    RxLogWorkDocMethods
->;
 
-export type RxLogWorkCollection = RxCollection<
-    RxLogWorkDocumentType,
-    RxLogWorkDocMethods
->;
 
-export type RxDoctorDocument = RxDocument<RxDoctorDocumentType>;
+export type RxLogWorkCollection = RxCollection<RxLogWorkDocumentType,RxLogWorkDocMethods>;
 export type RxDoctorCollection = RxCollection<RxDoctorDocumentType>;
-
-export type RxWorkItemDocument = RxDocument<RxWorkItemDocumentType>;
 export type RxWorkItemCollection = RxCollection<RxWorkItemDocumentType>;
 
+// export type RxDoctorDocument = RxDocument<RxDoctorDocumentType>;
+// export type RxWorkItemDocument = RxDocument<RxWorkItemDocumentType>;
+// export type RxLogWorkDocument = RxDocument<RxLogWorkDocumentType,RxLogWorkDocMethods>;
+
 export type RxLogWorkCollections = {
-    logWork: RxLogWorkCollection;
+    logwork: RxLogWorkCollection;
     doctor: RxDoctorCollection;
     workitem: RxWorkItemCollection;
 };

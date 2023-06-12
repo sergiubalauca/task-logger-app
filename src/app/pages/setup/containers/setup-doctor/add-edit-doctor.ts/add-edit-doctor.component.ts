@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { Doctor, HeaderComponent, ModalService } from '@shared';
 import { CommonModule } from '@angular/common';
 import { IonicModule, ModalController } from '@ionic/angular';
@@ -30,15 +30,16 @@ export class AddEditDoctorComponent implements OnInit {
     public doctorForm: FormGroup;
     @Input() private doctor: Doctor;
 
+    private readonly modalCtrl: ModalController = inject(ModalController);
     constructor(
-        private readonly modalCtrl: ModalController,
+        // private readonly modalCtrl: ModalController,
         private formBuilder: FormBuilder
     ) {}
 
     public ngOnInit(): void {
         this.doctorForm = this.formBuilder.group({
-            name: new FormControl(this.doctor ? this.doctor.name : '', Validators.required),
-            phone: new FormControl(this.doctor ? this.doctor.phone : '', Validators.required),
+            name: new FormControl<string>(this.doctor ? this.doctor.name : '', Validators.required),
+            phone: new FormControl<string>(this.doctor ? this.doctor.phone : '', Validators.required),
         });
     }
 

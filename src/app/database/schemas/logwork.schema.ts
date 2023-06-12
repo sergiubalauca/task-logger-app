@@ -22,27 +22,12 @@ export const LOGWORK_SCHEMA_LITERAL = {
             maxLength: 100,
             // primary: true,
         },
-        doctor: {
-            type: 'object',
-            properties: {
-                // description: {
-                //     type: 'string',
-                //     default: '',
-                //     maxLength: 100,
-                // },
-                id: {
-                    type: 'string',
-                    default: '',
-                    maxLength: 100,
-                },
-                // value: {
-                //     type: 'string',
-                //     default: '',
-                //     maxLength: 100,
-                // },
-                patient: {
-                    type: 'array',
-                    items: {
+        doctorGroup: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    doctor: {
                         type: 'object',
                         properties: {
                             name: {
@@ -50,30 +35,38 @@ export const LOGWORK_SCHEMA_LITERAL = {
                                 default: '',
                                 maxLength: 100,
                             },
-                            workItemAndNumber: {
+                            pacient: {
                                 type: 'array',
                                 items: {
                                     type: 'object',
                                     properties: {
-                                        workItem: {
-                                            type: 'object',
-                                            properties: {
-                                                id: {
-                                                    type: 'string',
-                                                    default: '',
-                                                    maxLength: 100,
-                                                },
-                                                name: {
-                                                    type: 'string',
-                                                    default: '',
-                                                    maxLength: 100,
-                                                },
-                                            },
-                                        },
-                                        numberOfWorkItems: {
+                                        name: {
                                             type: 'string',
                                             default: '',
                                             maxLength: 100,
+                                        },
+                                        workItemAndNumber: {
+                                            type: 'array',
+                                            items: {
+                                                type: 'object',
+                                                properties: {
+                                                    workItem: {
+                                                        type: 'object',
+                                                        properties: {
+                                                            name: {
+                                                                type: 'string',
+                                                                default: '',
+                                                                maxLength: 100,
+                                                            },
+                                                        },
+                                                    },
+                                                    numberOfWorkItems: {
+                                                        type: 'string',
+                                                        default: '',
+                                                        maxLength: 100,
+                                                    },
+                                                },
+                                            },
                                         },
                                     },
                                 },
@@ -83,16 +76,6 @@ export const LOGWORK_SCHEMA_LITERAL = {
                 },
             },
         },
-        // patient: {
-        //     type: 'string',
-        // },
-        // workItem: {
-        //     type: 'string',
-        // },
-        // numberOfWorkItems: {
-        //     type: 'string',
-        //     default: '',
-        // },
         startTime: {
             type: 'string',
             default: '',
@@ -109,7 +92,7 @@ export const LOGWORK_SCHEMA_LITERAL = {
         // },
     },
     // required: ['name', 'color', 'hp'],
-};
+} as const;
 
 const schemaTyped = toTypedRxJsonSchema(LOGWORK_SCHEMA_LITERAL);
 export type RxLogWorkDocumentType = ExtractDocumentTypeFromTypedRxJsonSchema<

@@ -6,7 +6,7 @@
         ion-item-group {
             :first-of-type {
                 max-height: 50vh;
-                overflow: scroll; // gsb needs revision
+                overflow-y: auto;
             }
             ion-grid {
                 ion-row {

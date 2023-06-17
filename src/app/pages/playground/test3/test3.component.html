@@ -1,0 +1,13 @@
+<ion-card (click)="loadChild()">
+    <ion-card-header>
+        <ion-card-subtitle
+            ><ion-avatar> <img src="{{ user.picture.medium }}" /> </ion-avatar
+            >{{ user.name.first }}</ion-card-subtitle
+        >
+        <ion-card-title>{{ user.name.last }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        <p>{{ user.email }}</p>
+    </ion-card-content>
+</ion-card>
+

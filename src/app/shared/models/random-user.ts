@@ -1,21 +1,37 @@
+export interface RandomUsers {
+    info: {
+        results: number;
+        page: number;
+    };
+    results: {
+        id: {
+            name: string;
+            value: string;
+        };
+        email: string;
+        name: {
+            title: string;
+            first: string;
+            last: string;
+        };
+        picture: {
+            medium: string;
+        };
+    }[];
+}
+
 export interface RandomUser {
-  info: {
-    results: number;
-    page: number;
-  };
-  results: {
     id: {
-      name: string;
-      value: string;
+        name: string;
+        value: string;
     };
     email: string;
     name: {
-      title: string;
-      first: string;
-      last: string;
+        title: string;
+        first: string;
+        last: string;
     };
-    picture: {
-      medium: string;
+    picture?: {
+        medium: string;
     };
-  }[];
 }

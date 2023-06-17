@@ -36,8 +36,9 @@
             appThrottleButtonDirective
             (click)="onSubmit()"
             throttleTime="2000"
+            [disabled]="!workItemForm.valid"
         >
-            <ion-icon class="icon-Save"></ion-icon>
+            <ion-icon name="checkmark-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>
 </ion-footer>

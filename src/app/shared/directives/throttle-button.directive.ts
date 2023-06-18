@@ -2,7 +2,8 @@ import { Directive, HostListener } from '@angular/core';
 import { AbstractThrottleDirective } from './abstract-throttle.directive';
 
 @Directive({
-	selector: '[appThrottleButtonDirective]'
+	selector: '[appThrottleButtonDirective]',
+	standalone: true,
 })
 export class ThrottleButtonDirective extends AbstractThrottleDirective {
 	public constructor() {

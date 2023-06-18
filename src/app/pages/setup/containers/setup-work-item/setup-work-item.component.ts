@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { WorkItemRepository } from '@database';
 import { IonicModule } from '@ionic/angular';
-import { ModalService, WorkItem } from '@shared';
-import { Observable } from 'rxjs';
+import { ItemSlidingCardComponent, ItemSlidingProps, ModalService, WorkItem } from '@shared';
+import { map, Observable } from 'rxjs';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { AddEditWorkItemComponent } from './add-edit-work-item/add-edit-work-item.component';
 
@@ -12,11 +12,16 @@ import { AddEditWorkItemComponent } from './add-edit-work-item/add-edit-work-ite
     templateUrl: './setup-work-item.component.html',
     styleUrls: ['./setup-work-item.component.scss'],
     standalone: true,
-    imports: [HeaderComponent, IonicModule, CommonModule],
+    imports: [
+        HeaderComponent,
+        IonicModule,
+        CommonModule,
+        ItemSlidingCardComponent,
+    ],
     providers: [WorkItemRepository, ModalService],
 })
 export class SetupWorkItemComponent implements OnInit {
-    public workItems$: Observable<WorkItem[]>;
+    public workItems$: Observable<ItemSlidingProps[]>;
 
     constructor(
         private readonly workItemRepository: WorkItemRepository,
@@ -24,7 +29,21 @@ export class SetupWorkItemComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.workItems$ = this.workItemRepository.getAll$();
+        this.workItems$ = this.workItemRepository.getAll$().pipe(
+            map((workItems: WorkItem[]) =>
+                workItems.map((workItem: WorkItem) => {
+                    const itemSlidingProp: ItemSlidingProps = {
+                        id: Number(workItem.id),
+                        title: workItem.name,
+                        rows: [
+                            `Description: ${workItem.description}`,
+                            `Rate: ${workItem.price}`,
+                        ],
+                    };
+                    return itemSlidingProp;
+                })
+            )
+        );
     }
 
     public async addWorkItem(): Promise<void> {
@@ -44,11 +63,12 @@ export class SetupWorkItemComponent implements OnInit {
         }
     }
 
-    public deleteWorkItem(workItem: WorkItem): void {
-        this.workItemRepository.deleteWorkItem(workItem);
+    public async deleteWorkItem(workItemId: number): Promise<void> {
+        await this.workItemRepository.deleteWorkItem(workItemId);
     }
 
-    public async editWorkItem(workItem: WorkItem): Promise<void> {
+    public async editWorkItem(workItemId: number): Promise<void> {
+        const workItem = await this.workItemRepository.getOne$(workItemId);
         await this.modalService.createAndShow(
             AddEditWorkItemComponent,
             '',

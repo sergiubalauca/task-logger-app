@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Doctor } from '@shared';
-import { RxCollection, RxDocument } from 'rxdb';
+import { DeepReadonlyObject, RxCollection, RxDocument } from 'rxdb';
 import { Observable } from 'rxjs';
 import { RxDatabaseProvider } from '../rx-database.provider';
 import { RxDoctorDocumentType } from '../schemas';
@@ -8,6 +8,24 @@ import { RxDoctorDocumentType } from '../schemas';
 @Injectable()
 export class DoctorRepository {
     constructor(private readonly databaseProvider: RxDatabaseProvider) {}
+
+    public async getOne$(id: number): Promise<DeepReadonlyObject<Doctor>> {
+        const database = this.databaseProvider.rxDatabaseInstance;
+        if (database && id) {
+            const docCollection =
+                this.databaseProvider?.rxDatabaseInstance.doctor;
+            const docToUpdate: RxDocument = await docCollection
+                .findOne()
+                .where('id')
+                .eq(id.toString())
+                .exec();
+
+            const res = docToUpdate.toJSON() as DeepReadonlyObject<Doctor>;
+            return res ?? null;
+        }
+
+        return null;
+    }
 
     public getAll$(): Observable<RxDoctorDocumentType[]> {
         const database = this.databaseProvider.rxDatabaseInstance;
@@ -45,18 +63,16 @@ export class DoctorRepository {
                 .exec();
 
             if (docToUpdate) {
-                await docToUpdate.incrementalPatch(
-                    {
-                        ...doctor,
-                    },
-                );
+                await docToUpdate.incrementalPatch({
+                    ...doctor,
+                });
             }
         }
 
         return null;
     }
 
-    public async deleteDoctor(doctor: Doctor) {
+    public async deleteDoctor(doctorId: number) {
         const database = this.databaseProvider.rxDatabaseInstance;
         if (database) {
             const docCollection =
@@ -64,7 +80,7 @@ export class DoctorRepository {
             const doctorToDelete: RxDocument = await docCollection
                 .findOne()
                 .where('id')
-                .eq(doctor.id)
+                .eq(doctorId.toString())
                 .exec();
 
             if (doctorToDelete) {

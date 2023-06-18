@@ -11,18 +11,4 @@
         height: 10vh;
         border-radius: 0 0 30px 30px;
     }
-    ion-content {
-        --background: transparent;
-
-        ion-card {
-            width: 90%;
-        }
-
-        ion-item-options {
-            border-radius: 10px;
-            ion-item-option {
-                border-radius: 10px;
-            }
-        }
-    }
 }

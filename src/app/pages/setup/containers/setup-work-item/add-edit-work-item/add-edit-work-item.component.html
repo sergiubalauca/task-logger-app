@@ -1,6 +1,6 @@
 <app-header [title]="'Setup Work Item'" [backBtnEnabled]="false"></app-header>
 
-<ion-content>
+<ion-content class="app-inner-padding">
     <form [formGroup]="workItemForm">
         <ion-item>
             <ion-input
@@ -35,7 +35,7 @@
             type="submit"
             appThrottleButtonDirective
             (click)="onSubmit()"
-            throttleTime="2000"
+            [throttleTime]="2000"
             [disabled]="!workItemForm.valid"
         >
             <ion-icon name="checkmark-outline"></ion-icon>

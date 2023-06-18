@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Doctor, ModalService } from '@shared';
+import { Doctor, ItemSlidingCardComponent, ItemSlidingProps, ModalService } from '@shared';
 import { CommonModule, NgFor } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { DoctorRepository } from '@database';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AddEditDoctorComponent } from './add-edit-doctor.ts/add-edit-doctor.component';
 
 @Component({
@@ -17,11 +17,12 @@ import { AddEditDoctorComponent } from './add-edit-doctor.ts/add-edit-doctor.com
         IonicModule,
         CommonModule,
         AddEditDoctorComponent,
+        ItemSlidingCardComponent
     ],
     providers: [DoctorRepository, ModalService],
 })
 export class SetupDoctorComponent implements OnInit {
-    public doctors$: Observable<Doctor[]>;
+    public doctors$: Observable<ItemSlidingProps[]>;
 
     constructor(
         private readonly doctorRepository: DoctorRepository,
@@ -29,7 +30,18 @@ export class SetupDoctorComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.doctors$ = this.doctorRepository.getAll$();
+        this.doctors$ = this.doctorRepository.getAll$().pipe(
+            map((doctors: Doctor[]) =>
+                doctors.map((doctor: Doctor) => {
+                    const itemSlidingProp: ItemSlidingProps = {
+                        id: Number(doctor.id),
+                        title: doctor.name,
+                        rows: [`Phone: ${doctor.phone}`],
+                    };
+                    return itemSlidingProp;
+                })
+            )
+        );
     }
 
     public async addDoctor(): Promise<void> {
@@ -49,11 +61,12 @@ export class SetupDoctorComponent implements OnInit {
         }
     }
 
-    public deleteDoctor(doctor: Doctor): void {
-        this.doctorRepository.deleteDoctor(doctor);
+    public async deleteDoctor(doctorId: number): Promise<void> {
+        await this.doctorRepository.deleteDoctor(doctorId);
     }
 
-    public async editDoctor(doctor: Doctor): Promise<void> {
+    public async editDoctor(doctorId: number): Promise<void> {
+        const doctor = await this.doctorRepository.getOne$(doctorId);
         await this.modalService.createAndShow(
             AddEditDoctorComponent,
             '',
@@ -68,7 +81,7 @@ export class SetupDoctorComponent implements OnInit {
         if (modalData.data && modalData.data.dismissed) {
             const doctorToEdit = {
                 ...modalData.data.doctor,
-                id: doctor.id,
+                id: doctorId,
             };
             this.doctorRepository.editDoctor(doctorToEdit);
         }

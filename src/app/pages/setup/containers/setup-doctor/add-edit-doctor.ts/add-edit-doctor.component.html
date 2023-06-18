@@ -1,6 +1,6 @@
 <app-header [title]="'Setup Doctor'" [backBtnEnabled]="false"></app-header>
 
-<ion-content>
+<ion-content class="app-inner-padding">
     <form [formGroup]="doctorForm">
         <ion-item>
             <ion-input
@@ -27,7 +27,7 @@
             type="submit"
             appThrottleButtonDirective
             (click)="onSubmit()"
-            throttleTime="2000"
+            [throttleTime]=2000
             [disabled]="!doctorForm.valid"
         >
             <ion-icon name="checkmark-outline"></ion-icon>

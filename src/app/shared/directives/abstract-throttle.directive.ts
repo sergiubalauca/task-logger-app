@@ -2,7 +2,11 @@ import { Directive, OnDestroy, Input, Output, EventEmitter, OnInit } from '@angu
 import { Subject } from 'rxjs';
 import { takeUntil, throttleTime, tap } from 'rxjs/operators';
 
-@Directive()
+@Directive(
+	{
+		standalone: true,
+	}
+)
 export abstract class AbstractThrottleDirective implements OnDestroy, OnInit {
 	@Input()
 	public throttleTime: number;
@@ -27,6 +31,7 @@ export abstract class AbstractThrottleDirective implements OnDestroy, OnInit {
 				throttleTime(this.throttleTime),
 				tap((value) => {
 					this.emitChange(value);
+					console.log('GSB AbstractThrottleDirective emitEvent$ value: ', value);
 				})
 			)
 			.subscribe();

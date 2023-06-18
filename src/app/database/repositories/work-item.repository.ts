@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { WorkItem } from '@shared';
+import { DeepReadonlyObject } from 'rxdb';
 import { Observable } from 'rxjs';
 import { RxDatabaseProvider } from '../rx-database.provider';
 import { RxWorkItemDocumentType } from '../schemas/work-item.schema';
@@ -6,6 +8,25 @@ import { RxWorkItemDocumentType } from '../schemas/work-item.schema';
 @Injectable()
 export class WorkItemRepository {
     constructor(private readonly databaseProvider: RxDatabaseProvider) {}
+
+    public async getOne$(id: number): Promise<DeepReadonlyObject<WorkItem>> {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database && id) {
+            const docCollection =
+                this.databaseProvider?.rxDatabaseInstance.workitem;
+            const workItemToUpdate: WorkItem = await docCollection
+                .findOne()
+                .where('id')
+                .eq(id.toString())
+                .exec();
+
+            const res = workItemToUpdate as DeepReadonlyObject<WorkItem>;
+            return res ?? null;
+        }
+
+        return null;
+    }
 
     public getAll$(): Observable<RxWorkItemDocumentType[]> {
         const database = this.databaseProvider.rxDatabaseInstance;
@@ -33,7 +54,7 @@ export class WorkItemRepository {
         }
     }
 
-    public async deleteWorkItem(workItem: any) {
+    public async deleteWorkItem(workItemId: number) {
         const database = this.databaseProvider.rxDatabaseInstance;
 
         if (database) {
@@ -42,7 +63,7 @@ export class WorkItemRepository {
             const workItemToDelete: any = await docCollection
                 .findOne()
                 .where('id')
-                .eq(workItem.id)
+                .eq(workItemId.toString())
                 .exec();
 
             if (workItemToDelete) {

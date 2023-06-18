@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { Doctor, HeaderComponent, ModalService } from '@shared';
+import { Doctor, HeaderComponent, ModalService, ThrottleButtonDirective } from '@shared';
 import { CommonModule } from '@angular/common';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { DoctorRepository } from '@database';
@@ -23,6 +23,7 @@ import {
         HeaderComponent,
         FormsModule,
         ReactiveFormsModule,
+        ThrottleButtonDirective
     ],
     providers: [DoctorRepository, ModalService, ModalController],
 })

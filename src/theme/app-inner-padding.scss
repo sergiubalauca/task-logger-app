@@ -1,0 +1,9 @@
+:root {
+	.app-inner-padding {
+		padding: var(--ion-app-inner-padding);
+		--padding-top: var(--ion-app-inner-padding);
+		--padding-bottom: var(--ion-app-inner-padding);
+		--padding-start: var(--ion-app-inner-padding);
+		--padding-end: var(--ion-app-inner-padding);
+	}
+}

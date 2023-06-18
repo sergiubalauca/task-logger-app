@@ -1,0 +1,136 @@
+:host {
+    ion-item-sliding {
+        overflow: visible;
+        margin-bottom: 20px;
+        border-radius: 15px;
+        cursor: pointer;
+
+        ion-item {
+            --inner-padding-end: 0px;
+            border-radius: 15px;
+            box-shadow: 8px 15px 20px 4px var(--ion-color-shadow01);
+
+            ion-card {
+                width: 100%;
+                border-radius: 15px;
+                cursor: pointer;
+
+                ion-card-content {
+                    padding: 20px;
+
+                    ion-card-title {
+                        margin-bottom: 20px;
+
+                        ion-grid {
+                            margin: 0;
+
+                            ion-row {
+                                ion-col {
+                                    display: flex;
+                                    justify-content: flex-start;
+                                    align-items: center;
+                                    font-size: 16px;
+                                    font-family: var(
+                                        --ion-font-family-semibold
+                                    );
+                                    color: var(--ion-color-grey);
+
+                                    // &:last-child {
+                                    //     justify-content: flex-end;
+                                    // }
+                                }
+                            }
+                        }
+                    }
+
+                    ion-grid {
+                        font-size: 14px;
+                        color: var(--ion-color-grey);
+                        margin-right: 35px;
+
+                        ion-row {
+                            ion-col {
+                                word-break: break-word;
+                                font-family: var(--ion-font-family-medium);
+                                font-size: 14px;
+                                color: var(--ion-color-dark-07);
+
+                                &:last-child {
+                                    font-family: var(
+                                        --ion-font-family-semibold
+                                    );
+                                    color: var(--ion-color-dark-08);
+                                }
+                            }
+                        }
+                    }
+
+                    ion-icon {
+                        color: var(--ion-color-primary-tint);
+                        font-size: 24px;
+                        padding: 5px;
+                        margin-top: 10px;
+                        margin-bottom: -5px;
+                        margin-left: -5px;
+                    }
+                }
+            }
+        }
+
+        ion-item-options {
+            border-bottom-width: 0;
+            ion-item-option {
+                --background: var(--ion-color-error);
+                border-radius: 15px;
+                margin-left: 10px;
+
+                &.ion-activated.delete {
+                    background: var(--ion-color-error);
+                }
+
+                &.ion-activated.duplicate {
+                    background: var(--ion-color-primary-tint);
+                }
+
+                ion-icon {
+                    --box-shadow: none;
+                    display: flex;
+                    align-items: center;
+                    color: var(--ion-color-light-08);
+                    font-size: 27px;
+                    margin: 0;
+                    padding: 30px;
+                    font-family: var(--ion-font-family-semibold);
+                }
+
+                &.duplicate {
+                    --background: var(--ion-color-primary-tint);
+                    margin-left: 10px;
+                    animation: fadeIn 200ms 1 ease-in;
+
+                    ion-icon {
+                        font-size: 30px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        transform: translateX(100%);
+    }
+    25% {
+        transform: translateX(75%);
+    }
+    50% {
+        transform: translateX(50%);
+    }
+    75% {
+        transform: translateX(25%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}

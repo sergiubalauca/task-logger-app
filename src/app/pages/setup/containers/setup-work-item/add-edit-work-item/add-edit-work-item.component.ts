@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HeaderComponent, ModalService, WorkItem } from '@shared';
+import { HeaderComponent, ModalService, ThrottleButtonDirective, WorkItem } from '@shared';
 import { CommonModule } from '@angular/common';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { WorkItemRepository } from '@database';
@@ -23,6 +23,7 @@ import {
         HeaderComponent,
         FormsModule,
         ReactiveFormsModule,
+        ThrottleButtonDirective
     ],
     providers: [WorkItemRepository, ModalService, ModalController],
 })

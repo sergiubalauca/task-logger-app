@@ -22,6 +22,7 @@ import { MultiStepFormService } from '../form/services/multi-step-form.service';
 import { WorkItemComponent } from '../form/containers/work-item/work-item.component';
 import { PacientComponent } from '../form/containers/pacient/pacient.component';
 import { DoctorComponent } from '../form/containers/doctor/doctor.component';
+import { FormReducer } from '../form/custom-state/reducer/form.reducer';
 
 const initSwiper = () => {
     console.log('initSwiper');
@@ -50,7 +51,8 @@ export class SwiperComponent implements OnInit, OnDestroy {
     constructor(
         private formSwiperState: FormSwipeStateService,
         private modalController: ModalController,
-        private formService: MultiStepFormService
+        private formService: MultiStepFormService,
+        private formStore: FormReducer
     ) {
         initSwiper();
     }
@@ -85,7 +87,8 @@ export class SwiperComponent implements OnInit, OnDestroy {
     }
 
     public onGoToDoctor(index: number) {
-        this.formSwiperState.setCurrentPacient(0);
+        // this.formSwiperState.setCurrentPacient(0);
+        this.formStore.setCurrentPacient(0);
         this.swiperElement.allowSlideNext = true;
         // this.formSwiperState.setCurrentDoctor(index);
         this.swiperElement.swiper.slideNext();
@@ -99,13 +102,17 @@ export class SwiperComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy() {
-        this.formSwiperState.setCurrentPacient(0);
-        this.formSwiperState.setCurrentDoctor(0);
+        // this.formSwiperState.setCurrentPacient(0);
+        // this.formSwiperState.setCurrentDoctor(0);
+        this.formStore.setCurrentPacient(0);
+        this.formStore.setCurrentDoctor(0);
     }
 
     public async close() {
-        this.formSwiperState.setCurrentPacient(0);
-        this.formSwiperState.setCurrentDoctor(0);
+        // this.formSwiperState.setCurrentPacient(0);
+        // this.formSwiperState.setCurrentDoctor(0);
+        this.formStore.setCurrentPacient(0);
+        this.formStore.setCurrentDoctor(0);
 
         const formValue = this.formService.getForm().value;
 

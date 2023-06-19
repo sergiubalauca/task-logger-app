@@ -20,6 +20,8 @@ import { SearcheableSelectInputComponent } from '../../components/searcheable-se
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { LogWorkRepository } from '@database';
+import { FormReducer } from '../../custom-state/reducer/form.reducer';
+import { FormSelector } from '../../custom-state/selector/form.selector';
 
 @Component({
     selector: 'app-doctor',
@@ -66,7 +68,9 @@ export class DoctorComponent implements OnInit {
     constructor(
         private formSwipeState: FormSwipeStateService,
         private multiStepFormService: MultiStepFormService,
-        private logWorkRepository: LogWorkRepository
+        private logWorkRepository: LogWorkRepository,
+        private formStore: FormReducer,
+        private formSelectors: FormSelector
     ) {}
 
     ngOnInit() {
@@ -92,7 +96,8 @@ export class DoctorComponent implements OnInit {
     }
 
     public addDoctorControl() {
-        this.formSwipeState.setCurrentPacient(0);
+        // this.formSwipeState.setCurrentPacient(0);
+        this.formStore.setCurrentPacient(0);
         this.multiStepFormService.addDoctorControl();
 
         // this.doctorGroupControls = of({
@@ -105,8 +110,10 @@ export class DoctorComponent implements OnInit {
     }
 
     public removeDoctorControl(index: number): void {
-        this.formSwipeState.setCurrentDoctor(0);
-        this.formSwipeState.setCurrentPacient(0);
+        // this.formSwipeState.setCurrentDoctor(0);
+        this.formStore.setCurrentDoctor(0);
+        // this.formSwipeState.setCurrentPacient(0);
+        this.formStore.setCurrentPacient(0);
         this.multiStepFormService.removeDoctorControl(index);
         // this.doctorGroupControls = this.doctorGroupControls.pipe(
         //     map((dgc) => ({
@@ -124,13 +131,15 @@ export class DoctorComponent implements OnInit {
         formIndex: number
     ): void {
         if (event.value && event.value !== '') {
-            this.formSwipeState.setCurrentDoctor(formIndex);
+            // this.formSwipeState.setCurrentDoctor(formIndex);
+            this.formStore.setCurrentDoctor(formIndex);
             this.doctorSelected.emit({ value: event, formIndex });
         }
     }
 
     public onGoToDoctor(index: number): void {
-        this.formSwipeState.setCurrentDoctor(index);
+        // this.formSwipeState.setCurrentDoctor(index);
+        this.formStore.setCurrentDoctor(index);
 
         this.goToDoctor.emit(index);
     }

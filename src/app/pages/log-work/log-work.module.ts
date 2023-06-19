@@ -13,6 +13,8 @@ import { SwiperComponent } from './swiper/swiper.component';
 import { DoctorComponent, PacientComponent } from './form/containers';
 import { FormSwipeStateService } from './form/services';
 import { WorkItemComponent } from './form/containers/work-item/work-item.component';
+import { FormReducer } from './form/custom-state/reducer/form.reducer';
+import { FormSelector } from './form/custom-state/selector/form.selector';
 @NgModule({
     imports: [
     CommonModule,
@@ -30,7 +32,7 @@ import { WorkItemComponent } from './form/containers/work-item/work-item.compone
     PacientComponent,
     WorkItemComponent,
 ],
-    providers: [PlatformProvider, ModalService, DateTimeService, FormSwipeStateService],
+    providers: [PlatformProvider, ModalService, DateTimeService, FormSwipeStateService, FormReducer, FormSelector],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LogWorkModule {}

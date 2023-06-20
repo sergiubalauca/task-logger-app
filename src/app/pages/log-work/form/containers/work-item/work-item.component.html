@@ -7,32 +7,38 @@
                     let j = index
                 "
             >
-                <ion-item [formGroupName]="j">
-                    <app-search-select-input
-                        formControlName="workItem"
-                        [strategy]="strategy"
-                        [form]="wig.workItemGroup"
-                    ></app-search-select-input>
-                </ion-item>
+                <ion-col>
+                    <ion-item [formGroupName]="j">
+                        <app-search-select-input
+                            formControlName="workItem"
+                            [strategy]="strategy"
+                            [form]="wig.workItemGroup"
+                        ></app-search-select-input>
+                    </ion-item>
 
-                <ion-item [formGroupName]="j">
-                    <ion-input
-                        formControlName="numberOfWorkItems"
-                        type="text"
-                        label="No of WorkItems"
-                        labelPlacement="floating"
+                    <ion-item [formGroupName]="j">
+                        <ion-input
+                            formControlName="numberOfWorkItems"
+                            type="text"
+                            label="No of WorkItems"
+                            labelPlacement="floating"
+                        >
+                        </ion-input>
+                    </ion-item>
+
+                    <ion-button
+                        color="danger"
+                        (click)="
+                            removeWorkItemControl(
+                                j,
+                                wig.doctorIdx,
+                                wig.pacientIdx
+                            )
+                        "
                     >
-                    </ion-input>
-                </ion-item>
-
-                <ion-button
-                    color="danger"
-                    (click)="
-                        removeWorkItemControl(j, wig.doctorIdx, wig.pacientIdx)
-                    "
-                >
-                    <ion-icon name="remove"></ion-icon>
-                </ion-button>
+                        <ion-icon name="remove"></ion-icon>
+                    </ion-button>
+                </ion-col>
             </ion-row>
             <ion-button
                 (click)="addWorkItemControl(wig.doctorIdx, wig.pacientIdx)"

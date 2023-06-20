@@ -16,7 +16,7 @@ import {
     FormsModule,
 } from '@angular/forms';
 import { SearcheableSelectComponent } from '../searcheable-select/searcheable-select.component';
-import { DOCUMENT } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import {
     CollectionNames,
     Doctor,
@@ -42,7 +42,7 @@ import { DoctorRepository, WorkItemRepository } from '@database';
         WorkItemRepository,
     ],
     standalone: true,
-    imports: [IonicModule, FormsModule],
+    imports: [IonicModule, FormsModule, CommonModule],
 })
 export class SearcheableSelectInputComponent implements ControlValueAccessor {
     @Input() public form: FormGroup;
@@ -94,7 +94,7 @@ export class SearcheableSelectInputComponent implements ControlValueAccessor {
         this.dataSourceSubscription = strategy
             .getAll$()
             .subscribe(async (items: any[]) => {
-                const selectOptions = items.map(
+                const selectOptions: SearcheableSelectModel[] = items.map(
                     (item: { id: string; name: string; description: string }) =>
                         new SearcheableSelectModel({
                             id: item.id,
@@ -125,8 +125,8 @@ export class SearcheableSelectInputComponent implements ControlValueAccessor {
                 const { data } = await modal.onWillDismiss();
                 if (data) {
                     this.selectedValue = data.value;
-                    this.propagateChange(data);
-                    this.itemSelected.emit(data);
+                    this.propagateChange(data.value);
+                    this.itemSelected.emit(data.value);
                 }
             });
     }

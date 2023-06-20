@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { FormState, Reducer } from '../models';
+import { Observable } from 'rxjs';
+import { FormState, Reducer, StateSubject } from '../models';
 
 @Injectable()
 export class FormReducer implements Reducer {
@@ -9,11 +9,11 @@ export class FormReducer implements Reducer {
         currentPacient: 0,
     };
 
-    formState: BehaviorSubject<FormState> = new BehaviorSubject<FormState>(
+    formState: StateSubject<FormState> = new StateSubject<FormState>(
         this.initialState
     );
 
-    public data$: Observable<FormState> = this.formState.asObservable();
+    public data$: Observable<FormState> = this.formState.value$;
 
     constructor() {}
 
@@ -25,13 +25,13 @@ export class FormReducer implements Reducer {
     };
 
     public setCurrentPacient = (value: number): void => {
-        this.formState.next({
+        this.formState.update({
             ...this.formState.value,
             currentPacient: value,
         });
     };
 
     public reset = (): void => {
-        this.formState.next(this.initialState);
+        this.formState.reset();
     };
 }

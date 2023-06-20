@@ -67,7 +67,7 @@ export class WorkItemComponent implements OnInit {
 
     constructor(
         private multiStepFormService: MultiStepFormService,
-        private formSwiperState: FormSwipeStateService,
+        // private formSwiperState: FormSwipeStateService,
         private formSelectors: FormSelector
     ) {}
 

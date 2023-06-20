@@ -66,7 +66,7 @@ export class DoctorComponent implements OnInit {
     public readonly strategy = DOCTOR_COLLECTION_NAME;
 
     constructor(
-        private formSwipeState: FormSwipeStateService,
+        // private formSwipeState: FormSwipeStateService,
         private multiStepFormService: MultiStepFormService,
         private logWorkRepository: LogWorkRepository,
         private formStore: FormReducer,

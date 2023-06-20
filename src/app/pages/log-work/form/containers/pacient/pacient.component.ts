@@ -57,7 +57,7 @@ export class PacientComponent implements OnInit {
 
     constructor(
         private multiStepFormService: MultiStepFormService,
-        private formSwiperState: FormSwipeStateService,
+        // private formSwiperState: FormSwipeStateService,
         private formStore: FormReducer,
         private formSelectors: FormSelector
     ) {}

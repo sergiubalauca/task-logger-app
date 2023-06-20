@@ -49,7 +49,7 @@ export class SwiperComponent implements OnInit, OnDestroy {
     private swiperElement: any;
 
     constructor(
-        private formSwiperState: FormSwipeStateService,
+        // private formSwiperState: FormSwipeStateService,
         private modalController: ModalController,
         private formService: MultiStepFormService,
         private formStore: FormReducer

@@ -3,7 +3,7 @@ import { Doctor, ItemSlidingCardComponent, ItemSlidingProps, ModalService } from
 import { CommonModule, NgFor } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
-import { DoctorRepository } from '@database';
+import { DoctorRepository } from 'src/app/core/database';
 import { map, Observable } from 'rxjs';
 import { AddEditDoctorComponent } from './add-edit-doctor.ts/add-edit-doctor.component';
 

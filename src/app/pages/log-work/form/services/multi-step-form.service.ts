@@ -8,7 +8,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { RxLogWorkDocumentType } from 'src/app/database/schemas';
+import { RxLogWorkDocumentType } from 'src/app/core/database/schemas';
 
 @Injectable()
 export class MultiStepFormService {

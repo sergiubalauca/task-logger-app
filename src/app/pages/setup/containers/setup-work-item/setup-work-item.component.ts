@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { WorkItemRepository } from '@database';
+import { WorkItemRepository } from 'src/app/core/database';
 import { IonicModule } from '@ionic/angular';
 import { ItemSlidingCardComponent, ItemSlidingProps, ModalService, WorkItem } from '@shared';
 import { map, Observable } from 'rxjs';

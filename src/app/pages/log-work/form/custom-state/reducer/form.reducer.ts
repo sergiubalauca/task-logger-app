@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormState, Reducer, StateSubject } from '../models';
-
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Injectable()
 export class FormReducer implements Reducer {
+    readonly localStorageStateKey = 'formState';
     readonly initialState: FormState = {
         currentDoctor: 0,
         currentPacient: 0,
@@ -15,7 +16,12 @@ export class FormReducer implements Reducer {
 
     public data$: Observable<FormState> = this.formState.value$;
 
-    constructor() {}
+    constructor() {
+        this.hydrate();
+        this.data$.pipe(takeUntilDestroyed()).subscribe((state) => {
+            this.setHydration(state);
+        });
+    }
 
     public setCurrentDoctor = (value: number): void => {
         this.formState.next({
@@ -33,5 +39,25 @@ export class FormReducer implements Reducer {
 
     public reset = (): void => {
         this.formState.reset();
+    };
+
+    public setState = (value: FormState): void => {
+        this.formState.update(value);
+    };
+
+    public hydrate = () => {
+        const storageValue = localStorage.getItem(this.localStorageStateKey);
+        if (storageValue) {
+            try {
+                const state = JSON.parse(storageValue);
+                this.setState(state);
+            } catch {
+                localStorage.removeItem(this.localStorageStateKey);
+            }
+        }
+    };
+
+    public setHydration = <T>(value: T) => {
+        localStorage.setItem(this.localStorageStateKey, JSON.stringify(value));
     };
 }

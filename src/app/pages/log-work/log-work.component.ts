@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from '@shared';
 import { RxCollection, RxDatabase } from 'rxdb';
-import { RxDatabaseProvider } from 'src/app/database/rx-database.provider';
+import { RxDatabaseProvider } from 'src/app/core/database/rx-database.provider';
 import { SwiperComponent } from './swiper/swiper.component';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../shared/components/header/header.component';
-import { LogWorkRepository } from 'src/app/database/repositories/logwork.repository';
+import { LogWorkRepository } from 'src/app/core/database/repositories/logwork.repository';
 
 @Component({
     selector: 'app-log-work',

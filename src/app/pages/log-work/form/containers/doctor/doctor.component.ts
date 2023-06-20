@@ -19,7 +19,7 @@ import { DatePickerComponent } from '../../components/date-picker/date-picker.co
 import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { LogWorkRepository } from '@database';
+import { LogWorkRepository } from 'src/app/core/database';
 import { FormReducer } from '../../custom-state/reducer/form.reducer';
 import { FormSelector } from '../../custom-state/selector/form.selector';
 

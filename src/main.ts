@@ -3,7 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
-import { RxDatabaseModule } from '@database';
+import { RxDatabaseModule } from 'src/app/core/database';
 import { CommonModule } from '@angular/common';
 import {
     withInterceptorsFromDi,

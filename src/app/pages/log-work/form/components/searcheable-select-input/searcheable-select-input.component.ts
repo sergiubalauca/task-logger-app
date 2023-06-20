@@ -26,7 +26,7 @@ import {
     SearcheableSelectModel,
     WORK_ITEM_COLLECTION_NAME,
 } from '@shared';
-import { DoctorRepository, WorkItemRepository } from '@database';
+import { DoctorRepository, WorkItemRepository } from 'src/app/core/database';
 
 @Component({
     selector: 'app-search-select-input',

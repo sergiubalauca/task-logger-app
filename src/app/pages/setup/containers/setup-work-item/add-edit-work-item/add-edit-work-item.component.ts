@@ -1,8 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HeaderComponent, ModalService, ThrottleButtonDirective, WorkItem } from '@shared';
+import {
+    HeaderComponent,
+    ModalService,
+    ThrottleButtonDirective,
+    WorkItem,
+} from '@shared';
 import { CommonModule } from '@angular/common';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { WorkItemRepository } from 'src/app/core/database';
 import {
     FormBuilder,
     FormControl,
@@ -23,9 +27,9 @@ import {
         HeaderComponent,
         FormsModule,
         ReactiveFormsModule,
-        ThrottleButtonDirective
+        ThrottleButtonDirective,
     ],
-    providers: [WorkItemRepository, ModalService, ModalController],
+    providers: [ModalService, ModalController],
 })
 export class AddEditWorkItemComponent implements OnInit {
     public workItemForm: FormGroup;
@@ -38,9 +42,17 @@ export class AddEditWorkItemComponent implements OnInit {
 
     public ngOnInit(): void {
         this.workItemForm = this.formBuilder.group({
-            name: new FormControl(this.workItem ? this.workItem.name : '', Validators.required),
-            price: new FormControl(this.workItem ? this.workItem.price : '', Validators.required),
-            description: new FormControl(this.workItem ? this.workItem.description : ''),
+            name: new FormControl(
+                this.workItem ? this.workItem.name : '',
+                Validators.required
+            ),
+            price: new FormControl(
+                this.workItem ? this.workItem.price : '',
+                Validators.required
+            ),
+            description: new FormControl(
+                this.workItem ? this.workItem.description : ''
+            ),
         });
     }
 

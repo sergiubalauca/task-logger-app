@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { WorkItem } from '@shared';
 import { DeepReadonlyObject } from 'rxdb';
 import { Observable } from 'rxjs';
+import { CRUDParams } from 'src/app/abstraction/database/strategy/rxdb-database.strategy';
 import { RxDatabaseProvider } from '../rx-database.provider';
 import { RxWorkItemDocumentType } from '../schemas/work-item.schema';
 
@@ -9,16 +10,18 @@ import { RxWorkItemDocumentType } from '../schemas/work-item.schema';
 export class WorkItemRepository {
     constructor(private readonly databaseProvider: RxDatabaseProvider) {}
 
-    public async getOne$(id: number): Promise<DeepReadonlyObject<WorkItem>> {
+    public async getOne(
+        params: Pick<CRUDParams, 'id'>
+    ): Promise<DeepReadonlyObject<WorkItem>> {
         const database = this.databaseProvider.rxDatabaseInstance;
 
-        if (database && id) {
+        if (database && params.id) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.workitem;
             const workItemToUpdate: WorkItem = await docCollection
                 .findOne()
                 .where('id')
-                .eq(id.toString())
+                .eq(params.id)
                 .exec();
 
             const res = workItemToUpdate as DeepReadonlyObject<WorkItem>;
@@ -38,7 +41,7 @@ export class WorkItemRepository {
         return null;
     }
 
-    public async addWorkItem(workItem: any): Promise<void> {
+    public async addOne(workItem: any): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
 
         if (database) {
@@ -54,16 +57,16 @@ export class WorkItemRepository {
         }
     }
 
-    public async deleteWorkItem(workItemId: number) {
+    public async deleteOne(params: Pick<CRUDParams, 'id'>) {
         const database = this.databaseProvider.rxDatabaseInstance;
 
-        if (database) {
+        if (database && params.id) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.workitem;
             const workItemToDelete: any = await docCollection
                 .findOne()
                 .where('id')
-                .eq(workItemId.toString())
+                .eq(params.id.toString())
                 .exec();
 
             if (workItemToDelete) {
@@ -72,7 +75,7 @@ export class WorkItemRepository {
         }
     }
 
-    public async editWorkItem(workItem: any): Promise<void> {
+    public async editOne(workItem: any): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
 
         if (database) {

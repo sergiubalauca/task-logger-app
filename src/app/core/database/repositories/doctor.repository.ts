@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Doctor } from '@shared';
-import { DeepReadonlyObject, RxCollection, RxDocument } from 'rxdb';
+import { DeepReadonlyObject, RxDocument } from 'rxdb';
 import { Observable } from 'rxjs';
+import { CRUDParams } from 'src/app/abstraction/database/strategy/rxdb-database.strategy';
 import { RxDatabaseProvider } from '../rx-database.provider';
 import { RxDoctorDocumentType } from '../schemas';
 
@@ -9,15 +10,17 @@ import { RxDoctorDocumentType } from '../schemas';
 export class DoctorRepository {
     constructor(private readonly databaseProvider: RxDatabaseProvider) {}
 
-    public async getOne$(id: number): Promise<DeepReadonlyObject<Doctor>> {
+    public async getOne(
+        params: Pick<CRUDParams, 'id'>
+    ): Promise<DeepReadonlyObject<Doctor>> {
         const database = this.databaseProvider.rxDatabaseInstance;
-        if (database && id) {
+        if (database && params.id) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.doctor;
             const docToUpdate: RxDocument = await docCollection
                 .findOne()
                 .where('id')
-                .eq(id.toString())
+                .eq(params.id)
                 .exec();
 
             const res = docToUpdate.toJSON() as DeepReadonlyObject<Doctor>;
@@ -36,7 +39,7 @@ export class DoctorRepository {
     }
 
     // gsb solve this any issue, use appropriate type
-    public async addDoctor(doctor: any): Promise<void> {
+    public async addOne(doctor: any): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
         if (database) {
             const docCollection =
@@ -51,7 +54,7 @@ export class DoctorRepository {
         }
     }
 
-    public async editDoctor(doctor: Doctor): Promise<void> {
+    public async editOne(doctor: Doctor): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
         if (database) {
             const docCollection =
@@ -72,15 +75,15 @@ export class DoctorRepository {
         return null;
     }
 
-    public async deleteDoctor(doctorId: number) {
+    public async deleteOne(params: Pick<CRUDParams, 'id'>): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
-        if (database) {
+        if (database && params.id) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.doctor;
             const doctorToDelete: RxDocument = await docCollection
                 .findOne()
                 .where('id')
-                .eq(doctorId.toString())
+                .eq(params.id.toString())
                 .exec();
 
             if (doctorToDelete) {

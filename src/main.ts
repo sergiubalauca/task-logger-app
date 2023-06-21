@@ -3,7 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
-import { RxDatabaseModule } from 'src/app/core/database';
+// import { RxDatabaseModule } from 'src/app/core/database';
 import { CommonModule } from '@angular/common';
 import {
     withInterceptorsFromDi,
@@ -14,6 +14,7 @@ import { pageTransitionAnimations } from '@shared';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { IonicRouteStrategy, IonicModule } from '@ionic/angular';
 import { RouteReuseStrategy } from '@angular/router';
+import { CoreModule } from './app/core/core.module';
 
 if (environment.production) {
     enableProdMode();
@@ -28,7 +29,8 @@ bootstrapApplication(AppComponent, {
             }),
             AppRoutingModule,
             CommonModule,
-            RxDatabaseModule
+            // RxDatabaseModule,
+            CoreModule
         ),
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         provideHttpClient(withInterceptorsFromDi()),

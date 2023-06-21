@@ -2,7 +2,6 @@ import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular
 import { Doctor, HeaderComponent, ModalService, ThrottleButtonDirective } from '@shared';
 import { CommonModule } from '@angular/common';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { DoctorRepository } from 'src/app/core/database';
 import {
     FormBuilder,
     FormControl,
@@ -25,7 +24,7 @@ import {
         ReactiveFormsModule,
         ThrottleButtonDirective
     ],
-    providers: [DoctorRepository, ModalService, ModalController],
+    providers: [ModalService, ModalController],
 })
 export class AddEditDoctorComponent implements OnInit {
     public doctorForm: FormGroup;

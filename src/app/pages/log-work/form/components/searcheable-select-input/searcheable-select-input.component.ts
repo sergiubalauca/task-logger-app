@@ -19,14 +19,14 @@ import { SearcheableSelectComponent } from '../searcheable-select/searcheable-se
 import { CommonModule, DOCUMENT } from '@angular/common';
 import {
     CollectionNames,
-    Doctor,
     DOCTOR_COLLECTION_NAME,
     PlatformName,
     PlatformProvider,
     SearcheableSelectModel,
     WORK_ITEM_COLLECTION_NAME,
 } from '@shared';
-import { DoctorRepository, WorkItemRepository } from 'src/app/core/database';
+
+import { DoctorFacade, WorkItemFacade } from '@abstraction';
 
 @Component({
     selector: 'app-search-select-input',
@@ -38,8 +38,6 @@ import { DoctorRepository, WorkItemRepository } from 'src/app/core/database';
             useExisting: forwardRef(() => SearcheableSelectInputComponent),
             multi: true,
         },
-        DoctorRepository,
-        WorkItemRepository,
     ],
     standalone: true,
     imports: [IonicModule, FormsModule, CommonModule],
@@ -57,8 +55,8 @@ export class SearcheableSelectInputComponent implements ControlValueAccessor {
 
     public selectedValue: string | null;
     private dropdownDataStrategies = {
-        [DOCTOR_COLLECTION_NAME]: this.doctorRepository,
-        [WORK_ITEM_COLLECTION_NAME]: this.workItemRepository,
+        [DOCTOR_COLLECTION_NAME]: this.doctorFacade,
+        [WORK_ITEM_COLLECTION_NAME]: this.workItemFacade,
     };
     private dataSourceSubscription: Subscription;
 
@@ -66,8 +64,8 @@ export class SearcheableSelectInputComponent implements ControlValueAccessor {
         private modalCtrl: ModalController,
         private platformProvider: PlatformProvider,
         @Inject(DOCUMENT) private document: Document,
-        private doctorRepository: DoctorRepository,
-        private workItemRepository: WorkItemRepository
+        private doctorFacade: DoctorFacade,
+        private workItemFacade: WorkItemFacade
     ) {}
 
     @HostListener('window:resize', ['$event'])

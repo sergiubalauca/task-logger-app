@@ -15,7 +15,9 @@
         "lib": ["es2018", "dom", "ES2021.WeakRef"],
         "paths": {
             "@shared": ["./src/app/shared/index.ts"],
-            "@database": ["src/app/core/database/index.ts"]
+            "@database": ["src/app/core/database/index.ts"],
+            "@core": ["src/app/core/index.ts"],
+            "@abstraction": ["src/app/abstraction/index.ts"]
         },
         "strictNullChecks": false,
         "useDefineForClassFields": false

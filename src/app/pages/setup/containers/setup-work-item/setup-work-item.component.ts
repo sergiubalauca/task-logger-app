@@ -1,11 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { WorkItemRepository } from 'src/app/core/database';
 import { IonicModule } from '@ionic/angular';
-import { ItemSlidingCardComponent, ItemSlidingProps, ModalService, WorkItem } from '@shared';
+import {
+    ItemSlidingCardComponent,
+    ItemSlidingProps,
+    ModalService,
+    WorkItem,
+} from '@shared';
 import { map, Observable } from 'rxjs';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { AddEditWorkItemComponent } from './add-edit-work-item/add-edit-work-item.component';
+import { WorkItemFacade } from '@abstraction';
 
 @Component({
     selector: 'app-setup-work-item',
@@ -18,18 +23,18 @@ import { AddEditWorkItemComponent } from './add-edit-work-item/add-edit-work-ite
         CommonModule,
         ItemSlidingCardComponent,
     ],
-    providers: [WorkItemRepository, ModalService],
+    providers: [ModalService],
 })
 export class SetupWorkItemComponent implements OnInit {
     public workItems$: Observable<ItemSlidingProps[]>;
 
     constructor(
-        private readonly workItemRepository: WorkItemRepository,
+        private readonly workItemFacade: WorkItemFacade,
         private readonly modalService: ModalService
     ) {}
 
     ngOnInit() {
-        this.workItems$ = this.workItemRepository.getAll$().pipe(
+        this.workItems$ = this.workItemFacade.getAll$().pipe(
             map((workItems: WorkItem[]) =>
                 workItems.map((workItem: WorkItem) => {
                     const itemSlidingProp: ItemSlidingProps = {
@@ -59,16 +64,18 @@ export class SetupWorkItemComponent implements OnInit {
         console.log('GSB modal data: ', modalData);
 
         if (modalData.data && modalData.data.dismissed) {
-            this.workItemRepository.addWorkItem(modalData.data.workItem);
+            this.workItemFacade.addOne(modalData.data.workItem);
         }
     }
 
     public async deleteWorkItem(workItemId: number): Promise<void> {
-        await this.workItemRepository.deleteWorkItem(workItemId);
+        await this.workItemFacade.deleteOne({ id: workItemId.toString() });
     }
 
     public async editWorkItem(workItemId: number): Promise<void> {
-        const workItem = await this.workItemRepository.getOne$(workItemId);
+        const workItem = await this.workItemFacade.getOne({
+            id: workItemId.toString(),
+        });
         await this.modalService.createAndShow(
             AddEditWorkItemComponent,
             '',
@@ -85,7 +92,7 @@ export class SetupWorkItemComponent implements OnInit {
                 ...modalData.data.workItem,
                 id: workItem.id,
             };
-            this.workItemRepository.editWorkItem(workItemToEdit);
+            await this.workItemFacade.editOne(workItemToEdit);
         }
     }
 }

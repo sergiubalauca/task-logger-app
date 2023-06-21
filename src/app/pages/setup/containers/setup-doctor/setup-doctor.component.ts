@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Doctor, ItemSlidingCardComponent, ItemSlidingProps, ModalService } from '@shared';
-import { CommonModule, NgFor } from '@angular/common';
+import {
+    Doctor,
+    ItemSlidingCardComponent,
+    ItemSlidingProps,
+    ModalService,
+} from '@shared';
+import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
-import { DoctorRepository } from 'src/app/core/database';
 import { map, Observable } from 'rxjs';
 import { AddEditDoctorComponent } from './add-edit-doctor.ts/add-edit-doctor.component';
+import { DoctorFacade } from '@abstraction';
 
 @Component({
     selector: 'app-setup-doctor',
@@ -17,20 +22,20 @@ import { AddEditDoctorComponent } from './add-edit-doctor.ts/add-edit-doctor.com
         IonicModule,
         CommonModule,
         AddEditDoctorComponent,
-        ItemSlidingCardComponent
+        ItemSlidingCardComponent,
     ],
-    providers: [DoctorRepository, ModalService],
+    providers: [ModalService],
 })
 export class SetupDoctorComponent implements OnInit {
     public doctors$: Observable<ItemSlidingProps[]>;
 
     constructor(
-        private readonly doctorRepository: DoctorRepository,
+        private readonly doctorFacade: DoctorFacade,
         private readonly modalService: ModalService
     ) {}
 
     ngOnInit() {
-        this.doctors$ = this.doctorRepository.getAll$().pipe(
+        this.doctors$ = this.doctorFacade.getAll$().pipe(
             map((doctors: Doctor[]) =>
                 doctors.map((doctor: Doctor) => {
                     const itemSlidingProp: ItemSlidingProps = {
@@ -57,16 +62,16 @@ export class SetupDoctorComponent implements OnInit {
         console.log('GSB modal data: ', modalData);
 
         if (modalData.data && modalData.data.dismissed) {
-            this.doctorRepository.addDoctor(modalData.data.doctor);
+            this.doctorFacade.addOne(modalData.data.doctor);
         }
     }
 
     public async deleteDoctor(doctorId: number): Promise<void> {
-        await this.doctorRepository.deleteDoctor(doctorId);
+        await this.doctorFacade.deleteOne({ id: doctorId.toString() });
     }
 
     public async editDoctor(doctorId: number): Promise<void> {
-        const doctor = await this.doctorRepository.getOne$(doctorId);
+        const doctor = await this.doctorFacade.getOne({ id: doctorId.toString() });
         await this.modalService.createAndShow(
             AddEditDoctorComponent,
             '',
@@ -83,7 +88,7 @@ export class SetupDoctorComponent implements OnInit {
                 ...modalData.data.doctor,
                 id: doctorId,
             };
-            this.doctorRepository.editDoctor(doctorToEdit);
+            await this.doctorFacade.editOne(doctorToEdit);
         }
     }
 }

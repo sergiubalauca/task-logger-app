@@ -1,11 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
     AbstractControl,
     FormGroup,
@@ -13,15 +6,14 @@ import {
     ReactiveFormsModule,
 } from '@angular/forms';
 import { DOCTOR_COLLECTION_NAME, SearcheableSelectModel } from '@shared';
-import { map, Observable, of, switchMap } from 'rxjs';
-import { FormSwipeStateService, MultiStepFormService } from '../../services';
+import { Observable, of, switchMap } from 'rxjs';
+import { MultiStepFormService } from '../../services';
 import { DatePickerComponent } from '../../components/date-picker/date-picker.component';
 import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { LogWorkRepository } from 'src/app/core/database';
 import { FormReducer } from '../../custom-state/reducer/form.reducer';
-import { FormSelector } from '../../custom-state/selector/form.selector';
+import { LogWorkFacade } from '@abstraction';
 
 @Component({
     selector: 'app-doctor',
@@ -38,10 +30,9 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
         DatePickerComponent,
         AsyncPipe,
     ],
-    providers: [LogWorkRepository],
+    providers: [],
 })
 export class DoctorComponent implements OnInit {
-    // @Input() public multiForm: FormGroup;
     @Input() public chosenDate: string;
 
     @Output() doctorSelected: EventEmitter<{
@@ -66,17 +57,15 @@ export class DoctorComponent implements OnInit {
     public readonly strategy = DOCTOR_COLLECTION_NAME;
 
     constructor(
-        // private formSwipeState: FormSwipeStateService,
         private multiStepFormService: MultiStepFormService,
-        private logWorkRepository: LogWorkRepository,
-        private formStore: FormReducer,
-        private formSelectors: FormSelector
+        private logWorkFacade: LogWorkFacade,
+        private formStore: FormReducer
     ) {}
 
     ngOnInit() {
-        const dailyWorkId = new Date(this.chosenDate).getDate().toString();
-        this.doctorGroupControls = this.logWorkRepository
-            .getDailyWork$(dailyWorkId)
+        const dailyWorkId = new Date(this.chosenDate).toUTCString();
+        this.doctorGroupControls = this.logWorkFacade
+            .getOne$({ id: dailyWorkId })
             .pipe(
                 switchMap((dailyWork) =>
                     of({

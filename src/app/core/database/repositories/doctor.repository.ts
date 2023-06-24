@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Doctor } from '@shared';
+import { CRUDParams, Doctor } from '@shared';
 import { DeepReadonlyObject, RxDocument } from 'rxdb';
 import { Observable } from 'rxjs';
-import { CRUDParams } from 'src/app/abstraction/database/strategy/rxdb-database.strategy';
 import { RxDatabaseProvider } from '../rx-database.provider';
 import { RxDoctorDocumentType } from '../schemas';
 

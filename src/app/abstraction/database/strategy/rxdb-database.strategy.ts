@@ -1,18 +1,17 @@
-import { Doctor } from '@shared';
+import { RxDoctorDocumentType } from '@core';
+import { CRUDParams } from '@shared';
 import { DeepReadonlyObject } from 'rxdb';
 import { Observable } from 'rxjs';
-import { RxDoctorDocumentType } from 'src/app/core/database/schemas';
-
-export interface CRUDParams {
-    id: string;
-}
 
 export interface RxDBStrategy {
-    getOne(params: Pick<CRUDParams, 'id'>): Promise<DeepReadonlyObject<any>>;
-    getAll$(): Observable<RxDoctorDocumentType[]>;
-    addOne(data: any): any;
-    editOne(data: any): any;
-    deleteOne(data: any): any;
+    getOne?(params: Pick<CRUDParams, 'id'>): Promise<DeepReadonlyObject<any>>;
+    getOne$?(
+        params: Pick<CRUDParams, 'id'>
+    ): Observable<DeepReadonlyObject<any>>;
+    getAll$(): Observable<DeepReadonlyObject<any>[]>;
+    addOne?(data: any): any;
+    editOne?(data: any): any;
+    deleteOne?(data: any): any;
 }
 
 export class Context {
@@ -22,14 +21,25 @@ export class Context {
         this.strategy = strategy;
     }
 
-    public async getOne(params: Pick<CRUDParams, 'id'>): Promise<DeepReadonlyObject<any>> {
+    public async getOne(
+        params: Pick<CRUDParams, 'id'>
+    ): Promise<DeepReadonlyObject<any>> {
         if (!params || !params.id) {
             throw new Error('ID is required');
         }
         return await this.strategy.getOne(params);
     }
 
-    public getAll$(): Observable<any[]> {
+    public getOne$(
+        params: Pick<CRUDParams, 'id'>
+    ): Observable<DeepReadonlyObject<any>> {
+        if (!params || !params.id) {
+            throw new Error('ID is required');
+        }
+        return this.strategy.getOne$(params);
+    }
+
+    public getAll$(): Observable<DeepReadonlyObject<any>> {
         return this.strategy.getAll$();
     }
 

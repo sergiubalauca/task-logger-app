@@ -33,3 +33,23 @@ export interface DailyWork {
         endTime: string;
     };
 }
+
+export interface DailyWorkDoc {
+    id?: string;
+    doctorGroup?: {
+        doctor?: {
+            name?: string;
+            pacient?: {
+                name?: string;
+                workItemAndNumber?: {
+                    workItem?: {
+                        name?: string;
+                    };
+                    numberOfWorkItems?: string;
+                }[];
+            }[];
+        };
+    }[];
+    startTime?: string;
+    endTime?: string;
+}

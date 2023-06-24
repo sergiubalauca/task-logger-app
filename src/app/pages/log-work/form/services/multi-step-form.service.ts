@@ -42,7 +42,7 @@ export class MultiStepFormService {
         });
     }
 
-    public initMultiStepForm(dailyWork: RxLogWorkDocumentType) {
+    public initMultiStepForm(dailyWork: any) {
         if (this.multiStepLogWorkForm) {
             return this.multiStepLogWorkForm;
         }

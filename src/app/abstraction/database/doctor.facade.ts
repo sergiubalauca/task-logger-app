@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { DoctorRepository } from '@core';
+import { DoctorRepository, RxDoctorDocumentType } from '@core';
+import { CRUDParams } from '@shared';
 import { map, Observable } from 'rxjs';
-import { RxDoctorDocumentType } from 'src/app/core/database/schemas';
-import { Context, CRUDParams } from './strategy/rxdb-database.strategy';
+import { Context } from './strategy/rxdb-database.strategy';
 
 @Injectable()
 export class DoctorFacade {

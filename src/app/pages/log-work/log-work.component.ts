@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from '@shared';
-import { RxCollection, RxDatabase } from 'rxdb';
-import { RxDatabaseProvider } from 'src/app/core/database/rx-database.provider';
 import { SwiperComponent } from './swiper/swiper.component';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../shared/components/header/header.component';
-import { LogWorkRepository } from 'src/app/core/database/repositories/logwork.repository';
+import { LogWorkFacade } from '@abstraction';
 
 @Component({
     selector: 'app-log-work',
@@ -13,13 +11,12 @@ import { LogWorkRepository } from 'src/app/core/database/repositories/logwork.re
     styleUrls: ['./log-work.component.scss'],
     standalone: true,
     imports: [HeaderComponent, IonicModule],
-    providers: [LogWorkRepository],
+    providers: [],
 })
 export class LogWorkComponent implements OnInit {
     constructor(
         private modalService: ModalService,
-        private databaseProvider: RxDatabaseProvider,
-        private logWorkRepository: LogWorkRepository
+        private logWorkFacade: LogWorkFacade
     ) {}
 
     ngOnInit() {}
@@ -43,10 +40,10 @@ export class LogWorkComponent implements OnInit {
             modalData.data
             // && modalData.data.dismissed
         ) {
-            this.logWorkRepository.editDailyWork(
-                modalData.data.formValue,
-                docId
-            );
+            this.logWorkFacade.editOne({
+                dailyWork: modalData.data.formValue,
+                dailyId: docId,
+            });
         }
     }
 }

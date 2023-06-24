@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { WorkItem } from '@shared';
+import { CRUDParams, WorkItem } from '@shared';
 import { DeepReadonlyObject } from 'rxdb';
 import { Observable } from 'rxjs';
-import { CRUDParams } from 'src/app/abstraction/database/strategy/rxdb-database.strategy';
 import { RxDatabaseProvider } from '../rx-database.provider';
 import { RxWorkItemDocumentType } from '../schemas/work-item.schema';
 

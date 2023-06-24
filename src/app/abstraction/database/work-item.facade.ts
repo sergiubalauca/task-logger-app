@@ -1,19 +1,13 @@
 import { Injectable } from '@angular/core';
-import { WorkItemRepository } from '@core';
-import { WorkItem } from '@shared';
-import { DeepReadonlyObject } from 'rxdb';
+import { RxWorkItemDocumentType, WorkItemRepository } from '@core';
+import { CRUDParams } from '@shared';
 import { map, Observable } from 'rxjs';
-import { RxWorkItemDocumentType } from 'src/app/core/database/schemas/work-item.schema';
-
-import { Context, CRUDParams } from './strategy/rxdb-database.strategy';
+import { Context } from './strategy/rxdb-database.strategy';
 
 @Injectable()
 export class WorkItemFacade {
     private readonly workItemStrategies = {
         rxdb: this.workItemRepository,
-    };
-    private readonly returnTypeBasedOnStrategy = {
-        rxdb: Promise<DeepReadonlyObject<WorkItem>>,
     };
 
     private readonly strategy = 'rxdb';

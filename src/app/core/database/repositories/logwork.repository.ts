@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { LOGWORK_COLLECTION_NAME } from '@shared';
-import { RxDocument } from 'rxdb';
-import { Observable } from 'rxjs';
-import { DailyWork } from 'src/app/shared/models/dailyWork';
+import { CRUDParams, DailyWork, DailyWorkDoc } from '@shared';
+import { DeepReadonlyObject } from 'rxdb';
+import { map, Observable } from 'rxjs';
 import { RxDatabaseProvider } from '../rx-database.provider';
 import { RxLogWorkDocumentType } from '../schemas';
 
@@ -10,19 +9,31 @@ import { RxLogWorkDocumentType } from '../schemas';
 export class LogWorkRepository {
     constructor(private readonly databaseProvider: RxDatabaseProvider) {}
 
-    public getDailyWork$(docId: string): Observable<RxLogWorkDocumentType> {
+    public getOne$(
+        params: Pick<CRUDParams, 'id'>
+    ): Observable<DeepReadonlyObject<DailyWorkDoc>> {
         const database = this.databaseProvider.rxDatabaseInstance;
         if (database) {
             const logWorkCollection =
                 this.databaseProvider?.rxDatabaseInstance.logwork;
-            return logWorkCollection.findOne().where('id').eq(docId).$;
+            const logWork: Observable<DailyWorkDoc> = logWorkCollection
+                .findOne()
+                .where('id')
+                .eq('Wed, 21 Jun 2023 19:54:00 GMT').$;
+
+            return logWork.pipe(
+                map((doc) => doc as DeepReadonlyObject<DailyWorkDoc>)
+            );
         }
+
+        return new Observable<DeepReadonlyObject<DailyWorkDoc>>();
     }
 
-    public async editDailyWork(
-        dailyWork: DailyWork,
-        dailyId: string
-    ): Promise<void> {
+    public async editOne(data: {
+        dailyWork: DailyWork;
+        dailyId: string;
+    }): Promise<void> {
+        const { dailyWork, dailyId } = data;
         const database = this.databaseProvider.rxDatabaseInstance;
 
         if (database) {
@@ -77,5 +88,41 @@ export class LogWorkRepository {
             //     });
             // }
         }
+    }
+
+    public async getOne(params: Pick<CRUDParams, 'id'>) {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database && params.id) {
+            const docCollection =
+                this.databaseProvider?.rxDatabaseInstance.logwork;
+            const workItem: any = await docCollection
+                .findOne()
+                .where('id')
+                .eq(params.id.toString())
+                .exec();
+
+            return workItem;
+        }
+
+        return null;
+    }
+
+    public async addOne(workItem: any): Promise<void> {
+        console.log('Method not implemented');
+    }
+
+    public async deleteOne(params: Pick<CRUDParams, 'id'>) {
+        console.log('Method not implemented');
+    }
+
+    public getAll$() {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database) {
+            return database.logwork.find().$;
+        }
+
+        return null;
     }
 }

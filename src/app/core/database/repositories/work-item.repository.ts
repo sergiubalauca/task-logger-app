@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CRUDParams, WorkItem } from '@shared';
-import { DeepReadonlyObject } from 'rxdb';
+import { DeepReadonlyObject, RxDocument } from 'rxdb';
 import { Observable } from 'rxjs';
 import { RxDatabaseProvider } from '../rx-database.provider';
 import { RxWorkItemDocumentType } from '../schemas/work-item.schema';
@@ -74,13 +74,13 @@ export class WorkItemRepository {
         }
     }
 
-    public async editOne(workItem: any): Promise<void> {
+    public async editOne(workItem: WorkItem): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
 
         if (database) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.workitem;
-            const workItemToUpdate: any = await docCollection
+            const workItemToUpdate: RxDocument = await docCollection
                 .findOne()
                 .where('id')
                 .eq(workItem.id)

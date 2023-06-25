@@ -22,7 +22,6 @@ export class LogWorkComponent implements OnInit {
     ngOnInit() {}
 
     public async selectDate(event: any) {
-        console.log('Open Form Event: ', event);
         await this.modalService.createAndShow(
             SwiperComponent,
             '',
@@ -35,6 +34,7 @@ export class LogWorkComponent implements OnInit {
         const modalData = await this.modalService.onDidDismiss();
 
         console.log('GSB modal data: ', modalData);
+
         const docId = new Date(event.detail.value).toUTCString();
         if (
             modalData.data

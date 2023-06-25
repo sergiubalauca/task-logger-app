@@ -71,7 +71,9 @@ export class SetupDoctorComponent implements OnInit {
     }
 
     public async editDoctor(doctorId: number): Promise<void> {
-        const doctor = await this.doctorFacade.getOne({ id: doctorId.toString() });
+        const doctor = await this.doctorFacade.getOne({
+            id: doctorId.toString(),
+        });
         await this.modalService.createAndShow(
             AddEditDoctorComponent,
             '',
@@ -84,9 +86,9 @@ export class SetupDoctorComponent implements OnInit {
         const modalData = await this.modalService.onDidDismiss();
 
         if (modalData.data && modalData.data.dismissed) {
-            const doctorToEdit = {
+            const doctorToEdit: Doctor = {
                 ...modalData.data.doctor,
-                id: doctorId,
+                id: doctor.id,
             };
             await this.doctorFacade.editOne(doctorToEdit);
         }

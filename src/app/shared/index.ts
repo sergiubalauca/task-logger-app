@@ -4,3 +4,5 @@ export * from './directives';
 export * from './constants';
 export * from './models';
 export * from './components';
+export * from './toast';
+export * from './alert';

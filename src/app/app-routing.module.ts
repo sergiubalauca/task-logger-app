@@ -1,30 +1,37 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { canActivateTeam } from './core/auth';
+import { LogInPage } from './pages/login/log-in.page';
 
 const routes: Routes = [
-  {
-    path: 'playground',
-    loadChildren: () =>
-      import('./pages/playground/playground.module').then(
-        (m) => m.PlaygroundModule
-      ),
-  },
-  {
-    path: 'home',
-    loadChildren: () =>
-      import('./pages/home/home.module').then((m) => m.HomeModule),
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
+    {
+        path: 'playground',
+        loadChildren: () =>
+            import('./pages/playground/playground.module').then(
+                (m) => m.PlaygroundModule
+            ),
+    },
+    {
+        path: 'home',
+        loadChildren: () =>
+            import('./pages/home/home.module').then((m) => m.HomeModule),
+        canActivate: [canActivateTeam],
+    },
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+    },
+    {
+        path: 'login',
+        component: LogInPage,
+    },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-  ],
-  exports: [RouterModule],
+    imports: [
+        RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    ],
+    exports: [RouterModule],
 })
 export class AppRoutingModule {}

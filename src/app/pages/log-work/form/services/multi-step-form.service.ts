@@ -89,45 +89,26 @@ export class MultiStepFormService {
 
     public newDoctor = () =>
         this.fb.group({
-            doctor: this.fb.control(null, {
-                validators: [Validators.required],
-            }),
+            doctor: this.fb.control(null, { validators: [Validators.required] }),
             patientGroup: this.fb.group({
                 patientArray: this.fb.array(
                     [
                         this.fb.group({
-                            patient: this.fb.control(null, {
-                                validators: [Validators.required],
-                            }),
+                            patient: this.fb.control(null, { validators: [Validators.required] }),
                             workItemGroup: this.fb.group({
                                 workItemAndNumber: this.fb.array(
                                     [
                                         this.fb.group({
-                                            workItem: this.fb.control(null, {
-                                                validators: [
-                                                    Validators.required,
-                                                ],
-                                            }),
-                                            numberOfWorkItems: this.fb.control(
-                                                null,
-                                                {
-                                                    validators: [
-                                                        Validators.required,
-                                                    ],
-                                                }
-                                            ),
+                                            workItem: this.fb.control(null, { validators: [Validators.required] }),
+                                            numberOfWorkItems: this.fb.control( null, { validators: [Validators.required] }),
                                         }),
                                     ],
-                                    {
-                                        validators: [Validators.required],
-                                    }
+                                    { validators: [Validators.required] }
                                 ),
                             }),
                         }),
                     ],
-                    {
-                        validators: [Validators.required],
-                    }
+                    { validators: [Validators.required] }
                 ),
             }),
         });

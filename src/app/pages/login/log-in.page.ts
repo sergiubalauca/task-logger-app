@@ -1,68 +1,61 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {
+    FormBuilder,
     FormControl,
     FormGroup,
     FormsModule,
     ReactiveFormsModule,
+    ValidationErrors,
     Validators,
 } from '@angular/forms';
 import { IonicModule, LoadingController, NavController } from '@ionic/angular';
-import { Keyboard } from '@capacitor/keyboard';
 import { firstValueFrom } from 'rxjs';
-import { LoginModel } from '@shared';
+import { LoginModel, UserStorageService } from '@shared';
 import { AuthFacade } from '@abstraction';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-log-in',
     templateUrl: './log-in.page.html',
     styleUrls: ['./log-in.page.scss'],
     standalone: true,
-    imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
-    providers: [AuthFacade],
+    imports: [
+        CommonModule,
+        IonicModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule,
+    ],
+    providers: [AuthFacade, UserStorageService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LogInPage implements OnInit {
     public form: FormGroup;
+    public formValidationMessages = { email: [], password: [] };
+    public showPassword = false;
+    public togglePassButtonLabel = this.translate.instant(
+        'login-page.show-password'
+    );
+    public labels = {
+        email: this.translate.instant('login-page.email'),
+        password: this.translate.instant('login-page.password'),
+    };
 
     constructor(
         private navCtrl: NavController,
         private authFacade: AuthFacade,
-        private loadingController: LoadingController
+        private loadingController: LoadingController,
+        private formBuilder: FormBuilder,
+        private readonly translate: TranslateService,
+        private readonly userStorageService: UserStorageService
     ) {}
 
     ngOnInit() {
-        this.createForm();
+        this.initLogin();
     }
 
-    createForm() {
-        this.form = new FormGroup({
-            email: new FormControl(null, {
-                validators: [
-                    Validators.required,
-                    Validators.email,
-                    Validators.minLength(4),
-                ],
-            }),
-            password: new FormControl(null, {
-                validators: [Validators.required, Validators.minLength(4)],
-            }),
-        });
-    }
-
-    async goBack(): Promise<boolean> {
-        return await this.navCtrl.navigateBack('/home');
-    }
-
-    async forgotPassword(): Promise<boolean> {
-        return await this.navCtrl.navigateForward('log-in/password-recovery');
-    }
-
-    closeKeyboard() {
-        Keyboard.hide();
-    }
-
-    async logIn(): Promise<void> {
+    public async logIn(): Promise<void> {
         if (this.form.invalid) {
             return;
         }
@@ -82,5 +75,67 @@ export class LogInPage implements OnInit {
         } catch (error) {
             await loader.dismiss();
         }
+    }
+
+    public togglePassword() {
+        this.showPassword = !this.showPassword;
+        this.togglePassButtonLabel = this.showPassword
+            ? this.translate.instant('login-page.hide-password')
+            : this.translate.instant('login-page.show-password');
+    }
+
+    private initLogin() {
+        this.form = this.formBuilder.group({
+            email: [
+                this.userStorageService.getUsername(),
+                [
+                    Validators.required,
+                    Validators.minLength(5),
+                    this.noWhitespaceValidator,
+                ],
+            ],
+            password: ['', [Validators.required]],
+        });
+
+        this.formValidationMessages = {
+            email: [
+                {
+                    type: 'required',
+                    message: this.translate.instant(
+                        'login-page.errorMessages.email.required'
+                    ),
+                },
+                {
+                    type: 'minlength',
+                    message: this.translate.instant(
+                        'login-page.errorMessages.email.minlength'
+                    ),
+                },
+                {
+                    type: 'whitespace',
+                    message: this.translate.instant(
+                        'login-page.errorMessages.email.whitespace'
+                    ),
+                },
+            ],
+            password: [
+                {
+                    type: 'required',
+                    message: this.translate.instant(
+                        'login-page.errorMessages.password.required'
+                    ),
+                },
+            ],
+        };
+    }
+
+    private noWhitespaceValidator(
+        control: FormControl
+    ): ValidationErrors | null {
+        if ((control.value || '').indexOf(' ') >= 0) {
+            return { whitespace: true };
+        }
+
+        return null;
     }
 }

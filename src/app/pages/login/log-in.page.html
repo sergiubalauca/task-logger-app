@@ -1,85 +1,77 @@
-<ion-content>
-    <!-- <ion-grid class="ion-no-padding ion-text-center">
-        <ion-img src="../../assets/images/sign-up-header.png"> </ion-img>
-    </ion-grid> -->
-    <ion-grid class="ion-text-center ion-padding-vertical">
-        <ion-text class="text-3 playfair-font-regular" color="tertiary">
-            WELCOME! <br />
-            Let's go
-        </ion-text>
-        <form [formGroup]="form" (ngSubmit)="logIn()" class="ion-padding">
-            <ion-grid>
-                <ion-row>
-                    <ion-col size-sm="6" offset-sm="3">
-                        <ion-item lines="none">
-                            <ion-input
-                                type="email"
-                                placeholder="E-mail"
-                                (keyup.enter)="closeKeyboard()"
-                                formControlName="email"
-                            >
-                            </ion-input>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-                <ion-text
-                    color="danger"
-                    class="text-1 ion-padding-start"
-                    *ngIf="form.get('email').invalid && form.get('email').touched && form.get('email').dirty"
-                >
-                    Please input a valid email address.
-                </ion-text>
-                <ion-row>
-                    <ion-col size-sm="6" offset-sm="3">
-                        <ion-item lines="none">
-                            <ion-input
-                                type="password"
-                                (keyup.enter)="closeKeyboard()"
-                                placeholder="Password"
-                                (keyup.enter)="closeKeyboard()"
-                                formControlName="password"
-                            ></ion-input>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-                <ion-text
-                    class="text-1 ion-padding-start"
-                    color="danger"
-                    *ngIf="form.get('password').invalid && form.get('password').touched && form.get('password').dirty"
-                >
-                    Password must have at least 5 characters.
-                </ion-text>
-                <ion-row>
-                    <ion-button
-                        fill="clear"
-                        class="text-1 playfair-font-regular"
-                        size="small"
-                        (click)="forgotPassword()"
-                    >
-                        Forgot your password?
-                    </ion-button>
-                </ion-row>
-            </ion-grid>
-            <ion-row>
-                <ion-col>
-                    <ion-button
-                        [disabled]="form.invalid"
-                        class="text-2 playfair-font-regular"
-                        type="submit"
-                    >
-                        LOG IN
-                    </ion-button>
-                </ion-col>
-            </ion-row>
-        </form>
+<ion-header class="ion-no-border">
+    <!-- <ion-img class="logo" src="assets/imgs/gimbil_logo_light.png"></ion-img> -->
+</ion-header>
 
-        <ion-button
-            fill="clear"
-            class="text-1 playfair-font-regular"
-            size="small"
-            (click)="goBack()"
+<ion-content class="ion-padding">
+    <form [formGroup]="form">
+        <ion-label class="title" color="dark"
+            >{{ 'login-page.label' | translate }}</ion-label
         >
-            Go back
-        </ion-button>
-    </ion-grid>
+        <div>
+            <ion-item class="ion-no-padding">
+                <ion-input
+                    formControlName="email"
+                    type="text"
+                    [label]="labels.email"
+                    labelPlacement="floating"
+                >
+                </ion-input>
+                <ion-text
+                    slot="end"
+                    class="showHide"
+                    (click)="togglePassword()"
+                ></ion-text>
+            </ion-item>
+            <div class="validation-errors">
+                <ng-container
+                    *ngFor="let validation of formValidationMessages.email"
+                >
+                    <div
+                        class="error-message"
+                        *ngIf="form.get('email').hasError(validation.type) && (form.get('email').dirty)"
+                    >
+                        {{ validation.message }}
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div>
+            <ion-item class="ion-no-padding">
+                <ion-label position="stacked"
+                    >{{ 'login-page.password' | translate}}</ion-label
+                >
+                <div class="toggle-pass">
+                    <ion-input
+                        #password
+                        formControlName="password"
+                        type="text"
+                        [label]="labels.password"
+                        [type]="showPassword ? 'text' : 'password'"
+                        labelPlacement="floating"
+                        clearOnEdit="false"
+                    >
+                    </ion-input>
+
+                    <ion-text *ngIf="password.value" (click)="togglePassword()"
+                        >{{togglePassButtonLabel}}</ion-text
+                    >
+                </div>
+            </ion-item>
+            <div class="validation-errors">
+                <ng-container
+                    *ngFor="let validation of formValidationMessages.password"
+                >
+                    <div
+                        class="error-message"
+                        *ngIf="form.get('password').hasError(validation.type) && (form.get('password').dirty)"
+                    >
+                        {{ validation.message }}
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <ion-button (click)="logIn()" [disabled]="!form.valid" expand="block"
+            >{{'login-page.title' | translate }}</ion-button
+        >
+    </form>
 </ion-content>

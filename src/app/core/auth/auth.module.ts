@@ -1,9 +1,10 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Type } from '@angular/core';
+import { UserStorageService } from '@shared';
 import { AuthenticationTokenProvider } from './providers';
 import { TokenInterceptor } from './providers/token-interceptor';
 import { TokenProvider } from './providers/token-provider';
-import { AuthGuardService, AuthService, UserStorageService } from './services';
+import { AuthGuardService, AuthService } from './services';
 
 @NgModule({
     declarations: [],

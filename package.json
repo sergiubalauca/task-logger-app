@@ -30,6 +30,8 @@
     "@ionic/core": "^7.0.7",
     "@ngrx/effects": "^16.0.0",
     "@ngrx/store": "^16.0.0",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
     "cropperjs": "^1.5.13",
     "date-fns": "^2.29.3",
     "ionicons": "^6.0.3",

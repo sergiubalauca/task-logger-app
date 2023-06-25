@@ -3,9 +3,14 @@ import { Observable } from 'rxjs/internal/Observable';
 import { map, tap } from 'rxjs/operators';
 import { AuthenticationTokenProvider } from '../providers';
 import { NavController, LoadingController } from '@ionic/angular';
-import { UserStorageService } from './user-storage.service';
+
 import { HttpService } from '../../api';
-import { AlertService, AuthenticationResult, LoginModel } from '@shared';
+import {
+    AlertService,
+    AuthenticationResult,
+    LoginModel,
+    UserStorageService,
+} from '@shared';
 
 @Injectable()
 export class AuthService {

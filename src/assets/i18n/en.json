@@ -1,0 +1,24 @@
+{
+    "login-page": {
+        "errorMessages": {
+            "email": {
+                "required": "Username is required",
+                "minlength": "Username must be at least 4 characters long",
+                "maxlength": "Username cannot be more than 24 characters long",
+                "whitespace": "Username cannot contain whitespace"
+            },
+            "password": {
+                "required": "Password is required",
+                "minlength": "Password must be at least 4 characters long",
+                "maxlength": "Password cannot be more than 24 characters long",
+                "whitespace": "Password cannot contain whitespace"
+            }
+        },
+        "email": "Email",
+        "password": "Password",
+        "label": "Login",
+        "title": "Login",
+        "show-password": "Show password",
+        "hide-password": "Hide password"
+    }
+}

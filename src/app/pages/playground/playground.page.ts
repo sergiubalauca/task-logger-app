@@ -1,13 +1,24 @@
 import {
     AfterViewInit,
+    ChangeDetectorRef,
     Component,
     inject,
     OnInit,
     TrackByFunction,
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, shareReplay } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import {
+    delay,
+    map,
+    mergeMap,
+    scan,
+    shareReplay,
+    startWith,
+    switchMap,
+    take,
+    withLatestFrom,
+} from 'rxjs/operators';
+import { interval, Observable, of } from 'rxjs';
 import { lazyArray } from 'src/app/shared/lazy-rendering.operator';
 import { RandomUser, RandomUsers } from 'src/app/shared/models/random-user';
 
@@ -17,6 +28,7 @@ import { CommonModule } from '@angular/common';
 import { Test2Component } from './test2/test2.component';
 import { Test3Component } from './test3/test3.component';
 import { UserService } from './services';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
     selector: 'app-home',
     templateUrl: 'playground.page.html',
@@ -29,7 +41,7 @@ import { UserService } from './services';
         Test2Component,
         Test3Component,
     ],
-    providers: [UserService],
+    // providers: [UserService],
 })
 export class PlaygroundPage implements OnInit, AfterViewInit {
     // public users$: Observable<RandomUser[]> = of([]);
@@ -53,12 +65,28 @@ export class PlaygroundPage implements OnInit, AfterViewInit {
     private userService: UserService = inject(UserService);
     private navController: NavController = inject(NavController);
 
-    constructor(private httpService: HttpClient) {}
+    constructor(
+        private httpService: HttpClient,
+        private route: ActivatedRoute,
+        private cdr: ChangeDetectorRef,
+        private router: Router
+    ) {
+        setInterval(() => {
+            this.cdr.detectChanges();
+        }, 1000);
+    }
 
     ngAfterViewInit() {}
 
     public loadChild(user: RandomUser) {
-        this.navController.navigateForward('playground/test3-child');
+        this.navController.navigateForward(
+            `playground/test3-child?id=${user.email}`
+        );
+
+        // this.router.navigate(['./test3-child'], {
+        //     relativeTo: this.route,
+        //     queryParams: { id: user.email },
+        // });
     }
     public ngOnInit(): void {
         // this.data$ = this.httpService
@@ -69,20 +97,13 @@ export class PlaygroundPage implements OnInit, AfterViewInit {
         //     lazyArray(3000, 10),
         //     map((data: any) => data as RandomUser)
         // );
+
         this.users$ = this.userService.getUsers(1);
     }
 
-    // public trackById(
-    //     index,
-    //     item: {
-    //         id: {
-    //             name: string;
-    //             value: string;
-    //         };
-    //     }
-    // ) {
-    //     return item.id.value;
-    // }
+    public addOne() {
+        this.userService.addUser();
+    }
 
     public editUser(user: RandomUser) {}
     public deleteUser(user: RandomUser) {}

@@ -36,4 +36,8 @@ export class Test3Component implements OnInit {
     public loadChild(): void {
         this.goToUser.emit(this.user);
     }
+
+    public edit(): void {
+        this.editUser.emit(this.user);
+    }
 }

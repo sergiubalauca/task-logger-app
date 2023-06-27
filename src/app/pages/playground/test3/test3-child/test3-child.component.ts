@@ -27,7 +27,10 @@ import { UserService } from '../../services';
 export class Test3ChildComponent implements OnInit {
     public user$: Observable<RandomUser> = this.activatedRoute.data.pipe(
         takeUntilDestroyed(),
-        map((data) => data.user as RandomUser)
+        map((data) => {
+            const x = 1;
+            return data.user as RandomUser;
+        })
     );
 
     @Output() public editUserEvent: EventEmitter<RandomUser> =
@@ -59,18 +62,13 @@ export class Test3ChildComponent implements OnInit {
 
     public editUser(user: RandomUser): void {
         const userEdit: RandomUser = {
+            ...user,
             name: {
-                first: 'John',
-                last: 'Doe',
-                title: 'Mr',
-            },
-            email: 'trst',
-            id: {
-                value: user.id.value,
-                name: user.id.name,
+                last: 'edited',
+                first: 'edited',
+                title: 'edited',
             },
         };
-
         this.userService.updateUser(userEdit, 1);
     }
 }

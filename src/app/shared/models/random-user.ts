@@ -31,7 +31,7 @@ export interface RandomUser {
         first: string;
         last: string;
     };
-    picture?: {
+    picture: {
         medium: string;
     };
 }

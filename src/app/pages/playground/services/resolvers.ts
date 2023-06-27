@@ -11,4 +11,9 @@ import { UserService } from './user.service';
 export const userResolver: ResolveFn<Observable<RandomUser>> = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-) => inject(UserService).getUser(route.paramMap.get('id'));
+) => {
+    const userService = inject(UserService);
+    const id = route.queryParamMap.get('id');
+    const paramId = userService.getUser(id);
+    return paramId;
+};

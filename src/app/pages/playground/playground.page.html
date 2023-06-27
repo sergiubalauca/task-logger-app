@@ -15,13 +15,19 @@
     <!-- <app-test *ngIf="data$ | async; let d" [data]="d"></app-test> -->
     <!-- <app-test2 [data]="data2$"></app-test2> -->
 
-    <ng-container *ngIf="users$ | async; let users">
-        <app-test3
-            *ngFor="let user of users"
-            [user]="user"
-            (editUser)="editUser($event)"
-            (deleteUser)="deleteUser($event)"
-            (goToUser)="loadChild($event)"
-        ></app-test3>
-    </ng-container>
+    <!-- <ng-container *ngIf="users$ | async; let users"> -->
+    <app-test3
+        *ngFor="let user of users$ | async"
+        [user]="user"
+        (editUser)="editUser($event)"
+        (deleteUser)="deleteUser($event)"
+        (goToUser)="loadChild($event)"
+    ></app-test3>
+    <!-- </ng-container> -->
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" class="ion-margin">
+        <ion-fab-button (click)="addOne()">
+            <!-- <ion-icon class="add-outline"></ion-icon> -->
+            <ion-icon name="add-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>

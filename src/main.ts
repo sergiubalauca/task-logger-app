@@ -24,6 +24,7 @@ import {
     TranslateService,
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { UserService } from './app/pages/playground/services';
 
 if (environment.production) {
     enableProdMode();
@@ -63,6 +64,7 @@ export const createTranslateLoader = (http: HttpClient) =>
 
 bootstrapApplication(AppComponent, {
     providers: [
+        UserService,
         importProvidersFrom(
             BrowserModule,
             IonicModule.forRoot({
@@ -88,6 +90,6 @@ bootstrapApplication(AppComponent, {
             deps: [TranslateService, Injector],
             multi: true,
         },
-        TranslateService
+        TranslateService,
     ],
 }).catch((err) => console.log(err));

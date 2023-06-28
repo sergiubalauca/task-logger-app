@@ -25,6 +25,7 @@ import {
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UserService } from './app/pages/playground/services';
+import { PayLocationService } from './app/pages/playground/self/services/pay-location.service';
 
 if (environment.production) {
     enableProdMode();
@@ -65,6 +66,7 @@ export const createTranslateLoader = (http: HttpClient) =>
 bootstrapApplication(AppComponent, {
     providers: [
         UserService,
+        PayLocationService,
         importProvidersFrom(
             BrowserModule,
             IonicModule.forRoot({

@@ -10,7 +10,7 @@ import {
     Output,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { map, Observable, of, Subject, takeUntil } from 'rxjs';
 import { RandomUser } from 'src/app/shared/models/random-user';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -43,7 +43,8 @@ export class Test3ChildComponent implements OnInit {
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private userService: UserService
+        private userService: UserService,
+        private navController: NavController
     ) {}
 
     ngOnInit() {
@@ -60,7 +61,7 @@ export class Test3ChildComponent implements OnInit {
         // );
     }
 
-    public editUser(user: RandomUser): void {
+    public async editUser(user: RandomUser): Promise<void> {
         const userEdit: RandomUser = {
             ...user,
             name: {
@@ -70,5 +71,7 @@ export class Test3ChildComponent implements OnInit {
             },
         };
         this.userService.updateUser(userEdit, 1);
+
+        await this.navController.navigateBack('playground');
     }
 }

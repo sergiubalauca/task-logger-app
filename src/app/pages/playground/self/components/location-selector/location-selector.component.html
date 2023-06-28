@@ -1,0 +1,7 @@
+<ng-container *ngIf="paymentLocations$ | async; let locations">
+    <app-location
+        *ngFor="let location of locations"
+        [location]="location"
+        (locationChecked)="locationChecked($event)"
+    ></app-location>
+</ng-container>

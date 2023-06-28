@@ -28,41 +28,41 @@ export class UserService {
     }
 
     public getUser(id: string): Observable<RandomUser> {
-        // return this.users$.pipe(
-        //     map((users: RandomUser[]) =>
-        //         users.find((user: RandomUser) => {
-        //             const x = 1;
-        //             return user.email === id;
-        //         })
-        //     )
-        // );
-
         return this.users$.pipe(
-            switchMap((initialState: RandomUser[]) => {
-                console.log('initialState', initialState);
-                return this.getStateUser().pipe(
-                    startWith(initialState),
-                    scan((acc: RandomUser[], curr: RandomUser) => {
-                        console.log('acc', acc);
-                        console.log('curr', curr);
-
-                        const index = acc.findIndex(
-                            (user: RandomUser) => user.email === curr.email
-                        );
-                        if (index > -1) {
-                            acc[index] = curr;
-                            return acc;
-                        }
-
-                        return [...acc, curr];
-                    }),
-                    map((data: RandomUser[]) => {
-                        console.log('data', data);
-                        return data[0];
-                    })
-                );
-            })
+            map((users: RandomUser[]) =>
+                users.find((user: RandomUser) => {
+                    const x = 1;
+                    return user.email === id;
+                })
+            )
         );
+
+        // return this.users$.pipe(
+        //     switchMap((initialState: RandomUser[]) => {
+        //         console.log('initialState', initialState);
+        //         return this.getStateUser().pipe(
+        //             startWith(initialState),
+        //             scan((acc: RandomUser[], curr: RandomUser) => {
+        //                 console.log('acc', acc);
+        //                 console.log('curr', curr);
+
+        //                 const index = acc.findIndex(
+        //                     (user: RandomUser) => user.email === curr.email
+        //                 );
+        //                 if (index > -1) {
+        //                     acc[index] = curr;
+        //                     return acc;
+        //                 }
+
+        //                 return [...acc, curr];
+        //             }),
+        //             map((data: RandomUser[]) => {
+        //                 console.log('data', data);
+        //                 return data[0];
+        //             })
+        //         );
+        //     })
+        // );
     }
 
     public getStateUser() {

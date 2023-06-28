@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PlaygroundPage } from './playground.page';
-import { SelfComponent } from './self/self.component';
+import { SelfPage } from './self/self.page';
+
 // import { UserService } from './services';
 import { userResolver } from './services/resolvers';
 import { Test3ChildComponent } from './test3/test3-child/test3-child.component';
@@ -26,7 +27,7 @@ export const CHILD_ROUTES = [
 const routes: Routes = [
     {
         path: '',
-        component: PlaygroundPage,
+        component: SelfPage,
     },
     {
         path: 'test3-child',
@@ -38,7 +39,7 @@ const routes: Routes = [
     },
     {
         path: 'self',
-        component: SelfComponent,
+        component: SelfPage,
     },
 ];
 

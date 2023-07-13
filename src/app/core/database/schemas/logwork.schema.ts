@@ -30,7 +30,7 @@ export const LOGWORK_SCHEMA_LITERAL = {
                     doctor: {
                         type: 'object',
                         properties: {
-                            name: {
+                            doctor: {
                                 type: 'string',
                                 default: '',
                                 maxLength: 100,

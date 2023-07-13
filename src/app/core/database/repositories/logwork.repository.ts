@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CRUDParams, DailyWork, DailyWorkDoc } from '@shared';
-import { DeepReadonlyObject } from 'rxdb';
+import { DeepReadonlyObject, RxDocument } from 'rxdb';
 import { map, Observable } from 'rxjs';
 import { RxDatabaseProvider } from '../rx-database.provider';
 import { RxLogWorkDocumentType } from '../schemas';
@@ -13,16 +13,21 @@ export class LogWorkRepository {
         params: Pick<CRUDParams, 'id'>
     ): Observable<DeepReadonlyObject<DailyWorkDoc>> {
         const database = this.databaseProvider.rxDatabaseInstance;
+
         if (database) {
             const logWorkCollection =
                 this.databaseProvider?.rxDatabaseInstance.logwork;
-            const logWork: Observable<DailyWorkDoc> = logWorkCollection
+            const logWork: Observable<RxDocument> = logWorkCollection
                 .findOne()
                 .where('id')
-                .eq('Wed, 21 Jun 2023 19:54:00 GMT').$;
+                .eq(params.id).$;
 
             return logWork.pipe(
-                map((doc) => doc as DeepReadonlyObject<DailyWorkDoc>)
+                map((doc) => {
+                    const res =
+                        doc?.toJSON() as DeepReadonlyObject<DailyWorkDoc>;
+                    return res ?? null;
+                })
             );
         }
 
@@ -50,7 +55,7 @@ export class LogWorkRepository {
             workItemToUpdate1.doctorGroup.push(
                 ...dailyWork.doctorGroup.doctorArray.map((doctor) => ({
                     doctor: {
-                        name: doctor.doctor.value,
+                        name: doctor.doctor,
                         pacient: doctor.patientGroup.patientArray.map(
                             (patient) => ({
                                 name: patient.patient,
@@ -58,7 +63,7 @@ export class LogWorkRepository {
                                     patient.workItemGroup.workItemAndNumber.map(
                                         (workItem) => ({
                                             workItem: {
-                                                name: workItem.workItem.value,
+                                                name: workItem.workItem,
                                             },
                                             numberOfWorkItems:
                                                 workItem.numberOfWorkItems.toString(),
@@ -90,19 +95,22 @@ export class LogWorkRepository {
         }
     }
 
-    public async getOne(params: Pick<CRUDParams, 'id'>) {
+    public async getOne(
+        params: Pick<CRUDParams, 'id'>
+    ): Promise<DeepReadonlyObject<DailyWorkDoc>> {
         const database = this.databaseProvider.rxDatabaseInstance;
 
         if (database && params.id) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.logwork;
-            const workItem: any = await docCollection
+            const workItem: RxDocument = await docCollection
                 .findOne()
                 .where('id')
                 .eq(params.id.toString())
                 .exec();
 
-            return workItem;
+            const res = workItem.toJSON() as DeepReadonlyObject<DailyWorkDoc>;
+            return res ?? null;
         }
 
         return null;

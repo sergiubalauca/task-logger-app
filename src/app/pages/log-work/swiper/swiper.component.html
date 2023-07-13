@@ -14,18 +14,21 @@
         (slidechange)="onSlideChange()"
         effect="coverflow"
     >
-        <swiper-slide>
-            <app-doctor
-                [chosenDate]="chosenDate"
-                (doctorSelected)="onDoctorSelected($event)"
-                (goToDoctor)="onGoToDoctor($event)"
-            ></app-doctor>
-        </swiper-slide>
-        <swiper-slide>
-            <app-pacient (goToWorkItem)="onGoToWorkItem()"></app-pacient>
-        </swiper-slide>
-        <swiper-slide>
-            <app-work-item></app-work-item>
-        </swiper-slide>
+        <ng-container *ngIf="this.multiForm | async as form">
+            <swiper-slide>
+                <app-doctor
+                    [chosenDate]="chosenDate"
+                    [form]="form"
+                    (doctorSelected)="onDoctorSelected($event)"
+                    (goToDoctor)="onGoToDoctor($event)"
+                ></app-doctor>
+            </swiper-slide>
+            <swiper-slide>
+                <app-pacient (goToWorkItem)="onGoToWorkItem()"></app-pacient>
+            </swiper-slide>
+            <swiper-slide>
+                <app-work-item></app-work-item>
+            </swiper-slide>
+        </ng-container>
     </swiper-container>
 </ion-content>

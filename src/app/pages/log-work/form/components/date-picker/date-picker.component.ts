@@ -47,10 +47,11 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
     public writeValue(dateValue: any): void {
         if (dateValue) {
-            this.displayDate = format(
-                new Date(dateValue),
-                this.dateDisplayFormat
-            );
+            this.displayDate = dateValue;
+            // this.displayDate = format(
+            //     new Date(dateValue),
+            //     this.dateDisplayFormat
+            // );
         }
     }
     public registerOnChange(fn: any): void {

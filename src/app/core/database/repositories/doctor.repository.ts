@@ -16,13 +16,13 @@ export class DoctorRepository {
         if (database && params.id) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.doctor;
-            const docToUpdate: RxDocument = await docCollection
+            const doc: RxDocument = await docCollection
                 .findOne()
                 .where('id')
                 .eq(params.id)
                 .exec();
 
-            const res = docToUpdate.toJSON() as DeepReadonlyObject<Doctor>;
+            const res = doc.toJSON() as DeepReadonlyObject<Doctor>;
             return res ?? null;
         }
 

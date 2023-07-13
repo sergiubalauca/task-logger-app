@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DateTimeService {
-	// todo: use this in all places where we want current date
-	public getCurrentDateTime(): Date {
-		return new Date();
-	}
+    public getCurrentDateTime(): Date {
+        return new Date();
+    }
+
+    public getDailyWorkId(date: Date): string {
+        if (!date) {
+            return null;
+        }
+        return date.getDay() + '-' + date.getMonth() + '-' + date.getFullYear();
+    }
 }

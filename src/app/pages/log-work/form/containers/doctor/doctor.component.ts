@@ -5,8 +5,13 @@ import {
     FormsModule,
     ReactiveFormsModule,
 } from '@angular/forms';
-import { DOCTOR_COLLECTION_NAME, SearcheableSelectModel } from '@shared';
-import { Observable, of, switchMap } from 'rxjs';
+import {
+    DailyWorkDoc,
+    DateTimeService,
+    DOCTOR_COLLECTION_NAME,
+    SearcheableSelectModel,
+} from '@shared';
+import { map, Observable, of, switchMap } from 'rxjs';
 import { MultiStepFormService } from '../../services';
 import { DatePickerComponent } from '../../components/date-picker/date-picker.component';
 import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
@@ -14,6 +19,8 @@ import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormReducer } from '../../custom-state/reducer/form.reducer';
 import { LogWorkFacade } from '@abstraction';
+import { RxDocument } from 'rxdb';
+import { RxLogWorkDocumentType } from '@database';
 
 @Component({
     selector: 'app-doctor',
@@ -34,7 +41,7 @@ import { LogWorkFacade } from '@abstraction';
 })
 export class DoctorComponent implements OnInit {
     @Input() public chosenDate: string;
-
+    @Input() public form: any;
     @Output() doctorSelected: EventEmitter<{
         value: SearcheableSelectModel;
         formIndex: number;
@@ -43,35 +50,45 @@ export class DoctorComponent implements OnInit {
 
     public doctorGroupControls: Observable<{
         form: FormGroup;
-        doctorFormGroup: FormGroup;
-        doctorFormGroupControls: AbstractControl[];
-        timeGroup: FormGroup;
-    }> = of({
-        form: this.multiStepFormService.initMultiStepForm(null),
-        doctorFormGroup: this.multiStepFormService.getDoctorFormGroup(),
-        doctorFormGroupControls:
-            this.multiStepFormService.getDoctorFormGroupControls(),
-        timeGroup: this.multiStepFormService.getTimeFormGroup(),
-    });
+        doctorFormGroup?: FormGroup;
+        doctorFormGroupControls?: AbstractControl[];
+        timeGroup?: FormGroup;
+    }>;
+    // = of({
+    //     form: this.multiStepFormService.initMultiStepForm(null),
+    //     // doctorFormGroup: this.multiStepFormService.getDoctorFormGroup(),
+    //     // doctorFormGroupControls:
+    //     //     this.multiStepFormService.getDoctorFormGroupControls(),
+    //     // timeGroup: this.multiStepFormService.getTimeFormGroup(),
+    // });
 
     public readonly strategy = DOCTOR_COLLECTION_NAME;
 
     constructor(
         private multiStepFormService: MultiStepFormService,
         private logWorkFacade: LogWorkFacade,
-        private formStore: FormReducer
+        private formStore: FormReducer,
+        private readonly dateTimeService: DateTimeService
     ) {}
 
     ngOnInit() {
-        const dailyWorkId = new Date(this.chosenDate).toUTCString();
+        // const dailyWorkId = new Date(this.chosenDate).toUTCString();
+        const dailyWorkId = this.dateTimeService.getDailyWorkId(
+            new Date(this.chosenDate)
+        );
         this.doctorGroupControls = this.logWorkFacade
             .getOne$({ id: dailyWorkId })
             .pipe(
+                map(
+                    (dailyWork: DailyWorkDoc) =>
+                        dailyWork as RxDocument<RxLogWorkDocumentType>
+                ),
                 switchMap((dailyWork) =>
                     of({
-                        form: this.multiStepFormService.initMultiStepForm(
-                            dailyWork
-                        ),
+                        // form: this.multiStepFormService.initMultiStepForm(
+                        //     dailyWork
+                        // ),
+                        form: this.form,
                         doctorFormGroup:
                             this.multiStepFormService.getDoctorFormGroup(),
                         doctorFormGroupControls:

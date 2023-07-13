@@ -7,6 +7,7 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { DailyWorkDoc } from '@shared';
 import { Observable, of } from 'rxjs';
 import { RxLogWorkDocumentType } from 'src/app/core/database/schemas';
 
@@ -15,20 +16,6 @@ export class MultiStepFormService {
     private multiStepLogWorkForm: FormGroup;
 
     constructor(private fb: FormBuilder) {}
-
-    // public setDoctorForm(): Observable<{
-    //     form: FormGroup<any>;
-    //     doctorFormGroup: FormGroup<any>;
-    //     doctorFormGroupControls: AbstractControl<any, any>[];
-    //     timeGroup: FormGroup<any>;
-    // }> {
-    //     return of({
-    //         form: this.initMultiStepForm(),
-    //         doctorFormGroup: this.getDoctorFormGroup(),
-    //         doctorFormGroupControls: this.getDoctorFormGroupControls(),
-    //         timeGroup: this.getTimeFormGroup(),
-    //     });
-    // }
 
     public setPacientForm(doctorIdx: number): Observable<{
         doctorIdx: number;
@@ -39,6 +26,38 @@ export class MultiStepFormService {
             doctorIdx,
             patientGroup: this.getPatientGroupFormGroup(doctorIdx),
             patientControls: this.getPatientControls(doctorIdx),
+        });
+    }
+
+    public buildFormWithData(dailyWork: DailyWorkDoc) {
+        dailyWork.doctorGroup.forEach((doctor, doctorIdx) => {
+            // this.addDoctorControl();
+            // console.log('GSB: ', this.getdoctorArray());
+            this.getdoctorArray().push(this.newDoctor());
+            this.getDoctorFormGroupControls()[doctorIdx].patchValue({
+                doctor: doctor.doctor.name,
+            });
+
+            doctor.doctor.pacient.forEach((pacient, pacientIdx) => {
+                // this.addPatientControl(doctorIdx);
+                this.getPatientArray(pacientIdx).push(this.newPatient());
+                this.getPatientControls(doctorIdx)[pacientIdx].patchValue({
+                    patient: pacient.name,
+                });
+
+                pacient.workItemAndNumber.forEach((workItem, workItemIdx) => {
+                    this.getWorkItemArray(doctorIdx, pacientIdx).push(
+                        this.newWorkItem()
+                    );
+
+                    this.getWorkItemControls(doctorIdx, pacientIdx)[
+                        workItemIdx
+                    ].patchValue({
+                        workItem: workItem.workItem.name,
+                        workItemNumber: workItem.numberOfWorkItems,
+                    });
+                });
+            });
         });
     }
 
@@ -60,7 +79,10 @@ export class MultiStepFormService {
                 }),
             }),
         });
-
+        if (dailyWork) {
+            // this.buildFormWithData(dailyWork);
+            // return this.multiStepLogWorkForm;
+        }
         return this.multiStepLogWorkForm;
     }
 
@@ -89,18 +111,33 @@ export class MultiStepFormService {
 
     public newDoctor = () =>
         this.fb.group({
-            doctor: this.fb.control(null, { validators: [Validators.required] }),
+            doctor: this.fb.control(null, {
+                validators: [Validators.required],
+            }),
             patientGroup: this.fb.group({
                 patientArray: this.fb.array(
                     [
                         this.fb.group({
-                            patient: this.fb.control(null, { validators: [Validators.required] }),
+                            patient: this.fb.control(null, {
+                                validators: [Validators.required],
+                            }),
                             workItemGroup: this.fb.group({
                                 workItemAndNumber: this.fb.array(
                                     [
                                         this.fb.group({
-                                            workItem: this.fb.control(null, { validators: [Validators.required] }),
-                                            numberOfWorkItems: this.fb.control( null, { validators: [Validators.required] }),
+                                            workItem: this.fb.control(null, {
+                                                validators: [
+                                                    Validators.required,
+                                                ],
+                                            }),
+                                            numberOfWorkItems: this.fb.control(
+                                                null,
+                                                {
+                                                    validators: [
+                                                        Validators.required,
+                                                    ],
+                                                }
+                                            ),
                                         }),
                                     ],
                                     { validators: [Validators.required] }

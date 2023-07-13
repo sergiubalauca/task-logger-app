@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DoctorRepository, RxDoctorDocumentType } from '@core';
-import { CRUDParams } from '@shared';
+import { CRUDParams, Doctor } from '@shared';
+import { DeepReadonlyObject } from 'rxdb';
 import { map, Observable } from 'rxjs';
 import { Context } from './strategy/rxdb-database.strategy';
 
@@ -20,7 +21,7 @@ export class DoctorFacade {
         this.context = new Context(strategy);
     }
 
-    public async getOne(params: Pick<CRUDParams, 'id'>): Promise<any> {
+    public async getOne(params: Pick<CRUDParams, 'id'>): Promise<DeepReadonlyObject<Doctor>> {
         return await this.context.getOne(params);
     }
 

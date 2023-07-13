@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LogWorkRepository, RxLogWorkDocumentType } from '@core';
-import { CRUDParams, DailyWork } from '@shared';
+import { CRUDParams, DailyWork, DailyWorkDoc } from '@shared';
+import { DeepReadonlyObject } from 'rxdb';
 import { map, Observable } from 'rxjs';
 import { Context } from './strategy/rxdb-database.strategy';
 
@@ -21,11 +22,13 @@ export class LogWorkFacade {
         this.context = new Context(strategy);
     }
 
-    public async getOne(params: Pick<CRUDParams, 'id'>): Promise<any> {
+    public async getOne(params: Pick<CRUDParams, 'id'>): Promise<DeepReadonlyObject<DailyWorkDoc>> {
         return await this.context.getOne(params);
     }
 
-    public getOne$(params: Pick<CRUDParams, 'id'>): Observable<any> {
+    public getOne$(
+        params: Pick<CRUDParams, 'id'>
+    ): Observable<DeepReadonlyObject<DailyWorkDoc>> {
         return this.context.getOne$(params);
     }
 

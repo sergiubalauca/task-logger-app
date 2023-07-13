@@ -13,8 +13,8 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { ModalController, IonicModule } from '@ionic/angular';
-import { SearcheableSelectModel } from '@shared';
-import { Observable, of } from 'rxjs';
+import { DailyWorkDoc, DateTimeService, SearcheableSelectModel } from '@shared';
+import { map, Observable, of, switchMap } from 'rxjs';
 import { SwiperOptions } from 'swiper';
 import { register } from 'swiper/element/bundle';
 import { FormSwipeStateService } from '../form/services';
@@ -23,6 +23,10 @@ import { WorkItemComponent } from '../form/containers/work-item/work-item.compon
 import { PacientComponent } from '../form/containers/pacient/pacient.component';
 import { DoctorComponent } from '../form/containers/doctor/doctor.component';
 import { FormReducer } from '../form/custom-state/reducer/form.reducer';
+import { CommonModule } from '@angular/common';
+import { LogWorkFacade } from '@abstraction';
+import { RxDocument } from 'rxdb';
+import { RxLogWorkDocumentType } from '@core';
 
 const initSwiper = () => {
     console.log('initSwiper');
@@ -39,6 +43,7 @@ const initSwiper = () => {
         DoctorComponent,
         PacientComponent,
         WorkItemComponent,
+        CommonModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -46,13 +51,16 @@ export class SwiperComponent implements OnInit, OnDestroy {
     @Input() public chosenDate: string;
     @ViewChild('swiperContainer') swiperContainer: ElementRef | undefined;
 
+    public multiForm: Observable<FormGroup>;
+
     private swiperElement: any;
 
     constructor(
-        // private formSwiperState: FormSwipeStateService,
         private modalController: ModalController,
         private formService: MultiStepFormService,
-        private formStore: FormReducer
+        private formStore: FormReducer,
+        private logWorkFacade: LogWorkFacade,
+        private readonly dateTimeService: DateTimeService
     ) {
         initSwiper();
     }
@@ -68,8 +76,21 @@ export class SwiperComponent implements OnInit, OnDestroy {
 
         this.swiperElement.allowSlideNext = false;
         // swiperEl.allowSlidePrev = false;
-        // this.multiForm = of(this.multiStepFormService.initMultiStepForm());
-        // this.multiStepFormService.addDoctorControl();
+
+        const dailyWorkId = this.dateTimeService.getDailyWorkId(
+            new Date(this.chosenDate)
+        );
+        this.multiForm = this.logWorkFacade.getOne$({ id: dailyWorkId }).pipe(
+            map(
+                (dailyWork: DailyWorkDoc) =>
+                    dailyWork as RxDocument<RxLogWorkDocumentType>
+            ),
+            switchMap((dailyWork) =>
+                of(this.formService.initMultiStepForm(dailyWork))
+            )
+        );
+
+        // this.multiForm = of(this.formService.initMultiStepForm(null));
     }
 
     public onSlideChange() {}
@@ -78,7 +99,6 @@ export class SwiperComponent implements OnInit, OnDestroy {
         value: SearcheableSelectModel;
         formIndex: number;
     }) {
-        // this.formSwiperState.setCurrentPacient(0);
         if (event.value && event.value.value !== '') {
             this.swiperElement.allowSlideNext = true;
             this.swiperElement.swiper.slideNext();
@@ -87,10 +107,8 @@ export class SwiperComponent implements OnInit, OnDestroy {
     }
 
     public onGoToDoctor(index: number) {
-        // this.formSwiperState.setCurrentPacient(0);
         this.formStore.setCurrentPacient(0);
         this.swiperElement.allowSlideNext = true;
-        // this.formSwiperState.setCurrentDoctor(index);
         this.swiperElement.swiper.slideNext();
         this.swiperElement.allowSlideNext = false;
     }
@@ -102,22 +120,24 @@ export class SwiperComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy() {
-        // this.formSwiperState.setCurrentPacient(0);
-        // this.formSwiperState.setCurrentDoctor(0);
         this.formStore.setCurrentPacient(0);
         this.formStore.setCurrentDoctor(0);
     }
 
     public async close() {
-        // this.formSwiperState.setCurrentPacient(0);
-        // this.formSwiperState.setCurrentDoctor(0);
         this.formStore.setCurrentPacient(0);
         this.formStore.setCurrentDoctor(0);
 
+        const isFormValid = this.formService.getForm().valid;
         const formValue = this.formService.getForm().value;
+
+        // return await this.modalController.dismiss({
+        //     formValue,
+        // });
 
         return await this.modalController.dismiss({
             formValue,
+            dismissed: isFormValid,
         });
     }
 }

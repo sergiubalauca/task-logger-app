@@ -1,23 +1,18 @@
 import {
-    AfterViewChecked,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     CUSTOM_ELEMENTS_SCHEMA,
-    DoCheck,
     ElementRef,
     Input,
     OnDestroy,
     OnInit,
     ViewChild,
 } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { DailyWorkDoc, DateTimeService, SearcheableSelectModel } from '@shared';
 import { map, Observable, of, switchMap } from 'rxjs';
 import { SwiperOptions } from 'swiper';
 import { register } from 'swiper/element/bundle';
-import { FormSwipeStateService } from '../form/services';
 import { MultiStepFormService } from '../form/services/multi-step-form.service';
 import { WorkItemComponent } from '../form/containers/work-item/work-item.component';
 import { PacientComponent } from '../form/containers/pacient/pacient.component';
@@ -28,10 +23,7 @@ import { LogWorkFacade } from '@abstraction';
 import { RxDocument } from 'rxdb';
 import { RxLogWorkDocumentType } from '@core';
 
-const initSwiper = () => {
-    console.log('initSwiper');
-    return register();
-};
+const initSwiper = () => register();
 @Component({
     selector: 'app-swiper',
     templateUrl: './swiper.component.html',

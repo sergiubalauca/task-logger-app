@@ -34,7 +34,7 @@ export class LogWorkComponent implements OnInit {
 
         const modalData = await this.modalService.onDidDismiss();
 
-        console.log('GSB modal data: ', modalData);
+        console.log('GSB SAVE: ', modalData.data.dismissed);
 
         const docId = this.dailyWorkIdService.getDailyWorkId(
             new Date(event.detail.value)

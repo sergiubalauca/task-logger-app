@@ -30,23 +30,28 @@ export class MultiStepFormService {
 
     public buildFormWithData(dailyWork: DailyWorkDoc) {
         dailyWork.doctorGroup.forEach((doctor, doctorIdx) => {
-            // this.addDoctorControl();
-            // console.log('GSB: ', this.getdoctorArray());
+            // remove existing doctor controls
+            this.removeDoctorControl(doctorIdx);
             this.getdoctorArray().push(this.newDoctor());
             this.getDoctorFormGroupControls()[doctorIdx].patchValue({
                 doctor: doctor.doctor.name,
             });
 
             doctor.doctor.pacient.forEach((pacient, pacientIdx) => {
-                // this.addPatientControl(doctorIdx);
-                this.getPatientArray(pacientIdx).push(
-                    this.newPatient()
-                );
+                // remove existing pacient controls
+                this.removePatientControl(doctorIdx, pacientIdx);
+                this.getPatientArray(pacientIdx).push(this.newPatient());
                 this.getPatientControls(doctorIdx)[pacientIdx].patchValue({
                     patient: pacient.name,
                 });
 
                 pacient.workItemAndNumber.forEach((workItem, workItemIdx) => {
+                    // remove existing workItem controls
+                    this.removeWorkItemControl(
+                        doctorIdx,
+                        pacientIdx,
+                        workItemIdx
+                    );
                     this.getWorkItemArray(doctorIdx, pacientIdx).push(
                         this.newWorkItem()
                     );
@@ -55,7 +60,7 @@ export class MultiStepFormService {
                         workItemIdx
                     ].patchValue({
                         workItem: workItem.workItem.name,
-                        workItemNumber: workItem.numberOfWorkItems,
+                        numberOfWorkItems: workItem.numberOfWorkItems,
                     });
                 });
             });

@@ -5,22 +5,15 @@ import {
     FormsModule,
     ReactiveFormsModule,
 } from '@angular/forms';
-import {
-    DailyWorkDoc,
-    DateTimeService,
-    DOCTOR_COLLECTION_NAME,
-    SearcheableSelectModel,
-} from '@shared';
-import { map, Observable, of, switchMap } from 'rxjs';
+import { DOCTOR_COLLECTION_NAME, SearcheableSelectModel } from '@shared';
+import { Observable, of, switchMap } from 'rxjs';
 import { MultiStepFormService } from '../../services';
 import { DatePickerComponent } from '../../components/date-picker/date-picker.component';
 import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormReducer } from '../../custom-state/reducer/form.reducer';
-import { LogWorkFacade } from '@abstraction';
-import { RxDocument } from 'rxdb';
-import { RxLogWorkDocumentType } from '@database';
+import { FormSelector } from '../../custom-state/selector/form.selector';
 
 @Component({
     selector: 'app-doctor',
@@ -66,39 +59,30 @@ export class DoctorComponent implements OnInit {
 
     constructor(
         private multiStepFormService: MultiStepFormService,
-        private logWorkFacade: LogWorkFacade,
         private formStore: FormReducer,
-        private readonly dateTimeService: DateTimeService
+        private formSelectors: FormSelector
     ) {}
 
     ngOnInit() {
-        // const dailyWorkId = new Date(this.chosenDate).toUTCString();
-        const dailyWorkId = this.dateTimeService.getDailyWorkId(
-            new Date(this.chosenDate)
-        );
-        this.doctorGroupControls = this.logWorkFacade
-            .getOne$({ id: dailyWorkId })
-            .pipe(
-                map(
-                    (dailyWork: DailyWorkDoc) =>
-                        dailyWork as RxDocument<RxLogWorkDocumentType>
-                ),
-                switchMap((dailyWork) =>
-                    of({
-                        // form: this.multiStepFormService.initMultiStepForm(
-                        //     dailyWork
-                        // ),
+        this.doctorGroupControls =
+            this.formSelectors.formAlreadySavedForDate$.pipe(
+                switchMap((formAlreadySavedForDate) => {
+                    if (!formAlreadySavedForDate) {
+                        this.multiStepFormService.addDoctorControl();
+                    }
+
+                    return of({
                         form: this.form,
                         doctorFormGroup:
                             this.multiStepFormService.getDoctorFormGroup(),
                         doctorFormGroupControls:
                             this.multiStepFormService.getDoctorFormGroupControls(),
                         timeGroup: this.multiStepFormService.getTimeFormGroup(),
-                    })
-                )
+                    });
+                })
             );
 
-        this.multiStepFormService.addDoctorControl();
+        // this.multiStepFormService.addDoctorControl();
     }
 
     public addDoctorControl() {

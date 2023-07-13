@@ -61,8 +61,6 @@ export class SetupWorkItemComponent implements OnInit {
 
         const modalData = await this.modalService.onDidDismiss();
 
-        console.log('GSB modal data: ', modalData);
-
         if (modalData.data && modalData.data.dismissed) {
             this.workItemFacade.addOne(modalData.data.workItem);
         }

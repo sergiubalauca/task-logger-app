@@ -15,5 +15,10 @@ export class FormSelector implements Selector {
         shareReplay(1)
     );
 
+    public formAlreadySavedForDate$: Observable<boolean> = this.store.data$.pipe(
+        map((state: FormState) => state.formAlreadySavedForDate),
+        shareReplay(1)
+    );
+
     constructor(private readonly store: FormReducer) {}
 }

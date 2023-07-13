@@ -3,19 +3,18 @@ import {
     AbstractControl,
     FormArray,
     FormBuilder,
-    FormControl,
     FormGroup,
     Validators,
 } from '@angular/forms';
 import { DailyWorkDoc } from '@shared';
 import { Observable, of } from 'rxjs';
-import { RxLogWorkDocumentType } from 'src/app/core/database/schemas';
+import { FormReducer } from '../custom-state/reducer/form.reducer';
 
 @Injectable()
 export class MultiStepFormService {
     private multiStepLogWorkForm: FormGroup;
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder, private formStore: FormReducer) {}
 
     public setPacientForm(doctorIdx: number): Observable<{
         doctorIdx: number;
@@ -40,7 +39,9 @@ export class MultiStepFormService {
 
             doctor.doctor.pacient.forEach((pacient, pacientIdx) => {
                 // this.addPatientControl(doctorIdx);
-                this.getPatientArray(pacientIdx).push(this.newPatient());
+                this.getPatientArray(pacientIdx).push(
+                    this.newPatient()
+                );
                 this.getPatientControls(doctorIdx)[pacientIdx].patchValue({
                     patient: pacient.name,
                 });
@@ -62,6 +63,7 @@ export class MultiStepFormService {
     }
 
     public initMultiStepForm(dailyWork: any) {
+        this.formStore.setFormAlreadySavedForDate(false);
         if (this.multiStepLogWorkForm) {
             return this.multiStepLogWorkForm;
         }
@@ -80,8 +82,9 @@ export class MultiStepFormService {
             }),
         });
         if (dailyWork) {
-            // this.buildFormWithData(dailyWork);
-            // return this.multiStepLogWorkForm;
+            this.formStore.setFormAlreadySavedForDate(true);
+            this.buildFormWithData(dailyWork);
+            return this.multiStepLogWorkForm;
         }
         return this.multiStepLogWorkForm;
     }
@@ -108,6 +111,13 @@ export class MultiStepFormService {
         // this.getPatientArray(doctorIndex).clear();
         return this.getDoctorFormGroupControls().splice(doctorIndex, 1);
     }
+
+    public newDoctorWithoutPacients = () =>
+        this.fb.group({
+            doctor: this.fb.control(null, {
+                validators: [Validators.required],
+            }),
+        });
 
     public newDoctor = () =>
         this.fb.group({
@@ -155,24 +165,23 @@ export class MultiStepFormService {
     }
 
     public getPatientGroupFormGroup(doctorIndex?: number) {
-        const doctorArray = this.getDoctorFormGroup().controls
-            .doctorArray as FormArray;
+        const doctorArray = (this.getDoctorFormGroup()?.controls?.doctorArray ??
+            []) as FormArray;
         const doctorFormGroup = doctorArray.controls[doctorIndex] as FormGroup;
         return doctorFormGroup.controls.patientGroup as FormGroup;
     }
 
     public getPatientControls(doctorIdx: number) {
         const patientControls = (
-            this.getPatientGroupFormGroup(doctorIdx).controls
-                .patientArray as FormArray
+            (this.getPatientGroupFormGroup(doctorIdx)?.controls?.patientArray ??
+                []) as FormArray
         ).controls;
         return patientControls;
     }
 
     public getPatientArray(index: number) {
-        const x = this.getPatientGroupFormGroup(index).get(
-            'patientArray'
-        ) as FormArray;
+        const x = (this.getPatientGroupFormGroup(index)?.get('patientArray') ??
+            []) as FormArray;
         // const x = this.getPatientControls(index);
         return x;
     }
@@ -187,6 +196,13 @@ export class MultiStepFormService {
             1
         );
     }
+
+    public newPatientWithoutWorkItems = () =>
+        this.fb.group({
+            patient: this.fb.control(null, {
+                validators: [Validators.required],
+            }),
+        });
 
     public newPatient = () =>
         this.fb.group({

@@ -59,8 +59,6 @@ export class SetupDoctorComponent implements OnInit {
 
         const modalData = await this.modalService.onDidDismiss();
 
-        console.log('GSB modal data: ', modalData);
-
         if (modalData.data && modalData.data.dismissed) {
             this.doctorFacade.addOne(modalData.data.doctor);
         }

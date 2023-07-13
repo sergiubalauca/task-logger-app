@@ -17,13 +17,14 @@ export class LogWorkRepository {
         if (database) {
             const logWorkCollection =
                 this.databaseProvider?.rxDatabaseInstance.logwork;
-            const logWork: Observable<RxDocument> = logWorkCollection
-                .findOne()
+            const logWork: Observable<RxDocument[]> = logWorkCollection
+                .find()
                 .where('id')
                 .eq(params.id).$;
 
             return logWork.pipe(
-                map((doc) => {
+                map((docs) => {
+                    const doc = docs[0];
                     const res =
                         doc?.toJSON() as DeepReadonlyObject<DailyWorkDoc>;
                     return res ?? null;

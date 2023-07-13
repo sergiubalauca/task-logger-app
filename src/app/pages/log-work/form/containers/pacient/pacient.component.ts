@@ -1,7 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { map, Observable, of, switchMap } from 'rxjs';
-import { FormSwipeStateService, MultiStepFormService } from '../../services';
+import {
+    AbstractControl,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+} from '@angular/forms';
+import { Observable, of, switchMap } from 'rxjs';
+import { MultiStepFormService } from '../../services';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormReducer } from '../../custom-state/reducer/form.reducer';
@@ -31,11 +36,8 @@ export class PacientComponent implements OnInit {
         patientGroup: FormGroup;
         patientControls: AbstractControl[];
         doctorIdx: number;
-    }> =
-    // this.formSwiperState.getCurrentDoctor()
-        this.formSelectors.currentDoctor$
-        .pipe(
-        switchMap((idx: number ) => {
+    }> = this.formSelectors.currentDoctor$.pipe(
+        switchMap((idx: number) => {
             const result: {
                 patientGroup: FormGroup;
                 patientControls: AbstractControl[];
@@ -43,12 +45,9 @@ export class PacientComponent implements OnInit {
             } = {
                 doctorIdx: idx,
                 patientGroup:
-                    this.multiStepFormService.getPatientGroupFormGroup(
-                        idx
-                    ),
-                patientControls: this.multiStepFormService.getPatientControls(
-                    idx
-                ),
+                    this.multiStepFormService.getPatientGroupFormGroup(idx),
+                patientControls:
+                    this.multiStepFormService.getPatientControls(idx),
             };
 
             return of(result);
@@ -57,92 +56,21 @@ export class PacientComponent implements OnInit {
 
     constructor(
         private multiStepFormService: MultiStepFormService,
-        // private formSwiperState: FormSwipeStateService,
         private formStore: FormReducer,
         private formSelectors: FormSelector
     ) {}
 
-    ngOnInit() {
-        // this.patientGroupControls = this.formSwiperState
-        //     .getCurrentDoctor()
-        //     .pipe(
-        //         switchMap((idx: { index: number }) => {
-        //             const result: {
-        //                 patientGroup: FormGroup;
-        //                 patientControls: AbstractControl[];
-        //                 doctorIdx: number;
-        //             } = {
-        //                 doctorIdx: idx.index,
-        //                 patientGroup:
-        //                     this.multiStepFormService.getPatientGroupFormGroup(
-        //                         idx.index
-        //                     ),
-        //                 patientControls:
-        //                     this.multiStepFormService.getPatientControls(
-        //                         idx.index
-        //                     ),
-        //             };
-        //             return of(result);
-        //         })
-        //     );
-    }
+    ngOnInit() {}
 
     public removePatientControl(index: number, doctorIdx: number) {
         this.multiStepFormService.removePatientControl(doctorIdx, index);
-        // this.patientGroupControls = this.formSwiperState
-        //     .getCurrentDoctor()
-        //     .pipe(
-        //         switchMap((idx: { index: number }) => {
-        //             const result: {
-        //                 patientGroup: FormGroup;
-        //                 patientControls: AbstractControl[];
-        //                 doctorIdx: number;
-        //             } = {
-        //                 doctorIdx: idx.index,
-        //                 patientGroup:
-        //                     this.multiStepFormService.getPatientGroupFormGroup(
-        //                         idx.index
-        //                     ),
-        //                 patientControls:
-        //                     this.multiStepFormService.getPatientControls(
-        //                         idx.index
-        //                     ),
-        //             };
-
-        //             return of(result);
-        //         })
-        //     );
     }
 
     public addPatientControl(doctorIdx: number) {
         this.multiStepFormService.addPatientControl(doctorIdx);
-        // this.patientGroupControls = this.formSwiperState
-        //     .getCurrentDoctor()
-        //     .pipe(
-        //         switchMap((idx: { index: number }) => {
-        //             const result: {
-        //                 patientGroup: FormGroup;
-        //                 patientControls: AbstractControl[];
-        //                 doctorIdx: number;
-        //             } = {
-        //                 doctorIdx: idx.index,
-        //                 patientGroup:
-        //                     this.multiStepFormService.getPatientGroupFormGroup(
-        //                         idx.index
-        //                     ),
-        //                 patientControls:
-        //                     this.multiStepFormService.getPatientControls(
-        //                         idx.index
-        //                     ),
-        //             };
-
-        //             return of(result);
-        //         })
-        //     );
     }
 
     public onGoToWorkItem(doctorIdx: number, pacientIdx: number) {
-        // this.formSwiperState.setCurrentPacient(pacientIdx);
         this.formStore.setCurrentPacient(pacientIdx);
         this.goToWorkItem.emit({ doctorIdx, pacientIdx });
     }

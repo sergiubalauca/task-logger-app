@@ -10,6 +10,8 @@ export class DateTimeService {
         if (!date) {
             return null;
         }
-        return date.getDay() + '-' + date.getMonth() + '-' + date.getFullYear();
+        return (
+            date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear()
+        );
     }
 }

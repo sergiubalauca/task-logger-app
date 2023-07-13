@@ -8,6 +8,7 @@ export class FormReducer implements Reducer {
     readonly initialState: FormState = {
         currentDoctor: 0,
         currentPacient: 0,
+        formAlreadySavedForDate: false,
     };
 
     formState: StateSubject<FormState> = new StateSubject<FormState>(
@@ -34,6 +35,13 @@ export class FormReducer implements Reducer {
         this.formState.update({
             ...this.formState.value,
             currentPacient: value,
+        });
+    };
+
+    public setFormAlreadySavedForDate = (value: boolean): void => {
+        this.formState.update({
+            ...this.formState.value,
+            formAlreadySavedForDate: value,
         });
     };
 

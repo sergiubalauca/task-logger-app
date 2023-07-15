@@ -81,39 +81,17 @@ export class DoctorComponent implements OnInit {
                     });
                 })
             );
-
-        // this.multiStepFormService.addDoctorControl();
     }
 
     public addDoctorControl() {
-        // this.formSwipeState.setCurrentPacient(0);
         this.formStore.setCurrentPacient(0);
         this.multiStepFormService.addDoctorControl();
-
-        // this.doctorGroupControls = of({
-        //     form: this.multiStepFormService.initMultiStepForm(),
-        //     doctorFormGroup: this.multiStepFormService.getDoctorFormGroup(),
-        //     doctorFormGroupControls:
-        //         this.multiStepFormService.getDoctorFormGroupControls(),
-        //     timeGroup: this.multiStepFormService.getTimeFormGroup(),
-        // });
     }
 
     public removeDoctorControl(index: number): void {
-        // this.formSwipeState.setCurrentDoctor(0);
         this.formStore.setCurrentDoctor(0);
-        // this.formSwipeState.setCurrentPacient(0);
         this.formStore.setCurrentPacient(0);
         this.multiStepFormService.removeDoctorControl(index);
-        // this.doctorGroupControls = this.doctorGroupControls.pipe(
-        //     map((dgc) => ({
-        //         ...dgc,
-        //         doctorFormGroup: this.multiStepFormService.getDoctorFormGroup(),
-        //         doctorFormGroupControls:
-        //             this.multiStepFormService.getDoctorFormGroupControls(),
-        //         timeGroup: this.multiStepFormService.getTimeFormGroup(),
-        //     }))
-        // );
     }
 
     public onDoctorSelected(
@@ -121,16 +99,13 @@ export class DoctorComponent implements OnInit {
         formIndex: number
     ): void {
         if (event.value && event.value !== '') {
-            // this.formSwipeState.setCurrentDoctor(formIndex);
             this.formStore.setCurrentDoctor(formIndex);
             this.doctorSelected.emit({ value: event, formIndex });
         }
     }
 
     public onGoToDoctor(index: number): void {
-        // this.formSwipeState.setCurrentDoctor(index);
         this.formStore.setCurrentDoctor(index);
-
         this.goToDoctor.emit(index);
     }
 }

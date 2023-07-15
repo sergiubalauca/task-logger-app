@@ -12,6 +12,7 @@
                 ion-row {
                     display: flex;
                     align-items: center;
+                    justify-content: center;
 
                     app-date-picker {
                         flex: 1;

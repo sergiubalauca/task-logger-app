@@ -17,16 +17,18 @@
                         ></app-search-select-input>
                     </ion-item>
 
-                    <ion-button (click)="onGoToDoctor(i)">
-                        <ion-icon name="arrow-forward-outline"></ion-icon>
-                    </ion-button>
-                    <ion-button
-                        *ngIf="dgc.doctorFormGroupControls.length > 1"
-                        color="danger"
-                        (click)="removeDoctorControl(i)"
-                    >
-                        <ion-icon name="remove"></ion-icon>
-                    </ion-button>
+                    <div>
+                        <ion-button (click)="onGoToDoctor(i)">
+                            <ion-icon name="arrow-forward-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button
+                            *ngIf="dgc.doctorFormGroupControls.length > 1"
+                            color="danger"
+                            (click)="removeDoctorControl(i)"
+                        >
+                            <ion-icon name="remove"></ion-icon>
+                        </ion-button>
+                    </div>
                 </ion-row>
 
                 <ion-button (click)="addDoctorControl()">

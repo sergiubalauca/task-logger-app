@@ -27,7 +27,7 @@ export const CHILD_ROUTES = [
 const routes: Routes = [
     {
         path: '',
-        component: SelfPage,
+        component: PlaygroundPage// SelfPage,
     },
     {
         path: 'test3-child',

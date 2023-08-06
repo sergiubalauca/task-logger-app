@@ -8,11 +8,13 @@ import { ApiModule } from './api';
 import { AuthModule } from './auth';
 import { AuthenticationTokenProvider } from './auth/providers';
 import { AuthGuardService } from './auth/services';
+import { WebErrorHandlerModule } from './custom-error-handler/global-error.module';
 import { RxDatabaseModule } from './database/rx-database.module';
 
 @NgModule({
     declarations: [],
     imports: [
+        WebErrorHandlerModule,
         RxDatabaseModule,
         ApiModule.forRoot({
             environment,

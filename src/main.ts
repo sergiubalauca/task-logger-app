@@ -26,10 +26,16 @@ import {
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UserService } from './app/pages/playground/services';
 import { PayLocationService } from './app/pages/playground/self/services/pay-location.service';
+import { Network } from '@awesome-cordova-plugins/network/ngx';
+import { ConnectivityService } from './app/core/offline/services/connectivity.service';
+import { ConnectivityStateService } from './app/core/offline/services/connectivity-state.service';
 
 if (environment.production) {
     enableProdMode();
 }
+
+export const initUserProviderFactory = (provider: ConnectivityService) => () =>
+    provider.startCheckConnectivity();
 
 export const appInitializerFactory =
     (translate: TranslateService, injector: Injector) => () =>
@@ -88,10 +94,19 @@ bootstrapApplication(AppComponent, {
         provideHttpClient(withInterceptorsFromDi()),
         {
             provide: APP_INITIALIZER,
+            useFactory: initUserProviderFactory,
+            deps: [ConnectivityService, Network, ConnectivityStateService],
+            multi: true,
+        },
+        {
+            provide: APP_INITIALIZER,
             useFactory: appInitializerFactory,
             deps: [TranslateService, Injector],
             multi: true,
         },
         TranslateService,
+        Network,
+        ConnectivityService,
+        ConnectivityStateService,
     ],
 }).catch((err) => console.log(err));

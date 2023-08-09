@@ -6,7 +6,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ConnectivityState } from './connectivity-state.model';
 
-@Injectable()
+@Injectable(
+    { providedIn: 'root'}
+)
 export class ConnectivityStateService {
     private connectivitySubject: BehaviorSubject<ConnectivityState> =
         new BehaviorSubject(new ConnectivityState('unknown'));

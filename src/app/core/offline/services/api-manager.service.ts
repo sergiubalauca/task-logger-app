@@ -70,21 +70,23 @@ export class OfflineManagerService {
         };
         // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
 
-        return this.storage.get(STORAGE_REQ_KEY).then((storedOperations) => {
-            let storedObj = JSON.parse(storedOperations);
+        const storeOperations = await this.storage.get(STORAGE_REQ_KEY);
+        let storedObj = JSON.parse(storeOperations);
+        if (storedObj) {
+            storedObj.push(action);
+        } else {
+            storedObj = [action];
+        }
 
-            if (storedObj) {
-                storedObj.push(action);
-            } else {
-                storedObj = [action];
-            }
-            // Save old & new local transactions back to Storage
-            return this.storage.set(STORAGE_REQ_KEY, JSON.stringify(storedObj));
-        });
+        // Save old & new local transactions back to Storage
+        return await this.storage.set(
+            STORAGE_REQ_KEY,
+            JSON.stringify(storedObj)
+        );
     }
 
     public sendRequests(operations: StoredRequest[]) {
-        const obs = [];
+        const obs: Observable<ArrayBuffer>[] = [];
 
         for (const op of operations) {
             console.log('Make one request: ', op);

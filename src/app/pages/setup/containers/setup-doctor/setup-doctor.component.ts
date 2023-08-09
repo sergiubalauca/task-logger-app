@@ -10,7 +10,8 @@ import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { map, Observable } from 'rxjs';
 import { AddEditDoctorComponent } from './add-edit-doctor.ts/add-edit-doctor.component';
-import { DoctorFacade } from '@abstraction';
+import { DoctorApiServce, DoctorFacade } from '@abstraction';
+import { ConnectivityStateService } from '@core';
 
 @Component({
     selector: 'app-setup-doctor',
@@ -24,14 +25,16 @@ import { DoctorFacade } from '@abstraction';
         AddEditDoctorComponent,
         ItemSlidingCardComponent,
     ],
-    providers: [ModalService],
+    providers: [ModalService, DoctorApiServce],
 })
 export class SetupDoctorComponent implements OnInit {
     public doctors$: Observable<ItemSlidingProps[]>;
-
+    public isOffline$ = this.connectivityStateService.connectivity$.pipe(map((status) => status));
     constructor(
         private readonly doctorFacade: DoctorFacade,
-        private readonly modalService: ModalService
+        private readonly modalService: ModalService,
+        private readonly doctorApiService: DoctorApiServce,
+        private readonly connectivityStateService: ConnectivityStateService
     ) {}
 
     ngOnInit() {
@@ -60,7 +63,8 @@ export class SetupDoctorComponent implements OnInit {
         const modalData = await this.modalService.onDidDismiss();
 
         if (modalData.data && modalData.data.dismissed) {
-            this.doctorFacade.addOne(modalData.data.doctor);
+            await this.doctorFacade.addOne(modalData.data.doctor);
+            this.doctorApiService.createDoctor(modalData.data.doctor).subscribe();
         }
     }
 

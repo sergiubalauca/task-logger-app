@@ -1,5 +1,6 @@
-import { UserProvider } from '@abstraction';
+import { DoctorApiServce, UserProvider } from '@abstraction';
 import { NgModule } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 import { environment } from 'src/environments/environment';
 import { AuthFacade } from '../abstraction/auth-facade';
 import { LogWorkFacade, WorkItemFacade } from '../abstraction/database';
@@ -32,6 +33,8 @@ import { RxDatabaseModule } from './database/rx-database.module';
         AlertService,
         AuthFacade,
         UserProvider,
+        DoctorApiServce,
+        Storage
     ],
 })
 export class CoreModule {}

@@ -29,6 +29,7 @@ import { PayLocationService } from './app/pages/playground/self/services/pay-loc
 import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { ConnectivityService } from './app/core/offline/services/connectivity.service';
 import { ConnectivityStateService } from './app/core/offline/services/connectivity-state.service';
+import { Storage } from '@ionic/storage';
 
 if (environment.production) {
     enableProdMode();
@@ -37,7 +38,10 @@ if (environment.production) {
 export const initUserProviderFactory = (provider: ConnectivityService) => () =>
     provider.startCheckConnectivity();
 
-export const appInitializerFactory =
+export const appIonicStoragesInitializer = (storage: Storage) => () =>
+    storage.create();
+
+export const appInitializerTranslateFactory =
     (translate: TranslateService, injector: Injector) => () =>
         new Promise<any>((resolve: any) => {
             const locationInitialized = injector.get(
@@ -100,10 +104,17 @@ bootstrapApplication(AppComponent, {
         },
         {
             provide: APP_INITIALIZER,
-            useFactory: appInitializerFactory,
+            useFactory: appInitializerTranslateFactory,
             deps: [TranslateService, Injector],
             multi: true,
         },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: appIonicStoragesInitializer,
+            deps: [Storage],
+            multi: true,
+        },
+        Storage,
         TranslateService,
         Network,
         ConnectivityService,

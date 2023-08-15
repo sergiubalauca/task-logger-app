@@ -1,21 +1,18 @@
 import { Injectable, NgZone } from '@angular/core';
-// import { NetworkStatus } from '@capacitor/core';
 import { ConnectionType, ConnectionStatus } from '@capacitor/network';
-import { ToastController } from '@ionic/angular';
+import { ToastService } from '@shared';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ConnectivityState } from './connectivity-state.model';
 
-@Injectable(
-    { providedIn: 'root'}
-)
+@Injectable({ providedIn: 'root' })
 export class ConnectivityStateService {
     private connectivitySubject: BehaviorSubject<ConnectivityState> =
         new BehaviorSubject(new ConnectivityState('unknown'));
 
     public constructor(
         private ngZone: NgZone,
-        private toastController: ToastController
+        private toastService: ToastService
     ) {}
 
     public get connectivity$(): Observable<ConnectivityState> {
@@ -41,12 +38,10 @@ export class ConnectivityStateService {
                 '(' + status.connectionType + ')'
             );
 
-            const toast = await this.toastController.create({
-                message: `You are now ${newType}`,
-                duration: 3000,
-                position: 'bottom',
-            });
-            await toast.present();
+            await this.toastService.presentSuccess(
+                `You are connected to: ${newType}`,
+                3000
+            );
         });
     }
 

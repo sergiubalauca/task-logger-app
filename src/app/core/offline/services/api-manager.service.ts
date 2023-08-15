@@ -3,7 +3,7 @@ import { Storage } from '@ionic/storage';
 import { Observable, from, of, forkJoin } from 'rxjs';
 import { switchMap, finalize } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
+import { ToastService } from '@shared';
 
 const STORAGE_REQ_KEY = 'storedreq';
 
@@ -22,7 +22,7 @@ export class OfflineManagerService {
     constructor(
         private storage: Storage,
         private http: HttpClient,
-        private toastController: ToastController
+        private toastService: ToastService
     ) {}
 
     public checkForEvents(): Observable<any> {
@@ -32,12 +32,10 @@ export class OfflineManagerService {
                 if (storedObj && storedObj.length > 0) {
                     return this.sendRequests(storedObj).pipe(
                         finalize(async () => {
-                            const toast = await this.toastController.create({
-                                message: `Local data succesfully synced to API!`,
-                                duration: 3000,
-                                position: 'bottom',
-                            });
-                            await toast.present();
+                            await this.toastService.presentSuccess(
+                                'Local data succesfully synced to API!',
+                                3000
+                            );
 
                             this.storage.remove(STORAGE_REQ_KEY);
                         })
@@ -51,12 +49,10 @@ export class OfflineManagerService {
     }
 
     public async storeRequest(url, type, data) {
-        const toast = await this.toastController.create({
-            message: `Your data is stored locally because you seem to be offline.`,
-            duration: 3000,
-            position: 'bottom',
-        });
-        await toast.present();
+        await this.toastService.presentError(
+            'Your data is stored locally because you seem to be offline.',
+            3000
+        );
 
         const action: StoredRequest = {
             url,

@@ -16,13 +16,17 @@ export class ConnectivityService {
 
     private initializeNetworkStatus(): void {
         Network.getStatus().then((status) => {
-            this.connectivityStateService.changeWifiConnectivity(status);
+            this.connectivityStateService
+                .changeWifiConnectivity(status)
+                .stopSubscription();
         });
     }
 
     private addListenertOnStatusChange(): void {
         Network.addListener('networkStatusChange', (status) => {
-            this.connectivityStateService.changeWifiConnectivity(status);
+            this.connectivityStateService
+                .changeWifiConnectivity(status)
+                .stopSubscription();
         });
 
         this.ngZone.runOutsideAngular(() => {
@@ -30,9 +34,9 @@ export class ConnectivityService {
             // this is why we will check every 5 seconds for accuracy
             setInterval(() => {
                 Network.getStatus().then((status) => {
-                    this.connectivityStateService.changeWifiConnectivity(
-                        status
-                    );
+                    this.connectivityStateService
+                        .changeWifiConnectivity(status)
+                        .stopSubscription();
                 });
             }, 5000);
         });

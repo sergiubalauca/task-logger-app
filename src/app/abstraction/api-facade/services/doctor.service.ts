@@ -27,6 +27,7 @@ export class DoctorApiServce {
     public createDoctor(doctor: Doctor): Observable<any> {
         return this.networkService.connectivity$.pipe(
             switchMap((status) => {
+                console.log('GSB: ', status);
                 if (status.isConnected) {
                     return this.httpService.makePost(
                         `${this.apiURL}/register`,

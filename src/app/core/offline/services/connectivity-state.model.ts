@@ -5,7 +5,7 @@ export class ConnectivityState {
     public get isConnected(): boolean | undefined {
         switch (this.connectionType) {
             case 'unknown':
-                return undefined;
+                return true;
             case 'none':
                 return false;
             default:

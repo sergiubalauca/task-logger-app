@@ -4,6 +4,7 @@ import { Observable, from, of, forkJoin } from 'rxjs';
 import { switchMap, finalize } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '@shared';
+import { HttpOperations, HttpService } from '../../api';
 
 const STORAGE_REQ_KEY = 'storedreq';
 
@@ -22,6 +23,7 @@ export class OfflineManagerService {
     constructor(
         private storage: Storage,
         private http: HttpClient,
+        private httpService: HttpService,
         private toastService: ToastService
     ) {}
 
@@ -86,8 +88,24 @@ export class OfflineManagerService {
 
         for (const op of operations) {
             console.log('Make one request: ', op);
-            const oneObs = this.http.request(op.type, op.url, op.data);
-            obs.push(oneObs);
+            switch (op.type) {
+                case HttpOperations.GET:
+                    break;
+                case HttpOperations.POST:
+                    obs.push(this.httpService.makePost(op.url, op.data));
+                    break;
+                case HttpOperations.PATCH:
+                    break;
+                case HttpOperations.DELETE:
+                    break;
+                case HttpOperations.PUT:
+                    break;
+
+                default:
+                    break;
+            }
+            // const oneObs = this.http.request(op.type, op.url, op.data);
+            // obs.push(oneObs);
         }
 
         // Send out all local events and return once they are finished

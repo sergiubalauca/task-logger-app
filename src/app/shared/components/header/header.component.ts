@@ -1,11 +1,15 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
 } from '@angular/core';
-import { NavController, IonicModule } from '@ionic/angular';
+import { NavController, IonicModule, PopoverController } from '@ionic/angular';
 import { NgIf } from '@angular/common';
+import { SettingsPopoverComponent } from '../settings-popover/settings-popover.component';
+import { AuthFacade } from '@abstraction';
 
 @Component({
     selector: 'app-header',
@@ -14,20 +18,40 @@ import { NgIf } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [IonicModule, NgIf],
+    providers: [AuthFacade],
 })
 export class HeaderComponent implements OnInit {
-  @Input() title: string;
-  @Input() public headerSubtitle: string;
-  @Input() public backBtnEnabled: boolean;
-  @Input() public backBtnIconClose: boolean;
+    @Input() title: string;
+    @Input() public headerSubtitle: string;
+    @Input() public backBtnEnabled: boolean;
+    @Input() public backBtnIconClose: boolean;
 
-  public constructor(private navController: NavController) {}
+    public constructor(
+        private navController: NavController,
+        public popoverController: PopoverController,
+        private authFacade: AuthFacade
+    ) {}
 
-  public ngOnInit(): void {}
+    public ngOnInit(): void {}
 
-  public goBack(): void {
-    this.navController.pop();
-  }
+    public async goBack(): Promise<void> {
+        await this.navController.pop();
+    }
 
-  public ngOnDestroy(): void {}
+    public async presentPopover(event: Event) {
+        const popover = await this.popoverController.create({
+            component: SettingsPopoverComponent,
+            event,
+        });
+
+        await popover.present();
+
+        const { data } = await popover.onDidDismiss();
+
+        if (data?.logout) {
+          await this.authFacade.logoutWithConfirmation();
+        }
+    }
+
+    public ngOnDestroy(): void {}
 }

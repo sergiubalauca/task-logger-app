@@ -10,6 +10,7 @@ import { NavController, IonicModule, PopoverController } from '@ionic/angular';
 import { NgIf } from '@angular/common';
 import { SettingsPopoverComponent } from '../settings-popover/settings-popover.component';
 import { AuthFacade } from '@abstraction';
+import { LogOutModel } from '../../models';
 
 @Component({
     selector: 'app-header',
@@ -49,7 +50,11 @@ export class HeaderComponent implements OnInit {
         const { data } = await popover.onDidDismiss();
 
         if (data?.logout) {
-          await this.authFacade.logoutWithConfirmation();
+            const loggedInUser = localStorage.getItem('USER_EMAIL');
+            const logOutModel: LogOutModel = {
+                email: loggedInUser,
+            };
+            await this.authFacade.logoutWithConfirmation(logOutModel);
         }
     }
 

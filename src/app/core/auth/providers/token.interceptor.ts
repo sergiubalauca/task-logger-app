@@ -16,7 +16,7 @@ export class TokenInterceptor implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         if (
-            req.url.indexOf('/auth/authenticate') > -1 ||
+            req.url.indexOf('/auth/login') > -1 ||
             req.url.indexOf('/auth/refresh') > -1
         ) {
             return next.handle(req);

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { canActivateTeam } from './core/auth';
+import { isLoggedIn } from './core/auth';
 import { LogInPage } from './pages/login/log-in.page';
 
 const routes: Routes = [
@@ -15,7 +15,7 @@ const routes: Routes = [
         path: 'home',
         loadChildren: () =>
             import('./pages/home/home.module').then((m) => m.HomeModule),
-        canActivate: [canActivateTeam],
+        canActivate: [isLoggedIn],
     },
     {
         path: '',

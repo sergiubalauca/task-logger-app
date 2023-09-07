@@ -1,5 +1,7 @@
-<app-header [title]="'Sinziana'" [backBtnEnabled]="true"></app-header>
+<app-header [title]="'Log Work'" [backBtnEnabled]="true"></app-header>
 
 <ion-content class="app-inner-padding">
-    <ion-datetime (ionChange)="selectDate($event)"></ion-datetime>
+    <ion-item
+        ><ion-datetime (ionChange)="selectDate($event)"></ion-datetime
+    ></ion-item>
 </ion-content>

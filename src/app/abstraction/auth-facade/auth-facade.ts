@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@core';
-import { AuthenticationResult, LoginModel } from '@shared';
+import { AuthenticationResult, LoginModel, LogOutModel } from '@shared';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -11,12 +11,12 @@ export class AuthFacade {
         return this.authService.isAuthenticated();
     }
 
-    public async logoutWithConfirmation(): Promise<void> {
-        return await this.authService.logoutWithConfirmation();
+    public async logoutWithConfirmation(loginModel: LogOutModel): Promise<void> {
+        return await this.authService.logoutWithConfirmation(loginModel);
     }
 
-    public async logout(): Promise<void> {
-        return await this.authService.logout();
+    public async logout(loginModel: LogOutModel): Promise<void> {
+        return await this.authService.logout(loginModel);
     }
 
     public login(loginModel: LoginModel): Observable<AuthenticationResult> {

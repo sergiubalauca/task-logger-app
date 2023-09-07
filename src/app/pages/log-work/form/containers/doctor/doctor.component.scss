@@ -4,18 +4,27 @@
         flex-direction: column;
 
         ion-item-group {
-            :first-of-type {
+            &:first-of-type {
                 max-height: 50vh;
                 overflow-y: auto;
             }
             ion-grid {
                 ion-row {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
+                    padding: 5px;
+                    ion-col {
+                        &.bordered {
+                            border-radius: 8px;
+                            border: solid 2px;
+                            border-color: var(--ion-color-light-09);
+                        }
 
-                    app-date-picker {
-                        flex: 1;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        app-date-picker {
+                            flex: 1;
+                        }
                     }
                 }
             }

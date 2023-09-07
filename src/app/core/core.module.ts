@@ -9,6 +9,7 @@ import { AlertService } from '../shared/alert';
 import { ApiModule } from './api';
 import { AuthModule } from './auth';
 import { AuthenticationTokenProvider } from './auth/providers';
+import { RefreshTokenProvider } from './auth/providers/refresh-token-provider.api';
 import { AuthGuardService } from './auth/services';
 import { WebErrorHandlerModule } from './custom-error-handler/global-error.module';
 import { RxDatabaseModule } from './database/rx-database.module';
@@ -23,6 +24,7 @@ import { RxDatabaseModule } from './database/rx-database.module';
         }),
         AuthModule.forRoot({
             tokenProvider: AuthenticationTokenProvider,
+            refreshTokenProvider: RefreshTokenProvider,
         }),
     ],
     providers: [
@@ -34,7 +36,7 @@ import { RxDatabaseModule } from './database/rx-database.module';
         AuthFacade,
         UserProvider,
         DoctorApiServce,
-        Storage
+        Storage,
     ],
 })
 export class CoreModule {}

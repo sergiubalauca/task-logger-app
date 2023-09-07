@@ -9,8 +9,10 @@ import {
     AlertService,
     AuthenticationResult,
     LoginModel,
+    LogOutModel,
     UserStorageService,
 } from '@shared';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -38,14 +40,14 @@ export class AuthService {
         return false;
     }
 
-    public async logoutWithConfirmation() {
+    public async logoutWithConfirmation(loginModel: LogOutModel) {
         const yesButton = {
             text: 'Yes',
             handler: async () => {
                 const loader = await this.loadingController.create();
                 await loader.present();
-                await this.logout();
-                loader.dismiss();
+                await this.logout(loginModel);
+                await loader.dismiss();
             },
         };
         const stayButton = {
@@ -61,9 +63,26 @@ export class AuthService {
         );
     }
 
-    public async logout() {
+    public async logout(loginModel?: LogOutModel) {
+        await firstValueFrom(
+            this.httpService.makePost(
+                `${this.authenticateEndpoint}/logout`,
+                loginModel
+            )
+        );
         this.tokenProvider.removeToken();
-        this.navController.navigateRoot('login');
+        await this.navController.navigateRoot('login');
+    }
+
+    public async forceLogout(loginModel?: LogOutModel) {
+        await firstValueFrom(
+            this.httpService.makePost(
+                `${this.authenticateEndpoint}/force-logout`,
+                loginModel
+            )
+        );
+        this.tokenProvider.removeToken();
+        await this.navController.navigateRoot('login');
     }
 
     public login(loginModel: LoginModel): Observable<AuthenticationResult> {

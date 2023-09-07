@@ -34,10 +34,11 @@ export class HttpService {
     public makePost<T, U>(
         urlPath: string,
         body: U,
-        responseType: any = 'json'
+        responseType: any = 'json',
+        extraHeaders?: { [name: string]: string }
     ): Observable<T | never> {
         return this.http.post<T>(this.url + urlPath, body, {
-            headers: this.createHeaders(),
+            headers: this.createHeaders(extraHeaders),
             withCredentials: false,
             responseType,
         });
@@ -72,10 +73,11 @@ export class HttpService {
             .addHeader('Accept', 'application/json')
             .addHeader('Content-Type', 'application/json');
         if (headers) {
+            // eslint-disable-next-line guard-for-in
             for (const key in headers) {
-                if (!headers.hasOwnProperty(key)) {
+                // if (!headers.hasOwnProperty(key)) {
                     builder.addHeader(key, headers[key]);
-                }
+                // }
             }
         }
         return builder.build();

@@ -2,7 +2,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { UserStorageService } from '@shared';
 import { AuthenticationTokenProvider } from './providers';
-import { TokenInterceptor } from './providers/token-interceptor';
+import { RefreshTokenProvider } from './providers/refresh-token-provider.api';
+import { RefreshTokenInterceptor } from './providers/refresh-token.interceptor';
+import { TokenInterceptor } from './providers/token.interceptor';
 import { TokenProvider } from './providers/token-provider';
 import { AuthGuardService, AuthService } from './services';
 
@@ -14,6 +16,7 @@ import { AuthGuardService, AuthService } from './services';
 export class AuthModule {
     public static forRoot(config: {
         tokenProvider: Type<TokenProvider>;
+        refreshTokenProvider: Type<RefreshTokenProvider>;
     }): ModuleWithProviders<AuthModule> {
         return {
             ngModule: AuthModule,
@@ -28,8 +31,17 @@ export class AuthModule {
                     useClass: TokenInterceptor,
                 },
                 {
+                    multi: true,
+                    provide: HTTP_INTERCEPTORS,
+                    useClass: RefreshTokenInterceptor,
+                },
+                {
                     provide: TokenProvider,
                     useClass: config.tokenProvider,
+                },
+                {
+                    provide: RefreshTokenProvider,
+                    useClass: config.refreshTokenProvider,
                 },
             ],
         };

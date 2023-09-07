@@ -8,27 +8,31 @@
                         let i = index
                     "
                 >
-                    <ion-item [formGroupName]="i">
-                        <app-search-select-input
-                            formControlName="doctor"
-                            [form]="dgc.doctorFormGroup"
-                            [strategy]="strategy"
-                            (itemSelected)="onDoctorSelected($event, i)"
-                        ></app-search-select-input>
-                    </ion-item>
+                    <ion-col class="bordered">
+                        <ion-item [formGroupName]="i">
+                            <app-search-select-input
+                                formControlName="doctor"
+                                [form]="dgc.doctorFormGroup"
+                                [strategy]="strategy"
+                                (itemSelected)="onDoctorSelected($event, i)"
+                            ></app-search-select-input>
+                        </ion-item>
 
-                    <div>
-                        <ion-button (click)="onGoToDoctor(i)">
-                            <ion-icon name="arrow-forward-outline"></ion-icon>
-                        </ion-button>
-                        <ion-button
-                            *ngIf="dgc.doctorFormGroupControls.length > 1"
-                            color="danger"
-                            (click)="removeDoctorControl(i)"
-                        >
-                            <ion-icon name="remove"></ion-icon>
-                        </ion-button>
-                    </div>
+                        <div>
+                            <ion-button (click)="onGoToDoctor(i)">
+                                <ion-icon
+                                    name="arrow-forward-outline"
+                                ></ion-icon>
+                            </ion-button>
+                            <ion-button
+                                *ngIf="dgc.doctorFormGroupControls.length > 1"
+                                color="danger"
+                                (click)="removeDoctorControl(i)"
+                            >
+                                <ion-icon name="remove"></ion-icon>
+                            </ion-button>
+                        </div>
+                    </ion-col>
                 </ion-row>
 
                 <ion-button (click)="addDoctorControl()">
@@ -39,20 +43,24 @@
         <ion-item-group [formGroup]="dgc.timeGroup">
             <ion-grid>
                 <ion-row>
-                    <app-date-picker
-                        [chosenDate]="chosenDate"
-                        formControlName="startTime"
-                        [form]="dgc.timeGroup"
-                        [label]="'Start Time'"
-                    ></app-date-picker>
+                    <ion-col
+                        ><app-date-picker
+                            [chosenDate]="chosenDate"
+                            formControlName="startTime"
+                            [form]="dgc.timeGroup"
+                            [label]="'Start Time'"
+                        ></app-date-picker
+                    ></ion-col>
                 </ion-row>
                 <ion-row>
-                    <app-date-picker
-                        [chosenDate]="chosenDate"
-                        formControlName="endTime"
-                        [form]="dgc.timeGroup"
-                        [label]="'End Time'"
-                    ></app-date-picker>
+                    <ion-col>
+                        <app-date-picker
+                            [chosenDate]="chosenDate"
+                            formControlName="endTime"
+                            [form]="dgc.timeGroup"
+                            [label]="'End Time'"
+                        ></app-date-picker>
+                    </ion-col>
                 </ion-row>
             </ion-grid>
         </ion-item-group>

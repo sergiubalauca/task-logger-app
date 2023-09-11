@@ -20,6 +20,7 @@ export class NotificationService {
             header: 'Error',
             message,
             buttons: ['OK'],
+            duration: 5000,
         });
 
         await alert.present();

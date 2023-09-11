@@ -5,13 +5,16 @@ import { switchMap, finalize } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '@shared';
 import { HttpOperations, HttpService } from '../../api';
+import { DoctorRepository } from '@database';
 
 const STORAGE_REQ_KEY = 'storedreq';
 
 interface StoredRequest {
     url: string;
     type: string;
-    data: any;
+    data: {
+        collection: string;
+    };
     time: number;
     id: string;
 }
@@ -20,11 +23,17 @@ interface StoredRequest {
     providedIn: 'root',
 })
 export class OfflineManagerService {
+    private localRxDBStrategies = {
+        doctor: this.doctorRepository,
+        workItem: 'workItem',
+        logWork: 'logWork'
+    };
     constructor(
         private storage: Storage,
         private http: HttpClient,
         private httpService: HttpService,
-        private toastService: ToastService
+        private toastService: ToastService,
+        private doctorRepository: DoctorRepository,
     ) {}
 
     public checkForEvents(): Observable<any> {
@@ -92,11 +101,20 @@ export class OfflineManagerService {
                 case HttpOperations.GET:
                     break;
                 case HttpOperations.POST:
-                    obs.push(this.httpService.makePost(op.url, op.data));
+                    obs.push(this.httpService.makePost(op.url, op.data)
+                        // .pipe(
+                        //     switchMap((res) => {
+                        //         // return this.localRxDBStrategies[op.data.collection].
+                        //         const rxDBRepo = this.localRxDBStrategies[op.data.collection];
+                        //         return of(rxDBRepo.editOne(op.data));
+                        //     }),
+                        // )
+                    );
                     break;
                 case HttpOperations.PATCH:
                     break;
                 case HttpOperations.DELETE:
+                    obs.push(this.httpService.makeDelete(op.url));
                     break;
                 case HttpOperations.PUT:
                     break;

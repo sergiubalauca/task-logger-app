@@ -25,6 +25,11 @@ export const DOCTOR_SCHEMA_LITERAL = {
             type: 'string',
             default: '',
             maxLength: 100,
+        },
+        mongoId: {
+            type: 'string',
+            default: '',
+            maxLength: 100,
         }
     },
 };

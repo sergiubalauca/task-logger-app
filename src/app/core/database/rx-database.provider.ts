@@ -73,6 +73,7 @@ export class RxDatabaseProvider {
             }
             this.setRxDatabaseInstance = database;
         } catch (error) {
+            await this.destroyDatabase();
             throw new Error(error);
         }
     }
@@ -80,6 +81,8 @@ export class RxDatabaseProvider {
     public async destroyDatabase(): Promise<void> {
         if (isRxDatabase(this.DB_INSTANCE)) {
             await this.DB_INSTANCE.destroy();
+            await this.DB_INSTANCE.remove();
+            this.setRxDatabaseInstance = null;
         }
     }
 

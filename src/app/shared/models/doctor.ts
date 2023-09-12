@@ -10,18 +10,3 @@ export interface DoctorDto {
     phone: string;
     _id: string;
 }
-
-export interface DoctorDoc {
-    doctor?: {
-        name?: string;
-        pacient?: {
-            name?: string;
-            workItemAndNumber?: {
-                workItem?: {
-                    name?: string;
-                };
-                numberOfWorkItems?: string;
-            }[];
-        }[];
-    };
-}

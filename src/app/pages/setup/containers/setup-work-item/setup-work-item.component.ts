@@ -7,10 +7,10 @@ import {
     ModalService,
     WorkItem,
 } from '@shared';
-import { map, Observable } from 'rxjs';
+import { firstValueFrom, map, Observable, take } from 'rxjs';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { AddEditWorkItemComponent } from './add-edit-work-item/add-edit-work-item.component';
-import { WorkItemFacade } from '@abstraction';
+import { WorkItemApiServce, WorkItemFacade } from '@abstraction';
 
 @Component({
     selector: 'app-setup-work-item',
@@ -23,14 +23,15 @@ import { WorkItemFacade } from '@abstraction';
         CommonModule,
         ItemSlidingCardComponent,
     ],
-    providers: [ModalService],
+    providers: [ModalService, WorkItemApiServce],
 })
 export class SetupWorkItemComponent implements OnInit {
     public workItems$: Observable<ItemSlidingProps[]>;
 
     constructor(
         private readonly workItemFacade: WorkItemFacade,
-        private readonly modalService: ModalService
+        private readonly modalService: ModalService,
+        private readonly workItemApiService: WorkItemApiServce
     ) {}
 
     ngOnInit() {
@@ -62,6 +63,12 @@ export class SetupWorkItemComponent implements OnInit {
         const modalData = await this.modalService.onDidDismiss();
 
         if (modalData.data && modalData.data.dismissed) {
+            const apiDoc = await firstValueFrom(
+                this.workItemApiService
+                    .createWorkItem(modalData.data.workItem)
+                    .pipe(take(1))
+            );
+
             this.workItemFacade.addOne(modalData.data.workItem);
         }
     }

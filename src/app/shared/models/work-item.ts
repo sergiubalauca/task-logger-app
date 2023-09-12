@@ -4,3 +4,10 @@ export interface WorkItem {
     price: number;
     description: string;
 }
+
+export interface WorkItemDto {
+    name: string;
+    price: number;
+    description: string;
+    _id: string;
+}

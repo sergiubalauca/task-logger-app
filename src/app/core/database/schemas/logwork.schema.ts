@@ -84,6 +84,10 @@ export const LOGWORK_SCHEMA_LITERAL = {
             type: 'string',
             default: '',
         },
+        mongoId: {
+            type: 'string',
+            default: '',
+        },
         // hp: {
         //     type: 'number',
         //     minimum: 0,

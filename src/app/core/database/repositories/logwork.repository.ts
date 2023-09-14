@@ -38,8 +38,9 @@ export class LogWorkRepository {
     public async editOne(data: {
         dailyWork: DailyWork;
         dailyId: string;
+        mongoId?: string;
     }): Promise<void> {
-        const { dailyWork, dailyId } = data;
+        const { dailyWork, dailyId, mongoId } = data;
         const database = this.databaseProvider.rxDatabaseInstance;
 
         if (database) {
@@ -51,6 +52,7 @@ export class LogWorkRepository {
                 id: dailyId,
                 endTime: '',
                 startTime: '',
+                mongoId: '',
             };
 
             workItemToUpdate1.doctorGroup.push(
@@ -78,21 +80,11 @@ export class LogWorkRepository {
 
             workItemToUpdate1.startTime = dailyWork.timeGroup.startTime;
             workItemToUpdate1.endTime = dailyWork.timeGroup.endTime;
+            workItemToUpdate1.mongoId = mongoId;
 
             await logWorkCollection.upsert({
                 ...workItemToUpdate1,
             });
-            // const workItemToUpdate = await logWorkCollection
-            //     .findOne()
-            //     .where('id')
-            //     .eq(dailyWork.id)
-            //     .exec();
-
-            // if (!workItemToUpdate) {
-            //     await logWorkCollection.upsert({
-            //         ...workItemToUpdate1,
-            //     });
-            // }
         }
     }
 

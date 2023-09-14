@@ -1,4 +1,4 @@
-import { DoctorApiServce, UserProvider } from '@abstraction';
+import { DoctorApiServce, LogWorkApiServce, UserProvider } from '@abstraction';
 import { NgModule } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { environment } from 'src/environments/environment';
@@ -36,6 +36,7 @@ import { RxDatabaseModule } from './database/rx-database.module';
         AuthFacade,
         UserProvider,
         DoctorApiServce,
+        LogWorkApiServce,
         Storage,
     ],
 })

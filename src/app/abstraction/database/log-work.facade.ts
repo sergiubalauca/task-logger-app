@@ -47,6 +47,7 @@ export class LogWorkFacade {
     public async editOne(logWorkItem: {
         dailyWork: DailyWork;
         dailyId: string;
+        mongoId?: string;
     }): Promise<void> {
         return await this.context.editOne(logWorkItem);
     }

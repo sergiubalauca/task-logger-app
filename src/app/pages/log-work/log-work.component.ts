@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { DateTimeService, ModalService } from '@shared';
+import { DailyWork, DateTimeService, ModalService } from '@shared';
 import { SwiperComponent } from './swiper/swiper.component';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../shared/components/header/header.component';
-import { LogWorkFacade } from '@abstraction';
+import { LogWorkApiServce, LogWorkFacade } from '@abstraction';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-log-work',
@@ -17,7 +18,8 @@ export class LogWorkComponent implements OnInit {
     constructor(
         private modalService: ModalService,
         private logWorkFacade: LogWorkFacade,
-        private dailyWorkIdService: DateTimeService
+        private dailyWorkIdService: DateTimeService,
+        private logWorkApiService: LogWorkApiServce
     ) {}
 
     ngOnInit() {}
@@ -41,9 +43,16 @@ export class LogWorkComponent implements OnInit {
             new Date(event.detail.value)
         );
         if (modalData.data && modalData.data.dismissed) {
+            const dailyWork: DailyWork = {...modalData.data.formValue, id: docId};
+            const apiDoc = await firstValueFrom(
+                this.logWorkApiService.createDailyWork(dailyWork)
+            );
+
             await this.logWorkFacade.editOne({
                 dailyWork: modalData.data.formValue,
                 dailyId: docId,
+                // eslint-disable-next-line no-underscore-dangle
+                mongoId: apiDoc._id,
             });
         }
     }

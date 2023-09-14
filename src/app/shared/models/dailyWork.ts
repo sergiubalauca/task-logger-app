@@ -3,26 +3,12 @@ export interface DailyWork {
     doctorGroup: {
         doctorArray: {
             doctor: string;
-            // doctor: {
-            //     description: string;
-            //     displayBoth: boolean;
-            //     id: string;
-            //     isSelected: boolean;
-            //     value: string;
-            // };
             patientGroup: {
                 patientArray: {
                     patient: string;
                     workItemGroup: {
                         workItemAndNumber: {
                             numberOfWorkItems: number;
-                            // workItem: {
-                            //     description: string;
-                            //     displayBoth: boolean;
-                            //     id: string;
-                            //     isSelected: boolean;
-                            //     value: string;
-                            // };
                             workItem: string;
                         }[];
                     };
@@ -34,6 +20,32 @@ export interface DailyWork {
         startTime: string;
         endTime: string;
     };
+    mongoId?: string;
+}
+
+export interface DailyWorkDto {
+    id: string;
+    doctorGroup: {
+        doctorArray: {
+            doctor: string;
+            patientGroup: {
+                patientArray: {
+                    patient: string;
+                    workItemGroup: {
+                        workItemAndNumber: {
+                            numberOfWorkItems: number;
+                            workItem: string;
+                        }[];
+                    };
+                }[];
+            };
+        }[];
+    };
+    timeGroup: {
+        startTime: string;
+        endTime: string;
+    };
+    _id: string;
 }
 
 export interface DailyWorkDoc {

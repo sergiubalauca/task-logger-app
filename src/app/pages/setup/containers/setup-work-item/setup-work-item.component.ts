@@ -106,13 +106,14 @@ export class SetupWorkItemComponent implements OnInit {
 
         if (modalData.data && modalData.data.dismissed) {
             const workItemToEdit: WorkItem = {
-                ...modalData.data.workItem,
-                id: workItem.mongoId,
+                ...modalData.data.workItem
             };
             await this.workItemFacade.editOne(workItemToEdit);
-            this.workItemApiService
-                .updateWorkItem(workItemToEdit)
-                .pipe(take(1));
+            await firstValueFrom(
+                this.workItemApiService
+                    .updateWorkItem({...workItemToEdit, id: workItem.mongoId,})
+                    .pipe(take(1))
+            );
         }
     }
 }

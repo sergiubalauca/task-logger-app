@@ -84,7 +84,7 @@ export class SetupDoctorComponent implements OnInit {
             id: doctorId.toString(),
         });
 
-        const deletedDoc = await firstValueFrom(
+        await firstValueFrom(
             this.doctorApiService.deleteDoctor(rxdbDoctor.mongoId).pipe(take(1))
         );
         await this.doctorFacade.deleteOne({ id: doctorId.toString() });
@@ -108,10 +108,13 @@ export class SetupDoctorComponent implements OnInit {
         if (modalData.data && modalData.data.dismissed) {
             const doctorToEdit: Doctor = {
                 ...modalData.data.doctor,
-                id: doctor.mongoId,
             };
             await this.doctorFacade.editOne(doctorToEdit);
-            this.doctorApiService.updateDoctor(doctorToEdit).pipe(take(1));
+            await firstValueFrom(
+                this.doctorApiService
+                    .updateDoctor({ ...doctorToEdit, id: doctor.mongoId })
+                    .pipe(take(1))
+            );
         }
     }
 }

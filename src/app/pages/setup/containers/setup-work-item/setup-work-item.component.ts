@@ -69,11 +69,23 @@ export class SetupWorkItemComponent implements OnInit {
                     .pipe(take(1))
             );
 
-            this.workItemFacade.addOne(modalData.data.workItem);
+            this.workItemFacade.addOne({
+                ...modalData.data.workItem,
+                // eslint-disable-next-line no-underscore-dangle
+                mongoId: apiDoc._id,
+            });
         }
     }
 
     public async deleteWorkItem(workItemId: number): Promise<void> {
+        const rxdbWorkItem = await this.workItemFacade.getOne({
+            id: workItemId.toString(),
+        });
+        await firstValueFrom(
+            this.workItemApiService
+                .deleteWorkItem(rxdbWorkItem.mongoId)
+                .pipe(take(1))
+        );
         await this.workItemFacade.deleteOne({ id: workItemId.toString() });
     }
 
@@ -95,9 +107,12 @@ export class SetupWorkItemComponent implements OnInit {
         if (modalData.data && modalData.data.dismissed) {
             const workItemToEdit: WorkItem = {
                 ...modalData.data.workItem,
-                id: workItem.id,
+                id: workItem.mongoId,
             };
             await this.workItemFacade.editOne(workItemToEdit);
+            this.workItemApiService
+                .updateWorkItem(workItemToEdit)
+                .pipe(take(1));
         }
     }
 }

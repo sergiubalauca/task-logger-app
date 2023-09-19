@@ -71,8 +71,11 @@ export class SetupDoctorComponent implements OnInit {
                     .pipe(take(1))
             );
 
-            // eslint-disable-next-line no-underscore-dangle
-            await this.doctorFacade.addOne({...modalData.data.doctor, mongoId: apiDoc._id});
+            await this.doctorFacade.addOne({
+                ...modalData.data.doctor,
+                // eslint-disable-next-line no-underscore-dangle
+                mongoId: apiDoc._id,
+            });
         }
     }
 
@@ -82,9 +85,7 @@ export class SetupDoctorComponent implements OnInit {
         });
 
         const deletedDoc = await firstValueFrom(
-            this.doctorApiService
-                .deleteDoctor(rxdbDoctor.mongoId)
-                .pipe(take(1))
+            this.doctorApiService.deleteDoctor(rxdbDoctor.mongoId).pipe(take(1))
         );
         await this.doctorFacade.deleteOne({ id: doctorId.toString() });
     }
@@ -110,10 +111,7 @@ export class SetupDoctorComponent implements OnInit {
                 id: doctor.mongoId,
             };
             await this.doctorFacade.editOne(doctorToEdit);
-            this.doctorApiService
-                .updateDoctor(doctorToEdit)
-                .pipe(take(1))
-                .subscribe();
+            this.doctorApiService.updateDoctor(doctorToEdit).pipe(take(1));
         }
     }
 }

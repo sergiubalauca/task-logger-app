@@ -10,6 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
     imports: [IonicModule],
 })
 export class AppComponent {
+    public title = 'demo-angular-jest';
+
     constructor(translateService: TranslateService) {
         translateService.setDefaultLang('en');
         translateService.use('en');

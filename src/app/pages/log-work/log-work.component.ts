@@ -3,7 +3,7 @@ import { DailyWork, DateTimeService, ModalService } from '@shared';
 import { SwiperComponent } from './swiper/swiper.component';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../shared/components/header/header.component';
-import { LogWorkApiServce, LogWorkFacade } from '@abstraction';
+import { LogWorkApiService, LogWorkFacade } from '@abstraction';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -19,7 +19,7 @@ export class LogWorkComponent implements OnInit {
         private modalService: ModalService,
         private logWorkFacade: LogWorkFacade,
         private dailyWorkIdService: DateTimeService,
-        private logWorkApiService: LogWorkApiServce
+        private logWorkApiService: LogWorkApiService
     ) {}
 
     ngOnInit() {}

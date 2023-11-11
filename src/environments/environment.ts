@@ -4,8 +4,9 @@
 
 export const environment = {
     production: false,
-    // baseUrl: 'http://localhost:3002/api/',
-    baseUrl: 'https://task-logger-backend-d52c39b7be36.herokuapp.com/api/',
+    baseUrl: 'http://localhost:3002/api/',
+    graphQLUrl: 'http://localhost:3002/graphql',
+    // baseUrl: 'https://task-logger-backend-d52c39b7be36.herokuapp.com/api/',
     // eslint-disable-next-line @typescript-eslint/naming-convention
     REQ_STORAGE_KEY: 'pendingRequests',
 };

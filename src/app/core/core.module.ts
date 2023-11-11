@@ -1,4 +1,4 @@
-import { DoctorApiServce, LogWorkApiServce, UserProvider } from '@abstraction';
+import { DoctorApiServce, LogWorkApiService, UserProvider, WorkItemApiServce } from '@abstraction';
 import { NgModule } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { environment } from 'src/environments/environment';
@@ -13,6 +13,8 @@ import { RefreshTokenProvider } from './auth/providers/refresh-token-provider.ap
 import { AuthGuardService } from './auth/services';
 import { WebErrorHandlerModule } from './custom-error-handler/global-error.module';
 import { RxDatabaseModule } from './database/rx-database.module';
+import { SyncService } from '../abstraction/api-facade/sync/sync.service';
+import { SyncConfigurationService } from '../abstraction/api-facade/sync/sync-configuration.service';
 
 @NgModule({
     declarations: [],
@@ -36,7 +38,10 @@ import { RxDatabaseModule } from './database/rx-database.module';
         AuthFacade,
         UserProvider,
         DoctorApiServce,
-        LogWorkApiServce,
+        LogWorkApiService,
+        WorkItemApiServce,
+        SyncService,
+        SyncConfigurationService,
         Storage,
     ],
 })

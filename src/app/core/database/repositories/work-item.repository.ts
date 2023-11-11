@@ -93,4 +93,22 @@ export class WorkItemRepository {
             }
         }
     }
+
+    public async deleteAll(): Promise<void> {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database) {
+            const docCollection =
+                this.databaseProvider?.rxDatabaseInstance.workitem;
+            const workItemsToDelete: RxDocument[] = await docCollection
+                .find()
+                .exec();
+
+            if (workItemsToDelete) {
+                workItemsToDelete.forEach((workItem) => {
+                    workItem.remove();
+                });
+            }
+        }
+    }
 }

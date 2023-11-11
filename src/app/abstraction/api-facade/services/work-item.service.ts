@@ -1,20 +1,59 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import {
     ConnectivityStateService,
+    GraphQLResponse,
     HttpService,
     OfflineManagerService,
 } from '@core';
 import { WorkItem, WorkItemDto, WORK_ITEM_COLLECTION_NAME } from '@shared';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, firstValueFrom, map, switchMap } from 'rxjs';
+import { SyncBaseService } from '../sync/sync-base.service';
+import { WorkItemFacade } from '../../database';
 
 @Injectable()
-export class WorkItemApiServce {
+export class WorkItemApiServce extends SyncBaseService {
+    public done$: Observable<boolean> = this.doneSubject.asObservable();
+    public async startSyncing(): Promise<void> {
+        this.doneSubject.next(false);
+
+        console.time('/Work Items api duration');
+
+        const workItems = await this.graphqlQuery({
+            query: `
+                query {
+                    workItems(filters: {_id:"Cermica"}){
+                        name, price, description
+                      }
+                }
+                `,
+            filters: {},
+        });
+        console.timeEnd('/Work Items api duration');
+        console.time('/Work Items rxdb duration');
+
+        // await this.syncLocalOrders(orders);
+        // await this.workItemFacade.addOne(orders[0]);
+        await this.workItemFacade.deleteAll();
+        for (const workItem of workItems) {
+            await this.workItemFacade.addOne(workItem);
+        }
+        this.doneSubject.next(true);
+
+        console.timeEnd('/Work Items rxdb duration');
+    }
+
     private readonly apiURL = 'work-item';
+
     constructor(
         private httpService: HttpService,
         private networkService: ConnectivityStateService,
-        private offlineManager: OfflineManagerService
-    ) {}
+        private offlineManager: OfflineManagerService,
+        private workItemFacade: WorkItemFacade
+    ) {
+        super();
+    }
 
     public createWorkItem(workItem: WorkItem): Observable<WorkItemDto> {
         return this.networkService.connectivity$.pipe(
@@ -73,6 +112,31 @@ export class WorkItemApiServce {
                     });
                 }
             })
+        );
+    }
+
+    public async graphqlQuery<T>(options: {
+        query: string;
+        filters?: { [key: string]: any };
+    }): Promise<WorkItemDto[]> {
+        return await firstValueFrom(
+            this.httpService
+                .makeGraphqlPost<
+                    WorkItemDto[],
+                    {
+                        query: string;
+                        filters?: { [key: string]: any };
+                    }
+                >({
+                    query: options.query,
+                    filters: options.filters,
+                })
+                .pipe(
+                    map((res) => {
+                        const x = 1;
+                        return res.data?.workItems;
+                    })
+                )
         );
     }
 }

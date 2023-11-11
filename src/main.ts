@@ -30,6 +30,7 @@ import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { ConnectivityService } from './app/core/offline/services/connectivity.service';
 import { ConnectivityStateService } from './app/core/offline/services/connectivity-state.service';
 import { Storage } from '@ionic/storage';
+import { SyncConfigurationService } from './app/abstraction/api-facade/sync/sync-configuration.service';
 
 if (environment.production) {
     enableProdMode();
@@ -73,6 +74,12 @@ export const appInitializerTranslateFactory =
 export const createTranslateLoader = (http: HttpClient) =>
     new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
+const syncWithServer =
+    (syncConfigurationService: SyncConfigurationService) => () => {
+        syncConfigurationService.configureSync();
+        return syncConfigurationService.startSync();
+    };
+
 bootstrapApplication(AppComponent, {
     providers: [
         UserService,
@@ -112,6 +119,12 @@ bootstrapApplication(AppComponent, {
             provide: APP_INITIALIZER,
             useFactory: appIonicStoragesInitializer,
             deps: [Storage],
+            multi: true,
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: syncWithServer,
+            deps: [SyncConfigurationService],
             multi: true,
         },
         Storage,

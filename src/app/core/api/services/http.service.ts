@@ -4,17 +4,26 @@ import { Observable } from 'rxjs';
 import { HttpHeaderBuilder } from '../builders/http-headers.builder';
 import { EnvironmentConfig, ENV_CONFIG } from '../environment-config.interface';
 
+export interface GraphQLResponse<T> {
+    data: {
+        [key: string]: T;
+    };
+    errors: any;
+}
+
 @Injectable({
     providedIn: 'root',
 })
 export class HttpService {
     private url: string;
+    private graphQLUrl: string;
 
     public constructor(
         private http: HttpClient,
         @Inject(ENV_CONFIG) config: EnvironmentConfig
     ) {
         this.url = `${config.environment.baseUrl}`;
+        this.graphQLUrl = `${config.environment.graphQLUrl}`;
     }
 
     public makeGet<T>(
@@ -38,6 +47,18 @@ export class HttpService {
         extraHeaders?: { [name: string]: string }
     ): Observable<T | never> {
         return this.http.post<T>(this.url + urlPath, body, {
+            headers: this.createHeaders(extraHeaders),
+            withCredentials: false,
+            responseType,
+        });
+    }
+
+    public makeGraphqlPost<T, U>(
+        body: U,
+        responseType: any = 'json',
+        extraHeaders?: { [name: string]: string }
+    ): Observable<GraphQLResponse<T> | never> {
+        return this.http.post<GraphQLResponse<T>>(this.graphQLUrl, body, {
             headers: this.createHeaders(extraHeaders),
             withCredentials: false,
             responseType,
@@ -76,7 +97,7 @@ export class HttpService {
             // eslint-disable-next-line guard-for-in
             for (const key in headers) {
                 // if (!headers.hasOwnProperty(key)) {
-                    builder.addHeader(key, headers[key]);
+                builder.addHeader(key, headers[key]);
                 // }
             }
         }

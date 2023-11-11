@@ -42,4 +42,8 @@ export class WorkItemFacade {
     public async deleteOne(params: Pick<CRUDParams, 'id'>): Promise<void> {
         return await this.context.deleteOne(params);
     }
+
+    public async deleteAll(): Promise<void> {
+        return await this.context.deleteAll();
+    }
 }

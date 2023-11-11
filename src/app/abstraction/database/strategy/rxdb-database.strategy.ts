@@ -12,6 +12,7 @@ export interface RxDBStrategy {
     addOne?(data: any): any;
     editOne?(data: any): any;
     deleteOne?(data: any): any;
+    deleteAll?(): any;
 }
 
 export class Context {
@@ -53,5 +54,9 @@ export class Context {
 
     public async deleteOne(params: Pick<CRUDParams, 'id'>): Promise<void> {
         return await this.strategy.deleteOne(params);
+    }
+
+    public async deleteAll(): Promise<void> {
+        return await this.strategy.deleteAll();
     }
 }

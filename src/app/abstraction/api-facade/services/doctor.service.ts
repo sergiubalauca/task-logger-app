@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import {
     ConnectivityStateService,
@@ -5,16 +6,26 @@ import {
     OfflineManagerService,
 } from '@core';
 import { Doctor, DoctorDto, DOCTOR_COLLECTION_NAME } from '@shared';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, Subject, of, switchMap } from 'rxjs';
+import { SyncBaseService } from '../sync/sync-base.service';
 
 @Injectable()
-export class DoctorApiServce {
+export class DoctorApiServce extends SyncBaseService {
+    protected doneSubject: Subject<boolean> = new Subject<boolean>();
+
     private readonly apiURL = 'doctor';
+    public done$: Observable<boolean> = this.doneSubject.asObservable();
+    public startSyncing(): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
+
     constructor(
         private httpService: HttpService,
         private networkService: ConnectivityStateService,
         private offlineManager: OfflineManagerService
-    ) {}
+    ) {
+        super();
+    }
 
     public createDoctor(doctor: Doctor): Observable<DoctorDto> {
         return this.networkService.connectivity$.pipe(
@@ -72,5 +83,9 @@ export class DoctorApiServce {
                 }
             })
         );
+    }
+
+    public getAllDoctors(): Observable<DoctorDto[]> {
+        return of([]);
     }
 }

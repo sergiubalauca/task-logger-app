@@ -3,6 +3,7 @@ import { InjectionToken } from '@angular/core';
 export interface EnvironmentConfig {
     environment: {
         baseUrl: string;
+        graphQLUrl: string;
     };
 }
 

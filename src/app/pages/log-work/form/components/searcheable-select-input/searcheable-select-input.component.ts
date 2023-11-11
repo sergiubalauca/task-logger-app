@@ -6,6 +6,7 @@ import {
     Inject,
     Output,
     EventEmitter,
+    OnDestroy,
 } from '@angular/core';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -42,7 +43,9 @@ import { DoctorFacade, WorkItemFacade } from '@abstraction';
     standalone: true,
     imports: [IonicModule, FormsModule, CommonModule],
 })
-export class SearcheableSelectInputComponent implements ControlValueAccessor {
+export class SearcheableSelectInputComponent
+    implements ControlValueAccessor, OnDestroy
+{
     @Input() public form: FormGroup;
     @Input() public strategy: CollectionNames;
     @Output() public itemSelected: EventEmitter<SearcheableSelectModel> =
@@ -83,7 +86,11 @@ export class SearcheableSelectInputComponent implements ControlValueAccessor {
     public registerOnTouched(fn: any): void {}
 
     public setDisabledState?(isDisabled: boolean): void {}
-
+    public ngOnDestroy(): void {
+        if (this.dataSourceSubscription) {
+            this.dataSourceSubscription.unsubscribe();
+        }
+    }
     public async onOpenSelect(): Promise<void> {
         if (this.dataSourceSubscription) {
             this.dataSourceSubscription.unsubscribe();

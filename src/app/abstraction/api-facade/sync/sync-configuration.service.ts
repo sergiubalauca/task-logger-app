@@ -16,7 +16,7 @@ export class SyncConfigurationService {
     ) {}
 
     public configureSync(): void {
-        // this.syncService.addSyncService(this.doctorSyncService);
+        this.syncService.addSyncService(this.doctorSyncService);
         this.syncService.addSyncService(this.workItemSyncService);
         // this.syncService.addSyncService(this.logWorkSyncService);
     }

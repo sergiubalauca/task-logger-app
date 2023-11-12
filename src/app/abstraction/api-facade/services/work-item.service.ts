@@ -3,7 +3,6 @@
 import { Injectable } from '@angular/core';
 import {
     ConnectivityStateService,
-    GraphQLResponse,
     HttpService,
     OfflineManagerService,
 } from '@core';
@@ -15,6 +14,7 @@ import { WorkItemFacade } from '../../database';
 @Injectable()
 export class WorkItemApiServce extends SyncBaseService {
     public done$: Observable<boolean> = this.doneSubject.asObservable();
+
     public async startSyncing(): Promise<void> {
         this.doneSubject.next(false);
 
@@ -33,11 +33,12 @@ export class WorkItemApiServce extends SyncBaseService {
         console.timeEnd('/Work Items api duration');
         console.time('/Work Items rxdb duration');
 
-        // await this.syncLocalOrders(orders);
-        // await this.workItemFacade.addOne(orders[0]);
         await this.workItemFacade.deleteAll();
         for (const workItem of workItems) {
-            await this.workItemFacade.addOne({...workItem, mongoId: workItem.id});
+            await this.workItemFacade.addOne({
+                ...workItem,
+                mongoId: workItem.id,
+            });
         }
         this.doneSubject.next(true);
 

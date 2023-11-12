@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import {
@@ -6,8 +7,9 @@ import {
     OfflineManagerService,
 } from '@core';
 import { Doctor, DoctorDto, DOCTOR_COLLECTION_NAME } from '@shared';
-import { Observable, Subject, of, switchMap } from 'rxjs';
+import { Observable, Subject, firstValueFrom, map, of, switchMap } from 'rxjs';
 import { SyncBaseService } from '../sync/sync-base.service';
+import { DoctorFacade } from '../../database';
 
 @Injectable()
 export class DoctorApiServce extends SyncBaseService {
@@ -15,14 +17,41 @@ export class DoctorApiServce extends SyncBaseService {
 
     private readonly apiURL = 'doctor';
     public done$: Observable<boolean> = this.doneSubject.asObservable();
-    public startSyncing(): Promise<void> {
-        throw new Error('Method not implemented.');
+    public async startSyncing(): Promise<void> {
+        this.doneSubject.next(false);
+
+        console.time('/Work Items api duration');
+
+        const doctors = await this.graphqlQuery({
+            query: `
+                query {
+                    doctors(filters:{ name: "test"}) {
+                        name, phone, id
+                      }
+                }
+                `,
+            filters: {},
+        });
+        console.timeEnd('/Doctors api duration');
+        console.time('/Doctors rxdb duration');
+
+        await this.doctorFacade.deleteAll();
+        for (const doctor of doctors) {
+            await this.doctorFacade.addOne({
+                ...doctor,
+                mongoId: doctor.id,
+            });
+        }
+        this.doneSubject.next(true);
+
+        console.timeEnd('/Work Items rxdb duration');
     }
 
     constructor(
         private httpService: HttpService,
         private networkService: ConnectivityStateService,
-        private offlineManager: OfflineManagerService
+        private offlineManager: OfflineManagerService,
+        private doctorFacade: DoctorFacade
     ) {
         super();
     }
@@ -85,7 +114,28 @@ export class DoctorApiServce extends SyncBaseService {
         );
     }
 
-    public getAllDoctors(): Observable<DoctorDto[]> {
-        return of([]);
+    public async graphqlQuery<T>(options: {
+        query: string;
+        filters?: { [key: string]: any };
+    }): Promise<DoctorDto[]> {
+        return await firstValueFrom(
+            this.httpService
+                .makeGraphqlPost<
+                    DoctorDto[],
+                    {
+                        query: string;
+                        filters?: { [key: string]: any };
+                    }
+                >({
+                    query: options.query,
+                    filters: options.filters,
+                })
+                .pipe(
+                    map((res) => {
+                        const x = 1;
+                        return res.data?.doctors;
+                    })
+                )
+        );
     }
 }

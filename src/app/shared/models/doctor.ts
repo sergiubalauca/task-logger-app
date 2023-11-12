@@ -9,4 +9,5 @@ export interface DoctorDto {
     name: string;
     phone: string;
     _id: string;
+    id: string;
 }

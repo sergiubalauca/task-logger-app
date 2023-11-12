@@ -23,8 +23,8 @@ export class WorkItemApiServce extends SyncBaseService {
         const workItems = await this.graphqlQuery({
             query: `
                 query {
-                    workItems(filters: {_id:"Cermica"}){
-                        name, price, description
+                    workItems(filters: {  }){
+                        name, price, description, id
                       }
                 }
                 `,
@@ -37,7 +37,7 @@ export class WorkItemApiServce extends SyncBaseService {
         // await this.workItemFacade.addOne(orders[0]);
         await this.workItemFacade.deleteAll();
         for (const workItem of workItems) {
-            await this.workItemFacade.addOne(workItem);
+            await this.workItemFacade.addOne({...workItem, mongoId: workItem.id});
         }
         this.doneSubject.next(true);
 

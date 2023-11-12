@@ -10,4 +10,5 @@ export interface WorkItemDto {
     price: number;
     description: string;
     _id: string;
+    id: string;
 }

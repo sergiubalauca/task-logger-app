@@ -96,13 +96,13 @@ export class DoctorRepository {
 
         if (database) {
             const docCollection =
-                this.databaseProvider?.rxDatabaseInstance.workitem;
-            const workItemsToDelete: RxDocument[] = await docCollection
+                this.databaseProvider?.rxDatabaseInstance.doctor;
+            const doctorsToDelete: RxDocument[] = await docCollection
                 .find()
                 .exec();
 
-            if (workItemsToDelete) {
-                workItemsToDelete.forEach((workItem) => {
+            if (doctorsToDelete) {
+                doctorsToDelete.forEach((workItem) => {
                     workItem.remove();
                 });
             }

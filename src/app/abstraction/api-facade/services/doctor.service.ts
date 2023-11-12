@@ -25,7 +25,7 @@ export class DoctorApiServce extends SyncBaseService {
         const doctors = await this.graphqlQuery({
             query: `
                 query {
-                    doctors(filters:{ name: "test"}) {
+                    doctors(filters:{ }) {
                         name, phone, id
                       }
                 }
@@ -44,7 +44,7 @@ export class DoctorApiServce extends SyncBaseService {
         }
         this.doneSubject.next(true);
 
-        console.timeEnd('/Work Items rxdb duration');
+        console.timeEnd('Doctors rxdb duration');
     }
 
     constructor(

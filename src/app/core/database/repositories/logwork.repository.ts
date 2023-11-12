@@ -132,13 +132,13 @@ export class LogWorkRepository {
 
         if (database) {
             const docCollection =
-                this.databaseProvider?.rxDatabaseInstance.workitem;
-            const workItemsToDelete: RxDocument[] = await docCollection
+                this.databaseProvider?.rxDatabaseInstance.logwork;
+            const logworks: RxDocument[] = await docCollection
                 .find()
                 .exec();
 
-            if (workItemsToDelete) {
-                workItemsToDelete.forEach((workItem) => {
+            if (logworks) {
+                logworks.forEach((workItem) => {
                     workItem.remove();
                 });
             }

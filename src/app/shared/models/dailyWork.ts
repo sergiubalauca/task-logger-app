@@ -24,6 +24,30 @@ export interface DailyWork {
 }
 
 export interface DailyWorkDto {
+    dailyWork: {
+        id: string;
+        doctorGroup: {
+            doctorArray: {
+                doctor: string;
+                patientGroup: {
+                    patientArray: {
+                        patient: string;
+                        workItemGroup: {
+                            workItemAndNumber: {
+                                numberOfWorkItems: number;
+                                workItem: string;
+                            }[];
+                        };
+                    }[];
+                };
+            }[];
+        };
+        timeGroup: {
+            startTime: string;
+            endTime: string;
+        };
+    };
+
     id: string;
     doctorGroup: {
         doctorArray: {
@@ -46,6 +70,7 @@ export interface DailyWorkDto {
         endTime: string;
     };
     _id: string;
+    rxdbId: string;
 }
 
 export interface DailyWorkDoc {

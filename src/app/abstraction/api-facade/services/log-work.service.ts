@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import {
@@ -6,21 +7,77 @@ import {
     OfflineManagerService,
 } from '@core';
 import { DailyWork, DailyWorkDto, LOGWORK_COLLECTION_NAME } from '@shared';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, firstValueFrom, map, switchMap } from 'rxjs';
 import { SyncBaseService } from '../sync/sync-base.service';
+import { DailyWorkFacade } from '../../database';
 
 @Injectable()
 export class LogWorkApiService extends SyncBaseService {
     private readonly apiURL = 'log-work';
 
     public done$: Observable<boolean> = this.doneSubject.asObservable();
-    public startSyncing(): Promise<void> {
-        throw new Error('Method not implemented.');
+    public async startSyncing(): Promise<void> {
+        this.doneSubject.next(false);
+
+        console.time('/Work Items api duration');
+
+        const dailyWorks = await this.graphqlQuery({
+            query: `
+                query {
+                    dailyWorks(filters:{  }){
+                        userId,
+                        rxdbId,
+                        id
+                        dailyWork {
+                          id,  
+                          doctorGroup {
+                            doctorArray{
+                              doctor
+                              patientGroup{
+                                patientArray{
+                                  patient
+                                  workItemGroup{
+                                    workItemAndNumber{
+                                      numberOfWorkItems
+                                      workItem
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          timeGroup {
+                            startTime
+                            endTime
+                          }
+                        }
+                      }
+                }
+                `,
+            filters: {},
+        });
+        console.timeEnd('/Daily Work api duration');
+        console.time('/Daily Work rxdb duration');
+
+        await this.dailyWorkFacade.deleteAll();
+        for (const dailyWork of dailyWorks) {
+            await this.dailyWorkFacade.editOne({
+                dailyId: dailyWork.rxdbId,
+                dailyWork: dailyWork.dailyWork,
+                mongoId: dailyWork.id,
+                // ...dailyWork,
+                // mongoId: dailyWork.id,
+            });
+        }
+        this.doneSubject.next(true);
+
+        console.timeEnd('/Daily Work rxdb duration');
     }
     constructor(
         private httpService: HttpService,
         private networkService: ConnectivityStateService,
-        private offlineManager: OfflineManagerService
+        private offlineManager: OfflineManagerService,
+        private dailyWorkFacade: DailyWorkFacade
     ) {
         super();
     }
@@ -58,6 +115,31 @@ export class LogWorkApiService extends SyncBaseService {
                     });
                 }
             })
+        );
+    }
+
+    public async graphqlQuery<T>(options: {
+        query: string;
+        filters?: { [key: string]: any };
+    }): Promise<DailyWorkDto[]> {
+        return await firstValueFrom(
+            this.httpService
+                .makeGraphqlPost<
+                DailyWorkDto[],
+                    {
+                        query: string;
+                        filters?: { [key: string]: any };
+                    }
+                >({
+                    query: options.query,
+                    filters: options.filters,
+                })
+                .pipe(
+                    map((res) => {
+                        const x = 1;
+                        return res.data?.dailyWorks;
+                    })
+                )
         );
     }
 }

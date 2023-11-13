@@ -1,8 +1,8 @@
 import {
     ChangeDetectionStrategy,
     Component,
-    EventEmitter,
     Input,
+    OnDestroy,
     OnInit,
     Output,
 } from '@angular/core';
@@ -21,7 +21,7 @@ import { LogOutModel } from '../../models';
     imports: [IonicModule, NgIf],
     providers: [AuthFacade],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
     @Input() title: string;
     @Input() public headerSubtitle: string;
     @Input() public backBtnEnabled: boolean;

@@ -62,7 +62,7 @@ export class RegisterPage implements OnInit {
 
         const loader = await this.loadingController.create();
         const username = this.form.value.email.split('@')[0];
-        const registerModel: RegisterModel = {...this.form.value, username};
+        const registerModel: RegisterModel = { ...this.form.value, username };
         await loader.present();
 
         try {
@@ -83,6 +83,10 @@ export class RegisterPage implements OnInit {
         this.togglePassButtonLabel = this.showPassword
             ? this.translate.instant('login-page.hide-password')
             : this.translate.instant('login-page.show-password');
+    }
+
+    public goBack() {
+        this.navCtrl.navigateRoot('login');
     }
 
     private initLogin() {

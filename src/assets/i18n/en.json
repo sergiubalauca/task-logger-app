@@ -23,6 +23,7 @@
     },
 
     "register-page": {
-        "button": "Register"
+        "button": "Register",
+        "go-to-login": "Already have an account? Login"
     }
 }

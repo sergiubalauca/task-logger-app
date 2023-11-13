@@ -132,7 +132,9 @@ export class DoctorApiServce extends SyncBaseService {
                 })
                 .pipe(
                     map((res) => {
-                        const x = 1;
+                        if (res.errors && res.errors.length > 0) {
+                            throw new Error(res.errors[0].message);
+                        }
                         return res.data?.doctors;
                     })
                 )

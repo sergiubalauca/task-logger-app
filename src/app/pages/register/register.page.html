@@ -5,7 +5,7 @@
 <ion-content class="ion-padding">
     <form [formGroup]="form">
         <ion-label class="title" color="dark"
-            >{{ 'login-page.label' | translate }}</ion-label
+            >{{ 'register-page.button' | translate }}</ion-label
         >
         <div>
             <ion-item class="ion-no-padding">
@@ -69,9 +69,7 @@
                 </ng-container>
             </div>
         </div>
-        <ion-button (click)="logIn()" [disabled]="!form.valid" expand="block"
-            >{{'login-page.title' | translate }}</ion-button
-        >
+
         <ion-button (click)="register()" expand="block"
             >{{'register-page.button' | translate }}</ion-button
         >

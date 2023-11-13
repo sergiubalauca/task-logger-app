@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { isLoggedIn } from './core/auth';
 import { LogInPage } from './pages/login/log-in.page';
+import { RegisterPage } from './pages/register/register.page';
 
 const routes: Routes = [
     {
@@ -25,6 +26,10 @@ const routes: Routes = [
     {
         path: 'login',
         component: LogInPage,
+    },
+    {
+        path: 'register',
+        component: RegisterPage,
     },
 ];
 

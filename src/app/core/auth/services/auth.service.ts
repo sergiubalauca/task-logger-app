@@ -10,6 +10,7 @@ import {
     AuthenticationResult,
     LoginModel,
     LogOutModel,
+    RegisterModel,
     UserStorageService,
 } from '@shared';
 import { firstValueFrom } from 'rxjs';
@@ -19,7 +20,8 @@ export class AuthService {
     public isAuthenticated$ = this.tokenProvider.tokenChanged$.pipe(
         map((auth) => auth !== null)
     );
-    private authenticateEndpoint = 'auth';
+    private readonly authenticateEndpoint = 'auth';
+    private readonly registerEndpoint = 'user/register';
 
     public constructor(
         private httpService: HttpService,
@@ -98,5 +100,22 @@ export class AuthService {
                     this.userStorageService.setUsername(loginModel.email);
                 })
             );
+    }
+
+    public register(registerModel: RegisterModel): Observable<any> {
+        return this.httpService.makePost(
+            `${this.registerEndpoint}`,
+            registerModel
+        );
+        // .pipe(
+        //     map(
+        //         (res: { message: string; tokens: AuthenticationResult }) =>
+        //             res.tokens as AuthenticationResult
+        //     ),
+        //     tap((authenticationResult: AuthenticationResult) => {
+        //         this.tokenProvider.saveToken(authenticationResult);
+        //         this.userStorageService.setUsername(loginModel.email);
+        //     })
+        // );
     }
 }

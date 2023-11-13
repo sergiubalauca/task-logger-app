@@ -10,15 +10,15 @@ import {
 } from '@angular/forms';
 import { IonicModule, LoadingController, NavController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
-import { LoginModel, UserStorageService } from '@shared';
+import { LoginModel, RegisterModel, UserStorageService } from '@shared';
 import { AuthFacade } from '@abstraction';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-log-in',
-    templateUrl: './log-in.page.html',
-    styleUrls: ['./log-in.page.scss'],
+    selector: 'app-register',
+    templateUrl: './register.page.html',
+    styleUrls: ['./register.page.scss'],
     standalone: true,
     imports: [
         CommonModule,
@@ -30,7 +30,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     providers: [AuthFacade, UserStorageService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class LogInPage implements OnInit {
+export class RegisterPage implements OnInit {
     public form: FormGroup;
     public formValidationMessages = { email: [], password: [] };
     public showPassword = false;
@@ -55,18 +55,19 @@ export class LogInPage implements OnInit {
         this.initLogin();
     }
 
-    public async logIn(): Promise<void> {
+    public async register(): Promise<void> {
         if (this.form.invalid) {
             return;
         }
 
         const loader = await this.loadingController.create();
-        const loginModel: LoginModel = this.form.value;
+        const username = this.form.value.email.split('@')[0];
+        const registerModel: RegisterModel = {...this.form.value, username};
         await loader.present();
 
         try {
             const authRes = await firstValueFrom(
-                this.authFacade.login(loginModel)
+                this.authFacade.register(registerModel)
             );
             if (authRes) {
                 await this.navCtrl.navigateRoot('home');
@@ -82,10 +83,6 @@ export class LogInPage implements OnInit {
         this.togglePassButtonLabel = this.showPassword
             ? this.translate.instant('login-page.hide-password')
             : this.translate.instant('login-page.show-password');
-    }
-
-    public register() {
-        this.navCtrl.navigateForward('register');
     }
 
     private initLogin() {

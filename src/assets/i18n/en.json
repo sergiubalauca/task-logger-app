@@ -20,5 +20,9 @@
         "title": "Login",
         "show-password": "Show password",
         "hide-password": "Hide password"
+    },
+
+    "register-page": {
+        "button": "Register"
     }
 }

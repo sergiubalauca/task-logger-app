@@ -53,6 +53,7 @@ export class SyncService {
                 this.translateService.instant('errorCodes.RXDB_SYNC'),
                 ToastDuration.slow
             );
+            // throw error;
         } finally {
             this.isSyncingSubject.next(false);
         }

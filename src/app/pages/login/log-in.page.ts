@@ -11,7 +11,7 @@ import {
 import { IonicModule, LoadingController, NavController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { LoginModel, UserStorageService } from '@shared';
-import { AuthFacade } from '@abstraction';
+import { AuthFacade, SyncConfigurationService } from '@abstraction';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -48,7 +48,8 @@ export class LogInPage implements OnInit {
         private loadingController: LoadingController,
         private formBuilder: FormBuilder,
         private readonly translate: TranslateService,
-        private readonly userStorageService: UserStorageService
+        private readonly userStorageService: UserStorageService,
+        private syncConfigurationService: SyncConfigurationService
     ) {}
 
     ngOnInit() {
@@ -72,6 +73,7 @@ export class LogInPage implements OnInit {
                 await this.navCtrl.navigateRoot('home');
                 await loader.dismiss();
             }
+            this.syncConfigurationService.startSync();
         } catch (error) {
             await loader.dismiss();
         }

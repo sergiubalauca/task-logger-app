@@ -1,6 +1,19 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+/* eslint-disable arrow-body-style */
+import {
+    HttpClient,
+    HttpErrorResponse,
+    HttpHeaders,
+} from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {
+    Observable,
+    catchError,
+    iif,
+    map,
+    of,
+    switchMap,
+    throwError,
+} from 'rxjs';
 import { HttpHeaderBuilder } from '../builders/http-headers.builder';
 import { EnvironmentConfig, ENV_CONFIG } from '../environment-config.interface';
 
@@ -24,6 +37,18 @@ export class HttpService {
     ) {
         this.url = `${config.environment.baseUrl}`;
         this.graphQLUrl = `${config.environment.graphQLUrl}`;
+    }
+
+    public pingServer(): Observable<boolean> {
+        // return this.http.get<boolean>(this.url + 'ping');
+        return this.http.post<boolean>(this.url + 'auth/' + 'ping', null).pipe(
+            map((res) => {
+                return res;
+            }),
+            catchError((error) => {
+                return throwError(() => error);
+            })
+        );
     }
 
     public makeGet<T>(
@@ -57,12 +82,37 @@ export class HttpService {
         body: U,
         responseType: any = 'json',
         extraHeaders?: { [name: string]: string }
-    ): Observable<GraphQLResponse<T> | never> {
-        return this.http.post<GraphQLResponse<T>>(this.graphQLUrl, body, {
-            headers: this.createHeaders(extraHeaders),
-            withCredentials: false,
-            responseType,
-        });
+    ): Observable<any> {
+        return this.pingServer().pipe(
+            switchMap((res) =>
+                iif(
+                    () => res,
+                    this.http
+                        .post<GraphQLResponse<T>>(this.graphQLUrl, body, {
+                            headers: this.createHeaders(extraHeaders),
+                            withCredentials: false,
+                            responseType,
+                        })
+                        .pipe(
+                            switchMap((res2) => {
+                                if (res2.errors && res2.errors.length > 0) {
+                                    throw new HttpErrorResponse({
+                                        error: res2.errors[0].message,
+                                        status: 401,
+                                        statusText: res2.errors[0].message,
+                                    });
+                                }
+                                return of(res2);
+                            })
+                        ),
+                    throwError(() => new Error('Server is not available'))
+                )
+            ),
+            // eslint-disable-next-line arrow-body-style
+            catchError((error) => {
+                return throwError(() => error);
+            })
+        );
     }
 
     public makePatch<T, U>(
@@ -102,5 +152,10 @@ export class HttpService {
             }
         }
         return builder.build();
+    }
+
+    private handleError(err: HttpErrorResponse): Observable<never> {
+        // just a test ... more could would go here
+        return throwError(() => err);
     }
 }

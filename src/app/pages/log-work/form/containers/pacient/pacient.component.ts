@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    inject,
+} from '@angular/core';
 import {
     AbstractControl,
     FormGroup,
@@ -54,12 +63,16 @@ export class PacientComponent implements OnInit {
             return of(result);
         })
     );
-
+    private cdr = inject(ChangeDetectorRef);
     constructor(
         private multiStepFormService: MultiStepFormService,
         private formStore: FormReducer,
         private formSelectors: FormSelector
-    ) {}
+    ) {
+        setInterval(() => {
+            this.cdr.markForCheck();
+        }, 1000);
+    }
 
     ngOnInit() {}
 

@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    inject,
+} from '@angular/core';
 import {
     FormGroup,
     AbstractControl,
@@ -63,11 +69,15 @@ export class WorkItemComponent implements OnInit {
             return of(result);
         })
     );
-
+    private cdr = inject(ChangeDetectorRef);
     constructor(
         private multiStepFormService: MultiStepFormService,
         private formSelectors: FormSelector
-    ) {}
+    ) {
+        setInterval(() => {
+            this.cdr.markForCheck();
+        }, 1000);
+    }
 
     ngOnInit() {}
 

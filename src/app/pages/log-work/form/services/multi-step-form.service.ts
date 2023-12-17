@@ -92,16 +92,18 @@ export class MultiStepFormService {
     }
 
     public addDoctorControl() {
-        return this.getdoctorArray().push(this.newDoctor());
+        this.getdoctorArray().push(this.newDoctor());
+        this.getdoctorArray().updateValueAndValidity();
     }
 
     public removeDoctorControl(doctorIndex: number) {
-        // delete patients and work items for this doctor
         const patientArray = this.getPatientArray(doctorIndex);
-        for(let i = patientArray.length - 1; i >= 0; i--) {
+        for (let i = patientArray.length - 1; i >= 0; i--) {
             this.removePatientControl(doctorIndex, i);
         }
-        return this.getDoctorFormGroupControls().splice(doctorIndex, 1);
+        this.getPatientArray(doctorIndex).updateValueAndValidity();
+        this.getdoctorArray().controls.splice(doctorIndex, 1);
+        this.getdoctorArray().updateValueAndValidity();
     }
 
     public newDoctorWithoutPacients = () =>
@@ -185,19 +187,22 @@ export class MultiStepFormService {
     }
 
     public addPatientControl(index: number) {
-        return this.getPatientArray(index).push(this.newPatient());
+        this.getPatientArray(index).push(this.newPatient());
+        this.getPatientArray(index).updateValueAndValidity();
     }
 
     public removePatientControl(doctorIndex: number, pacientIndex: number) {
         // delete work items for this patient
         const workItemArray = this.getWorkItemArray(doctorIndex, pacientIndex);
-        for(let i = workItemArray.length - 1; i >= 0; i--) {
+        for (let i = workItemArray.length - 1; i >= 0; i--) {
             this.removeWorkItemControl(doctorIndex, pacientIndex, i);
         }
-        return this.getPatientArray(doctorIndex).controls.splice(
-            pacientIndex,
-            1
-        );
+        this.getWorkItemArray(
+            doctorIndex,
+            pacientIndex
+        ).updateValueAndValidity();
+        this.getPatientArray(doctorIndex).controls.splice(pacientIndex, 1);
+        this.getPatientArray(doctorIndex).updateValueAndValidity();
     }
 
     public newPatientWithoutWorkItems = () =>
@@ -266,9 +271,13 @@ export class MultiStepFormService {
     }
 
     public addWorkItemControl(doctorIndex?: number, patientIndex?: number) {
-        return this.getWorkItemArray(doctorIndex, patientIndex).push(
+        this.getWorkItemArray(doctorIndex, patientIndex).push(
             this.newWorkItem()
         );
+        this.getWorkItemArray(
+            doctorIndex,
+            patientIndex
+        ).updateValueAndValidity();
     }
 
     public removeWorkItemControl(
@@ -276,10 +285,14 @@ export class MultiStepFormService {
         patientIndex?: number,
         workItemIndex?: number
     ) {
-        return this.getWorkItemArray(doctorIndex, patientIndex).controls.splice(
+        this.getWorkItemArray(doctorIndex, patientIndex).controls.splice(
             workItemIndex,
             1
         );
+        this.getWorkItemArray(
+            doctorIndex,
+            patientIndex
+        ).updateValueAndValidity();
     }
 
     public newWorkItem = () =>

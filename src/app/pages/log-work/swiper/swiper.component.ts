@@ -115,7 +115,11 @@ export class SwiperComponent implements OnInit, OnDestroy {
         this.formStore.setCurrentDoctor(0);
     }
 
-    public async close() {
+    public closeModal() {
+        this.modalController.dismiss();
+    }
+
+    public async save() {
         this.formStore.setCurrentPacient(0);
         this.formStore.setCurrentDoctor(0);
 

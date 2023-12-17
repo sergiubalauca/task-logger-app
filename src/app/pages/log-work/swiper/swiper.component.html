@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" no-border no-shadow class="ion-no-border">
     <ion-toolbar>
         <ion-buttons slot="end">
-            <ion-button (click)="close()">
+            <ion-button (click)="closeModal()">
                 <ion-icon name="close-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -30,4 +30,10 @@
             </swiper-slide>
         </ng-container>
     </swiper-container>
+
+    <ion-item-group>
+        <ion-button expand="block" (click)="save()">
+            <ion-text>Save</ion-text>
+        </ion-button>
+    </ion-item-group>
 </ion-content>

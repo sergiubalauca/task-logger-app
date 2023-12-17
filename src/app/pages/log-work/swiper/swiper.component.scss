@@ -22,26 +22,11 @@
     }
     ion-content {
         swiper-slide {
-            // form {
-            //     display: flex;
-            //     flex-direction: column;
-
-            //     ion-item-group {
-            //         :first-of-type {
-            //             max-height: 50vh;
-            //             overflow: scroll;
-            //         }
-            //         ion-grid {
-            //             ion-row {
-            //                 display: flex;
-            //                 align-items: center;
-
-            //                 app-date-picker {
-            //                     flex: 1;
-            //                 }
-            //             }
-            //         }
-            //     }
+        }
+        ion-item-group {
+            // ion-button {
+            //     // set width to 100% of parent
+            //     width: 100%;
             // }
         }
     }

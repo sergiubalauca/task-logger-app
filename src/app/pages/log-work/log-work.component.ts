@@ -15,13 +15,55 @@ import { firstValueFrom } from 'rxjs';
     providers: [],
 })
 export class LogWorkComponent implements OnInit {
+    public highlightedDates = [
+        {
+            date: '2023-12-05',
+            textColor: '#800080',
+            backgroundColor: '#ffc0cb',
+        },
+        {
+            date: '2023-12-10',
+            textColor: '#09721b',
+            backgroundColor: '#c8e5d0',
+        },
+        {
+            date: '2023-12-20',
+            textColor: 'var(--ion-color-secondary-contrast)',
+            backgroundColor: 'var(--ion-color-secondary)',
+        },
+        {
+            date: '2023-12-23',
+            textColor: 'rgb(68, 10, 184)',
+            backgroundColor: 'rgb(211, 200, 229)',
+        },
+    ];
+
     constructor(
         private modalService: ModalService,
         private logWorkFacade: LogWorkFacade,
         private dailyWorkIdService: DateTimeService,
         private logWorkApiService: LogWorkApiService
     ) {}
+    // highlightedDates = (isoString) => {
+    //     const date = new Date(isoString);
+    //     const utcDay = date.getUTCDate();
 
+    //     if (utcDay % 5 === 0) {
+    //         return {
+    //             textColor: '#800080',
+    //             backgroundColor: '#ffc0cb',
+    //         };
+    //     }
+
+    //     if (utcDay % 3 === 0) {
+    //         return {
+    //             textColor: 'var(--ion-color-secondary-contrast)',
+    //             backgroundColor: 'var(--ion-color-secondary)',
+    //         };
+    //     }
+
+    //     return undefined;
+    // };
     ngOnInit() {}
 
     public async selectDate(event: any) {
@@ -43,7 +85,10 @@ export class LogWorkComponent implements OnInit {
             new Date(event.detail.value)
         );
         if (modalData.data && modalData.data.dismissed) {
-            const dailyWork: DailyWork = {...modalData.data.formValue, id: docId};
+            const dailyWork: DailyWork = {
+                ...modalData.data.formValue,
+                id: docId,
+            };
             const apiDoc = await firstValueFrom(
                 this.logWorkApiService.createDailyWork(dailyWork)
             );

@@ -1,7 +1,16 @@
 <app-header [title]="'Log Work'" [backBtnEnabled]="true"></app-header>
 
 <ion-content class="app-inner-padding">
-    <ion-item
-        ><ion-datetime (ionChange)="selectDate($event)"></ion-datetime
-    ></ion-item>
+    <!-- <ion-item> -->
+    <div>
+        <ion-datetime
+            color="rose"
+            presentation="date"
+            (ionChange)="selectDate($event)"
+            [highlightedDates]="highlightedDates"
+        >
+            <span slot="title">Select a date to start logging</span>
+        </ion-datetime>
+    </div>
+    <!-- </ion-item> -->
 </ion-content>

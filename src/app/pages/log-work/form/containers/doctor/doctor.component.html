@@ -19,7 +19,14 @@
                         </ion-item>
 
                         <div>
-                            <ion-button (click)="onGoToDoctor(i)">
+                            <!-- {{ dgc.doctorFormGroupControls[i].value?.doctor | json }} -->
+                            <ion-button
+                                [disabled]="
+                                    !dgc.doctorFormGroupControls[i]?.value
+                                        ?.doctor
+                                "
+                                (click)="onGoToDoctor(i)"
+                            >
                                 <ion-icon
                                     name="arrow-forward-outline"
                                 ></ion-icon>

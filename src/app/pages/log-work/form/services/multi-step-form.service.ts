@@ -22,16 +22,12 @@ export class MultiStepFormService {
 
     public buildFormWithData(dailyWork: DailyWorkDoc) {
         dailyWork.doctorGroup.forEach((doctor, doctorIdx) => {
-            // remove existing doctor controls
-            // this.removeDoctorControl(doctorIdx);
             this.getdoctorArray().push(this.newDoctorWithoutPacients());
             this.getDoctorFormGroupControls()[doctorIdx].patchValue({
                 doctor: doctor.doctor.name,
             });
 
             doctor.doctor.pacient.forEach((pacient, pacientIdx) => {
-                // remove existing pacient controls
-                // this.removePatientControl(doctorIdx, pacientIdx);
                 this.getPatientArray(doctorIdx).push(
                     this.newPatientWithoutWorkItems()
                 );
@@ -40,12 +36,6 @@ export class MultiStepFormService {
                 });
 
                 pacient.workItemAndNumber.forEach((workItem, workItemIdx) => {
-                    // remove existing workItem controls
-                    // this.removeWorkItemControl(
-                    //     doctorIdx,
-                    //     pacientIdx,
-                    //     workItemIdx
-                    // );
                     this.getWorkItemArray(doctorIdx, pacientIdx).push(
                         this.newWorkItem()
                     );
@@ -106,8 +96,11 @@ export class MultiStepFormService {
     }
 
     public removeDoctorControl(doctorIndex: number) {
-        // remove also it's pacients
-        // this.getPatientArray(doctorIndex).clear();
+        // delete patients and work items for this doctor
+        const patientArray = this.getPatientArray(doctorIndex);
+        for(let i = patientArray.length - 1; i >= 0; i--) {
+            this.removePatientControl(doctorIndex, i);
+        }
         return this.getDoctorFormGroupControls().splice(doctorIndex, 1);
     }
 
@@ -196,6 +189,11 @@ export class MultiStepFormService {
     }
 
     public removePatientControl(doctorIndex: number, pacientIndex: number) {
+        // delete work items for this patient
+        const workItemArray = this.getWorkItemArray(doctorIndex, pacientIndex);
+        for(let i = workItemArray.length - 1; i >= 0; i--) {
+            this.removeWorkItemControl(doctorIndex, pacientIndex, i);
+        }
         return this.getPatientArray(doctorIndex).controls.splice(
             pacientIndex,
             1

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
     FormGroup,
     AbstractControl,
@@ -6,7 +6,7 @@ import {
     ReactiveFormsModule,
 } from '@angular/forms';
 import { combineLatest, Observable, of, switchMap } from 'rxjs';
-import { FormSwipeStateService, MultiStepFormService } from '../../services';
+import { MultiStepFormService } from '../../services';
 import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
@@ -27,6 +27,7 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
         SearcheableSelectInputComponent,
         AsyncPipe,
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkItemComponent implements OnInit {
     public readonly strategy = WORK_ITEM_COLLECTION_NAME;
@@ -36,8 +37,6 @@ export class WorkItemComponent implements OnInit {
         doctorIdx: number;
         pacientIdx: number;
     }> = combineLatest([
-        // this.formSwiperState.getCurrentDoctor(),
-        // this.formSwiperState.getCurrentPacient(),
         this.formSelectors.currentDoctor$,
         this.formSelectors.currentPacient$,
     ]).pipe(
@@ -67,7 +66,6 @@ export class WorkItemComponent implements OnInit {
 
     constructor(
         private multiStepFormService: MultiStepFormService,
-        // private formSwiperState: FormSwipeStateService,
         private formSelectors: FormSelector
     ) {}
 
@@ -84,8 +82,6 @@ export class WorkItemComponent implements OnInit {
             index
         );
         this.workItemGroupControls = combineLatest([
-            // this.formSwiperState.getCurrentDoctor(),
-            // this.formSwiperState.getCurrentPacient(),
             this.formSelectors.currentDoctor$,
             this.formSelectors.currentPacient$,
         ]).pipe(
@@ -118,8 +114,6 @@ export class WorkItemComponent implements OnInit {
     public addWorkItemControl(doctorIdx: number, pacientIdx: number) {
         this.multiStepFormService.addWorkItemControl(doctorIdx, pacientIdx);
         this.workItemGroupControls = combineLatest([
-            // this.formSwiperState.getCurrentDoctor(),
-            // this.formSwiperState.getCurrentPacient(),
             this.formSelectors.currentDoctor$,
             this.formSelectors.currentPacient$,
         ]).pipe(

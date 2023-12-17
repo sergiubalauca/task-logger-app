@@ -7,10 +7,10 @@ import {
     OnInit,
     ViewChild,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { DailyWorkDoc, DateTimeService, SearcheableSelectModel } from '@shared';
-import { map, Observable, of, switchMap } from 'rxjs';
+import { distinctUntilChanged, map, Observable, of, switchMap } from 'rxjs';
 import { SwiperOptions } from 'swiper';
 import { register } from 'swiper/element/bundle';
 import { MultiStepFormService } from '../form/services/multi-step-form.service';
@@ -22,6 +22,7 @@ import { CommonModule } from '@angular/common';
 import { LogWorkFacade } from '@abstraction';
 import { RxDocument } from 'rxdb';
 import { RxLogWorkDocumentType } from '@core';
+import { FormSelector } from '../form/custom-state/selector/form.selector';
 
 const initSwiper = () => register();
 @Component({
@@ -44,7 +45,6 @@ export class SwiperComponent implements OnInit, OnDestroy {
     @ViewChild('swiperContainer') swiperContainer: ElementRef | undefined;
 
     public multiForm: Observable<FormGroup>;
-
     private swiperElement: any;
 
     constructor(
@@ -52,7 +52,8 @@ export class SwiperComponent implements OnInit, OnDestroy {
         private formService: MultiStepFormService,
         private formStore: FormReducer,
         private logWorkFacade: LogWorkFacade,
-        private readonly dateTimeService: DateTimeService
+        private readonly dateTimeService: DateTimeService,
+        private formSelectors: FormSelector
     ) {
         initSwiper();
     }
@@ -81,8 +82,6 @@ export class SwiperComponent implements OnInit, OnDestroy {
                 of(this.formService.initMultiStepForm(dailyWork))
             )
         );
-
-        // this.multiForm = of(this.formService.initMultiStepForm(null));
     }
 
     public onSlideChange() {}

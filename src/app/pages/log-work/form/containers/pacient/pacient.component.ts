@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
     AbstractControl,
     FormGroup,
@@ -25,6 +25,7 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
         NgFor,
         AsyncPipe,
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PacientComponent implements OnInit {
     @Output() goToWorkItem: EventEmitter<{

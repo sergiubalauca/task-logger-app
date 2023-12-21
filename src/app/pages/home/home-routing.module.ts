@@ -30,6 +30,13 @@ const routes: Routes = [
             return playgroundModule.PlaygroundModule;
         },
     },
+    {
+        path: 'reports',
+        loadChildren: async () => {
+            const reportsModule = await import('../reports/reports.module');
+            return reportsModule.ReportsModule;
+        },
+    },
 ];
 
 @NgModule({

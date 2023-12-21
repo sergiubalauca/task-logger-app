@@ -21,4 +21,8 @@ export class HomeComponent implements OnInit {
     public async openSetup(): Promise<boolean> {
         return await this.navController.navigateForward('/home/setup');
     }
+
+    public async openReports(): Promise<boolean> {
+        return await this.navController.navigateForward('/home/reports');
+    }
 }

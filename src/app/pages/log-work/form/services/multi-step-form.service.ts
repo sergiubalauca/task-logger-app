@@ -104,6 +104,8 @@ export class MultiStepFormService {
         this.getPatientArray(doctorIndex).updateValueAndValidity();
         this.getdoctorArray().controls.splice(doctorIndex, 1);
         this.getdoctorArray().updateValueAndValidity();
+
+        console.log('GSB form: ', this.multiStepLogWorkForm);
     }
 
     public newDoctorWithoutPacients = () =>

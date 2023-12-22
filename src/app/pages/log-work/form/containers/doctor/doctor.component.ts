@@ -5,7 +5,6 @@ import {
     Component,
     EventEmitter,
     Input,
-    OnInit,
     Output,
     inject,
 } from '@angular/core';
@@ -19,8 +18,6 @@ import { DOCTOR_COLLECTION_NAME, SearcheableSelectModel } from '@shared';
 import {
     BehaviorSubject,
     Observable,
-    Subject,
-    distinct,
     distinctUntilChanged,
     of,
     switchMap,
@@ -54,34 +51,11 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
 })
 export class DoctorComponent {
     @Input() public chosenDate: string;
-    // @Input() public form: any;
-    // @Input() public set formValue(form$: Observable<FormGroup>) {
-    //     this.formSet = form$.pipe(
-    //         switchMap((form) =>
-    //             of({
-    //                 form,
-    //                 doctorFormGroup:
-    //                     this.multiStepFormService.getDoctorFormGroup(),
-    //                 doctorFormGroupControls:
-    //                     this.multiStepFormService.getDoctorFormGroupControls(),
-    //                 timeGroup: this.multiStepFormService.getTimeFormGroup(),
-    //             })
-    //         )
-    //     );
-    // }
-
     @Output() doctorSelected: EventEmitter<{
         value: SearcheableSelectModel;
         formIndex: number;
     }> = new EventEmitter<null>();
     @Output() goToDoctor: EventEmitter<number> = new EventEmitter<number>();
-
-    // public formSet: Observable<{
-    //     form: FormGroup;
-    //     doctorFormGroup?: FormGroup;
-    //     doctorFormGroupControls?: AbstractControl[];
-    //     timeGroup?: FormGroup;
-    // }>;
 
     public formRefresh$: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
@@ -95,14 +69,12 @@ export class DoctorComponent {
         timeGroup?: FormGroup;
     }> = this.formSelectors.formAlreadySavedForDate$.pipe(
         distinctUntilChanged(),
-        switchMap((formAlreadySavedForDate) =>
-            // this.formSelectors.currentDoctor$.pipe(
-            this.formRefreshObs$.pipe(
-                switchMap((idx) => {
-                    if (!formAlreadySavedForDate) {
-                        this.multiStepFormService.addDoctorControl();
-                    }
-
+        switchMap((formAlreadySavedForDate) => {
+            if (!formAlreadySavedForDate) {
+                this.multiStepFormService.addDoctorControl();
+            }
+            return this.formRefreshObs$.pipe(
+                switchMap((_isFormRefresh: boolean) => {
                     const result: {
                         form: FormGroup;
                         doctorFormGroup?: FormGroup;
@@ -119,8 +91,8 @@ export class DoctorComponent {
 
                     return of(result);
                 })
-            )
-        )
+            );
+        })
     );
 
     public readonly strategy = DOCTOR_COLLECTION_NAME;
@@ -144,13 +116,9 @@ export class DoctorComponent {
 
     public removeDoctorControl(index: number): void {
         this.multiStepFormService.removeDoctorControl(index);
-        // this.formStore.setCurrentDoctor(1);
+        const docArray = this.multiStepFormService.getdoctorArray();
+        this.formStore.setCurrentDoctor(docArray.length - 1);
         this.formRefresh$.next(true);
-        // setTimeout(() => {
-        //     this.formStore.setCurrentDoctor(0);
-        // }, 3000);
-
-        // this.formStore.setCurrentPacient(0);
     }
 
     public onDoctorSelected(
@@ -158,7 +126,6 @@ export class DoctorComponent {
         formIndex: number
     ): void {
         if (event.value && event.value !== '') {
-            // this.formStore.setCurrentDoctor(formIndex);
             this.doctorSelected.emit({ value: event, formIndex });
         }
     }

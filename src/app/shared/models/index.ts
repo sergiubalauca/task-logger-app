@@ -6,3 +6,4 @@ export * from './dailyWork';
 export * from './login.model';
 export * from './authentication-result.model';
 export * from './stored-request';
+export * from './reports';

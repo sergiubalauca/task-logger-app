@@ -17,7 +17,7 @@ export class ApiModule {
         return {
             ngModule: ApiModule,
             providers: [
-                HttpService,
+                // HttpService, - it's provided in root
                 ToastService,
                 {
                     provide: HTTP_INTERCEPTORS,

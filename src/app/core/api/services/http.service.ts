@@ -40,7 +40,6 @@ export class HttpService {
     }
 
     public pingServer(): Observable<boolean> {
-        // return this.http.get<boolean>(this.url + 'ping');
         return this.http.post<boolean>(this.url + 'auth/' + 'ping', null).pipe(
             map((res) => {
                 return res;
@@ -94,15 +93,19 @@ export class HttpService {
                             responseType,
                         })
                         .pipe(
-                            switchMap((res2) => {
-                                if (res2.errors && res2.errors.length > 0) {
+                            switchMap((graphQlReponse) => {
+                                if (
+                                    graphQlReponse.errors &&
+                                    graphQlReponse.errors.length > 0
+                                ) {
                                     throw new HttpErrorResponse({
-                                        error: res2.errors[0].message,
+                                        error: graphQlReponse.errors[0].message,
                                         status: 401,
-                                        statusText: res2.errors[0].message,
+                                        statusText:
+                                            graphQlReponse.errors[0].message,
                                     });
                                 }
-                                return of(res2);
+                                return of(graphQlReponse);
                             })
                         ),
                     throwError(() => new Error('Server is not available'))

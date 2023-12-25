@@ -1,9 +1,19 @@
-import { DoctorApiServce, LogWorkApiService, UserProvider, WorkItemApiServce } from '@abstraction';
+import {
+    DoctorApiServce,
+    LogWorkApiService,
+    ReportsService,
+    UserProvider,
+    WorkItemApiServce,
+} from '@abstraction';
 import { NgModule } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { environment } from 'src/environments/environment';
 import { AuthFacade } from '../abstraction/auth-facade';
-import { DailyWorkFacade, LogWorkFacade, WorkItemFacade } from '../abstraction/database';
+import {
+    DailyWorkFacade,
+    LogWorkFacade,
+    WorkItemFacade,
+} from '../abstraction/database';
 import { DoctorFacade } from '../abstraction/database/doctor.facade';
 import { AlertService } from '../shared/alert';
 import { ApiModule } from './api';
@@ -44,6 +54,7 @@ import { SyncConfigurationService } from '../abstraction/api-facade/sync/sync-co
         SyncService,
         SyncConfigurationService,
         Storage,
+        ReportsService,
     ],
 })
 export class CoreModule {}

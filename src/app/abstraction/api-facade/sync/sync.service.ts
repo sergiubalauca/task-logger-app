@@ -20,7 +20,6 @@ export class SyncService {
         .pipe(map((values) => values.every((v) => v === true)))
         .pipe(debounceTime(100), distinctUntilChanged());
 
-    // improvement idea: should we store this value in localStorage as well or is good enough to keep it in memory
     private lastSyncDateSubject = new BehaviorSubject(new Date());
     public lastSyncDate$ = this.lastSyncDateSubject.asObservable();
 

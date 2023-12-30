@@ -10,7 +10,7 @@
             </ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
-            <ion-button (click)="presentPopover($event)">
+            <ion-button *ngIf="settingsEnabled" (click)="presentPopover($event)">
                 <ion-icon
                     name="settings-outline"
                     size="large"

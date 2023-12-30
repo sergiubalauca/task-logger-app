@@ -43,7 +43,7 @@ export class SetupWorkItemComponent implements OnInit {
                         title: workItem.name,
                         rows: [
                             `Description: ${workItem.description}`,
-                            `Rate: ${workItem.price}`,
+                            `Price: ${workItem.price}`,
                         ],
                     };
                     return itemSlidingProp;

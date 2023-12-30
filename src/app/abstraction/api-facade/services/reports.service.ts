@@ -10,7 +10,7 @@ export class ReportsService {
     public getReports(options: {
         query: string;
         filters?: { [key: string]: any };
-    }): Observable<ReportDto> {
+    }): Observable<ReportDto[]> {
         return this.httpService
             .makeGraphqlPost<
                 ReportDto[],

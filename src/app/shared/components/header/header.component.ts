@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     @Input() public headerSubtitle: string;
     @Input() public backBtnEnabled: boolean;
     @Input() public backBtnIconClose: boolean;
+    @Input() public settingsEnabled = true;
 
     public constructor(
         private navController: NavController,

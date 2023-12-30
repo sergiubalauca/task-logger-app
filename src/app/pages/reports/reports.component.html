@@ -1,15 +1,37 @@
-<app-header [title]="'Reports'" [backBtnEnabled]="true"></app-header>
+<app-header
+    [title]="'Reports'"
+    [backBtnEnabled]="true"
+    [settingsEnabled]="true"
+></app-header>
 
 <ion-content class="app-inner-padding">
-    <!-- <ion-card (click)="goToDoctorsList()">
+    <ion-card *ngFor="let report of reports$ | async">
         <ion-card-header>
-            <ion-card-title>Doctors</ion-card-title>
+            <ion-card-title>{{ report.monthlyReports.month }} </ion-card-title>
         </ion-card-header>
+        <ion-card-content>
+            <ion-list>
+                <ion-item>
+                    <ion-label>Sumary</ion-label>
+                    <ion-label>{{
+                        report.monthlyReports.totalPrice
+                    }}</ion-label>
+                    <ion-note slot="end">{{
+                        report.monthlyReports.numberOfElements
+                    }}</ion-note>
+                </ion-item>
+            </ion-list>
+            <ion-list>
+                <ion-item
+                    *ngFor="let workItem of report.monthlyReports.workItem"
+                >
+                    <ion-label>{{ workItem.name }}</ion-label>
+                    <ion-label>{{ workItem.totalPriceOfElements }}</ion-label>
+                    <ion-note slot="end">{{
+                        workItem.numberOfElements
+                    }}</ion-note>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
     </ion-card>
-
-    <ion-card (click)="goToWorkItemsList()">
-        <ion-card-header>
-            <ion-card-title>Work Items</ion-card-title>
-        </ion-card-header>
-    </ion-card> -->
 </ion-content>

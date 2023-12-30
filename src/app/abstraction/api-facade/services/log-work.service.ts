@@ -19,7 +19,7 @@ export class LogWorkApiService extends SyncBaseService {
     public async startSyncing(): Promise<void> {
         this.doneSubject.next(false);
 
-        console.time('/Work Items api duration');
+        console.time('Work Items rxdb duration');
 
         const dailyWorks = await this.graphqlQuery({
             query: `
@@ -56,8 +56,6 @@ export class LogWorkApiService extends SyncBaseService {
                 `,
             filters: {},
         });
-        console.timeEnd('/Daily Work api duration');
-        console.time('/Daily Work rxdb duration');
 
         await this.dailyWorkFacade.deleteAll();
         for (const dailyWork of dailyWorks) {
@@ -71,7 +69,7 @@ export class LogWorkApiService extends SyncBaseService {
         }
         this.doneSubject.next(true);
 
-        console.timeEnd('/Daily Work rxdb duration');
+        console.timeEnd('Work Items rxdb duration');
     }
     constructor(
         private httpService: HttpService,

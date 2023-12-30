@@ -18,7 +18,7 @@ export class WorkItemApiServce extends SyncBaseService {
     public async startSyncing(): Promise<void> {
         this.doneSubject.next(false);
 
-        console.time('/Work Items api duration');
+        console.time('Work Items rxdb duration');
 
         const workItems = await this.graphqlQuery({
             query: `
@@ -30,8 +30,6 @@ export class WorkItemApiServce extends SyncBaseService {
                 `,
             filters: {},
         });
-        console.timeEnd('/Work Items api duration');
-        console.time('/Work Items rxdb duration');
 
         await this.workItemFacade.deleteAll();
         for (const workItem of workItems) {
@@ -42,7 +40,7 @@ export class WorkItemApiServce extends SyncBaseService {
         }
         this.doneSubject.next(true);
 
-        console.timeEnd('/Work Items rxdb duration');
+        console.timeEnd('Work Items rxdb duration');
     }
 
     private readonly apiURL = 'work-item';

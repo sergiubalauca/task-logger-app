@@ -20,7 +20,7 @@ export class DoctorApiServce extends SyncBaseService {
     public async startSyncing(): Promise<void> {
         this.doneSubject.next(false);
 
-        console.time('/Work Items api duration');
+        console.time('Doctors rxdb duration');
 
         const doctors = await this.graphqlQuery({
             query: `
@@ -32,8 +32,6 @@ export class DoctorApiServce extends SyncBaseService {
                 `,
             filters: {},
         });
-        console.timeEnd('/Doctors api duration');
-        console.time('/Doctors rxdb duration');
 
         await this.doctorFacade.deleteAll();
         for (const doctor of doctors) {

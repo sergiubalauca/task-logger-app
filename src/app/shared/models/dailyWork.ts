@@ -19,6 +19,10 @@ export interface DailyWork {
     timeGroup: {
         startTime: string;
         endTime: string;
+        breaks: {
+            startTime: string;
+            endTime: string;
+        }[];
     };
     mongoId?: string;
 }
@@ -45,6 +49,10 @@ export interface DailyWorkDto {
         timeGroup: {
             startTime: string;
             endTime: string;
+            breaks: {
+                startTime: string;
+                endTime: string;
+            }[];
         };
     };
 
@@ -68,6 +76,10 @@ export interface DailyWorkDto {
     timeGroup: {
         startTime: string;
         endTime: string;
+        breaks: {
+            startTime: string;
+            endTime: string;
+        }[];
     };
     _id: string;
     rxdbId: string;
@@ -91,4 +103,8 @@ export interface DailyWorkDoc {
     }[];
     startTime?: string;
     endTime?: string;
+    breaks?: {
+        startTime?: string;
+        endTime?: string;
+    }[];
 }

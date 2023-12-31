@@ -20,10 +20,18 @@
                     [chosenDate]="chosenDate"
                     (doctorSelected)="onDoctorSelected($event)"
                     (goToDoctor)="onGoToDoctor($event)"
+                    (navigateTimeTracking)="onNavigateTimeTracking()"
                 ></app-doctor>
             </swiper-slide>
-            <swiper-slide>
-                <app-pacient (goToWorkItem)="onGoToWorkItem()"></app-pacient>
+            <swiper-slide [ngSwitch]="swiperPageTwoComponent">
+                <app-pacient
+                    *ngSwitchCase="'app-pacient'"
+                    (goToWorkItem)="onGoToWorkItem()"
+                ></app-pacient>
+                <app-time-tracking
+                    *ngSwitchCase="'app-time-tracking'"
+                    [chosenDate]="chosenDate"
+                ></app-time-tracking>
             </swiper-slide>
             <swiper-slide>
                 <app-work-item></app-work-item>

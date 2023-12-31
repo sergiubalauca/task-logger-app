@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-    AbstractControl,
-    FormArray,
-    FormBuilder,
-    FormGroup,
-    Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DailyWorkDoc } from '@shared';
-import { Observable, of } from 'rxjs';
+
 import { FormReducer } from '../custom-state/reducer/form.reducer';
 
 @Injectable()
@@ -48,7 +42,18 @@ export class MultiStepFormService {
                 });
             });
         });
-        console.log('GSB form: ', this.multiStepLogWorkForm);
+
+        dailyWork.breaks?.forEach((breakItem, breakIdx) => {
+            if (breakIdx > 0) {
+                this.addBreak();
+            }
+            this.getTimeFormGroupControls()[breakIdx].patchValue({
+                startTime: breakItem.startTime,
+                endTime: breakItem.endTime,
+            });
+        });
+
+        console.log('GSB form with data: ', this.multiStepLogWorkForm);
     }
 
     public initMultiStepForm(dailyWork: any) {
@@ -68,6 +73,16 @@ export class MultiStepFormService {
                 endTime: this.fb.control(dailyWork?.endTime ?? null, {
                     validators: [Validators.required],
                 }),
+                breaks: this.fb.array([
+                    this.fb.group({
+                        startTime: this.fb.control(null, {
+                            validators: [Validators.required],
+                        }),
+                        endTime: this.fb.control(null, {
+                            validators: [Validators.required],
+                        }),
+                    }),
+                ]),
             }),
         });
         if (dailyWork) {
@@ -165,6 +180,29 @@ export class MultiStepFormService {
         return this.multiStepLogWorkForm.get('timeGroup') as FormGroup;
     }
 
+    public getTimeFormGroupControls() {
+        return (this.getTimeFormGroup().controls.breaks as FormArray).controls;
+    }
+
+    public newBreak = () =>
+        this.fb.group({
+            startTime: this.fb.control(null, {
+                validators: [Validators.required],
+            }),
+            endTime: this.fb.control(null, {
+                validators: [Validators.required],
+            }),
+        });
+
+    public getBreaksArray() {
+        return this.getTimeFormGroup().controls.breaks as FormArray;
+    }
+
+    public addBreak() {
+        this.getBreaksArray().push(this.newBreak());
+        this.getBreaksArray().updateValueAndValidity();
+    }
+
     public getPatientGroupFormGroup(doctorIndex?: number) {
         const doctorArray = (this.getDoctorFormGroup()?.controls?.doctorArray ??
             []) as FormArray;
@@ -182,10 +220,8 @@ export class MultiStepFormService {
     }
 
     public getPatientArray(index: number) {
-        const x = (this.getPatientGroupFormGroup(index)?.get('patientArray') ??
+        return (this.getPatientGroupFormGroup(index)?.get('patientArray') ??
             []) as FormArray;
-        // const x = this.getPatientControls(index);
-        return x;
     }
 
     public addPatientControl(index: number) {

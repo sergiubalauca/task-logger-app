@@ -1,0 +1,100 @@
+<div *ngIf="doctorGroupControls | async; let dgc">
+    <form [formGroup]="dgc.form">
+        <ion-item-group [formGroup]="dgc.timeGroup">
+            <ion-item-divider>
+                <ion-label> Time Tracking </ion-label>
+            </ion-item-divider>
+            <ion-grid>
+                <ion-row>
+                    <ion-col
+                        ><app-date-picker
+                            [chosenDate]="chosenDate"
+                            formControlName="startTime"
+                            [form]="dgc.timeGroup"
+                            [label]="'Start Time'"
+                        ></app-date-picker
+                    ></ion-col>
+                    <ion-col>
+                        <app-date-picker
+                            [chosenDate]="chosenDate"
+                            formControlName="endTime"
+                            [form]="dgc.timeGroup"
+                            [label]="'End Time'"
+                        ></app-date-picker>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <ion-item-divider>
+                <ion-label> Breaks </ion-label>
+            </ion-item-divider>
+            <ion-grid formArrayName="breaks">
+                <ion-row
+                    long-press
+                    (press)="onLongPress()"
+                    (tap)="onTap()"
+                    *ngFor="
+                        let breakControl of dgc.timeGroupControls;
+                        let i = index
+                    "
+                >
+                    <ion-col>
+                        <div [formGroupName]="i">
+                            <app-date-picker
+                                [chosenDate]="chosenDate"
+                                formControlName="startTime"
+                                [form]="dgc.timeGroup"
+                                [label]="'Start Time'"
+                            ></app-date-picker>
+                        </div>
+                    </ion-col>
+                    <ion-col>
+                        <div [formGroupName]="i">
+                            <app-date-picker
+                                [chosenDate]="chosenDate"
+                                formControlName="endTime"
+                                [form]="dgc.timeGroup"
+                                [label]="'End Time'"
+                            ></app-date-picker>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-button (click)="addBreak()">
+                    <ion-icon name="add"></ion-icon>
+                </ion-button>
+            </ion-grid>
+        </ion-item-group>
+
+        <!-- <ion-item-group [formGroup]="dgc.timeGroup">
+            <ion-grid formArrayName="breaks">
+                <ion-row
+                    *ngFor="
+                        let breakControl of dgc.timeGroupControls;
+                        let i = index
+                    "
+                >
+                    <ion-col>
+                        <ion-item [formGroupName]="i">
+                            <app-date-picker
+                                [chosenDate]="chosenDate"
+                                formControlName="startTime"
+                                [form]="dgc.timeGroup"
+                                [label]="'Start Time'"
+                            ></app-date-picker>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item [formGroupName]="i">
+                            <app-date-picker
+                                [chosenDate]="chosenDate"
+                                formControlName="endTime"
+                                [form]="dgc.timeGroup"
+                                [label]="'Start Time'"
+                            ></app-date-picker>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item-group> -->
+    </form>
+</div>

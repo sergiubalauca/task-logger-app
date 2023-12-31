@@ -29,6 +29,7 @@ import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe, CommonModule } from '@angular/common';
 import { FormReducer } from '../../custom-state/reducer/form.reducer';
 import { FormSelector } from '../../custom-state/selector/form.selector';
+import { TimeTrackingComponent } from '../time-tracking/time-tracking.component';
 
 @Component({
     selector: 'app-doctor',
@@ -45,6 +46,7 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
         DatePickerComponent,
         AsyncPipe,
         CommonModule,
+        TimeTrackingComponent,
     ],
     providers: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -56,6 +58,8 @@ export class DoctorComponent {
         formIndex: number;
     }> = new EventEmitter<null>();
     @Output() goToDoctor: EventEmitter<number> = new EventEmitter<number>();
+    @Output() navigateTimeTracking: EventEmitter<unknown> =
+        new EventEmitter<unknown>();
 
     public formRefresh$: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
@@ -115,9 +119,9 @@ export class DoctorComponent {
     }
 
     public removeDoctorControl(index: number): void {
-        this.multiStepFormService.removeDoctorControl(index);
         const docArray = this.multiStepFormService.getdoctorArray();
         this.formStore.setCurrentDoctor(docArray.length - 1);
+        this.multiStepFormService.removeDoctorControl(index);
         this.formRefresh$.next(true);
     }
 
@@ -134,5 +138,9 @@ export class DoctorComponent {
         this.formStore.setCurrentDoctor(index);
         this.formStore.setCurrentPacient(0);
         this.goToDoctor.emit(index);
+    }
+
+    public goToTimeTracking() {
+        this.navigateTimeTracking.emit();
     }
 }

@@ -1,0 +1,37 @@
+:host {
+    form {
+        display: flex;
+        flex-direction: column;
+
+        ion-item-group {
+            // &:first-of-type {
+            //     max-height: 35vh;
+            //     overflow-y: auto;
+            // }
+            ion-grid {
+                &:last-of-type {
+                    max-height: 40vh;
+                    overflow-y: auto;
+                }
+                ion-row {
+                    padding: 5px;
+                    ion-col {
+                        &.bordered {
+                            border-radius: 8px;
+                            border: solid 2px;
+                            border-color: var(--ion-color-light-09);
+                        }
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        app-date-picker {
+                            flex: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

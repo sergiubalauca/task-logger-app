@@ -49,6 +49,10 @@ export class LogWorkApiService extends SyncBaseService {
                           timeGroup {
                             startTime
                             endTime
+                            breaks {
+                                startTime
+                                endTime
+                            }
                           }
                         }
                       }

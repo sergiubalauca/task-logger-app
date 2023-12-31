@@ -84,6 +84,22 @@ export const LOGWORK_SCHEMA_LITERAL = {
             type: 'string',
             default: '',
         },
+        breaks: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    startTime: {
+                        type: 'string',
+                        default: '',
+                    },
+                    endTime: {
+                        type: 'string',
+                        default: '',
+                    },
+                },
+            },
+        },
         mongoId: {
             type: 'string',
             default: '',

@@ -52,6 +52,7 @@ export class LogWorkRepository {
                 id: dailyId,
                 endTime: '',
                 startTime: '',
+                breaks: [],
                 mongoId: '',
             };
 
@@ -80,6 +81,7 @@ export class LogWorkRepository {
 
             workItemToUpdate1.startTime = dailyWork.timeGroup.startTime;
             workItemToUpdate1.endTime = dailyWork.timeGroup.endTime;
+            workItemToUpdate1.breaks = dailyWork.timeGroup.breaks;
             workItemToUpdate1.mongoId = mongoId;
 
             await logWorkCollection.upsert({

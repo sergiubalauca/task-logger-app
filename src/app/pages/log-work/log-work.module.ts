@@ -15,6 +15,7 @@ import { FormSwipeStateService } from './form/services';
 import { WorkItemComponent } from './form/containers/work-item/work-item.component';
 import { FormReducer } from './form/custom-state/reducer/form.reducer';
 import { FormSelector } from './form/custom-state/selector/form.selector';
+import { TimeTrackingComponent } from './form/containers/time-tracking/time-tracking.component';
 @NgModule({
     imports: [
     CommonModule,
@@ -31,6 +32,7 @@ import { FormSelector } from './form/custom-state/selector/form.selector';
     DoctorComponent,
     PacientComponent,
     WorkItemComponent,
+    TimeTrackingComponent
 ],
     providers: [PlatformProvider, ModalService, DateTimeService, FormSwipeStateService, FormReducer, FormSelector],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

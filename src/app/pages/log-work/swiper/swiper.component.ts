@@ -23,6 +23,7 @@ import { LogWorkFacade } from '@abstraction';
 import { RxDocument } from 'rxdb';
 import { RxLogWorkDocumentType } from '@core';
 import { FormSelector } from '../form/custom-state/selector/form.selector';
+import { TimeTrackingComponent } from '../form/containers/time-tracking/time-tracking.component';
 
 const initSwiper = () => register();
 @Component({
@@ -37,6 +38,7 @@ const initSwiper = () => register();
         PacientComponent,
         WorkItemComponent,
         CommonModule,
+        TimeTrackingComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -45,6 +47,7 @@ export class SwiperComponent implements OnInit, OnDestroy {
     @ViewChild('swiperContainer') swiperContainer: ElementRef | undefined;
 
     public multiForm: Observable<FormGroup>;
+    public swiperPageTwoComponent: 'app-pacient' | 'app-time-tracking' = null;
     private swiperElement: any;
 
     constructor(
@@ -98,6 +101,7 @@ export class SwiperComponent implements OnInit, OnDestroy {
     }
 
     public onGoToDoctor(index: number) {
+        this.swiperPageTwoComponent = 'app-pacient';
         this.formStore.setCurrentPacient(0);
         this.swiperElement.allowSlideNext = true;
         this.swiperElement.swiper.slideNext();
@@ -110,9 +114,17 @@ export class SwiperComponent implements OnInit, OnDestroy {
         this.swiperElement.allowSlideNext = false;
     }
 
+    public onNavigateTimeTracking() {
+        this.swiperPageTwoComponent = 'app-time-tracking';
+        this.swiperElement.allowSlideNext = true;
+        this.swiperElement.swiper.slideNext();
+        this.swiperElement.allowSlideNext = false;
+    }
+
     public ngOnDestroy() {
         this.formStore.setCurrentPacient(0);
         this.formStore.setCurrentDoctor(0);
+        this.swiperPageTwoComponent = null;
     }
 
     public closeModal() {

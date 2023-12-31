@@ -19,7 +19,6 @@
                         </ion-item>
 
                         <div>
-                            <!-- {{ dgc.doctorFormGroupControls[i].value?.doctor | json }} -->
                             <ion-button
                                 [disabled]="
                                     !dgc.doctorFormGroupControls[i]?.value
@@ -71,5 +70,10 @@
                 </ion-row>
             </ion-grid>
         </ion-item-group>
+        <ion-buttons>
+            <ion-button (click)="goToTimeTracking()">
+                Time Tracking
+            </ion-button>
+        </ion-buttons>
     </form>
 </div>

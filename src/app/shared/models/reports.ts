@@ -9,5 +9,6 @@ export interface ReportDto {
         }[];
         totalPrice: number;
         numberOfElements: number;
+        workedHours: number;
     };
 }

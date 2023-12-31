@@ -25,6 +25,7 @@ export class ReportsComponent implements OnInit {
                             month,
                             numberOfElements,
                             totalPrice,
+                            workedHours,
                             workItem{
                                 name,
                                 numberOfElements,

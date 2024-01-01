@@ -13,7 +13,7 @@
                     max-height: 40vh;
                     overflow-y: auto;
                 }
-                ion-row {
+                ion-row + app-item-sliding-card {
                     padding: 5px;
                     ion-col {
                         &.bordered {

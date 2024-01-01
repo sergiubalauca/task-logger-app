@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/member-ordering */
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    EventEmitter,
     Input,
-    Output,
     inject,
 } from '@angular/core';
 import {
@@ -14,25 +11,14 @@ import {
     FormsModule,
     ReactiveFormsModule,
 } from '@angular/forms';
-import {
-    DOCTOR_COLLECTION_NAME,
-    LongPressDirective,
-    SearcheableSelectModel,
-} from '@shared';
-import {
-    BehaviorSubject,
-    Observable,
-    distinctUntilChanged,
-    of,
-    switchMap,
-} from 'rxjs';
+import { ItemSlidingCardComponent, LongPressDirective } from '@shared';
+import { Observable, of } from 'rxjs';
 import { MultiStepFormService } from '../../services';
 import { DatePickerComponent } from '../../components/date-picker/date-picker.component';
 import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe, CommonModule } from '@angular/common';
 import { FormReducer } from '../../custom-state/reducer/form.reducer';
-import { FormSelector } from '../../custom-state/selector/form.selector';
 
 @Component({
     selector: 'app-time-tracking',
@@ -50,6 +36,7 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
         AsyncPipe,
         CommonModule,
         LongPressDirective,
+        ItemSlidingCardComponent,
     ],
     providers: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -66,7 +53,6 @@ export class TimeTrackingComponent {
         timeGroupControls: this.multiStepFormService.getTimeFormGroupControls(),
     });
 
-    public readonly strategy = DOCTOR_COLLECTION_NAME;
     private cdr = inject(ChangeDetectorRef);
 
     constructor(
@@ -80,6 +66,10 @@ export class TimeTrackingComponent {
 
     public addBreak(): void {
         this.multiStepFormService.addBreak();
+    }
+
+    public deleteBreak(id: number): void {
+        this.multiStepFormService.deleteBreak(id);
     }
 
     public onLongPress(): void {

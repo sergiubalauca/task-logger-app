@@ -76,10 +76,10 @@ export class MultiStepFormService {
                 breaks: this.fb.array([
                     this.fb.group({
                         startTime: this.fb.control(null, {
-                            validators: [Validators.required],
+                            validators: [],
                         }),
                         endTime: this.fb.control(null, {
-                            validators: [Validators.required],
+                            validators: [],
                         }),
                     }),
                 ]),
@@ -200,6 +200,11 @@ export class MultiStepFormService {
 
     public addBreak() {
         this.getBreaksArray().push(this.newBreak());
+        this.getBreaksArray().updateValueAndValidity();
+    }
+
+    public deleteBreak(index: number) {
+        this.getBreaksArray().controls.splice(index, 1);
         this.getBreaksArray().updateValueAndValidity();
     }
 

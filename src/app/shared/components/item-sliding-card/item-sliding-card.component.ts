@@ -20,7 +20,8 @@ import { ItemSlidingProps } from './item-sliding-props.interface';
     imports: [CommonModule, IonicModule, ThrottleButtonDirective],
 })
 export class ItemSlidingCardComponent implements OnInit {
-    @Input({ required: true }) itemSlidingProps: ItemSlidingProps;
+    @Input() itemSlidingProps: ItemSlidingProps;
+    @Input() isNgContent: boolean;
     @Output() itemSlidingDelete: EventEmitter<number> = new EventEmitter();
     @Output() itemSlidingEdit: EventEmitter<number> = new EventEmitter();
 
@@ -30,11 +31,11 @@ export class ItemSlidingCardComponent implements OnInit {
 
     public deleteItem(e: Event) {
         e.stopPropagation();
-        this.itemSlidingDelete.emit(this.itemSlidingProps.id);
+        this.itemSlidingDelete.emit(this.itemSlidingProps?.id ?? null);
     }
 
     public editItem(e: Event) {
         e.stopPropagation();
-        this.itemSlidingEdit.emit(this.itemSlidingProps.id);
+        this.itemSlidingEdit.emit(this.itemSlidingProps?.id ?? null);
     }
 }

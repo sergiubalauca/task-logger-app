@@ -70,7 +70,7 @@ export class DoctorComponent {
         form: FormGroup;
         doctorFormGroup?: FormGroup;
         doctorFormGroupControls?: AbstractControl[];
-        timeGroup?: FormGroup;
+        // timeGroup?: FormGroup;
     }> = this.formSelectors.formAlreadySavedForDate$.pipe(
         distinctUntilChanged(),
         switchMap((formAlreadySavedForDate) => {
@@ -83,14 +83,14 @@ export class DoctorComponent {
                         form: FormGroup;
                         doctorFormGroup?: FormGroup;
                         doctorFormGroupControls?: AbstractControl[];
-                        timeGroup?: FormGroup;
+                        // timeGroup?: FormGroup;
                     } = {
                         form: this.multiStepFormService.getForm(),
                         doctorFormGroup:
                             this.multiStepFormService.getDoctorFormGroup(),
                         doctorFormGroupControls:
                             this.multiStepFormService.getDoctorFormGroupControls(),
-                        timeGroup: this.multiStepFormService.getTimeFormGroup(),
+                        // timeGroup: this.multiStepFormService.getTimeFormGroup(),
                     };
 
                     return of(result);

@@ -13,6 +13,7 @@
         pagination="true"
         (slidechange)="onSlideChange()"
         effect="coverflow"
+        threshold="100"
     >
         <ng-container *ngIf="this.multiForm | async as form">
             <swiper-slide>

@@ -13,5 +13,21 @@
     }
     ion-content {
         --background: transparent;
+
+        ion-grid {
+            ion-row {
+                padding: 5px;
+                ion-col {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    &:first-of-type {
+                        align-items: flex-start;
+                        justify-content: flex-start;
+                    }
+                }
+            }
+        }
     }
 }

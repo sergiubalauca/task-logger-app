@@ -7,10 +7,10 @@ import {
     OnInit,
     ViewChild,
 } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { DailyWorkDoc, DateTimeService, SearcheableSelectModel } from '@shared';
-import { distinctUntilChanged, map, Observable, of, switchMap } from 'rxjs';
+import { map, Observable, of, switchMap } from 'rxjs';
 import { SwiperOptions } from 'swiper';
 import { register } from 'swiper/element/bundle';
 import { MultiStepFormService } from '../form/services/multi-step-form.service';

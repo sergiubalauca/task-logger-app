@@ -11,8 +11,8 @@ import { FormGroup } from '@angular/forms';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { DailyWorkDoc, DateTimeService, SearcheableSelectModel } from '@shared';
 import { map, Observable, of, switchMap } from 'rxjs';
-import { SwiperOptions } from 'swiper';
-import { register } from 'swiper/element/bundle';
+import SwiperOptions from 'swiper';
+import { register, SwiperContainer } from 'swiper/element/bundle';
 import { MultiStepFormService } from '../form/services/multi-step-form.service';
 import { WorkItemComponent } from '../form/containers/work-item/work-item.component';
 import { PacientComponent } from '../form/containers/pacient/pacient.component';
@@ -63,7 +63,7 @@ export class SwiperComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.swiperElement = document.querySelector(
             'swiper-container'
-        ) as SwiperOptions;
+        ) as SwiperContainer;
         // buttonEl.addEventListener('click', () => {
         //     // swiperEl.swiper.slideNext();
         //     console.log('swiperEl: ', swiperEl.swiper);

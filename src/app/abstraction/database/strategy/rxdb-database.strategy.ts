@@ -9,6 +9,7 @@ export interface RxDBStrategy {
         params: Pick<CRUDParams, 'id'>
     ): Observable<DeepReadonlyObject<any>>;
     getAll$(): Observable<DeepReadonlyObject<any>[]>;
+    getManyByCondition?(params: Pick<CRUDParams, 'id'>[]): Observable<any>;
     addOne?(data: any): any;
     editOne?(data: any): any;
     deleteOne?(data: any): any;
@@ -42,6 +43,12 @@ export class Context {
 
     public getAll$(): Observable<DeepReadonlyObject<any>> {
         return this.strategy.getAll$();
+    }
+
+    public getManyByCondition(
+        params: Pick<CRUDParams, 'id'>[]
+    ): Observable<DeepReadonlyObject<any[]>> {
+        return this.strategy.getManyByCondition(params);
     }
 
     public async addOne(data: any): Promise<void> {

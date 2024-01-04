@@ -135,9 +135,7 @@ export class LogWorkRepository {
         if (database) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.logwork;
-            const logworks: RxDocument[] = await docCollection
-                .find()
-                .exec();
+            const logworks: RxDocument[] = await docCollection.find().exec();
 
             if (logworks) {
                 logworks.forEach((workItem) => {
@@ -145,5 +143,38 @@ export class LogWorkRepository {
                 });
             }
         }
+    }
+
+    public getManyByCondition(
+        params: Pick<CRUDParams, 'id'>[]
+    ): Observable<DeepReadonlyObject<DailyWorkDoc>[]> {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database && params && params.length > 0) {
+            const docCollection =
+                this.databaseProvider?.rxDatabaseInstance.logwork;
+
+            const regex = new RegExp('\\d-1-2021', 'g');
+
+            const logWorks: Observable<RxDocument[]> = docCollection
+                .find()
+                .where('id')
+                // .eq(params.id.toString())
+                .in(params.map((param) => param.id.toString()))
+                // DB id is in format '1-1-2021' and params.id is in format '1-2021'. Create regex to find all items with '1-2021' in id
+                .$;
+
+
+            return logWorks.pipe(
+                map((docs) => {
+                    return docs.map(
+                        (doc) =>
+                            doc.toJSON() as DeepReadonlyObject<DailyWorkDoc>
+                    );
+                })
+            );
+        }
+
+        return null;
     }
 }

@@ -22,7 +22,9 @@ export class LogWorkFacade {
         this.context = new Context(strategy);
     }
 
-    public async getOne(params: Pick<CRUDParams, 'id'>): Promise<DeepReadonlyObject<DailyWorkDoc>> {
+    public async getOne(
+        params: Pick<CRUDParams, 'id'>
+    ): Promise<DeepReadonlyObject<DailyWorkDoc>> {
         return await this.context.getOne(params);
     }
 
@@ -54,5 +56,11 @@ export class LogWorkFacade {
 
     public async deleteOne(params: Pick<CRUDParams, 'id'>): Promise<void> {
         return await this.context.deleteOne(params);
+    }
+
+    public getManyByCondition(
+        params: Pick<CRUDParams, 'id'>[]
+    ): Observable<DeepReadonlyObject<DailyWorkDoc[]>> {
+        return this.context.getManyByCondition(params);
     }
 }

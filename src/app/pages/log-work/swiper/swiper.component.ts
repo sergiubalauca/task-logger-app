@@ -11,7 +11,6 @@ import { FormGroup } from '@angular/forms';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { DailyWorkDoc, DateTimeService, SearcheableSelectModel } from '@shared';
 import { map, Observable, of, switchMap } from 'rxjs';
-import SwiperOptions from 'swiper';
 import { register, SwiperContainer } from 'swiper/element/bundle';
 import { MultiStepFormService } from '../form/services/multi-step-form.service';
 import { WorkItemComponent } from '../form/containers/work-item/work-item.component';

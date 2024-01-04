@@ -1,42 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import {
+    AfterContentChecked,
+    ChangeDetectionStrategy,
+    Component,
+    OnInit,
+} from '@angular/core';
 import { DailyWork, DateTimeService, ModalService } from '@shared';
 import { SwiperComponent } from './swiper/swiper.component';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { LogWorkApiService, LogWorkFacade } from '@abstraction';
-import { firstValueFrom } from 'rxjs';
+import {
+    Observable,
+    distinctUntilChanged,
+    firstValueFrom,
+    map,
+    of,
+    switchMap,
+} from 'rxjs';
+import { StateSubject } from './form/custom-state/models';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-log-work',
     templateUrl: './log-work.component.html',
     styleUrls: ['./log-work.component.scss'],
     standalone: true,
-    imports: [HeaderComponent, IonicModule],
+    imports: [HeaderComponent, IonicModule, CommonModule],
     providers: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LogWorkComponent implements OnInit {
-    public highlightedDates = [
+export class LogWorkComponent implements OnInit, AfterContentChecked {
+    public newMonthChangedEvent: StateSubject<string[]> = new StateSubject([]);
+
+    public highlightedDates$: Observable<
         {
-            date: '2023-12-05',
-            textColor: '#800080',
-            backgroundColor: '#ffc0cb',
-        },
-        {
-            date: '2023-12-10',
-            textColor: '#09721b',
-            backgroundColor: '#c8e5d0',
-        },
-        {
-            date: '2023-12-20',
-            textColor: 'var(--ion-color-secondary-contrast)',
-            backgroundColor: 'var(--ion-color-secondary)',
-        },
-        {
-            date: '2023-12-23',
-            textColor: 'rgb(68, 10, 184)',
-            backgroundColor: 'rgb(211, 200, 229)',
-        },
-    ];
+            date: string;
+            textColor: string;
+            backgroundColor: string;
+        }[]
+    >;
 
     constructor(
         private modalService: ModalService,
@@ -44,27 +46,52 @@ export class LogWorkComponent implements OnInit {
         private dailyWorkIdService: DateTimeService,
         private logWorkApiService: LogWorkApiService
     ) {}
-    // highlightedDates = (isoString) => {
-    //     const date = new Date(isoString);
-    //     const utcDay = date.getUTCDate();
 
-    //     if (utcDay % 5 === 0) {
-    //         return {
-    //             textColor: '#800080',
-    //             backgroundColor: '#ffc0cb',
-    //         };
-    //     }
+    ngOnInit() {
+        this.highlightedDates$ = this.newMonthChangedEvent.pipe(
+            distinctUntilChanged((a, b) => {
+                return JSON.stringify(a) === JSON.stringify(b);
+            }),
+            switchMap((datesToQuery) => {
+                if (!datesToQuery || datesToQuery.length === 0) {
+                    return of([]);
+                }
 
-    //     if (utcDay % 3 === 0) {
-    //         return {
-    //             textColor: 'var(--ion-color-secondary-contrast)',
-    //             backgroundColor: 'var(--ion-color-secondary)',
-    //         };
-    //     }
+                return this.logWorkFacade
+                    .getManyByCondition(
+                        datesToQuery.map((date) => ({ id: date }))
+                    )
+                    .pipe(
+                        map((docs) => {
+                            if (!docs || docs.length === 0) {
+                                return [];
+                            }
 
-    //     return undefined;
-    // };
-    ngOnInit() {}
+                            return docs.map((doc) => {
+                                const day = doc.id
+                                    .split('-')[0]
+                                    .padStart(2, '0');
+                                const month = doc.id
+                                    .split('-')[1]
+                                    .padStart(2, '0');
+                                const year = doc.id.split('-')[2];
+
+                                const date = `${year}-${month}-${day}`;
+                                return {
+                                    date,
+                                    textColor: 'rgb(68, 10, 184)',
+                                    backgroundColor: 'rgb(215, 400, 229)',
+                                };
+                            });
+                        })
+                    );
+            })
+        );
+    }
+
+    ngAfterContentChecked() {
+        this.observeDatetimeMonthChange2();
+    }
 
     public async selectDate(event: any) {
         await this.modalService.createAndShow(
@@ -97,5 +124,72 @@ export class LogWorkComponent implements OnInit {
                 mongoId: apiDoc._id,
             });
         }
+    }
+
+    public observeDatetimeMonthChange2() {
+        const daysInMonth: Map<string, number[]> = new Map([
+            ['January', Array.from(Array(31).keys())],
+            ['February', Array.from(Array(28).keys())],
+            ['March', Array.from(Array(31).keys())],
+            ['April', Array.from(Array(30).keys())],
+            ['May', Array.from(Array(31).keys())],
+            ['June', Array.from(Array(30).keys())],
+            ['July', Array.from(Array(31).keys())],
+            ['August', Array.from(Array(31).keys())],
+            ['September', Array.from(Array(30).keys())],
+            ['October', Array.from(Array(31).keys())],
+            ['November', Array.from(Array(30).keys())],
+            ['December', Array.from(Array(31).keys())],
+        ]);
+
+        const monthsNameToNumber: Map<string, number> = new Map([
+            ['January', 1],
+            ['February', 2],
+            ['March', 3],
+            ['April', 4],
+            ['May', 5],
+            ['June', 6],
+            ['July', 7],
+            ['August', 8],
+            ['September', 9],
+            ['October', 10],
+            ['November', 11],
+            ['December', 12],
+        ]);
+
+        let previous = '';
+        let datesToQuery: string[] = [];
+
+        const targetNode = document.querySelector('ion-datetime');
+        const config = { attributes: true, childList: true, subtree: true };
+        const callbackProcess = (mutationsList, observer): string[] => {
+            for (const mutation of mutationsList) {
+                if (mutation.type === 'attributes') {
+                    const e = document
+                        .querySelector('ion-datetime')
+                        .shadowRoot.querySelector('ion-label')?.textContent;
+                    if (e !== previous) {
+                        previous = e;
+
+                        const days = daysInMonth.get(e?.split(' ')[0]);
+                        const year = e?.split(' ')[1];
+
+                        datesToQuery = days?.map((day) => {
+                            const date = `${day + 1}-${monthsNameToNumber.get(
+                                e?.split(' ')[0]
+                            )}-${year}`;
+                            return date;
+                        });
+
+                        this.newMonthChangedEvent.next(datesToQuery);
+
+                        return datesToQuery;
+                    }
+                }
+            }
+        };
+
+        const observer = new MutationObserver(callbackProcess);
+        observer.observe(targetNode, config);
     }
 }

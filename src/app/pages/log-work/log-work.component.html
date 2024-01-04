@@ -4,10 +4,11 @@
     <!-- <ion-item> -->
     <div class="datetime-wrapper">
         <ion-datetime
+            [mode]="'ios'"
             color="rose"
             presentation="date"
             (ionChange)="selectDate($event)"
-            [highlightedDates]="highlightedDates"
+            [highlightedDates]="highlightedDates$ | async"
         >
             <span slot="title">Select a date to start logging</span>
         </ion-datetime>

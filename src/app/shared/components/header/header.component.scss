@@ -6,7 +6,8 @@
         padding-right: var(--ion-app-inner-padding);
 
         ion-toolbar {
-            --background: var(--ion-color-background);
+            // --background: var(--ion-color-background);
+            --background: transparent
             --padding-bottom: 0;
             --padding-end: 0;
             --padding-start: 0;

@@ -65,4 +65,8 @@ export class AddEditWorkItemComponent implements OnInit {
             'Save'
         );
     }
+
+    public closeModal() {
+        this.modalCtrl.dismiss();
+    }
 }

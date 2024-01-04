@@ -1,4 +1,13 @@
-<app-header [title]="'Setup Work Item'" [backBtnEnabled]="false"></app-header>
+<!-- <app-header [title]="'Setup Work Item'" [backBtnEnabled]="false"></app-header> -->
+<ion-header [translucent]="true" no-border no-shadow class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (click)="closeModal()">
+                <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 
 <ion-content class="app-inner-padding">
     <form [formGroup]="workItemForm">

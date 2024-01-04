@@ -1,7 +1,7 @@
 <ion-input
     readonly
     [value]="displayDate"
-    (click)="openModal()"
+    (click)="openModal(); $event.preventDefault()"
     label=""
     labelPlacement="floating"
 >

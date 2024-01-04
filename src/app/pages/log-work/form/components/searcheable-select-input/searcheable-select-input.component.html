@@ -1,6 +1,6 @@
 <ion-input
     [readonly]="true"
-    (click)="onOpenSelect()"
+    (click)="onOpenSelect(); $event.preventDefault()"
     [label]="inputLabel[strategy]"
     labelPlacement="floating"
     readonly

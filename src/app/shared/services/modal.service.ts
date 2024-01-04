@@ -18,7 +18,7 @@ export class ModalService {
             component: componentRef,
             cssClass,
             initialBreakpoint: 0.9,
-            // breakpoints: [0, 0.5, 0.9],
+            breakpoints: [0, 0.5, 0.9],
             componentProps,
             backdropDismiss,
         });

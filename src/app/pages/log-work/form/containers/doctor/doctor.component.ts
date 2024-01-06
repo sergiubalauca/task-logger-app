@@ -5,7 +5,9 @@ import {
     Component,
     EventEmitter,
     Input,
+    OnInit,
     Output,
+    ViewChild,
     inject,
 } from '@angular/core';
 import {
@@ -14,7 +16,12 @@ import {
     FormsModule,
     ReactiveFormsModule,
 } from '@angular/forms';
-import { DOCTOR_COLLECTION_NAME, SearcheableSelectModel } from '@shared';
+import {
+    DOCTOR_COLLECTION_NAME,
+    ItemSlidingCardComponent,
+    SearcheableSelectModel,
+    SuppressTouchMoveDirective,
+} from '@shared';
 import {
     BehaviorSubject,
     Observable,
@@ -47,6 +54,8 @@ import { TimeTrackingComponent } from '../time-tracking/time-tracking.component'
         AsyncPipe,
         CommonModule,
         TimeTrackingComponent,
+        ItemSlidingCardComponent,
+        SuppressTouchMoveDirective,
     ],
     providers: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -61,6 +70,8 @@ export class DoctorComponent {
     @Output() navigateTimeTracking: EventEmitter<unknown> =
         new EventEmitter<unknown>();
 
+    @ViewChild('ion-item-group') ionItemGroup: any;
+
     public formRefresh$: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
     public formRefreshObs$: Observable<boolean> =
@@ -70,7 +81,6 @@ export class DoctorComponent {
         form: FormGroup;
         doctorFormGroup?: FormGroup;
         doctorFormGroupControls?: AbstractControl[];
-        // timeGroup?: FormGroup;
     }> = this.formSelectors.formAlreadySavedForDate$.pipe(
         distinctUntilChanged(),
         switchMap((formAlreadySavedForDate) => {
@@ -83,14 +93,12 @@ export class DoctorComponent {
                         form: FormGroup;
                         doctorFormGroup?: FormGroup;
                         doctorFormGroupControls?: AbstractControl[];
-                        // timeGroup?: FormGroup;
                     } = {
                         form: this.multiStepFormService.getForm(),
                         doctorFormGroup:
                             this.multiStepFormService.getDoctorFormGroup(),
                         doctorFormGroupControls:
                             this.multiStepFormService.getDoctorFormGroupControls(),
-                        // timeGroup: this.multiStepFormService.getTimeFormGroup(),
                     };
 
                     return of(result);

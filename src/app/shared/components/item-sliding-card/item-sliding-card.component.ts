@@ -22,6 +22,7 @@ import { ItemSlidingProps } from './item-sliding-props.interface';
 export class ItemSlidingCardComponent implements OnInit {
     @Input() itemSlidingProps: ItemSlidingProps;
     @Input() isNgContent: boolean;
+    @Input() canDelete: boolean = true;
     @Output() itemSlidingDelete: EventEmitter<number> = new EventEmitter();
     @Output() itemSlidingEdit: EventEmitter<number> = new EventEmitter();
 

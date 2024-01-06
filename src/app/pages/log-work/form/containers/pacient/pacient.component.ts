@@ -13,12 +13,13 @@ import {
     FormsModule,
     ReactiveFormsModule,
 } from '@angular/forms';
-import { Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { MultiStepFormService } from '../../services';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormReducer } from '../../custom-state/reducer/form.reducer';
 import { FormSelector } from '../../custom-state/selector/form.selector';
+import { ItemSlidingCardComponent, SuppressTouchMoveDirective } from '@shared';
 
 @Component({
     selector: 'app-pacient',
@@ -32,6 +33,8 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
         IonicModule,
         NgFor,
         AsyncPipe,
+        ItemSlidingCardComponent,
+        SuppressTouchMoveDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -41,25 +44,36 @@ export class PacientComponent implements OnInit {
         pacientIdx: number;
     }> = new EventEmitter<{ doctorIdx: number; pacientIdx: number }>();
 
+    public formRefresh$: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+    public formRefreshObs$: Observable<boolean> =
+        this.formRefresh$.asObservable();
+
     public patientGroupControls: Observable<{
         patientGroup: FormGroup;
         patientControls: AbstractControl[];
         doctorIdx: number;
     }> = this.formSelectors.currentDoctor$.pipe(
         switchMap((idx: number) => {
-            const result: {
-                patientGroup: FormGroup;
-                patientControls: AbstractControl[];
-                doctorIdx: number;
-            } = {
-                doctorIdx: idx,
-                patientGroup:
-                    this.multiStepFormService.getPatientGroupFormGroup(idx),
-                patientControls:
-                    this.multiStepFormService.getPatientControls(idx),
-            };
+            return this.formRefreshObs$.pipe(
+                switchMap((_isFormRefresh: boolean) => {
+                    const result: {
+                        patientGroup: FormGroup;
+                        patientControls: AbstractControl[];
+                        doctorIdx: number;
+                    } = {
+                        doctorIdx: idx,
+                        patientGroup:
+                            this.multiStepFormService.getPatientGroupFormGroup(
+                                idx
+                            ),
+                        patientControls:
+                            this.multiStepFormService.getPatientControls(idx),
+                    };
 
-            return of(result);
+                    return of(result);
+                })
+            );
         })
     );
     private cdr = inject(ChangeDetectorRef);
@@ -76,11 +90,17 @@ export class PacientComponent implements OnInit {
     ngOnInit() {}
 
     public removePatientControl(index: number, doctorIdx: number) {
+        const patientArray =
+            this.multiStepFormService.getPatientArray(doctorIdx)
+        this.formStore.setCurrentPacient(patientArray.length - 1);
         this.multiStepFormService.removePatientControl(doctorIdx, index);
+        this.formRefresh$.next(true);
     }
 
     public addPatientControl(doctorIdx: number) {
+        this.formStore.setCurrentPacient(0);
         this.multiStepFormService.addPatientControl(doctorIdx);
+        this.formRefresh$.next(true);
     }
 
     public onGoToWorkItem(doctorIdx: number, pacientIdx: number) {

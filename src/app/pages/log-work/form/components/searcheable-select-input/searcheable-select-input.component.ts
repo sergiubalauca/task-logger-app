@@ -115,8 +115,8 @@ export class SearcheableSelectInputComponent
                     component: SearcheableSelectComponent,
                     cssClass: 'custom-searcheable-select',
                     backdropDismiss: true,
-                    // breakpoints: [0, 0.5, maxBreakpoint],
-                    initialBreakpoint: 0.8, //maxBreakpoint,
+                    breakpoints: [0, 0.5, 0.9],
+                    initialBreakpoint: 0.9, //maxBreakpoint,
                     componentProps: {
                         selectOptions,
                         selectedItemId: selectOptions.find(

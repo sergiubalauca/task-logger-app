@@ -1,6 +1,6 @@
 <div *ngIf="doctorGroupControls | async; let dgc">
     <form [formGroup]="dgc.form">
-        <ion-item-group formGroupName="doctorGroup">
+        <ion-item-group formGroupName="doctorGroup" supressTouchMove>
             <ion-grid formArrayName="doctorArray">
                 <ion-row
                     *ngFor="
@@ -8,71 +8,53 @@
                         let i = index
                     "
                 >
-                    <ion-col class="bordered">
-                        <ion-item [formGroupName]="i">
-                            <app-search-select-input
-                                formControlName="doctor"
-                                [form]="dgc.doctorFormGroup"
-                                [strategy]="strategy"
-                                (itemSelected)="onDoctorSelected($event, i)"
-                            ></app-search-select-input>
-                        </ion-item>
+                    <app-item-sliding-card
+                        [isNgContent]="true"
+                        [canDelete]="dgc.doctorFormGroupControls.length > 1"
+                        [itemSlidingProps]="{
+                    id: i,
+                    title: '',
+                    rows: [],
+                }"
+                        (itemSlidingDelete)="removeDoctorControl(i)"
+                    >
+                        <ion-col class="bordered">
+                            <ion-item [formGroupName]="i">
+                                <app-search-select-input
+                                    formControlName="doctor"
+                                    [form]="dgc.doctorFormGroup"
+                                    [strategy]="strategy"
+                                    (itemSelected)="onDoctorSelected($event, i)"
+                                ></app-search-select-input>
+                            </ion-item>
 
-                        <div>
-                            <ion-button
-                                [disabled]="
-                                    !dgc.doctorFormGroupControls[i]?.value
-                                        ?.doctor
-                                "
-                                (click)="onGoToDoctor(i)"
-                            >
-                                <ion-icon
-                                    name="arrow-forward-outline"
-                                ></ion-icon>
-                            </ion-button>
-                            <ion-button
-                                *ngIf="dgc.doctorFormGroupControls.length > 1"
-                                color="danger"
-                                (click)="removeDoctorControl(i)"
-                            >
-                                <ion-icon name="remove"></ion-icon>
-                            </ion-button>
-                        </div>
-                    </ion-col>
+                            <ion-buttons>
+                                <ion-button
+                                    [disabled]="
+                                        !dgc.doctorFormGroupControls[i]?.value
+                                            ?.doctor
+                                    "
+                                    (click)="onGoToDoctor(i)"
+                                >
+                                    <ion-icon
+                                        name="arrow-forward-outline"
+                                    ></ion-icon>
+                                </ion-button>
+                            </ion-buttons>
+                        </ion-col>
+                    </app-item-sliding-card>
                 </ion-row>
 
-                <ion-button (click)="addDoctorControl()">
-                    <ion-icon name="add"></ion-icon>
-                </ion-button>
+                <ion-buttons>
+                    <ion-button (click)="addDoctorControl()">
+                        <ion-icon name="add"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
             </ion-grid>
         </ion-item-group>
-        <!-- <ion-item-group [formGroup]="dgc.timeGroup">
-            <ion-grid>
-                <ion-row>
-                    <ion-col
-                        ><app-date-picker
-                            [chosenDate]="chosenDate"
-                            formControlName="startTime"
-                            [form]="dgc.timeGroup"
-                            [label]="'Start Time'"
-                        ></app-date-picker
-                    ></ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <app-date-picker
-                            [chosenDate]="chosenDate"
-                            formControlName="endTime"
-                            [form]="dgc.timeGroup"
-                            [label]="'End Time'"
-                        ></app-date-picker>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item-group> -->
+
         <ion-buttons>
             <ion-button (click)="goToTimeTracking()">
-                <!-- Time Tracking -->
                 <ion-label>Time Tracking</ion-label>
                 <ion-icon name="arrow-forward-outline"> </ion-icon>
             </ion-button>

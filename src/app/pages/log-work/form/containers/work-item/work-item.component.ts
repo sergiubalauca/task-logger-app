@@ -16,7 +16,7 @@ import { MultiStepFormService } from '../../services';
 import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { WORK_ITEM_COLLECTION_NAME } from '@shared';
+import { ItemSlidingCardComponent, SuppressTouchMoveDirective, WORK_ITEM_COLLECTION_NAME } from '@shared';
 import { FormSelector } from '../../custom-state/selector/form.selector';
 
 @Component({
@@ -32,6 +32,8 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
         NgFor,
         SearcheableSelectInputComponent,
         AsyncPipe,
+        ItemSlidingCardComponent,
+        SuppressTouchMoveDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -91,65 +93,9 @@ export class WorkItemComponent implements OnInit {
             pacientIdx,
             index
         );
-        this.workItemGroupControls = combineLatest([
-            this.formSelectors.currentDoctor$,
-            this.formSelectors.currentPacient$,
-        ]).pipe(
-            switchMap(([currentDoctorIndex, currentPacientIndex]) => {
-                const result: {
-                    workItemGroup: FormGroup;
-                    workItemControls: AbstractControl[];
-                    doctorIdx: number;
-                    pacientIdx: number;
-                } = {
-                    doctorIdx: currentDoctorIndex,
-                    pacientIdx: currentPacientIndex,
-                    workItemGroup:
-                        this.multiStepFormService.getWorkItemGroupFormGroup(
-                            currentDoctorIndex,
-                            currentPacientIndex
-                        ),
-                    workItemControls:
-                        this.multiStepFormService.getWorkItemControls(
-                            currentDoctorIndex,
-                            currentPacientIndex
-                        ),
-                };
-
-                return of(result);
-            })
-        );
     }
 
     public addWorkItemControl(doctorIdx: number, pacientIdx: number) {
         this.multiStepFormService.addWorkItemControl(doctorIdx, pacientIdx);
-        this.workItemGroupControls = combineLatest([
-            this.formSelectors.currentDoctor$,
-            this.formSelectors.currentPacient$,
-        ]).pipe(
-            switchMap(([currentDoctorIndex, currentPacientIndex]) => {
-                const result: {
-                    workItemGroup: FormGroup;
-                    workItemControls: AbstractControl[];
-                    doctorIdx: number;
-                    pacientIdx: number;
-                } = {
-                    doctorIdx: currentDoctorIndex,
-                    pacientIdx: currentPacientIndex,
-                    workItemGroup:
-                        this.multiStepFormService.getWorkItemGroupFormGroup(
-                            currentDoctorIndex,
-                            currentPacientIndex
-                        ),
-                    workItemControls:
-                        this.multiStepFormService.getWorkItemControls(
-                            currentDoctorIndex,
-                            currentPacientIndex
-                        ),
-                };
-
-                return of(result);
-            })
-        );
     }
 }

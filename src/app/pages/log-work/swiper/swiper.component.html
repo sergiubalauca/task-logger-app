@@ -13,11 +13,11 @@
         pagination="true"
         (slidechange)="onSlideChange()"
         effect="coverflow"
-        threshold="100"
     >
         <ng-container *ngIf="this.multiForm | async as form">
             <swiper-slide>
                 <app-doctor
+                    style="height: 100%"
                     [chosenDate]="chosenDate"
                     (doctorSelected)="onDoctorSelected($event)"
                     (goToDoctor)="onGoToDoctor($event)"
@@ -26,6 +26,7 @@
             </swiper-slide>
             <swiper-slide [ngSwitch]="swiperPageTwoComponent">
                 <app-pacient
+                    style="height: 100%"
                     *ngSwitchCase="'app-pacient'"
                     (goToWorkItem)="onGoToWorkItem()"
                 ></app-pacient>
@@ -35,7 +36,7 @@
                 ></app-time-tracking>
             </swiper-slide>
             <swiper-slide>
-                <app-work-item></app-work-item>
+                <app-work-item style="height: 100%"></app-work-item>
             </swiper-slide>
         </ng-container>
     </swiper-container>

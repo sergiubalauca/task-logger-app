@@ -21,7 +21,6 @@ import { CommonModule } from '@angular/common';
 import { LogWorkFacade } from '@abstraction';
 import { RxDocument } from 'rxdb';
 import { RxLogWorkDocumentType } from '@core';
-import { FormSelector } from '../form/custom-state/selector/form.selector';
 import { TimeTrackingComponent } from '../form/containers/time-tracking/time-tracking.component';
 
 const initSwiper = () => register();
@@ -54,8 +53,7 @@ export class SwiperComponent implements OnInit, OnDestroy {
         private formService: MultiStepFormService,
         private formStore: FormReducer,
         private logWorkFacade: LogWorkFacade,
-        private readonly dateTimeService: DateTimeService,
-        private formSelectors: FormSelector
+        private readonly dateTimeService: DateTimeService
     ) {
         initSwiper();
     }
@@ -63,14 +61,8 @@ export class SwiperComponent implements OnInit, OnDestroy {
         this.swiperElement = document.querySelector(
             'swiper-container'
         ) as SwiperContainer;
-        // buttonEl.addEventListener('click', () => {
-        //     // swiperEl.swiper.slideNext();
-        //     console.log('swiperEl: ', swiperEl.swiper);
-        //     // swiperEl.swiper.watchOverflow = true;
-        // });
 
         this.swiperElement.allowSlideNext = false;
-        // swiperEl.allowSlidePrev = false;
 
         const dailyWorkId = this.dateTimeService.getDailyWorkId(
             new Date(this.chosenDate)
@@ -136,10 +128,6 @@ export class SwiperComponent implements OnInit, OnDestroy {
 
         const isFormValid = this.formService.getForm().valid;
         const formValue = this.formService.getForm().value;
-
-        // return await this.modalController.dismiss({
-        //     formValue,
-        // });
 
         return await this.modalController.dismiss({
             formValue,

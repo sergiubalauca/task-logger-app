@@ -1,36 +1,44 @@
 <div *ngIf="patientGroupControls | async; let pgc">
     <form [formGroup]="pgc.patientGroup">
-        <ion-grid formArrayName="patientArray">
+        <ion-grid formArrayName="patientArray" supressTouchMove>
             <ion-row
                 *ngFor="
                     let pacientControl of pgc.patientControls;
                     let j = index
                 "
             >
-                <ion-item [formGroupName]="j">
-                    <ion-input
-                        formControlName="patient"
-                        type="text"
-                        label="Patient"
-                        labelPlacement="floating"
-                    >
-                    </ion-input>
-                </ion-item>
-
-                <ion-button
-                    color="danger"
-                    *ngIf="pgc.patientControls.length > 1"
-                    (click)="removePatientControl(j, pgc.doctorIdx)"
+                <app-item-sliding-card
+                    [isNgContent]="true"
+                    [canDelete]="pgc.patientControls.length > 1"
+                    [itemSlidingProps]="{
+                    id: j,
+                    title: '',
+                    rows: [],
+                }"
+                    (itemSlidingDelete)="removePatientControl(j, pgc.doctorIdx)"
                 >
-                    <ion-icon name="remove"></ion-icon>
-                </ion-button>
-                <ion-button (click)="onGoToWorkItem(pgc.doctorIdx, j)">
-                    <ion-icon name="arrow-forward-outline"></ion-icon>
-                </ion-button>
+                    <ion-item [formGroupName]="j">
+                        <ion-input
+                            formControlName="patient"
+                            type="text"
+                            label="Patient"
+                            labelPlacement="floating"
+                        >
+                        </ion-input>
+                    </ion-item>
+
+                    <ion-buttons>
+                        <ion-button (click)="onGoToWorkItem(pgc.doctorIdx, j)">
+                            <ion-icon name="arrow-forward-outline"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </app-item-sliding-card>
             </ion-row>
-            <ion-button (click)="addPatientControl(pgc.doctorIdx)">
-                <ion-icon name="add"></ion-icon>
-            </ion-button>
+            <ion-buttons>
+                <ion-button (click)="addPatientControl(pgc.doctorIdx)">
+                    <ion-icon name="add"></ion-icon>
+                </ion-button>
+            </ion-buttons>
         </ion-grid>
     </form>
 </div>

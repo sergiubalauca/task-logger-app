@@ -37,7 +37,7 @@
     </ion-item>
     <ion-item-options side="end" class="ion-no-border">
         <ng-container>
-            <ion-item-option class="ion-no-border delete">
+            <ion-item-option *ngIf="canDelete" class="ion-no-border delete">
                 <ion-icon
                     (eventTriggered)="deleteItem($event)"
                     name="close-outline"

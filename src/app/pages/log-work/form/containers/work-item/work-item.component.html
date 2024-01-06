@@ -1,50 +1,52 @@
 <div *ngIf="workItemGroupControls | async; let wig">
     <form [formGroup]="wig.workItemGroup">
-        <ion-grid formArrayName="workItemAndNumber">
+        <ion-grid formArrayName="workItemAndNumber" supressTouchMove>
             <ion-row
                 *ngFor="
                     let workItemControl of wig.workItemControls;
                     let j = index
                 "
             >
-                <ion-col>
-                    <ion-item [formGroupName]="j">
-                        <app-search-select-input
-                            formControlName="workItem"
-                            [strategy]="strategy"
-                            [form]="wig.workItemGroup"
-                        ></app-search-select-input>
-                    </ion-item>
-
-                    <ion-item [formGroupName]="j">
-                        <ion-input
-                            formControlName="numberOfWorkItems"
-                            type="text"
-                            label="No of WorkItems"
-                            labelPlacement="floating"
-                        >
-                        </ion-input>
-                    </ion-item>
-
-                    <ion-button
-                        color="danger"
-                        (click)="
-                            removeWorkItemControl(
-                                j,
-                                wig.doctorIdx,
-                                wig.pacientIdx
-                            )
-                        "
-                    >
-                        <ion-icon name="remove"></ion-icon>
-                    </ion-button>
-                </ion-col>
+                <app-item-sliding-card
+                    [isNgContent]="true"
+                    [itemSlidingProps]="{
+                        id: j,
+                        title: '',
+                        rows: [],
+                    }"
+                    (itemSlidingDelete)="
+                        removeWorkItemControl(j, wig.doctorIdx, wig.pacientIdx)
+                    "
+                >
+                    <ion-col size="8">
+                        <ion-item [formGroupName]="j">
+                            <app-search-select-input
+                                formControlName="workItem"
+                                [strategy]="strategy"
+                                [form]="wig.workItemGroup"
+                            ></app-search-select-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-item [formGroupName]="j">
+                            <ion-input
+                                formControlName="numberOfWorkItems"
+                                type="text"
+                                label="Count"
+                                labelPlacement="floating"
+                            >
+                            </ion-input>
+                        </ion-item>
+                    </ion-col>
+                </app-item-sliding-card>
             </ion-row>
-            <ion-button
-                (click)="addWorkItemControl(wig.doctorIdx, wig.pacientIdx)"
-            >
-                <ion-icon name="add"></ion-icon>
-            </ion-button>
+            <ion-buttons>
+                <ion-button
+                    (click)="addWorkItemControl(wig.doctorIdx, wig.pacientIdx)"
+                >
+                    <ion-icon name="add"></ion-icon>
+                </ion-button>
+            </ion-buttons>
         </ion-grid>
     </form>
 </div>

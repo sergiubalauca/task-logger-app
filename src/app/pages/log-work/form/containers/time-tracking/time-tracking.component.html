@@ -27,7 +27,7 @@
             <ion-item-divider>
                 <ion-label> Breaks </ion-label>
             </ion-item-divider>
-            <ion-grid formArrayName="breaks">
+            <ion-grid formArrayName="breaks" supressTouchMove>
                 <ion-row
                     long-press
                     (press)="onLongPress()"
@@ -44,7 +44,7 @@
                         title: '',
                         rows: [],
                     }"
-                    (itemSlidingDelete)="deleteBreak(i)"
+                        (itemSlidingDelete)="deleteBreak(i)"
                     >
                         <ion-col [formGroupName]="i">
                             <app-date-picker

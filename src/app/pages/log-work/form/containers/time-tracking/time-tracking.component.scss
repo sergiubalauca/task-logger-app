@@ -10,7 +10,7 @@
             // }
             ion-grid {
                 &:last-of-type {
-                    max-height: 40vh;
+                    max-height: 32vh;
                     overflow-y: auto;
                 }
                 ion-row + app-item-sliding-card {

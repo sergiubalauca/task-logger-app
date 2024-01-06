@@ -32,6 +32,9 @@
 
             ion-grid {
                 ion-row {
+                    &:last-of-type {
+                        margin-bottom: 20px;
+                    }
                     padding: 5px;
                     ion-col {
                         display: flex;

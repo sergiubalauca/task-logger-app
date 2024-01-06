@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
     Doctor,
     ItemSlidingCardComponent,
@@ -26,6 +26,7 @@ import { ConnectivityStateService } from '@core';
         ItemSlidingCardComponent,
     ],
     providers: [ModalService, DoctorApiServce],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SetupDoctorComponent implements OnInit {
     public doctors$: Observable<ItemSlidingProps[]>;
@@ -108,6 +109,7 @@ export class SetupDoctorComponent implements OnInit {
         if (modalData.data && modalData.data.dismissed) {
             const doctorToEdit: Doctor = {
                 ...modalData.data.doctor,
+                id: doctorId.toString(),
             };
             await this.doctorFacade.editOne(doctorToEdit);
             await firstValueFrom(

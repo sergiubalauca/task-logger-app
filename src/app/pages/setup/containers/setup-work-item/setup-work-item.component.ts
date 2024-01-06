@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import {
     ItemSlidingCardComponent,
@@ -24,6 +24,7 @@ import { WorkItemApiServce, WorkItemFacade } from '@abstraction';
         ItemSlidingCardComponent,
     ],
     providers: [ModalService, WorkItemApiServce],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SetupWorkItemComponent implements OnInit {
     public workItems$: Observable<ItemSlidingProps[]>;
@@ -106,7 +107,8 @@ export class SetupWorkItemComponent implements OnInit {
 
         if (modalData.data && modalData.data.dismissed) {
             const workItemToEdit: WorkItem = {
-                ...modalData.data.workItem
+                ...modalData.data.workItem,
+                id: workItemId.toString(),
             };
             await this.workItemFacade.editOne(workItemToEdit);
             await firstValueFrom(

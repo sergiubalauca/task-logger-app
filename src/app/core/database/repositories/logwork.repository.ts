@@ -54,6 +54,7 @@ export class LogWorkRepository {
                 startTime: '',
                 breaks: [],
                 mongoId: '',
+                isPartiallySaved: data.dailyWork.isPartiallySaved,
             };
 
             workItemToUpdate1.doctorGroup.push(
@@ -70,7 +71,7 @@ export class LogWorkRepository {
                                                 name: workItem.workItem,
                                             },
                                             numberOfWorkItems:
-                                                workItem.numberOfWorkItems.toString(),
+                                                workItem?.numberOfWorkItems?.toString() ?? '',
                                         })
                                     ),
                             })

@@ -1,5 +1,6 @@
 export interface DailyWork {
     id: string;
+    isPartiallySaved: boolean;
     doctorGroup: {
         doctorArray: {
             doctor: string;
@@ -29,6 +30,7 @@ export interface DailyWork {
 
 export interface DailyWorkDto {
     dailyWork: {
+        isPartiallySaved: boolean;
         id: string;
         doctorGroup: {
             doctorArray: {
@@ -86,6 +88,7 @@ export interface DailyWorkDto {
 }
 
 export interface DailyWorkDoc {
+    isPartiallySaved: boolean;
     id?: string;
     doctorGroup?: {
         doctor?: {

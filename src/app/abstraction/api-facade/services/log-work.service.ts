@@ -29,7 +29,8 @@ export class LogWorkApiService extends SyncBaseService {
                         rxdbId,
                         id
                         dailyWork {
-                          id,  
+                          id,
+                          isPartiallySaved,
                           doctorGroup {
                             doctorArray{
                               doctor

@@ -77,11 +77,22 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
                                 const year = doc.id.split('-')[2];
 
                                 const date = `${year}-${month}-${day}`;
-                                return {
-                                    date,
-                                    textColor: 'rgb(68, 10, 184)',
-                                    backgroundColor: 'rgb(215, 400, 229)',
-                                };
+
+                                switch (doc.isPartiallySaved) {
+                                    case true:
+                                        return {
+                                            date,
+                                            textColor: 'rgb(68, 10, 184)',
+                                            backgroundColor: 'rgb(255, 255, 0)',
+                                        };
+                                    case false:
+                                        return {
+                                            date,
+                                            textColor: 'rgb(68, 10, 184)',
+                                            backgroundColor:
+                                                'rgb(215, 400, 229)',
+                                        };
+                                }
                             });
                         })
                     );
@@ -108,17 +119,19 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
         const docId = this.dailyWorkIdService.getDailyWorkId(
             new Date(event.detail.value)
         );
-        if (modalData.data && modalData.data.dismissed) {
+        if (modalData.data) {
+            const isFormValid = modalData.data.dismissed;
             const dailyWork: DailyWork = {
                 ...modalData.data.formValue,
                 id: docId,
+                isPartiallySaved: !isFormValid,
             };
             const apiDoc = await firstValueFrom(
                 this.logWorkApiService.createDailyWork(dailyWork)
             );
 
             await this.logWorkFacade.editOne({
-                dailyWork: modalData.data.formValue,
+                dailyWork: {...modalData.data.formValue, isPartiallySaved: !isFormValid},
                 dailyId: docId,
                 // eslint-disable-next-line no-underscore-dangle
                 mongoId: apiDoc._id,

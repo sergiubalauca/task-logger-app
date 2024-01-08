@@ -22,6 +22,10 @@ export const LOGWORK_SCHEMA_LITERAL = {
             maxLength: 100,
             // primary: true,
         },
+        isPartiallySaved: {
+            type: 'boolean',
+            default: true,
+        },
         doctorGroup: {
             type: 'array',
             items: {

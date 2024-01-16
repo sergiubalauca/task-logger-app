@@ -120,22 +120,30 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
             new Date(event.detail.value)
         );
         if (modalData.data) {
-            const isFormValid = modalData.data.dismissed;
-            const dailyWork: DailyWork = {
-                ...modalData.data.formValue,
-                id: docId,
-                isPartiallySaved: !isFormValid,
-            };
-            const apiDoc = await firstValueFrom(
-                this.logWorkApiService.createDailyWork(dailyWork)
-            );
+            if (modalData.data.isDelete) {
+                const mongoIdOfDoc = (await this.logWorkFacade.getOne({ id: docId })).mongoId ?? null;
+                await firstValueFrom(this.logWorkApiService.deleteDailyWork(mongoIdOfDoc));
+                await this.logWorkFacade.deleteOne({ id: docId });
+            } else {
+                const isFormValid = modalData.data.dismissed;
+                const dailyWork: DailyWork = {
+                    ...modalData.data.formValue,
+                    id: docId,
+                    isPartiallySaved: !isFormValid,
+                };
+                const apiDoc = await firstValueFrom(
+                    this.logWorkApiService.createDailyWork(dailyWork)
+                );
 
-            await this.logWorkFacade.editOne({
-                dailyWork: {...modalData.data.formValue, isPartiallySaved: !isFormValid},
-                dailyId: docId,
-                // eslint-disable-next-line no-underscore-dangle
-                mongoId: apiDoc._id,
-            });
+                await this.logWorkFacade.editOne({
+                    dailyWork: {
+                        ...modalData.data.formValue,
+                        isPartiallySaved: !isFormValid,
+                    },
+                    dailyId: docId,
+                    mongoId: apiDoc._id,
+                });
+            }
         }
     }
 
@@ -175,13 +183,16 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
 
         const targetNode = document.querySelector('ion-datetime');
         const config = { attributes: true, childList: true, subtree: true };
-        const callbackProcess = (mutationsList, observer): string[] => {
+        const callbackProcess = (
+            mutationsList: { type: string }[],
+            _observer: unknown
+        ): string[] => {
             for (const mutation of mutationsList) {
                 if (mutation.type === 'attributes') {
                     const e = document
                         .querySelector('ion-datetime')
-                        .shadowRoot.querySelector('ion-label')?.textContent;
-                    if (e !== previous) {
+                        ?.shadowRoot?.querySelector('ion-label')?.textContent;
+                    if (e && e !== previous) {
                         previous = e;
 
                         const days = daysInMonth.get(e?.split(' ')[0]);

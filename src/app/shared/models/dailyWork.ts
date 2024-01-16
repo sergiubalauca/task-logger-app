@@ -90,6 +90,7 @@ export interface DailyWorkDto {
 export interface DailyWorkDoc {
     isPartiallySaved: boolean;
     id?: string;
+    mongoId?: string;
     doctorGroup?: {
         doctor?: {
             name?: string;

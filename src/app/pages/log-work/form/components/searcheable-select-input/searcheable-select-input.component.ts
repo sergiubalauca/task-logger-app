@@ -53,7 +53,7 @@ export class SearcheableSelectInputComponent
 
     public inputLabel = {
         [DOCTOR_COLLECTION_NAME]: 'Doctor',
-        [WORK_ITEM_COLLECTION_NAME]: 'Work Item',
+        [WORK_ITEM_COLLECTION_NAME]: 'Service',
     };
 
     public selectedValue: string | null;

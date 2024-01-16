@@ -103,6 +103,21 @@ export class LogWorkApiService extends SyncBaseService {
         );
     }
 
+    public deleteDailyWork(id: string): Observable<DailyWorkDto> {
+        return this.networkService.connectivity$.pipe(
+            switchMap((status) => {
+                const route = `${this.apiURL}/${id}`;
+                if (status.isConnected) {
+                    return this.httpService.makeDelete(route);
+                } else {
+                    return this.offlineManager.storeRequest(route, 'DELETE', {
+                        collection: LOGWORK_COLLECTION_NAME,
+                    });
+                }
+            })
+        );
+    }
+
     public updateDailyWork(dailyWork: DailyWork): Observable<DailyWorkDto> {
         return this.networkService.connectivity$.pipe(
             switchMap((status) => {

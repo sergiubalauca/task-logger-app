@@ -45,6 +45,7 @@ export class SwiperComponent implements OnInit, OnDestroy {
     @ViewChild('swiperContainer') swiperContainer: ElementRef | undefined;
 
     public multiForm: Observable<FormGroup>;
+    protected isDeleteButtonEnabled: boolean = true;
     public swiperPageTwoComponent: 'app-pacient' | 'app-time-tracking' = null;
     private swiperElement: any;
 
@@ -72,9 +73,10 @@ export class SwiperComponent implements OnInit, OnDestroy {
                 (dailyWork: DailyWorkDoc) =>
                     dailyWork as RxDocument<RxLogWorkDocumentType>
             ),
-            switchMap((dailyWork) =>
-                of(this.formService.initMultiStepForm(dailyWork))
-            )
+            switchMap((dailyWork) => {
+                this.isDeleteButtonEnabled = !!!dailyWork;
+                return of(this.formService.initMultiStepForm(dailyWork));
+            })
         );
     }
 
@@ -120,6 +122,12 @@ export class SwiperComponent implements OnInit, OnDestroy {
 
     public closeModal() {
         this.modalController.dismiss();
+    }
+
+    public async deleteLoggedWorkForDate() {
+        return await this.modalController.dismiss({
+            isDelete: true,
+        });
     }
 
     public async save() {

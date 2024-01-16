@@ -2,18 +2,19 @@
     ion-header {
         margin-top: 10px;
         margin-bottom: 50px;
-        padding-left: var(--ion-app-inner-padding);
-        padding-right: var(--ion-app-inner-padding);
 
         ion-toolbar {
-            // --background: var(--ion-color-background);
-            --background: transparent
+            --background: var(--ion-color-background);
+            // --background: background-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 41%, rgba(0,212,255,1) 100%);
+            // --background: transparent
             --padding-bottom: 0;
             --padding-end: 0;
             --padding-start: 0;
             --padding-top: 0;
 
             ion-buttons {
+                padding-left: var(--ion-app-inner-padding);
+                padding-right: var(--ion-app-inner-padding);
                 ion-button,
                 ion-menu-button {
                     margin-inline-start: 0;

@@ -8,6 +8,11 @@
                 <ion-icon name="trash-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
+        <ion-buttons slot="start" *ngIf="!isFormValid" class="warning-icon">
+            <ion-button [disabled]="true">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
         <ion-buttons slot="end">
             <ion-button (click)="closeModal()">
                 <ion-icon name="close-outline"></ion-icon>

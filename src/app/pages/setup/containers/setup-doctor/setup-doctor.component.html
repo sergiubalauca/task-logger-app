@@ -1,7 +1,6 @@
 <app-header [title]="'Setup Doctor'" [backBtnEnabled]="true"></app-header>
 
 <ion-content class="app-inner-padding">
-    {{ isOffline$ | async | json  }}
     <ng-container *ngFor="let doctor of doctors$ | async">
         <app-item-sliding-card
             [itemSlidingProps]="doctor"
@@ -12,7 +11,6 @@
 
     <ion-fab horizontal="end" vertical="bottom" slot="fixed" class="ion-margin">
         <ion-fab-button (click)="addDoctor()">
-            <!-- <ion-icon class="add-outline"></ion-icon> -->
             <ion-icon name="add-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>

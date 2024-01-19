@@ -48,6 +48,7 @@ export class SwiperComponent implements OnInit, OnDestroy {
     protected isDeleteButtonEnabled: boolean = true;
     public swiperPageTwoComponent: 'app-pacient' | 'app-time-tracking' = null;
     private swiperElement: any;
+    public isFormValid = this.formService.getForm()?.valid ?? false;
 
     constructor(
         private modalController: ModalController,
@@ -75,7 +76,11 @@ export class SwiperComponent implements OnInit, OnDestroy {
             ),
             switchMap((dailyWork) => {
                 this.isDeleteButtonEnabled = !!!dailyWork;
-                return of(this.formService.initMultiStepForm(dailyWork));
+
+                const form = of(this.formService.initMultiStepForm(dailyWork));
+                this.isFormValid = this.formService.getForm().valid;
+
+                return form;
             })
         );
     }

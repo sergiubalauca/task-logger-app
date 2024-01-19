@@ -11,7 +11,11 @@ import {
     FormsModule,
     ReactiveFormsModule,
 } from '@angular/forms';
-import { ItemSlidingCardComponent, LongPressDirective, SuppressTouchMoveDirective } from '@shared';
+import {
+    ItemSlidingCardComponent,
+    LongPressDirective,
+    SuppressTouchMoveDirective,
+} from '@shared';
 import { Observable, of } from 'rxjs';
 import { MultiStepFormService } from '../../services';
 import { DatePickerComponent } from '../../components/date-picker/date-picker.component';
@@ -37,7 +41,7 @@ import { FormReducer } from '../../custom-state/reducer/form.reducer';
         CommonModule,
         LongPressDirective,
         ItemSlidingCardComponent,
-        SuppressTouchMoveDirective
+        SuppressTouchMoveDirective,
     ],
     providers: [],
     changeDetection: ChangeDetectionStrategy.OnPush,

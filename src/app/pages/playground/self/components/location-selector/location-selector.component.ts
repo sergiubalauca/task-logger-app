@@ -23,7 +23,6 @@ export class LocationSelectorComponent implements OnInit {
     }
 
     public locationChecked(location: PayLocation) {
-        // console.log('GSB: ', location);
         this.locationService.pushToLocationList(location);
     }
 }

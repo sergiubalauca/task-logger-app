@@ -13,8 +13,8 @@ import { Subscription } from 'rxjs';
 import {
     ControlValueAccessor,
     NG_VALUE_ACCESSOR,
-    FormGroup,
     FormsModule,
+    AbstractControl,
 } from '@angular/forms';
 import { SearcheableSelectComponent } from '../searcheable-select/searcheable-select.component';
 import { CommonModule, DOCUMENT } from '@angular/common';
@@ -28,6 +28,7 @@ import {
 } from '@shared';
 
 import { DoctorFacade, WorkItemFacade } from '@abstraction';
+import { ErrorMapper, TranslateErrorPipe } from '../../error-mappers';
 
 @Component({
     selector: 'app-search-select-input',
@@ -41,12 +42,12 @@ import { DoctorFacade, WorkItemFacade } from '@abstraction';
         },
     ],
     standalone: true,
-    imports: [IonicModule, FormsModule, CommonModule],
+    imports: [IonicModule, FormsModule, CommonModule, TranslateErrorPipe],
 })
 export class SearcheableSelectInputComponent
     implements ControlValueAccessor, OnDestroy
 {
-    @Input() public form: FormGroup;
+    @Input() public attachedFormControl: AbstractControl;
     @Input() public strategy: CollectionNames;
     @Output() public itemSelected: EventEmitter<SearcheableSelectModel> =
         new EventEmitter();
@@ -55,6 +56,10 @@ export class SearcheableSelectInputComponent
         [DOCTOR_COLLECTION_NAME]: 'Doctor',
         [WORK_ITEM_COLLECTION_NAME]: 'Service',
     };
+
+    protected get errorMapper(): typeof ErrorMapper {
+        return ErrorMapper;
+    }
 
     public selectedValue: string | null;
     private dropdownDataStrategies = {

@@ -16,25 +16,34 @@ import { WorkItemComponent } from './form/containers/work-item/work-item.compone
 import { FormReducer } from './form/custom-state/reducer/form.reducer';
 import { FormSelector } from './form/custom-state/selector/form.selector';
 import { TimeTrackingComponent } from './form/containers/time-tracking/time-tracking.component';
+import { TranslateErrorPipe } from './form/error-mappers';
 @NgModule({
     imports: [
-    CommonModule,
-    IonicModule,
-    LogWorkRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    LogWorkComponent,
-    SearcheableSelectInputComponent,
-    SearcheableSelectComponent,
-    DatePickerComponent,
-    DatePickerModalComponent,
-    SwiperComponent,
-    DoctorComponent,
-    PacientComponent,
-    WorkItemComponent,
-    TimeTrackingComponent
-],
-    providers: [PlatformProvider, ModalService, DateTimeService, FormSwipeStateService, FormReducer, FormSelector],
+        CommonModule,
+        IonicModule,
+        LogWorkRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        // LogWorkComponent,
+        // SearcheableSelectInputComponent,
+        // SearcheableSelectComponent,
+        // DatePickerComponent,
+        // DatePickerModalComponent,
+        // SwiperComponent,
+        // DoctorComponent,
+        // PacientComponent,
+        // WorkItemComponent,
+        // TimeTrackingComponent,
+        // TranslateErrorPipe,
+    ],
+    providers: [
+        PlatformProvider,
+        ModalService,
+        DateTimeService,
+        FormSwipeStateService,
+        FormReducer,
+        FormSelector,
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LogWorkModule {}

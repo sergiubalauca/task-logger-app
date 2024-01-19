@@ -19,6 +19,7 @@ import {
 } from 'rxjs';
 import { StateSubject } from './form/custom-state/models';
 import { CommonModule } from '@angular/common';
+import { DatetimeHighlight } from '@ionic/core';
 
 @Component({
     selector: 'app-log-work',
@@ -32,13 +33,7 @@ import { CommonModule } from '@angular/common';
 export class LogWorkComponent implements OnInit, AfterContentChecked {
     public newMonthChangedEvent: StateSubject<string[]> = new StateSubject([]);
 
-    public highlightedDates$: Observable<
-        {
-            date: string;
-            textColor: string;
-            backgroundColor: string;
-        }[]
-    >;
+    public highlightedDates$: Observable<DatetimeHighlight[]>;
 
     constructor(
         private modalService: ModalService,
@@ -121,8 +116,12 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
         );
         if (modalData.data) {
             if (modalData.data.isDelete) {
-                const mongoIdOfDoc = (await this.logWorkFacade.getOne({ id: docId })).mongoId ?? null;
-                await firstValueFrom(this.logWorkApiService.deleteDailyWork(mongoIdOfDoc));
+                const mongoIdOfDoc =
+                    (await this.logWorkFacade.getOne({ id: docId })).mongoId ??
+                    null;
+                await firstValueFrom(
+                    this.logWorkApiService.deleteDailyWork(mongoIdOfDoc)
+                );
                 await this.logWorkFacade.deleteOne({ id: docId });
             } else {
                 const isFormValid = modalData.data.dismissed;

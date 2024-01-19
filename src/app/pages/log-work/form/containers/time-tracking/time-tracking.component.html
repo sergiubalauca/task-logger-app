@@ -10,7 +10,9 @@
                         ><app-date-picker
                             [chosenDate]="chosenDate"
                             formControlName="startTime"
-                            [form]="dgc.timeGroup"
+                            [attachedFormControl]="
+                                dgc.timeGroup.get('startTime')
+                            "
                             [label]="'Start Time'"
                         ></app-date-picker
                     ></ion-col>
@@ -18,7 +20,7 @@
                         <app-date-picker
                             [chosenDate]="chosenDate"
                             formControlName="endTime"
-                            [form]="dgc.timeGroup"
+                            [attachedFormControl]="dgc.timeGroup.get('endTime')"
                             [label]="'End Time'"
                         ></app-date-picker>
                     </ion-col>
@@ -50,7 +52,9 @@
                             <app-date-picker
                                 [chosenDate]="chosenDate"
                                 formControlName="startTime"
-                                [form]="dgc.timeGroup"
+                                [attachedFormControl]="
+                                    breakControl.get('startTime')
+                                "
                                 [label]="'Start Time'"
                             ></app-date-picker>
                         </ion-col>
@@ -58,7 +62,9 @@
                             <app-date-picker
                                 [chosenDate]="chosenDate"
                                 formControlName="endTime"
-                                [form]="dgc.timeGroup"
+                                [attachedFormControl]="
+                                    breakControl.get('endTime')
+                                "
                                 [label]="'End Time'"
                             ></app-date-picker>
                         </ion-col>

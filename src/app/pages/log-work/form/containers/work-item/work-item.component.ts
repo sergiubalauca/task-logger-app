@@ -15,9 +15,14 @@ import { combineLatest, Observable, of, switchMap } from 'rxjs';
 import { MultiStepFormService } from '../../services';
 import { SearcheableSelectInputComponent } from '../../components/searcheable-select-input/searcheable-select-input.component';
 import { IonicModule } from '@ionic/angular';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { ItemSlidingCardComponent, SuppressTouchMoveDirective, WORK_ITEM_COLLECTION_NAME } from '@shared';
+import { NgIf, NgFor, AsyncPipe, CommonModule } from '@angular/common';
+import {
+    ItemSlidingCardComponent,
+    SuppressTouchMoveDirective,
+    WORK_ITEM_COLLECTION_NAME,
+} from '@shared';
 import { FormSelector } from '../../custom-state/selector/form.selector';
+import { TranslateErrorPipe } from '../../error-mappers';
 
 @Component({
     selector: 'app-work-item',
@@ -33,7 +38,9 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
         SearcheableSelectInputComponent,
         AsyncPipe,
         ItemSlidingCardComponent,
-        SuppressTouchMoveDirective
+        SuppressTouchMoveDirective,
+        CommonModule,
+        TranslateErrorPipe,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DailyWorkDoc } from '@shared';
-
 import { FormReducer } from '../custom-state/reducer/form.reducer';
+import { dateCompareAgainstValidator } from '../validators';
 
 @Injectable()
 export class MultiStepFormService {
@@ -68,18 +68,34 @@ export class MultiStepFormService {
             }),
             timeGroup: this.fb.group({
                 startTime: this.fb.control(dailyWork?.startTime ?? null, {
-                    validators: [Validators.required],
+                    validators: [
+                        Validators.required,
+                        dateCompareAgainstValidator('endTime', 'lessThan'),
+                    ],
                 }),
                 endTime: this.fb.control(dailyWork?.endTime ?? null, {
-                    validators: [Validators.required],
+                    validators: [
+                        Validators.required,
+                        dateCompareAgainstValidator('startTime', 'greaterThan'),
+                    ],
                 }),
                 breaks: this.fb.array([
                     this.fb.group({
                         startTime: this.fb.control(null, {
-                            validators: [],
+                            validators: [
+                                dateCompareAgainstValidator(
+                                    'endTime',
+                                    'lessThan'
+                                ),
+                            ],
                         }),
                         endTime: this.fb.control(null, {
-                            validators: [],
+                            validators: [
+                                dateCompareAgainstValidator(
+                                    'startTime',
+                                    'greaterThan'
+                                ),
+                            ],
                         }),
                     }),
                 ]),
@@ -161,6 +177,7 @@ export class MultiStepFormService {
                                                 {
                                                     validators: [
                                                         Validators.required,
+                                                        Validators.min(1),
                                                     ],
                                                 }
                                             ),
@@ -187,10 +204,16 @@ export class MultiStepFormService {
     public newBreak = () =>
         this.fb.group({
             startTime: this.fb.control(null, {
-                validators: [Validators.required],
+                validators: [
+                    Validators.required,
+                    dateCompareAgainstValidator('endTime', 'lessThan'),
+                ],
             }),
             endTime: this.fb.control(null, {
-                validators: [Validators.required],
+                validators: [
+                    Validators.required,
+                    dateCompareAgainstValidator('startTime', 'greaterThan'),
+                ],
             }),
         });
 
@@ -273,7 +296,10 @@ export class MultiStepFormService {
                                 validators: [Validators.required],
                             }),
                             numberOfWorkItems: this.fb.control(null, {
-                                validators: [Validators.required],
+                                validators: [
+                                    Validators.required,
+                                    Validators.min(1),
+                                ],
                             }),
                         }),
                     ],
@@ -288,8 +314,8 @@ export class MultiStepFormService {
         doctorIndex?: number,
         patientIndex?: number
     ) {
-        const patientArray = this.getPatientGroupFormGroup(doctorIndex).controls
-            .patientArray as FormArray;
+        const patientArray = this.getPatientGroupFormGroup(doctorIndex)
+            ?.controls.patientArray as FormArray;
         const patientFormGroup = patientArray.controls[
             patientIndex
         ] as FormGroup;
@@ -344,7 +370,7 @@ export class MultiStepFormService {
                 validators: [Validators.required],
             }),
             numberOfWorkItems: this.fb.control(null, {
-                validators: [Validators.required],
+                validators: [Validators.required, Validators.min(1)],
             }),
         });
 

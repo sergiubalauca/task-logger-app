@@ -17,8 +17,19 @@
                         font-size: 28px;
                     }
                 }
+
+                &.warning-icon {
+                    ion-button {
+                        --color: var(--ion-color-accent);
+
+                        ion-icon {
+                            font-size: 35px;
+                            font-weight: 500;
+                        }
+                    }
+                }
             }
-        };
+        }
     }
     ion-content {
         swiper-slide {

@@ -20,6 +20,7 @@ import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormReducer } from '../../custom-state/reducer/form.reducer';
 import { FormSelector } from '../../custom-state/selector/form.selector';
 import { ItemSlidingCardComponent, SuppressTouchMoveDirective } from '@shared';
+import { TranslateErrorPipe } from '../../error-mappers';
 
 @Component({
     selector: 'app-pacient',
@@ -34,7 +35,8 @@ import { ItemSlidingCardComponent, SuppressTouchMoveDirective } from '@shared';
         NgFor,
         AsyncPipe,
         ItemSlidingCardComponent,
-        SuppressTouchMoveDirective
+        SuppressTouchMoveDirective,
+        TranslateErrorPipe,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -91,7 +93,7 @@ export class PacientComponent implements OnInit {
 
     public removePatientControl(index: number, doctorIdx: number) {
         const patientArray =
-            this.multiStepFormService.getPatientArray(doctorIdx)
+            this.multiStepFormService.getPatientArray(doctorIdx);
         this.formStore.setCurrentPacient(patientArray.length - 1);
         this.multiStepFormService.removePatientControl(doctorIdx, index);
         this.formRefresh$.next(true);

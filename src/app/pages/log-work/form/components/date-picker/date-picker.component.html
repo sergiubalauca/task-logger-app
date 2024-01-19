@@ -7,3 +7,11 @@
 >
     {{ label }}
 </ion-input>
+
+<ion-note
+    *ngIf="attachedFormControl?.errors; let errors"
+    color="danger"
+    size="small"
+>
+    {{ errors | translateError }}
+</ion-note>

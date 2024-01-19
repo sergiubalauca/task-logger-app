@@ -25,6 +25,16 @@
                             labelPlacement="floating"
                         >
                         </ion-input>
+                        <ion-note
+                            *ngIf="
+                                pacientControl.get('patient')?.errors;
+                                let errors
+                            "
+                            color="danger"
+                            size="small"
+                        >
+                            {{ errors | translateError }}
+                        </ion-note>
                     </ion-item>
 
                     <ion-buttons>

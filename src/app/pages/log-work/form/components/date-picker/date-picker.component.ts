@@ -2,11 +2,10 @@ import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { ModalService, DateTimeService } from '@shared';
 import { PickerOptions } from '@ionic/core';
 import {
+    AbstractControl,
     ControlValueAccessor,
-    FormGroup,
     NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-// import { format, formatISO } from 'date-fns';
 import format from 'date-fns/format';
 import formatISO from 'date-fns/formatISO';
 import { DatePickerModalComponent } from '../date-picker-modal';
@@ -15,6 +14,8 @@ import {
     DatePickerRoleTypeEnum,
 } from '../../models';
 import { IonicModule } from '@ionic/angular';
+import { TranslateErrorPipe } from '../../error-mappers';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-date-picker',
@@ -28,10 +29,10 @@ import { IonicModule } from '@ionic/angular';
         },
     ],
     standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule, TranslateErrorPipe, CommonModule],
 })
 export class DatePickerComponent implements OnInit, ControlValueAccessor {
-    @Input() public form: FormGroup;
+    @Input() public attachedFormControl: AbstractControl;
     @Input() chosenDate: string;
     @Input() label: string;
 

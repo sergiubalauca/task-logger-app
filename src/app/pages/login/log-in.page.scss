@@ -1,15 +1,15 @@
 :host {
     ion-header {
+        background: var(--ion-color-primary-shade);
+        background-image: url("../../../../resources/splash.png");
+        background-repeat: no-repeat;
+        padding-bottom: 20px;
         display: flex;
-        flex: 1 1 40%;
+        flex: 1 1 30%;
         align-items: flex-end;
         justify-content: center;
-        background: var(--ion-color-primary-shade);
-        background-image: url("../../../assets/imgs/login_background.svg");
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: top right;
-        padding-bottom: 50px;
+        background-size: cover;
+        background-position: center;
 
         .logo {
             max-width: 100px;

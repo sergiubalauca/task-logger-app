@@ -26,6 +26,12 @@
                         align-items: flex-start;
                         justify-content: flex-start;
                     }
+
+                    ion-label {
+                        font-size: 16px;
+                        color: var(--ion-color-grey);
+                        font-family: var(--ion-font-family-bold);
+                    }
                 }
             }
         }

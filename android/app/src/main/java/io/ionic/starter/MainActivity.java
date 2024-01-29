@@ -1,4 +1,4 @@
-package io.ionic.worklogging;
+package io.ionic.dentalog;
 
 import com.getcapacitor.BridgeActivity;
 

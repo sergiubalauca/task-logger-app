@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">WorkLogging</string>
-    <string name="title_activity_main">WorkLogging</string>
-    <string name="package_name">io.ionic.worklogging</string>
-    <string name="custom_url_scheme">io.ionic.worklogging</string>
+    <string name="app_name">Dentalog</string>
+    <string name="title_activity_main">Dentalog</string>
+    <string name="package_name">io.ionic.dentalog</string>
+    <string name="custom_url_scheme">io.ionic.dentalog</string>
 </resources>

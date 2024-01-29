@@ -1,6 +1,6 @@
 {
-    "appId": "io.ionic.worklogging",
-    "appName": "WorkLogging",
+    "appId": "io.ionic.dentalog",
+    "appName": "Dentalog",
     "webDir": "www",
     "bundledWebRuntime": false,
     "plugins": {

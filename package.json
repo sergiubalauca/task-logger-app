@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^17.0.8",
     "@angular/router": "^17.0.8",
     "@awesome-cordova-plugins/network": "^6.4.0",
+    "@babel/polyfill": "^7.12.1",
     "@capacitor/android": "^5.0.0",
     "@capacitor/app": "^5.0.0",
     "@capacitor/core": "^5.0.0",

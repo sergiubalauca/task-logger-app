@@ -11,8 +11,8 @@ import { LOGWORK_SCHEMA_LITERAL, RxLogWorkDocumentType } from './schemas';
 import { isRxDatabase } from 'rxdb';
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { DOCTOR_SCHEMA_LITERAL } from './schemas/doctor.schema';
-import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder';
-import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
+// import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder';
+// import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
 import { WORKITEM_SCHEMA_LITERAL } from './schemas/work-item.schema';
 
 @Injectable()
@@ -58,8 +58,12 @@ export class RxDatabaseProvider {
 
         try {
             if (isDevMode()) {
-                addRxPlugin(RxDBDevModePlugin);
-                addRxPlugin(RxDBQueryBuilderPlugin);
+                // addRxPlugin(RxDBDevModePlugin);
+                // addRxPlugin(RxDBQueryBuilderPlugin);
+
+                await import('rxdb/plugins/dev-mode').then(
+                    module => addRxPlugin(module.RxDBDevModePlugin)
+                );
             }
 
             const database = await createRxDatabase<RxLogWorkCollections>({

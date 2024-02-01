@@ -1,4 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import {
+    Component,
+    CUSTOM_ELEMENTS_SCHEMA,
+    inject,
+    OnInit,
+} from '@angular/core';
 import {
     FormBuilder,
     FormControl,
@@ -14,6 +19,7 @@ import { LoginModel, RegisterModel, UserStorageService } from '@shared';
 import { AuthFacade } from '@abstraction';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @Component({
     selector: 'app-register',
@@ -27,7 +33,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
         ReactiveFormsModule,
         TranslateModule,
     ],
-    providers: [AuthFacade, UserStorageService],
+    providers: [AuthFacade, UserStorageService, InAppBrowser],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RegisterPage implements OnInit {
@@ -41,6 +47,7 @@ export class RegisterPage implements OnInit {
         email: this.translate.instant('login-page.email'),
         password: this.translate.instant('login-page.password'),
     };
+    private inAppBrowser: InAppBrowser = inject(InAppBrowser);
 
     constructor(
         private navCtrl: NavController,
@@ -53,6 +60,16 @@ export class RegisterPage implements OnInit {
 
     ngOnInit() {
         this.initLogin();
+    }
+
+    protected openTaCSite() {
+        const browser = this.inAppBrowser.create(
+            'https://sergiubalauca.github.io/dentalog-t-c/',
+            '_blank',
+            'presentationstyle=formsheet,toolbarposition=top,fullscreen=no,hideurlbar=yes,toolbarcolor=#176bff,closebuttoncolor=#ffffff,navigationbuttoncolor=#ffffff'
+        );
+
+        browser.show();
     }
 
     public async register(): Promise<void> {
@@ -100,6 +117,7 @@ export class RegisterPage implements OnInit {
                 ],
             ],
             password: ['', [Validators.required]],
+            termsAndConditions: [false, [Validators.requiredTrue]],
         });
 
         this.formValidationMessages = {

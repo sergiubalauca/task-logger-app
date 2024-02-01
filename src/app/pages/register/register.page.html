@@ -70,11 +70,28 @@
             </div>
         </div>
 
-        <ion-button (click)="register()" expand="block"
+        <ion-button (click)="register()" expand="block" [disabled]="!form.valid"
             >{{'register-page.button' | translate }}</ion-button
         >
         <ion-button (click)="goBack()" expand="block"
             >{{'register-page.go-to-login' | translate }}</ion-button
         >
+
+        <!-- checkbox for terms and conditions with external link to page -->
+        <ion-item lines="none">
+            <ion-checkbox
+                formControlName="termsAndConditions"
+                
+            ></ion-checkbox>
+            <ion-label (click)="openTaCSite()">
+                I agree to the <a>Terms and Conditions</a>
+            </ion-label>
+        </ion-item>
+
+        <!-- <ion-checkbox formControlName="termsAndConditions">
+            <ion-label>
+                I agree to the <a href="www.google.com">Terms and Conditions</a>
+            </ion-label>
+        </ion-checkbox> -->
     </form>
 </ion-content>

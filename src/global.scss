@@ -149,3 +149,13 @@ ion-datetime {
     color: var(----ion-text-color);
     font-family: var(--ion-font-family-bold);
 }
+
+ion-checkbox {
+    --size: 32px;
+    --checkbox-background-checked: #6815ec;
+}
+
+ion-checkbox::part(container) {
+    border-radius: 6px;
+    border: 2px solid #0b0318;
+}

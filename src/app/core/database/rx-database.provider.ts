@@ -1,8 +1,9 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable, inject, isDevMode } from '@angular/core';
 import {
     DATABASE_NAME,
     DOCTOR_COLLECTION_NAME,
     LOGWORK_COLLECTION_NAME,
+    ToastService,
     WORK_ITEM_COLLECTION_NAME,
 } from '@shared';
 import { addRxPlugin, createRxDatabase, RxDatabase } from 'rxdb';
@@ -19,6 +20,7 @@ import { WORKITEM_SCHEMA_LITERAL } from './schemas/work-item.schema';
 export class RxDatabaseProvider {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     private DB_INSTANCE: RxLogWorkDatabase;
+    private toastService: ToastService = inject(ToastService);
     private readonly collectionSettings = {
         [LOGWORK_COLLECTION_NAME]: {
             schema: LOGWORK_SCHEMA_LITERAL,
@@ -56,11 +58,21 @@ export class RxDatabaseProvider {
             return this.rxDatabaseInstance;
         }
 
+        
         try {
-            if (isDevMode()) {
-                addRxPlugin(RxDBDevModePlugin);
-                addRxPlugin(RxDBQueryBuilderPlugin);
+            if (isDevMode()){
+                this.toastService.presentSuccess('Dev Mode', 3000);
+                await import('rxdb/plugins/dev-mode').then(
+                    module => addRxPlugin(module.RxDBDevModePlugin)
+                );
             }
+            await import('rxdb/plugins/query-builder').then(
+                module => addRxPlugin(module.RxDBQueryBuilderPlugin)
+            );
+            // if (isDevMode()) {
+            //     addRxPlugin(RxDBDevModePlugin);
+            //     addRxPlugin(RxDBQueryBuilderPlugin);
+            // }
 
             const database = await createRxDatabase<RxLogWorkCollections>({
                 name: DATABASE_NAME,

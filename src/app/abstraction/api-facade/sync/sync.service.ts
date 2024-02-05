@@ -5,6 +5,7 @@ import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastDuration, ToastService } from '@shared';
 import { SyncBaseService } from './sync-base.service';
+import { errorMapper } from '@core';
 
 @Injectable()
 export class SyncService {
@@ -49,7 +50,8 @@ export class SyncService {
         } catch (error) {
             console.error(error);
             this.toastService.presentError(
-                this.translateService.instant('errorCodes.RXDB_SYNC'),
+                // this.translateService.instant('errorCodes.RXDB_SYNC'),
+                errorMapper(error),
                 ToastDuration.slow
             );
             // throw error;

@@ -10,6 +10,7 @@ import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ErrorModelBuilder } from '../builders/error-model.builder';
 import { ToastDuration, ToastService } from '@shared';
+import { errorMapper } from '../models';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -23,6 +24,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             catchError((error: any) => {
                 if (error instanceof HttpErrorResponse) {
                     const errorMessage = error.error.message;
+                    const mappedErrorMessage = errorMapper(errorMessage);
                     const errorName = error.error.errorName;
                     const errorStatusCode = error.error.statusCode;
 
@@ -33,7 +35,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                         .build();
 
                     this.toastService.presentError(
-                        errorMessage,
+                        mappedErrorMessage,
                         ToastDuration.fast
                     );
                     throw errorModel;

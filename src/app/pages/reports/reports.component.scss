@@ -1,16 +1,16 @@
 :host {
-    &::after {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: auto;
-        content: "";
-        width: 100%;
-        background-color: var(--ion-color-background);
-        height: 140px;
-        border-radius: 0 0 30px 30px;
-    }
+    // &::after {
+    //     position: absolute;
+    //     top: 0;
+    //     right: 0;
+    //     left: 0;
+    //     bottom: auto;
+    //     content: "";
+    //     width: 100%;
+    //     background-color: var(--ion-color-background);
+    //     height: 140px;
+    //     border-radius: 0 0 30px 30px;
+    // }
     ion-content {
         --background: transparent;
 

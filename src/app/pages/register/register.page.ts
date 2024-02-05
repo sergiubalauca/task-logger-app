@@ -15,11 +15,11 @@ import {
 } from '@angular/forms';
 import { IonicModule, LoadingController, NavController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
-import { LoginModel, RegisterModel, UserStorageService } from '@shared';
+import { RegisterModel, UserStorageService } from '@shared';
 import { AuthFacade } from '@abstraction';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { Browser } from '@capacitor/browser';
 
 @Component({
     selector: 'app-register',
@@ -33,7 +33,7 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
         ReactiveFormsModule,
         TranslateModule,
     ],
-    providers: [AuthFacade, UserStorageService, InAppBrowser],
+    providers: [AuthFacade, UserStorageService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RegisterPage implements OnInit {
@@ -47,7 +47,6 @@ export class RegisterPage implements OnInit {
         email: this.translate.instant('login-page.email'),
         password: this.translate.instant('login-page.password'),
     };
-    private inAppBrowser: InAppBrowser = inject(InAppBrowser);
 
     constructor(
         private navCtrl: NavController,
@@ -62,14 +61,10 @@ export class RegisterPage implements OnInit {
         this.initLogin();
     }
 
-    protected openTaCSite() {
-        const browser = this.inAppBrowser.create(
-            'https://sergiubalauca.github.io/dentalog-t-c/',
-            '_blank',
-            'presentationstyle=formsheet,toolbarposition=top,fullscreen=no,hideurlbar=yes,toolbarcolor=#176bff,closebuttoncolor=#ffffff,navigationbuttoncolor=#ffffff'
-        );
-
-        browser.show();
+    protected async openTaCSite(): Promise<void> {
+        await Browser.open({
+            url: 'https://sergiubalauca.github.io/dentalog-t-c/',
+        });
     }
 
     public async register(): Promise<void> {
@@ -114,9 +109,12 @@ export class RegisterPage implements OnInit {
                     Validators.required,
                     Validators.minLength(5),
                     this.noWhitespaceValidator,
+                    Validators.pattern(
+                        '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'
+                    ),
                 ],
             ],
-            password: ['', [Validators.required]],
+            password: ['', [Validators.required, Validators.minLength(4)]],
             termsAndConditions: [false, [Validators.requiredTrue]],
         });
 
@@ -140,6 +138,12 @@ export class RegisterPage implements OnInit {
                         'login-page.errorMessages.email.whitespace'
                     ),
                 },
+                {
+                    type: 'pattern',
+                    message: this.translate.instant(
+                        'login-page.errorMessages.email.pattern'
+                    ),
+                }
             ],
             password: [
                 {
@@ -148,6 +152,12 @@ export class RegisterPage implements OnInit {
                         'login-page.errorMessages.password.required'
                     ),
                 },
+                {
+                    type: 'minlength',
+                    message: this.translate.instant(
+                        'login-page.errorMessages.password.minlength'
+                    ),
+                }
             ],
         };
     }

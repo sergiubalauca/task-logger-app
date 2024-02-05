@@ -5,7 +5,7 @@
 ></app-header>
 
 <ion-content class="app-inner-padding">
-    <ion-card *ngFor="let report of reports$ | async">
+    <ion-card *ngFor="let report of reports$ | async" mode="ios">
         <ion-card-header>
             <ion-card-title>{{ report.monthlyReports.month }} </ion-card-title>
         </ion-card-header>

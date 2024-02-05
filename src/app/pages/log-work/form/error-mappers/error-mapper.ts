@@ -17,6 +17,9 @@ export type ErrorMapperKeys = keyof typeof ErrorMapper;
 })
 export class TranslateErrorPipe implements PipeTransform {
     public transform(error: ValidationErrors): string[] {
+        if (!error) {
+            return [];
+        }
         const errorMessages: string[] = [];
 
         Object.keys(error).forEach((key) => {

@@ -5,7 +5,8 @@
                 "required": "Username is required",
                 "minlength": "Username must be at least 4 characters long",
                 "maxlength": "Username cannot be more than 24 characters long",
-                "whitespace": "Username cannot contain whitespace"
+                "whitespace": "Username cannot contain whitespace",
+                "pattern": "Username must be a valid email address"
             },
             "password": {
                 "required": "Password is required",

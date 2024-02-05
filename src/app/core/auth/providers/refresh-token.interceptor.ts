@@ -11,7 +11,7 @@ import { TokenProvider } from './token-provider';
 import { RefreshTokenProvider } from './refresh-token-provider.api';
 import { AlertService, LogOutModel } from '@shared';
 import { AuthService } from '../services';
-import { ApiErrorCodes, ErrorModel } from '../../api';
+import { ApiErrorCodes } from '../../api';
 
 @Injectable()
 export class RefreshTokenInterceptor implements HttpInterceptor {
@@ -82,7 +82,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
                             await this.authService.forceLogout(logOutModel);
                             await this.showSessionExpiredAlert();
                             this.refreshTokenInProgress = false;
-                            // throw e;
+
                             return e;
                         }),
                         finalize(() => {

@@ -37,19 +37,12 @@
                                 formControlName="numberOfWorkItems"
                                 label="Count"
                                 labelPlacement="floating"
+                                errorText="{{
+                                    workItemControl.get('numberOfWorkItems')
+                                        ?.errors | translateError
+                                }}"
                             >
                             </ion-input>
-                            <ion-note
-                                *ngIf="
-                                    workItemControl.get('numberOfWorkItems')
-                                        ?.errors;
-                                    let errors
-                                "
-                                color="danger"
-                                size="small"
-                            >
-                                {{ errors | translateError }}
-                            </ion-note>
                         </ion-item>
                     </ion-col>
                 </app-item-sliding-card>

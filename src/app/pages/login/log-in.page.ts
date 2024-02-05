@@ -131,6 +131,12 @@ export class LogInPage implements OnInit {
                         'login-page.errorMessages.password.required'
                     ),
                 },
+                {
+                    type: 'minlength',
+                    message: this.translate.instant(
+                        'login-page.errorMessages.password.minlength'
+                    ),
+                }
             ],
         };
     }

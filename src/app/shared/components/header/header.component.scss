@@ -1,6 +1,7 @@
 :host {
     ion-header {
-        margin-top: 10px;
+        // margin-top: 10px;
+        // padding-top: 24px;
         margin-bottom: 50px;
 
         ion-toolbar {
@@ -15,15 +16,15 @@
             ion-buttons {
                 padding-left: var(--ion-app-inner-padding);
                 padding-right: var(--ion-app-inner-padding);
-                ion-button,
-                ion-menu-button {
-                    margin-inline-start: 0;
-                    margin-inline-end: 0;
-                    --padding-start: 0;
-                    --padding-end: 0;
-                    --color: black;
-                    --background: transparent;
-                }
+                // ion-button,
+                // ion-menu-button {
+                //     margin-inline-start: 0;
+                //     margin-inline-end: 0;
+                //     --padding-start: 0;
+                //     --padding-end: 0;
+                //     --color: black;
+                //     --background: transparent;
+                // }
             }
 
             &.title {
@@ -34,10 +35,43 @@
                 }
 
                 ion-title {
+                    text-align: center;
                     --color: var(--ion-color-dark-06);
-                    font-size: 16px;
+                    font-size: 20px;
                     font-family: var(--ion-font-family-bold);
                 }
+            }
+
+            ion-icon {
+                color: var(--ion-color-dark-06);
+            }
+        }
+        .custom-shape-divider-top-1707164763 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+        
+        .custom-shape-divider-top-1707164763 svg {
+            position: relative;
+            display: block;
+            width: calc(115% + 1.3px);
+            height: 329px;
+        }
+        
+        .custom-shape-divider-top-1707164763 .shape-fill {
+            fill: #8F73A7;
+        }
+        
+        /** For mobile devices **/
+        @media (max-width: 767px) {
+            .custom-shape-divider-top-1707164763 svg {
+                width: calc(151% + 1.3px);
+                height: 128px;
             }
         }
     }

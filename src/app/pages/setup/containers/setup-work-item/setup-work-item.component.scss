@@ -11,4 +11,25 @@
     //     height: 140px;
     //     border-radius: 0 0 30px 30px;
     // }
+    ion-content {
+        --background: transparent;
+        top: 20px;
+
+        ion-card {
+            width: 90%;
+        }
+
+        ion-item-options {
+            border-radius: 10px;
+            ion-item-option {
+                border-radius: 10px;
+            }
+        }
+
+        ion-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+    }
 }

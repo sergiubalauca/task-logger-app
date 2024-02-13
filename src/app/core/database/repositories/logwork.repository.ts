@@ -64,8 +64,8 @@ export class LogWorkRepository {
                         pacient: doctor.patientGroup.patientArray.map(
                             (patient) => ({
                                 name: patient.patient,
-                                workItemAndNumber:
-                                    patient.workItemGroup.workItemAndNumber.map(
+                                workItemProps:
+                                    patient.workItemGroup.workItemProps.map(
                                         (workItem) => ({
                                             workItem: {
                                                 name: workItem.workItem,
@@ -73,6 +73,7 @@ export class LogWorkRepository {
                                             numberOfWorkItems:
                                                 workItem?.numberOfWorkItems?.toString() ??
                                                 '',
+                                            color: workItem.color,
                                         })
                                     ),
                             })

@@ -19,6 +19,7 @@
                 >
                     <ion-item [formGroupName]="j">
                         <ion-input
+                            appUppercase
                             formControlName="patient"
                             type="text"
                             label="Patient"
@@ -32,7 +33,15 @@
                     </ion-item>
 
                     <ion-buttons>
-                        <ion-button (click)="onGoToWorkItem(pgc.doctorIdx, j)">
+                        <ion-button
+                            (click)="
+                                onGoToWorkItem(
+                                    pgc.doctorIdx,
+                                    j,
+                                    pacientControl.get('patient').value
+                                )
+                            "
+                        >
                             <ion-icon name="arrow-forward-outline"></ion-icon>
                         </ion-button>
                     </ion-buttons>

@@ -1,16 +1,10 @@
-import {
-    Component,
-    EventEmitter,
-    inject,
-    Input,
-    OnInit,
-    Output,
-} from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import {
     Doctor,
     HeaderComponent,
     ModalService,
     ThrottleButtonDirective,
+    UppercaseDirective,
 } from '@shared';
 import { CommonModule } from '@angular/common';
 import { IonicModule, ModalController } from '@ionic/angular';
@@ -35,6 +29,7 @@ import {
         FormsModule,
         ReactiveFormsModule,
         ThrottleButtonDirective,
+        UppercaseDirective
     ],
     providers: [ModalService, ModalController],
 })
@@ -43,10 +38,7 @@ export class AddEditDoctorComponent implements OnInit {
     @Input() private doctor: Doctor;
 
     private readonly modalCtrl: ModalController = inject(ModalController);
-    constructor(
-        // private readonly modalCtrl: ModalController,
-        private formBuilder: FormBuilder
-    ) {}
+    constructor(private formBuilder: FormBuilder) {}
 
     public ngOnInit(): void {
         this.doctorForm = this.formBuilder.group({
@@ -55,8 +47,7 @@ export class AddEditDoctorComponent implements OnInit {
                 Validators.required
             ),
             phone: new FormControl<string>(
-                this.doctor ? this.doctor.phone : '',
-                Validators.required
+                this.doctor ? this.doctor.phone : ''
             ),
         });
     }

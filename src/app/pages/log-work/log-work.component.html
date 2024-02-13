@@ -3,8 +3,8 @@
 <ion-content class="app-inner-padding">
     <div class="datetime-wrapper">
         <ion-datetime
-            [mode]="'ios'"
-            color="rose"
+            mode="ios"
+            color="theme"
             presentation="date"
             (ionChange)="selectDate($event)"
             [highlightedDates]="highlightedDates$ | async"

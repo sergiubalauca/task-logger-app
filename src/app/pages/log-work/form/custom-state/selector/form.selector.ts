@@ -10,15 +10,27 @@ export class FormSelector implements Selector {
         shareReplay(1)
     );
 
+    public currentDoctorBreadcrumb$: Observable<string> = this.store.data$.pipe(
+        map((state: FormState) => state.currentDoctorBreadcrumb),
+        shareReplay(1)
+    );
+
     public currentPacient$: Observable<number> = this.store.data$.pipe(
         map((state: FormState) => state.currentPacient),
         shareReplay(1)
     );
 
-    public formAlreadySavedForDate$: Observable<boolean> = this.store.data$.pipe(
-        map((state: FormState) => state.formAlreadySavedForDate),
-        shareReplay(1)
-    );
+    public currentPacientBreadcrumb$: Observable<string> =
+        this.store.data$.pipe(
+            map((state: FormState) => state.currentPacientBreadcrumb),
+            shareReplay(1)
+        );
+
+    public formAlreadySavedForDate$: Observable<boolean> =
+        this.store.data$.pipe(
+            map((state: FormState) => state.formAlreadySavedForDate),
+            shareReplay(1)
+        );
 
     constructor(private readonly store: FormReducer) {}
 }

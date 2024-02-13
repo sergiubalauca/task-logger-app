@@ -29,7 +29,7 @@ export class MultiStepFormService {
                     patient: pacient.name,
                 });
 
-                pacient.workItemAndNumber.forEach((workItem, workItemIdx) => {
+                pacient.workItemProps.forEach((workItem, workItemIdx) => {
                     this.getWorkItemArray(doctorIdx, pacientIdx).push(
                         this.newWorkItem()
                     );
@@ -38,6 +38,7 @@ export class MultiStepFormService {
                     ].patchValue({
                         workItem: workItem.workItem.name,
                         numberOfWorkItems: workItem.numberOfWorkItems,
+                        color: workItem.color,
                     });
                 });
             });
@@ -164,7 +165,7 @@ export class MultiStepFormService {
                                 validators: [Validators.required],
                             }),
                             workItemGroup: this.fb.group({
-                                workItemAndNumber: this.fb.array(
+                                workItemProps: this.fb.array(
                                     [
                                         this.fb.group({
                                             workItem: this.fb.control(null, {
@@ -181,6 +182,9 @@ export class MultiStepFormService {
                                                     ],
                                                 }
                                             ),
+                                            color: this.fb.control(null, {
+                                                validators: [Validators.required],
+                                            }),
                                         }),
                                     ],
                                     { validators: [Validators.required] }
@@ -277,7 +281,7 @@ export class MultiStepFormService {
                 validators: [Validators.required],
             }),
             workItemGroup: this.fb.group({
-                workItemAndNumber: this.fb.array([], {
+                workItemProps: this.fb.array([], {
                     validators: [Validators.required],
                 }),
             }),
@@ -289,7 +293,7 @@ export class MultiStepFormService {
                 validators: [Validators.required],
             }),
             workItemGroup: this.fb.group({
-                workItemAndNumber: this.fb.array(
+                workItemProps: this.fb.array(
                     [
                         this.fb.group({
                             workItem: this.fb.control(null, {
@@ -300,6 +304,9 @@ export class MultiStepFormService {
                                     Validators.required,
                                     Validators.min(1),
                                 ],
+                            }),
+                            color: this.fb.control(null, {
+                                validators: [Validators.required],
                             }),
                         }),
                     ],
@@ -326,7 +333,7 @@ export class MultiStepFormService {
         const workItemControls =
             (
                 (this.getWorkItemGroupFormGroup(doctorIndex, patientIndex)
-                    ?.controls?.workItemAndNumber ?? null) as FormArray
+                    ?.controls?.workItemProps ?? null) as FormArray
             )?.controls ?? null;
         return workItemControls;
     }
@@ -335,7 +342,7 @@ export class MultiStepFormService {
         const workItemArray = this.getWorkItemGroupFormGroup(
             doctorIndex,
             patientIndex
-        )?.get('workItemAndNumber') as FormArray;
+        )?.get('workItemProps') as FormArray;
         return workItemArray;
     }
 
@@ -371,6 +378,9 @@ export class MultiStepFormService {
             }),
             numberOfWorkItems: this.fb.control(null, {
                 validators: [Validators.required, Validators.min(1)],
+            }),
+            color: this.fb.control(null, {
+                validators: [Validators.required],
             }),
         });
 

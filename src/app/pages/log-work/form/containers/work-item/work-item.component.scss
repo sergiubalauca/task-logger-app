@@ -5,17 +5,19 @@
             overflow-y: auto;
 
             ion-row {
-                &:last-of-type {
-                    margin-bottom: 20px;
-                }
+                &.outer-slide {
+                    &:last-of-type {
+                        margin-bottom: 20px;
+                    }
 
-                ion-col {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
+                    ion-col {
+                        // display: flex;
+                        // justify-content: center;
+                        // align-items: center;
 
-                    ion-note {
-                        font-size: 13px;
+                        ion-note {
+                            font-size: 13px;
+                        }
                     }
                 }
             }

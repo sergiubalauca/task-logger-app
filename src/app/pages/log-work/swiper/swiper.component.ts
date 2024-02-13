@@ -10,7 +10,16 @@ import {
 import { FormGroup } from '@angular/forms';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { DailyWorkDoc, DateTimeService, SearcheableSelectModel } from '@shared';
-import { map, Observable, of, switchMap } from 'rxjs';
+import {
+    combineLatest,
+    forkJoin,
+    map,
+    Observable,
+    of,
+    Subject,
+    switchMap,
+    takeUntil,
+} from 'rxjs';
 import { register, SwiperContainer } from 'swiper/element/bundle';
 import { MultiStepFormService } from '../form/services/multi-step-form.service';
 import { WorkItemComponent } from '../form/containers/work-item/work-item.component';
@@ -22,6 +31,8 @@ import { LogWorkFacade } from '@abstraction';
 import { RxDocument } from 'rxdb';
 import { RxLogWorkDocumentType } from '@core';
 import { TimeTrackingComponent } from '../form/containers/time-tracking/time-tracking.component';
+import { FormSelector } from '../form/custom-state/selector/form.selector';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const initSwiper = () => register();
 @Component({
@@ -50,21 +61,39 @@ export class SwiperComponent implements OnInit, OnDestroy {
     private swiperElement: any;
     public isFormValid = this.formService.getForm()?.valid ?? false;
 
+    protected currentSlideMapper = (
+        currentDoc: string,
+        currentPacient: string
+    ): Array<string> => {
+        const currentSlideIndex = this.swiperElement.swiper.activeIndex;
+
+        return {
+            1: [`D: ${currentDoc ?? '-'}`],
+            2: [`D: ${currentDoc}`, `P: ${currentPacient ?? '-'}`],
+        }[currentSlideIndex];
+    };
+
+    protected breadcrumbs = [];
+    private ngOnDestroy$: Subject<void> = new Subject<void>();
+
     constructor(
         private modalController: ModalController,
         private formService: MultiStepFormService,
         private formStore: FormReducer,
+        private formSelectors: FormSelector,
         private logWorkFacade: LogWorkFacade,
         private readonly dateTimeService: DateTimeService
     ) {
         initSwiper();
     }
+
     ngOnInit() {
         this.swiperElement = document.querySelector(
             'swiper-container'
         ) as SwiperContainer;
 
         this.swiperElement.allowSlideNext = false;
+        this.swiperElement.swiper.on('slideChange', () => this.onSlideChange());
 
         const dailyWorkId = this.dateTimeService.getDailyWorkId(
             new Date(this.chosenDate)
@@ -85,7 +114,20 @@ export class SwiperComponent implements OnInit, OnDestroy {
         );
     }
 
-    public onSlideChange() {}
+    public onSlideChange() {
+        combineLatest([
+            this.formSelectors.currentDoctorBreadcrumb$,
+            this.formSelectors.currentPacientBreadcrumb$,
+        ])
+            .pipe(takeUntil(this.ngOnDestroy$))
+            .subscribe(([currentDoc, currentPacient]) => {
+                const currentSlide = this.currentSlideMapper(
+                    currentDoc,
+                    currentPacient
+                );
+                this.breadcrumbs = currentSlide;
+            });
+    }
 
     public onDoctorSelected(event: {
         value: SearcheableSelectModel;
@@ -122,7 +164,10 @@ export class SwiperComponent implements OnInit, OnDestroy {
     public ngOnDestroy() {
         this.formStore.setCurrentPacient(0);
         this.formStore.setCurrentDoctor(0);
+        this.formStore.setCurrentDoctorBreadcrumb('');
+        this.formStore.setCurrentPacientBreadcrumb('');
         this.swiperPageTwoComponent = null;
+        this.ngOnDestroy$.next();
     }
 
     public closeModal() {

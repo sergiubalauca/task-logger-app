@@ -1,7 +1,8 @@
 <div *ngIf="workItemGroupControls | async; let wig">
     <form [formGroup]="wig.workItemGroup">
-        <ion-grid formArrayName="workItemAndNumber" supressTouchMove>
+        <ion-grid formArrayName="workItemProps" supressTouchMove>
             <ion-row
+                class="outer-slide"
                 *ngFor="
                     let workItemControl of wig.workItemControls;
                     let j = index
@@ -18,33 +19,54 @@
                         removeWorkItemControl(j, wig.doctorIdx, wig.pacientIdx)
                     "
                 >
-                    <ion-col size="8">
-                        <ion-item [formGroupName]="j">
-                            <app-search-select-input
-                                formControlName="workItem"
-                                [strategy]="strategy"
-                                [attachedFormControl]="
-                                    workItemControl.get('workItem')
-                                "
-                            ></app-search-select-input>
-                        </ion-item>
-                    </ion-col>
-
-                    <ion-col size="4">
-                        <ion-item [formGroupName]="j">
-                            <ion-input
-                                type="number"
-                                formControlName="numberOfWorkItems"
-                                label="Count"
-                                labelPlacement="floating"
-                                errorText="{{
-                                    workItemControl.get('numberOfWorkItems')
-                                        ?.errors | translateError
-                                }}"
-                            >
-                            </ion-input>
-                        </ion-item>
-                    </ion-col>
+                    <ion-grid>
+                        <ion-row class="inner-slide">
+                            <ion-col size="12">
+                                <ion-item [formGroupName]="j">
+                                    <app-search-select-input
+                                        formControlName="workItem"
+                                        [strategy]="strategy"
+                                        [attachedFormControl]="
+                                            workItemControl.get('workItem')
+                                        "
+                                    ></app-search-select-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="inner-slide">
+                            <ion-col size="6">
+                                <ion-item [formGroupName]="j">
+                                    <ion-input
+                                        type="number"
+                                        formControlName="numberOfWorkItems"
+                                        label="Count"
+                                        labelPlacement="floating"
+                                        errorText="{{
+                                            workItemControl.get(
+                                                'numberOfWorkItems'
+                                            )?.errors | translateError
+                                        }}"
+                                    >
+                                    </ion-input>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="6">
+                                <ion-item [formGroupName]="j">
+                                    <ion-input
+                                        appUppercase
+                                        type="text"
+                                        formControlName="color"
+                                        label="Color"
+                                        labelPlacement="floating"
+                                        errorText="{{
+                                            workItemControl.get('color')?.errors
+                                                | translateError
+                                        }}"
+                                    >
+                                    </ion-input>
+                                </ion-item> </ion-col
+                        ></ion-row>
+                    </ion-grid>
                 </app-item-sliding-card>
             </ion-row>
             <ion-buttons>

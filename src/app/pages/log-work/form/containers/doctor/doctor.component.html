@@ -34,7 +34,13 @@
                                         !dgc.doctorFormGroupControls[i]?.value
                                             ?.doctor
                                     "
-                                    (click)="onGoToDoctor(i)"
+                                    (click)="
+                                        onGoToDoctor(
+                                            i,
+                                            dgc.doctorFormGroupControls[i]
+                                                ?.value?.doctor
+                                        )
+                                    "
                                 >
                                     <ion-icon
                                         name="arrow-forward-outline"

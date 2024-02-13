@@ -7,7 +7,9 @@ export class FormReducer implements Reducer {
     readonly localStorageStateKey = 'formState';
     readonly initialState: FormState = {
         currentDoctor: 0,
+        currentDoctorBreadcrumb: '',
         currentPacient: 0,
+        currentPacientBreadcrumb: '',
         formAlreadySavedForDate: false,
     };
 
@@ -31,10 +33,24 @@ export class FormReducer implements Reducer {
         });
     };
 
+    public setCurrentDoctorBreadcrumb = (value: string): void => {
+        this.formState.next({
+            ...this.formState.value,
+            currentDoctorBreadcrumb: value,
+        });
+    };
+
     public setCurrentPacient = (value: number): void => {
         this.formState.update({
             ...this.formState.value,
             currentPacient: value,
+        });
+    };
+
+    public setCurrentPacientBreadcrumb = (value: string): void => {
+        this.formState.update({
+            ...this.formState.value,
+            currentPacientBreadcrumb: value,
         });
     };
 

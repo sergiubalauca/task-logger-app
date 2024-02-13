@@ -29,6 +29,13 @@
                     }
                 }
             }
+
+            ion-breadcrumbs {
+                padding: 0;
+                ion-breadcrumb {
+                    font-size: small;
+                }
+            }
         }
     }
     ion-content {

@@ -13,6 +13,7 @@
     <form [formGroup]="doctorForm">
         <ion-item>
             <ion-input
+                appUppercase
                 label="Name"
                 labelPlacement="floating"
                 formControlName="name"
@@ -36,7 +37,7 @@
             type="submit"
             appThrottleButtonDirective
             (click)="onSubmit()"
-            [throttleTime]=2000
+            [throttleTime]="2000"
             [disabled]="!doctorForm.valid"
         >
             <ion-icon name="checkmark-outline"></ion-icon>

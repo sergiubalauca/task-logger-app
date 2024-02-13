@@ -8,9 +8,10 @@ export interface DailyWork {
                 patientArray: {
                     patient: string;
                     workItemGroup: {
-                        workItemAndNumber: {
+                        workItemProps: {
                             numberOfWorkItems: number;
                             workItem: string;
+                            color: string;
                         }[];
                     };
                 }[];
@@ -39,9 +40,10 @@ export interface DailyWorkDto {
                     patientArray: {
                         patient: string;
                         workItemGroup: {
-                            workItemAndNumber: {
+                            workItemProps: {
                                 numberOfWorkItems: number;
                                 workItem: string;
+                                color: string;
                             }[];
                         };
                     }[];
@@ -66,9 +68,10 @@ export interface DailyWorkDto {
                 patientArray: {
                     patient: string;
                     workItemGroup: {
-                        workItemAndNumber: {
+                        workItemProps: {
                             numberOfWorkItems: number;
                             workItem: string;
+                            color: string;
                         }[];
                     };
                 }[];
@@ -96,11 +99,12 @@ export interface DailyWorkDoc {
             name?: string;
             pacient?: {
                 name?: string;
-                workItemAndNumber?: {
+                workItemProps?: {
                     workItem?: {
                         name?: string;
                     };
                     numberOfWorkItems?: string;
+                    color?: string;
                 }[];
             }[];
         };

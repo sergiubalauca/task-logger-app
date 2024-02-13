@@ -19,6 +19,7 @@ import { NgIf, NgFor, AsyncPipe, CommonModule } from '@angular/common';
 import {
     ItemSlidingCardComponent,
     SuppressTouchMoveDirective,
+    UppercaseDirective,
     WORK_ITEM_COLLECTION_NAME,
 } from '@shared';
 import { FormSelector } from '../../custom-state/selector/form.selector';
@@ -41,6 +42,7 @@ import { TranslateErrorPipe } from '../../error-mappers';
         SuppressTouchMoveDirective,
         CommonModule,
         TranslateErrorPipe,
+        UppercaseDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

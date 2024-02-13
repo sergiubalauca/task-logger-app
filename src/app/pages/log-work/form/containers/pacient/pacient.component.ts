@@ -19,7 +19,11 @@ import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormReducer } from '../../custom-state/reducer/form.reducer';
 import { FormSelector } from '../../custom-state/selector/form.selector';
-import { ItemSlidingCardComponent, SuppressTouchMoveDirective } from '@shared';
+import {
+    ItemSlidingCardComponent,
+    SuppressTouchMoveDirective,
+    UppercaseDirective,
+} from '@shared';
 import { TranslateErrorPipe } from '../../error-mappers';
 
 @Component({
@@ -37,6 +41,7 @@ import { TranslateErrorPipe } from '../../error-mappers';
         ItemSlidingCardComponent,
         SuppressTouchMoveDirective,
         TranslateErrorPipe,
+        UppercaseDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -105,8 +110,9 @@ export class PacientComponent implements OnInit {
         this.formRefresh$.next(true);
     }
 
-    public onGoToWorkItem(doctorIdx: number, pacientIdx: number) {
+    public onGoToWorkItem(doctorIdx: number, pacientIdx: number, pacient) {
         this.formStore.setCurrentPacient(pacientIdx);
+        this.formStore.setCurrentPacientBreadcrumb(pacient);
         this.goToWorkItem.emit({ doctorIdx, pacientIdx });
     }
 }

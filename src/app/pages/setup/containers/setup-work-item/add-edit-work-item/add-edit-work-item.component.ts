@@ -3,6 +3,7 @@ import {
     HeaderComponent,
     ModalService,
     ThrottleButtonDirective,
+    UppercaseDirective,
     WorkItem,
 } from '@shared';
 import { CommonModule } from '@angular/common';
@@ -28,6 +29,7 @@ import {
         FormsModule,
         ReactiveFormsModule,
         ThrottleButtonDirective,
+        UppercaseDirective
     ],
     providers: [ModalService, ModalController],
 })

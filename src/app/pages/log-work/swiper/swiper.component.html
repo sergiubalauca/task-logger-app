@@ -18,14 +18,19 @@
                 <ion-icon name="close-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
+        <ion-breadcrumbs>
+            <ion-breadcrumb *ngFor="let bc of breadcrumbs">{{
+                bc
+            }}</ion-breadcrumb>
+        </ion-breadcrumbs>
     </ion-toolbar>
 </ion-header>
 <ion-content class="app-inner-padding">
     <swiper-container
         #swiperContainer
         pagination="true"
-        (slidechange)="onSlideChange()"
         effect="coverflow"
+        parallax="true"
     >
         <ng-container *ngIf="this.multiForm | async as form">
             <swiper-slide>

@@ -49,7 +49,7 @@ export const LOGWORK_SCHEMA_LITERAL = {
                                             default: '',
                                             maxLength: 100,
                                         },
-                                        workItemAndNumber: {
+                                        workItemProps: {
                                             type: 'array',
                                             items: {
                                                 type: 'object',
@@ -65,6 +65,11 @@ export const LOGWORK_SCHEMA_LITERAL = {
                                                         },
                                                     },
                                                     numberOfWorkItems: {
+                                                        type: 'string',
+                                                        default: '',
+                                                        maxLength: 100,
+                                                    },
+                                                    color: {
                                                         type: 'string',
                                                         default: '',
                                                         maxLength: 100,

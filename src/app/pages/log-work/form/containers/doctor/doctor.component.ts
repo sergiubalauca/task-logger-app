@@ -142,8 +142,9 @@ export class DoctorComponent {
         }
     }
 
-    public onGoToDoctor(index: number): void {
+    public onGoToDoctor(index: number, doc: string): void {
         this.formStore.setCurrentDoctor(index);
+        this.formStore.setCurrentDoctorBreadcrumb(doc);
         this.formStore.setCurrentPacient(0);
         this.goToDoctor.emit(index);
     }

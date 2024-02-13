@@ -38,9 +38,10 @@ export class LogWorkApiService extends SyncBaseService {
                                 patientArray{
                                   patient
                                   workItemGroup{
-                                    workItemAndNumber{
+                                    workItemProps{
                                       numberOfWorkItems
                                       workItem
+                                      color
                                     }
                                   }
                                 }

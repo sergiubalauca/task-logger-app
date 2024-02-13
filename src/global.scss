@@ -37,6 +37,13 @@
     --ion-text-color: #62545d;
     --ion-text-color-rgb: 136, 19, 55;
 
+    --ion-color-theme: #8F73A7;
+	--ion-color-theme-rgb: 143,115,167;
+	--ion-color-theme-contrast: #000000;
+	--ion-color-theme-contrast-rgb: 0,0,0;
+	--ion-color-theme-shade: #7e6593;
+	--ion-color-theme-tint: #9a81b0;
+
     --ion-color-step-50: #f9e6e9;
     --ion-color-step-100: #f3dbdf;
     --ion-color-step-150: #edd0d6;
@@ -130,12 +137,22 @@ swiper-slide img {
     --ion-color-tint: var(--ion-color-rose-tint);
 }
 
+.ion-color-theme {
+	--ion-color-base: var(--ion-color-theme);
+	--ion-color-base-rgb: var(--ion-color-theme-rgb);
+	--ion-color-contrast: var(--ion-color-theme-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-theme-contrast-rgb);
+	--ion-color-shade: var(--ion-color-theme-shade);
+	--ion-color-tint: var(--ion-color-theme-tint);
+}
+
 ion-datetime {
     --background: #fff1f2;
     --background-rgb: 255, 241, 242;
 
     border-radius: 16px;
-    box-shadow: rgba(var(--ion-color-rose-rgb), 0.3) 0px 10px 15px -3px;
+    box-shadow: rgba(var(--ion-color-theme-rgb), 0.3) 0px 10px 15px -3px;
+    border: 1px solid var(--ion-color-background);
 }
 
 .label-text-wrapper {

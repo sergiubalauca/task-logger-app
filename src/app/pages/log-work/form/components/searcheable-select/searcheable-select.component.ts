@@ -178,17 +178,20 @@ export class SearcheableSelectComponent implements OnInit, AfterViewInit {
 
     private expandFoundGroup = (searchTerm: string) => {
         // expand the accordion where the search result is found
-        const group = this.selectOptions.find(
-            (item) =>
-                item.description
-                    .toString()
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                item.value
-                    .toString()
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase())
-        )?.group;
+        const group =
+            searchTerm && searchTerm !== ''
+                ? this.selectOptions.find(
+                      (item) =>
+                          item.description
+                              .toString()
+                              .toLowerCase()
+                              .includes(searchTerm.toLowerCase()) ||
+                          item.value
+                              .toString()
+                              .toLowerCase()
+                              .includes(searchTerm.toLowerCase())
+                  )?.group
+                : undefined;
 
         if (group && this.ionAccordionGroup) {
             this.ionAccordionGroup.value = group;

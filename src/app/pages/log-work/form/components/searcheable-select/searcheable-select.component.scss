@@ -1,141 +1,150 @@
 :host {
-	ion-header {
-		padding-bottom: 0;
+    ion-header {
+        padding-bottom: 0;
 
-		ion-grid {
-			ion-row {
-				ion-col {
-					ion-title {
-						color: var(--ion-color-accent);
-						font-family: var(--ion-font-family-semibold);
-						font-size: 16px;
-						text-align: start;
-						padding-left: 6px;
-					}
+        ion-grid {
+            ion-row {
+                ion-col {
+                    ion-title {
+                        color: var(--ion-color-accent);
+                        font-family: var(--ion-font-family-semibold);
+                        font-size: 16px;
+                        text-align: start;
+                        padding-left: 6px;
+                    }
 
-					ion-buttons {
-						justify-content: flex-end;
+                    ion-buttons {
+                        justify-content: flex-end;
 
-						ion-button {
-							padding-left: 5px;
-							color: var(--ion-color-grey);
-							font-size: 22px;
+                        ion-button {
+                            padding-left: 5px;
+                            color: var(--ion-color-grey);
+                            font-size: 22px;
 
-							ion-icon {
-								color: var(--ion-color-accent);
-								font-size: 24px;
-							}
-						}
-					}
+                            ion-icon {
+                                color: var(--ion-color-accent);
+                                font-size: 24px;
+                            }
+                        }
+                    }
 
-					&.search-wrap {
-						position: relative;
-						padding-bottom: 25px;
-						padding-left: 5px;
-						padding-right: 10px;
+                    &.search-wrap {
+                        position: relative;
+                        padding-bottom: 25px;
+                        padding-left: 5px;
+                        padding-right: 10px;
 
-						ion-searchbar {
-							--background: transparent;
-							--box-shadow: none;
-							--color: var(--ion-color-dark-04);
-							--icon-color: var(--ion-color-light-09);
+                        ion-searchbar {
+                            --background: transparent;
+                            --box-shadow: none;
+                            --color: var(--ion-color-dark-04);
+                            --icon-color: var(--ion-color-light-09);
 
-							height: 48px;
-							border-radius: 10px;
-							border: 2px solid var(--ion-color-light-09);
+                            height: 48px;
+                            border-radius: 10px;
+                            border: 2px solid var(--ion-color-light-09);
 
-							ion-icon {
-								color: var(--ion-color-light-09);
-								size: 25px;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                            ion-icon {
+                                color: var(--ion-color-light-09);
+                                size: 25px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	ion-content {
-		--padding-top: 10px;
+    ion-content {
+        --padding-top: 10px;
 
-		ion-list {
-			margin-left: 6px;
-			margin-right: 5px;
-			margin-bottom: 150px;
-			border-bottom: 2px solid var(--ion-color-light-09);
+        ion-list {
+            margin-left: 6px;
+            margin-right: 5px;
+            margin-bottom: 150px;
+            border-bottom: 2px solid var(--ion-color-light-09);
 
-			ion-item {
-				margin-bottom: 15px;
-				cursor: pointer;
+            ion-item {
+                margin-bottom: 15px;
+                cursor: pointer;
 
-				&.leave-empty {
-					font-family: var(--ion-font-family-semibold);
-					font-size: 16px;
-					color: var(--ion-color-dark-04);
-				}
+                &.leave-empty {
+                    font-family: var(--ion-font-family-semibold);
+                    font-size: 16px;
+                    color: var(--ion-color-dark-04);
+                }
 
-				&.selected {
-					ion-grid {
-						ion-row {
-							&:first-child {
-								ion-col {
-									ion-icon {
-										display: block;
-									}
-								}
-							}
+                &.selected {
+                    ion-grid {
+                        ion-row {
+                            &:first-child {
+                                ion-col {
+                                    ion-icon {
+                                        display: block;
+                                    }
+                                }
+                            }
 
-							ion-col {
-								ion-label {
-									color: var(--ion-color-dark-06);
-								}
-							}
-						}
-					}
-				}
+                            ion-col {
+                                ion-label {
+                                    color: var(--ion-color-dark-06);
+                                }
+                            }
+                        }
+                    }
+                }
 
-				ion-grid {
-					ion-row {
-						ion-col {
-							ion-label {
-								font-family: var(--ion-font-family-semibold);
-								font-size: 16px;
-								color: var(--ion-color-dark-04);
-							}
-						}
+                ion-grid {
+                    ion-row {
+                        ion-col {
+                            ion-label {
+                                font-family: var(--ion-font-family-semibold);
+                                font-size: 16px;
+                                color: var(--ion-color-dark-04);
+                            }
+                        }
 
-						&:first-child {
-							ion-col {
-								display: flex;
-								justify-content: flex-start;
-								align-items: center;
+                        &:first-child {
+                            ion-col {
+                                display: flex;
+                                justify-content: flex-start;
+                                align-items: center;
 
-								ion-icon {
-									// display: none;
-									font-size: 12px;
-									margin-left: 10px;
-								}
-							}
-						}
+                                ion-icon {
+                                    font-size: 12px;
+                                    margin-left: 10px;
+                                }
+                            }
+                        }
 
-						&:last-child {
-							ion-col {
-								ion-label {
-									font-family: var(--ion-font-family);
-									font-size: 13px;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+                        &:last-child {
+                            ion-col {
+                                ion-label {
+                                    font-family: var(--ion-font-family);
+                                    font-size: 13px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
-		ion-note {
-			font-size: 13px;
-			--color: var(--ion-color-dark-04);
-			font-family: var(--ion-font-family-semibold);
-			margin-left: 5px;
-		}
-	}
+            ion-accordion-group {
+                margin: 0;
+
+                ion-accordion {
+                    ion-item {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+
+        ion-note {
+            font-size: 13px;
+            --color: var(--ion-color-dark-04);
+            font-family: var(--ion-font-family-semibold);
+            margin-left: 5px;
+        }
+    }
 }

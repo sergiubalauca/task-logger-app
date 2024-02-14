@@ -25,7 +25,7 @@
                                 <ion-item [formGroupName]="j">
                                     <app-search-select-input
                                         formControlName="workItem"
-                                        [strategy]="strategy"
+                                        [strategy]="workItemStrategy"
                                         [attachedFormControl]="
                                             workItemControl.get('workItem')
                                         "
@@ -34,7 +34,7 @@
                             </ion-col>
                         </ion-row>
                         <ion-row class="inner-slide">
-                            <ion-col size="6">
+                            <ion-col size="3.5">
                                 <ion-item [formGroupName]="j">
                                     <ion-input
                                         type="number"
@@ -50,20 +50,15 @@
                                     </ion-input>
                                 </ion-item>
                             </ion-col>
-                            <ion-col size="6">
+                            <ion-col size="7.5">
                                 <ion-item [formGroupName]="j">
-                                    <ion-input
-                                        appUppercase
-                                        type="text"
+                                    <app-search-select-input
                                         formControlName="color"
-                                        label="Color"
-                                        labelPlacement="floating"
-                                        errorText="{{
-                                            workItemControl.get('color')?.errors
-                                                | translateError
-                                        }}"
-                                    >
-                                    </ion-input>
+                                        [strategy]="colorStrategy"
+                                        [attachedFormControl]="
+                                            workItemControl.get('color')
+                                        "
+                                    ></app-search-select-input>
                                 </ion-item> </ion-col
                         ></ion-row>
                     </ion-grid>

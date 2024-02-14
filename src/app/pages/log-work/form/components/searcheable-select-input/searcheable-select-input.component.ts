@@ -19,6 +19,7 @@ import {
 import { SearcheableSelectComponent } from '../searcheable-select/searcheable-select.component';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import {
+    COLOR_COLLECTION_NAME,
     CollectionNames,
     DOCTOR_COLLECTION_NAME,
     PlatformName,
@@ -27,7 +28,7 @@ import {
     WORK_ITEM_COLLECTION_NAME,
 } from '@shared';
 
-import { DoctorFacade, WorkItemFacade } from '@abstraction';
+import { ColorFacade, DoctorFacade, WorkItemFacade } from '@abstraction';
 import { ErrorMapper, TranslateErrorPipe } from '../../error-mappers';
 
 @Component({
@@ -55,6 +56,7 @@ export class SearcheableSelectInputComponent
     public inputLabel = {
         [DOCTOR_COLLECTION_NAME]: 'Doctor',
         [WORK_ITEM_COLLECTION_NAME]: 'Service',
+        [COLOR_COLLECTION_NAME]: 'Color',
     };
 
     protected get errorMapper(): typeof ErrorMapper {
@@ -62,9 +64,11 @@ export class SearcheableSelectInputComponent
     }
 
     public selectedValue: string | null;
+
     private dropdownDataStrategies = {
         [DOCTOR_COLLECTION_NAME]: this.doctorFacade,
         [WORK_ITEM_COLLECTION_NAME]: this.workItemFacade,
+        [COLOR_COLLECTION_NAME]: this.colorFacade,
     };
     private dataSourceSubscription: Subscription;
 
@@ -73,7 +77,8 @@ export class SearcheableSelectInputComponent
         private platformProvider: PlatformProvider,
         @Inject(DOCUMENT) private document: Document,
         private doctorFacade: DoctorFacade,
-        private workItemFacade: WorkItemFacade
+        private workItemFacade: WorkItemFacade,
+        private colorFacade: ColorFacade
     ) {}
 
     @HostListener('window:resize', ['$event'])
@@ -105,12 +110,18 @@ export class SearcheableSelectInputComponent
             .getAll$()
             .subscribe(async (items: any[]) => {
                 const selectOptions: SearcheableSelectModel[] = items.map(
-                    (item: { id: string; name: string; description: string }) =>
+                    (item: {
+                        id: string;
+                        name: string;
+                        description: string;
+                        group: string;
+                    }) =>
                         new SearcheableSelectModel({
                             id: item.id,
                             value: item.name,
                             description: item.description ?? '',
                             displayBoth: true,
+                            group: item.group,
                         })
                 );
 
@@ -132,7 +143,7 @@ export class SearcheableSelectInputComponent
                     showBackdrop: false,
                 });
                 await modal.present();
-                const { data } = await modal.onWillDismiss();
+                const { data } = await modal.onWillDismiss()
                 if (data) {
                     this.selectedValue = data.value;
                     this.propagateChange(data.value);

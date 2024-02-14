@@ -4,6 +4,7 @@ export class SearcheableSelectModel {
 	public value: string;
 	public isSelected: boolean;
 	public displayBoth: boolean;
+	public group: string;
 
 	public constructor(model: Partial<SearcheableSelectModel>) {
 		this.id = model.id;
@@ -11,5 +12,6 @@ export class SearcheableSelectModel {
 		this.isSelected = model.isSelected;
 		this.value = model.value;
 		this.displayBoth = model.displayBoth;
+		this.group = model.group;
 	}
 }

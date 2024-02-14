@@ -10,6 +10,7 @@ import { Storage } from '@ionic/storage-angular';
 import { environment } from 'src/environments/environment';
 import { AuthFacade } from '../abstraction/auth-facade';
 import {
+    ColorFacade,
     DailyWorkFacade,
     LogWorkFacade,
     WorkItemFacade,
@@ -55,6 +56,7 @@ import { SyncConfigurationService } from '../abstraction/api-facade/sync/sync-co
         SyncConfigurationService,
         Storage,
         ReportsService,
+        ColorFacade,
     ],
 })
 export class CoreModule {}

@@ -17,6 +17,7 @@ import { SearcheableSelectInputComponent } from '../../components/searcheable-se
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe, CommonModule } from '@angular/common';
 import {
+    COLOR_COLLECTION_NAME,
     ItemSlidingCardComponent,
     SuppressTouchMoveDirective,
     UppercaseDirective,
@@ -47,7 +48,9 @@ import { TranslateErrorPipe } from '../../error-mappers';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkItemComponent implements OnInit {
-    public readonly strategy = WORK_ITEM_COLLECTION_NAME;
+    protected readonly workItemStrategy = WORK_ITEM_COLLECTION_NAME;
+    protected readonly colorStrategy = COLOR_COLLECTION_NAME;
+
     public workItemGroupControls: Observable<{
         workItemGroup: FormGroup;
         workItemControls: AbstractControl[];

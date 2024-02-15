@@ -4,8 +4,8 @@ export class ApiErrorCodes {
     public static invalidRefreshToken = 'INVALID_REFRESH_TOKEN';
     public static expiredRefreshToken = 'EXPIRED_REFRESH_TOKEN';
     public static invalidCredentials = 'INVALID_CREDENTIALS';
+    public static userAlreadyExists = 'USER_ALREADY_EXISTS';
 }
-
 
 export const errorMapper = (error: string) => {
     switch (error) {
@@ -19,6 +19,8 @@ export const errorMapper = (error: string) => {
             return 'Expired refresh token';
         case ApiErrorCodes.invalidCredentials:
             return 'Invalid credentials';
+        case ApiErrorCodes.userAlreadyExists:
+            return 'User already exists';
         default:
             return 'Unknown error';
     }

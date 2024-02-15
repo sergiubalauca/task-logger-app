@@ -1,16 +1,20 @@
 import {
     ChangeDetectionStrategy,
     Component,
+    HostListener,
+    Inject,
     Input,
     OnDestroy,
     OnInit,
     Output,
 } from '@angular/core';
 import { NavController, IonicModule, PopoverController } from '@ionic/angular';
-import { NgIf } from '@angular/common';
+import { DOCUMENT, NgIf, NgStyle } from '@angular/common';
 import { SettingsPopoverComponent } from '../settings-popover/settings-popover.component';
 import { AuthFacade } from '@abstraction';
 import { LogOutModel } from '../../models';
+import { PlatformName, PlatformProvider } from '../../services';
+import { AlertService } from '../../alert';
 
 @Component({
     selector: 'app-header',
@@ -18,8 +22,8 @@ import { LogOutModel } from '../../models';
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [IonicModule, NgIf],
-    providers: [AuthFacade],
+    imports: [IonicModule, NgIf, NgStyle],
+    providers: [AuthFacade, PlatformProvider, AlertService],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
     @Input() title: string;
@@ -31,7 +35,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public constructor(
         private navController: NavController,
         public popoverController: PopoverController,
-        private authFacade: AuthFacade
+        private authFacade: AuthFacade,
+        private platformProvider: PlatformProvider
     ) {}
 
     public ngOnInit(): void {}
@@ -59,5 +64,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
     }
 
+    @HostListener('window:resize', ['$event'])
+    public getScreenSize(): number {
+        return window.innerHeight;
+    }
+
+    protected getHeaderThreshold(): {
+        'padding-top': string;
+        'margin-top': string;
+    } {
+        return this.platformProvider.getPlatform() === PlatformName.IOS
+            ? { 'padding-top': '54px', 'margin-top': '54px' }
+            : { 'padding-top': '0', 'margin-top': '0' };
+    }
     public ngOnDestroy(): void {}
 }

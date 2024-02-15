@@ -72,10 +72,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     protected getHeaderThreshold(): {
         'padding-top': string;
         'margin-top': string;
+        'margin-bottom': string;
     } {
         return this.platformProvider.getPlatform() === PlatformName.IOS
-            ? { 'padding-top': '54px', 'margin-top': '54px' }
-            : { 'padding-top': '0', 'margin-top': '0' };
+            ? { 'padding-top': '54px', 'margin-top': '54px', 'margin-bottom': '54px'}
+            : { 'padding-top': '0', 'margin-top': '0', 'margin-bottom': '0'}
     }
     public ngOnDestroy(): void {}
 }

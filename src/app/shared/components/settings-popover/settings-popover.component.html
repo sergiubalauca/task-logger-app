@@ -1,6 +1,20 @@
 <ion-content class="ion-no-padding">
     <ion-list class="ion-no-padding">
-        <ion-item [button]="true" [detail]="false" lines="none" (click)="logout()">Logout</ion-item>
-        <ion-item (click)="openTermsAndConditions()">Terms and Conditions</ion-item>
+        <ion-item
+            [button]="true"
+            [detail]="false"
+            lines="none"
+            (click)="logout()"
+            >Logout</ion-item
+        >
+        <ion-item (click)="openTermsAndConditions()"
+            >Terms and Conditions</ion-item
+        >
+        <ion-item
+            (click)="deleteAccount()"
+            color="danger"
+            [ngStyle]="{ 'font-weight': 'bold' }"
+            >Delete Account</ion-item
+        >
     </ion-list>
 </ion-content>

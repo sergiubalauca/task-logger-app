@@ -15,6 +15,8 @@ import { AuthFacade } from '@abstraction';
 import { LogOutModel } from '../../models';
 import { PlatformName, PlatformProvider } from '../../services';
 import { AlertService } from '../../alert';
+import { firstValueFrom } from 'rxjs';
+import { AuthenticationTokenProvider } from '@core';
 
 @Component({
     selector: 'app-header',
@@ -36,7 +38,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private navController: NavController,
         public popoverController: PopoverController,
         private authFacade: AuthFacade,
-        private platformProvider: PlatformProvider
+        private platformProvider: PlatformProvider,
+        private authenticationTokenProvider: AuthenticationTokenProvider
     ) {}
 
     public ngOnInit(): void {}
@@ -62,6 +65,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
             };
             await this.authFacade.logoutWithConfirmation(logOutModel);
         }
+
+        if (data?.deleteAccount) {
+            const loggedInUser = localStorage.getItem('USER_EMAIL');
+            const logOutModel: LogOutModel = {
+                email: loggedInUser,
+            };
+            try {
+                await this.authFacade.deleteAccount(logOutModel);
+            } catch (error) {
+                throw new Error('Error deleting account');
+            }
+        }
     }
 
     @HostListener('window:resize', ['$event'])
@@ -75,8 +90,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         'margin-bottom': string;
     } {
         return this.platformProvider.getPlatform() === PlatformName.IOS
-            ? { 'padding-top': '54px', 'margin-top': '54px', 'margin-bottom': '54px'}
-            : { 'padding-top': '0', 'margin-top': '0', 'margin-bottom': '0'}
+            ? {
+                  'padding-top': '54px',
+                  'margin-top': '54px',
+                  'margin-bottom': '54px',
+              }
+            : { 'padding-top': '0', 'margin-top': '0', 'margin-bottom': '0' };
     }
     public ngOnDestroy(): void {}
 }

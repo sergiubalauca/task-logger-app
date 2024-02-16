@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@core';
-import { AuthenticationResult, LoginModel, LogOutModel, RegisterModel } from '@shared';
+import {
+    AuthenticationResult,
+    LoginModel,
+    LogOutModel,
+    RegisterModel,
+} from '@shared';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -27,5 +32,9 @@ export class AuthFacade {
 
     public register(registerModel: RegisterModel): Observable<any> {
         return this.authService.register(registerModel);
+    }
+
+    public async deleteAccount(logOutModel: LogOutModel): Promise<any> {
+        return await this.authService.deleteAccount(logOutModel);
     }
 }

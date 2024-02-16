@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IonicModule, PopoverController } from '@ionic/angular';
-import { NgIf } from '@angular/common';
+import { NgIf, NgStyle } from '@angular/common';
 import { Browser } from '@capacitor/browser';
 
 @Component({
@@ -9,7 +9,7 @@ import { Browser } from '@capacitor/browser';
     styleUrls: ['./settings-popover.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [IonicModule, NgIf],
+    imports: [IonicModule, NgIf, NgStyle],
     providers: [],
 })
 export class SettingsPopoverComponent {
@@ -22,5 +22,11 @@ export class SettingsPopoverComponent {
 
     protected async openTermsAndConditions(): Promise<void> {
         await Browser.open({ url: 'https://sergiubalauca.github.io/dentalog-t-c/' });
+    }
+
+    protected deleteAccount(): void {
+        this.popoverController.dismiss({
+            deleteAccount: true,
+        });
     }
 }

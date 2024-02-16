@@ -102,20 +102,40 @@ export class AuthService {
             );
     }
 
+    public async deleteAccount(loginModel: LogOutModel): Promise<any> {
+        const yesButton = {
+            text: 'Yes',
+            handler: async () => {
+                const loader = await this.loadingController.create();
+                await loader.present();
+                await firstValueFrom(
+                    this.httpService.makePost(
+                        `${this.authenticateEndpoint}/delete-account`,
+                        loginModel
+                    )
+                );
+                await loader.dismiss();
+                this.tokenProvider.removeToken();
+                await this.navController.navigateRoot('login');
+            },
+        };
+        const stayButton = {
+            text: 'No',
+            handler: () => {},
+        };
+
+        await this.alertService.presentAlert(
+            'Account Deletion',
+            'Are you sure?',
+            [yesButton, stayButton],
+            true
+        );
+    }
+
     public register(registerModel: RegisterModel): Observable<any> {
         return this.httpService.makePost(
             `${this.registerEndpoint}`,
             registerModel
         );
-        // .pipe(
-        //     map(
-        //         (res: { message: string; tokens: AuthenticationResult }) =>
-        //             res.tokens as AuthenticationResult
-        //     ),
-        //     tap((authenticationResult: AuthenticationResult) => {
-        //         this.tokenProvider.saveToken(authenticationResult);
-        //         this.userStorageService.setUsername(loginModel.email);
-        //     })
-        // );
     }
 }

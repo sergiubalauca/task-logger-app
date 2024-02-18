@@ -7,6 +7,7 @@ export enum ErrorMapper {
     endTimeBeforeStartTime = 'End time must be after start time',
     min = 'Value is too small',
     dateComparison = 'Check start/end time',
+    overlappingBreaks = 'Breaks cannot overlap',
 }
 
 export type ErrorMapperKeys = keyof typeof ErrorMapper;

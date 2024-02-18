@@ -18,11 +18,13 @@
                 <ion-icon name="close-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-breadcrumbs>
-            <ion-breadcrumb *ngFor="let bc of breadcrumbs">{{
-                bc
-            }}</ion-breadcrumb>
-        </ion-breadcrumbs>
+        <ng-container *ngIf="swiperPageTwoComponent === 'app-pacient'">
+            <ion-breadcrumbs>
+                <ion-breadcrumb *ngFor="let bc of breadcrumbs">{{
+                    bc
+                }}</ion-breadcrumb>
+            </ion-breadcrumbs>
+        </ng-container>
     </ion-toolbar>
 </ion-header>
 <ion-content class="app-inner-padding">

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
-import { ModalService, DateTimeService } from '@shared';
+import { ModalService, DateTimeService, TranslateErrorPipe } from '@shared';
 import { PickerOptions } from '@ionic/core';
 import {
     AbstractControl,
@@ -14,7 +14,6 @@ import {
     DatePickerRoleTypeEnum,
 } from '../../models';
 import { IonicModule } from '@ionic/angular';
-import { TranslateErrorPipe } from '../../error-mappers';
 import { CommonModule, NgIf } from '@angular/common';
 
 @Component({

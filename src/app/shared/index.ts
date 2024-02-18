@@ -7,3 +7,4 @@ export * from './components';
 export * from './toast';
 export * from './alert';
 export * from './decorators';
+export * from './pipes';

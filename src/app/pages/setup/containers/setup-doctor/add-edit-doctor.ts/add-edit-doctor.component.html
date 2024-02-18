@@ -11,12 +11,15 @@
 
 <ion-content class="app-inner-padding">
     <form [formGroup]="doctorForm">
-        <ion-item>
+        <ion-item lines="none">
             <ion-input
                 appUppercase
                 label="Name"
                 labelPlacement="floating"
                 formControlName="name"
+                errorText="{{
+                    doctorForm.get('name')?.errors | translateError
+                }}"
             >
             </ion-input>
         </ion-item>

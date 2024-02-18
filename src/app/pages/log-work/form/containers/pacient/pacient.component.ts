@@ -22,9 +22,9 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
 import {
     ItemSlidingCardComponent,
     SuppressTouchMoveDirective,
+    TranslateErrorPipe,
     UppercaseDirective,
 } from '@shared';
-import { TranslateErrorPipe } from '../../error-mappers';
 
 @Component({
     selector: 'app-pacient',

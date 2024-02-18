@@ -25,11 +25,10 @@ import {
     PlatformName,
     PlatformProvider,
     SearcheableSelectModel,
+    TranslateErrorPipe,
     WORK_ITEM_COLLECTION_NAME,
 } from '@shared';
-
 import { ColorFacade, DoctorFacade, WorkItemFacade } from '@abstraction';
-import { ErrorMapper, TranslateErrorPipe } from '../../error-mappers';
 
 @Component({
     selector: 'app-search-select-input',
@@ -58,10 +57,6 @@ export class SearcheableSelectInputComponent
         [WORK_ITEM_COLLECTION_NAME]: 'Service',
         [COLOR_COLLECTION_NAME]: 'Color',
     };
-
-    protected get errorMapper(): typeof ErrorMapper {
-        return ErrorMapper;
-    }
 
     public selectedValue: string | null;
 
@@ -143,7 +138,7 @@ export class SearcheableSelectInputComponent
                     showBackdrop: false,
                 });
                 await modal.present();
-                const { data } = await modal.onWillDismiss()
+                const { data } = await modal.onWillDismiss();
                 if (data) {
                     this.selectedValue = data.value;
                     this.propagateChange(data.value);

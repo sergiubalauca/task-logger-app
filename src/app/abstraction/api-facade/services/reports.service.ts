@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpService } from '@core';
 import { ReportDto } from '@shared';
-import { Observable, firstValueFrom, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable()
 export class ReportsService {
@@ -27,7 +27,7 @@ export class ReportsService {
                     if (res.errors && res.errors.length > 0) {
                         throw new Error(res.errors[0].message);
                     }
-                    return res.data?.reports;
+                    return res.data?.reports || [];
                 })
             );
     }

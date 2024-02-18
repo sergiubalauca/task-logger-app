@@ -34,8 +34,8 @@
                             </ion-col>
                         </ion-row>
                         <ion-row class="inner-slide">
-                            <ion-col size="3.5">
-                                <ion-item [formGroupName]="j">
+                            <ion-col size="4">
+                                <ion-item [formGroupName]="j" lines="none">
                                     <ion-input
                                         type="number"
                                         formControlName="numberOfWorkItems"
@@ -50,7 +50,7 @@
                                     </ion-input>
                                 </ion-item>
                             </ion-col>
-                            <ion-col size="7.5">
+                            <ion-col size="8">
                                 <ion-item [formGroupName]="j">
                                     <app-search-select-input
                                         formControlName="color"
@@ -59,7 +59,8 @@
                                             workItemControl.get('color')
                                         "
                                     ></app-search-select-input>
-                                </ion-item> </ion-col
+                                </ion-item>
+                            </ion-col
                         ></ion-row>
                     </ion-grid>
                 </app-item-sliding-card>

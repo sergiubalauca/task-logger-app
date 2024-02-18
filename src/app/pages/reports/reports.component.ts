@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NavController, IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { ReportsService } from '@abstraction';
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     imports: [HeaderComponent, IonicModule, CommonModule],
 })
-export class ReportsComponent implements OnInit {
+export class ReportsComponent {
     private readonly reportsService = inject(ReportsService);
     // eslint-disable-next-line @typescript-eslint/member-ordering
     protected readonly reports$: Observable<ReportDto[]> = this.reportsService
@@ -40,19 +40,49 @@ export class ReportsComponent implements OnInit {
         .pipe(
             map((reports) => {
                 console.log(reports);
-                return reports;
+                return reports.map((report) => {
+                    return {
+                        ...report,
+                        monthlyReports: {
+                            ...report.monthlyReports,
+                            numberOfElements:
+                                Number(
+                                    report.monthlyReports.numberOfElements.toFixed(
+                                        2
+                                    )
+                                ) || 0,
+                            totalPrice:
+                                Number(
+                                    report.monthlyReports.totalPrice.toFixed(2)
+                                ) || 0,
+                            workedHours:
+                                Number(
+                                    report.monthlyReports.workedHours.toFixed(2)
+                                ) || 0,
+                            workItem: report.monthlyReports.workItem.map(
+                                (workItem) => {
+                                    return {
+                                        ...workItem,
+                                        numberOfElements:
+                                            Number(
+                                                workItem.numberOfElements.toFixed(
+                                                    2
+                                                )
+                                            ) || 0,
+                                        totalPriceOfElements:
+                                            Number(
+                                                workItem.totalPriceOfElements.toFixed(
+                                                    2
+                                                )
+                                            ) || 0,
+                                    };
+                                }
+                            ),
+                        },
+                    };
+                });
             })
         );
 
     constructor(private navController: NavController) {}
-
-    ngOnInit() {}
-
-    // public async goToDoctorsList(): Promise<boolean> {
-    //     return this.navController.navigateForward('/home/setup/doctors');
-    // }
-
-    // public async goToWorkItemsList(): Promise<boolean> {
-    //     return this.navController.navigateForward('/home/setup/work-items');
-    // }
 }

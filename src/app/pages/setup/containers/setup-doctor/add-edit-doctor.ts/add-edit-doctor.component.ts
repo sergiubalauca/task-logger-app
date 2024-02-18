@@ -4,6 +4,7 @@ import {
     HeaderComponent,
     ModalService,
     ThrottleButtonDirective,
+    TranslateErrorPipe,
     UppercaseDirective,
 } from '@shared';
 import { CommonModule } from '@angular/common';
@@ -22,6 +23,7 @@ import {
     templateUrl: './add-edit-doctor.component.html',
     styleUrls: ['./add-edit-doctor.component.scss'],
     standalone: true,
+    providers: [ModalService, ModalController],
     imports: [
         IonicModule,
         CommonModule,
@@ -29,9 +31,9 @@ import {
         FormsModule,
         ReactiveFormsModule,
         ThrottleButtonDirective,
-        UppercaseDirective
+        UppercaseDirective,
+        TranslateErrorPipe,
     ],
-    providers: [ModalService, ModalController],
 })
 export class AddEditDoctorComponent implements OnInit {
     public doctorForm: FormGroup;

@@ -10,20 +10,27 @@
 
 <ion-content class="app-inner-padding">
     <form [formGroup]="workItemForm">
-        <ion-item>
+        <ion-item lines="none">
             <ion-input
                 appUppercase
                 label="Name"
                 labelPlacement="floating"
                 formControlName="name"
+                errorText="{{
+                    workItemForm.get('name')?.errors | translateError
+                }}"
             >
             </ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item lines="none">
             <ion-input
                 label="Price"
+                type="number"
                 labelPlacement="floating"
                 formControlName="price"
+                errorText="{{
+                    workItemForm.get('price')?.errors | translateError
+                }}"
             >
             </ion-input>
         </ion-item>

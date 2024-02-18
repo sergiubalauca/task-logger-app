@@ -20,11 +20,11 @@ import {
     COLOR_COLLECTION_NAME,
     ItemSlidingCardComponent,
     SuppressTouchMoveDirective,
+    TranslateErrorPipe,
     UppercaseDirective,
     WORK_ITEM_COLLECTION_NAME,
 } from '@shared';
 import { FormSelector } from '../../custom-state/selector/form.selector';
-import { TranslateErrorPipe } from '../../error-mappers';
 
 @Component({
     selector: 'app-work-item',

@@ -3,6 +3,7 @@ import {
     HeaderComponent,
     ModalService,
     ThrottleButtonDirective,
+    TranslateErrorPipe,
     UppercaseDirective,
     WorkItem,
 } from '@shared';
@@ -22,6 +23,7 @@ import {
     templateUrl: './add-edit-work-item.component.html',
     styleUrls: ['./add-edit-work-item.component.scss'],
     standalone: true,
+    providers: [ModalService, ModalController],
     imports: [
         IonicModule,
         CommonModule,
@@ -29,9 +31,9 @@ import {
         FormsModule,
         ReactiveFormsModule,
         ThrottleButtonDirective,
-        UppercaseDirective
+        UppercaseDirective,
+        TranslateErrorPipe,
     ],
-    providers: [ModalService, ModalController],
 })
 export class AddEditWorkItemComponent implements OnInit {
     public workItemForm: FormGroup;
@@ -48,10 +50,11 @@ export class AddEditWorkItemComponent implements OnInit {
                 this.workItem ? this.workItem.name : '',
                 Validators.required
             ),
-            price: new FormControl(
-                this.workItem ? this.workItem.price : '',
-                Validators.required
-            ),
+            price: new FormControl(this.workItem ? this.workItem.price : '', [
+                Validators.required,
+                // validate price to be a positive number without any special characters
+                Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/),
+            ]),
             description: new FormControl(
                 this.workItem ? this.workItem.description : ''
             ),

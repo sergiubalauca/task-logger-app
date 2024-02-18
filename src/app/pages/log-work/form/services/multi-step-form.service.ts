@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DailyWorkDoc } from '@shared';
 import { FormReducer } from '../custom-state/reducer/form.reducer';
-import { dateCompareAgainstValidator } from '../validators';
+import {
+    dateCompareAgainstValidator,
+    overlappingBreaksValidator,
+} from '../validators';
 
 @Injectable()
 export class MultiStepFormService {
@@ -53,8 +56,6 @@ export class MultiStepFormService {
                 endTime: breakItem.endTime,
             });
         });
-
-        console.log('GSB form with data: ', this.multiStepLogWorkForm);
     }
 
     public initMultiStepForm(dailyWork: any) {
@@ -88,6 +89,12 @@ export class MultiStepFormService {
                                     'endTime',
                                     'lessThan'
                                 ),
+                                dateCompareAgainstValidator(
+                                    'startTime',
+                                    'greaterThanOrEqualTo',
+                                    true
+                                ),
+                                overlappingBreaksValidator('endTime'),
                             ],
                         }),
                         endTime: this.fb.control(null, {
@@ -96,6 +103,12 @@ export class MultiStepFormService {
                                     'startTime',
                                     'greaterThan'
                                 ),
+                                dateCompareAgainstValidator(
+                                    'endTime',
+                                    'lessThanOrEqualTo',
+                                    true
+                                ),
+                                overlappingBreaksValidator('startTime'),
                             ],
                         }),
                     }),
@@ -179,11 +192,16 @@ export class MultiStepFormService {
                                                     validators: [
                                                         Validators.required,
                                                         Validators.min(1),
+                                                        Validators.pattern(
+                                                            /^[0-9]+(\.[0-9]{1,2})?$/
+                                                        ),
                                                     ],
                                                 }
                                             ),
                                             color: this.fb.control(null, {
-                                                validators: [Validators.required],
+                                                validators: [
+                                                    Validators.required,
+                                                ],
                                             }),
                                         }),
                                     ],
@@ -211,12 +229,24 @@ export class MultiStepFormService {
                 validators: [
                     Validators.required,
                     dateCompareAgainstValidator('endTime', 'lessThan'),
+                    dateCompareAgainstValidator(
+                        'startTime',
+                        'greaterThanOrEqualTo',
+                        true
+                    ),
+                    overlappingBreaksValidator('endTime'),
                 ],
             }),
             endTime: this.fb.control(null, {
                 validators: [
                     Validators.required,
                     dateCompareAgainstValidator('startTime', 'greaterThan'),
+                    dateCompareAgainstValidator(
+                        'endTime',
+                        'lessThanOrEqualTo',
+                        true
+                    ),
+                    overlappingBreaksValidator('startTime'),
                 ],
             }),
         });
@@ -303,6 +333,9 @@ export class MultiStepFormService {
                                 validators: [
                                     Validators.required,
                                     Validators.min(1),
+                                    Validators.pattern(
+                                        /^[0-9]+(\.[0-9]{1,2})?$/
+                                    ),
                                 ],
                             }),
                             color: this.fb.control(null, {
@@ -377,7 +410,11 @@ export class MultiStepFormService {
                 validators: [Validators.required],
             }),
             numberOfWorkItems: this.fb.control(null, {
-                validators: [Validators.required, Validators.min(1)],
+                validators: [
+                    Validators.required,
+                    Validators.min(1),
+                    Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/),
+                ],
             }),
             color: this.fb.control(null, {
                 validators: [Validators.required],

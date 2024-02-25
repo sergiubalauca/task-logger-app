@@ -1,11 +1,7 @@
-/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
-import { ToastDuration, ToastService } from '@shared';
 import { SyncBaseService } from './sync-base.service';
-import { errorMapper } from '@core';
 
 @Injectable()
 export class SyncService {
@@ -24,10 +20,7 @@ export class SyncService {
     private lastSyncDateSubject = new BehaviorSubject(new Date());
     public lastSyncDate$ = this.lastSyncDateSubject.asObservable();
 
-    constructor(
-        private toastService: ToastService,
-        private translateService: TranslateService
-    ) {}
+    constructor() {}
 
     public addSyncService(syncService: SyncBaseService) {
         this.syncServices.push(syncService);
@@ -49,12 +42,6 @@ export class SyncService {
             this.lastSyncDateSubject.next(new Date());
         } catch (error) {
             console.error(error);
-            this.toastService.presentError(
-                // this.translateService.instant('errorCodes.RXDB_SYNC'),
-                errorMapper(error),
-                ToastDuration.slow
-            );
-            // throw error;
         } finally {
             this.isSyncingSubject.next(false);
         }

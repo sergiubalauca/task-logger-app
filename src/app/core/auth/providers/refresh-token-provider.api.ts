@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AuthenticationResult } from '@shared';
-
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { catchError, map } from 'rxjs/operators';
-import { HttpService } from '../../api';
+import { ApiErrorCodes, HttpService } from '../../api';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class RefreshTokenProvider {
@@ -17,8 +17,20 @@ export class RefreshTokenProvider {
     public refreshToken(
         authenticationResult: AuthenticationResult
     ): Observable<string> {
+        if (!authenticationResult || !authenticationResult.refreshToken) {
+            return throwError(
+                () =>
+                    new HttpErrorResponse({
+                        error: {
+                            message: ApiErrorCodes.expiredRefreshToken,
+                            errorName: ApiErrorCodes.expiredRefreshToken,
+                        },
+                        status: 401,
+                        statusText: 'Unauthorized',
+                    })
+            );
+        }
         // add refresh token to bearer authentication header
-
         return this.httpService
             .makePost<AuthenticationResult, AuthenticationResult>(
                 `${this.path}/refresh`,

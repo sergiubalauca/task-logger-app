@@ -171,15 +171,10 @@ export class LogWorkRepository {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.logwork;
 
-            const regex = new RegExp('\\d-1-2021', 'g');
-
-            const logWorks: Observable<RxDocument[]> =
-                // DB id is in format '1-1-2021' and params.id is in format '1-2021'. Create regex to find all items with '1-2021' in id
-                docCollection
-                    .find()
-                    .where('id')
-                    // .eq(params.id.toString())
-                    .in(params.map((param) => param.id.toString())).$;
+            const logWorks: Observable<RxDocument[]> = docCollection
+                .find()
+                .where('id')
+                .in(params.map((param) => param.id.toString())).$;
 
             return logWorks.pipe(
                 map((docs) => {

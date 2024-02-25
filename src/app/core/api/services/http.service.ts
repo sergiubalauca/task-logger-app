@@ -44,9 +44,9 @@ export class HttpService {
             map((res) => {
                 return res;
             }),
-            catchError((error) => {
-                return throwError(() => error);
-            })
+            // catchError((error) => {
+            //     return throwError(() => error);
+            // })
         );
     }
 

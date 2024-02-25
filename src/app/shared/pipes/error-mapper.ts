@@ -27,7 +27,7 @@ export class TranslateErrorPipe implements PipeTransform {
             error[key] = ErrorMapper[key];
             errorMessages.push(error[key]);
         });
-        console.log(errorMessages);
+        // console.log(errorMessages);
         return errorMessages;
     }
 }

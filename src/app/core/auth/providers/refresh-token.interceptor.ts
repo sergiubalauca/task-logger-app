@@ -1,4 +1,5 @@
 import {
+    HttpErrorResponse,
     HttpEvent,
     HttpHandler,
     HttpInterceptor,
@@ -65,7 +66,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
                         }),
                         catchError(async (e: any) => {
                             this.refreshTokenInProgress = false;
-                            console.log('GSB Error: ' + JSON.stringify(e));
+
                             if (
                                 e.errorCode ===
                                     ApiErrorCodes.invalidRefreshToken ||
@@ -83,7 +84,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
                             await this.showSessionExpiredAlert();
                             this.refreshTokenInProgress = false;
 
-                            return e;
+                            throw e;
                         }),
                         finalize(() => {
                             this.refreshTokenInProgress = false;

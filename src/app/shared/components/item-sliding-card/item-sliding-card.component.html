@@ -9,7 +9,7 @@
         [ngClass]="!isNgContent ? '' : 'ngContent'"
     >
         <ion-card mode="ios" class="ion-no-margin" (click)="editItem($event)">
-            <ion-card-content *ngIf="!isNgContent">
+            <ion-card-content *ngIf="!isNgContent; else ngContent">
                 <ion-card-title>
                     <ion-grid class="ion-no-padding">
                         <ion-row>
@@ -30,9 +30,9 @@
                 </ion-card-content>
             </ion-card-content>
 
-            <ion-card-content class="ngContent">
+            <!-- <ion-card-content class="ngContent">
                 <ng-content></ng-content>
-            </ion-card-content>
+            </ion-card-content> -->
         </ion-card>
     </ion-item>
     <ion-item-options side="end" class="ion-no-border">
@@ -46,4 +46,10 @@
             </ion-item-option>
         </ng-container>
     </ion-item-options>
+
+    <ng-template #ngContent>
+        <ion-card-content class="ngContent">
+            <ng-content></ng-content>
+        </ion-card-content>
+    </ng-template>
 </ion-item-sliding>

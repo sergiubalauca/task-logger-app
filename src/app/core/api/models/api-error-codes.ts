@@ -5,6 +5,7 @@ export class ApiErrorCodes {
     public static expiredRefreshToken = 'EXPIRED_REFRESH_TOKEN';
     public static invalidCredentials = 'INVALID_CREDENTIALS';
     public static userAlreadyExists = 'USER_ALREADY_EXISTS';
+    public static httpErrorResponse = 'HttpErrorResponse';
 }
 
 export const errorMapper = (error: string) => {
@@ -21,6 +22,8 @@ export const errorMapper = (error: string) => {
             return 'Invalid credentials';
         case ApiErrorCodes.userAlreadyExists:
             return 'User already exists';
+        case ApiErrorCodes.httpErrorResponse:
+            return 'Server not available';
         default:
             return 'Unknown error';
     }

@@ -6,6 +6,7 @@ export class ApiErrorCodes {
     public static invalidCredentials = 'INVALID_CREDENTIALS';
     public static userAlreadyExists = 'USER_ALREADY_EXISTS';
     public static httpErrorResponse = 'HttpErrorResponse';
+    public static duplicateEntry = 'DUPLICATE_ENTRY';
 }
 
 export const errorMapper = (error: string) => {
@@ -24,6 +25,8 @@ export const errorMapper = (error: string) => {
             return 'User already exists';
         case ApiErrorCodes.httpErrorResponse:
             return 'Server not available';
+        case ApiErrorCodes.duplicateEntry:
+            return 'This entry already exists';
         default:
             return 'Unknown error';
     }

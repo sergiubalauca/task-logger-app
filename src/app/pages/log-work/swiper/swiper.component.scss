@@ -39,13 +39,12 @@
         }
     }
     ion-content {
-        swiper-slide {
-        }
-        ion-item-group {
-            // ion-button {
-            //     // set width to 100% of parent
-            //     width: 100%;
-            // }
+        #animated-rows {
+            position: absolute;
+            top: 95%;
+            left: 0;
+            right: 0;
+            z-index: 1;
         }
     }
 }

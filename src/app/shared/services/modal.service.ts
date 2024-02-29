@@ -12,7 +12,8 @@ export class ModalService {
         componentRef: any,
         cssClass: string,
         componentProps: any,
-        backdropDismiss: boolean
+        backdropDismiss: boolean,
+        canDismissFn?: () => Promise<boolean>
     ): Promise<void> {
         this.modal = await this.modalController.create({
             component: componentRef,
@@ -21,12 +22,13 @@ export class ModalService {
             breakpoints: [0, 0.5, 0.9],
             componentProps,
             backdropDismiss,
+            canDismiss: canDismissFn,
         });
 
         await this.modal.present();
     }
 
     public async onDidDismiss(): Promise<OverlayEventDetail<any>> {
-        return this.modal.onDidDismiss();
+        return await this.modal.onDidDismiss();
     }
 }

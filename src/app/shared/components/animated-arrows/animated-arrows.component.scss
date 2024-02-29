@@ -1,0 +1,44 @@
+:host {
+    .arrows-body {
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    .arrow {
+        position: relative;
+        width: 10px;
+        height: 10px;
+        // how to pass 60px as a variable?
+
+        border-top: 2px solid var(--ion-color-theme);
+        border-left: 2px solid var(--ion-color-theme-warning);
+        transform: rotate(45deg);
+        animation: arrow-load 2s infinite;
+    }
+
+    .arrow:nth-child(1) {
+        left: 25px;
+        animation-delay: -0.4s;
+    }
+    .arrow:nth-child(2) {
+        animation-delay: -0.2s;
+    }
+    .arrow:nth-child(3) {
+        right: 25px;
+    }
+
+    @keyframes arrow-load {
+        0% {
+            opacity: 1;
+            transform: rotate(-45deg) translate(60px, 60px);
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+            transform: rotate(-45deg) translate(-60px, -60px);
+        }
+    }
+}

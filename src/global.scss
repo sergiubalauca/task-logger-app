@@ -187,3 +187,7 @@ ion-checkbox::part(container) {
     --background: var(--ion-color-accent);
     --color: var(--ion-color-dark-01);
 }
+
+.action-sheet .action-sheet-group {
+    background: #e5e5e5;
+}

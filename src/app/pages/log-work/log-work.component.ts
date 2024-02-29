@@ -3,8 +3,14 @@ import {
     ChangeDetectionStrategy,
     Component,
     OnInit,
+    inject,
 } from '@angular/core';
-import { DailyWork, DateTimeService, ModalService } from '@shared';
+import {
+    DailyWork,
+    DateTimeService,
+    FormCanDeactivateService,
+    ModalService,
+} from '@shared';
 import { SwiperComponent } from './swiper/swiper.component';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from '../../shared/components/header/header.component';
@@ -32,8 +38,10 @@ import { DatetimeHighlight } from '@ionic/core';
 })
 export class LogWorkComponent implements OnInit, AfterContentChecked {
     public newMonthChangedEvent: StateSubject<string[]> = new StateSubject([]);
-
     public highlightedDates$: Observable<DatetimeHighlight[]>;
+    private formCanDeactivateService: FormCanDeactivateService = inject(
+        FormCanDeactivateService
+    );
 
     constructor(
         private modalService: ModalService,
@@ -106,7 +114,8 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
             {
                 chosenDate: event.detail.value,
             },
-            true
+            true,
+            this.formCanDeactivateService.canDeactivateFn
         );
 
         const modalData = await this.modalService.onDidDismiss();

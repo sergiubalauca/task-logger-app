@@ -2,6 +2,7 @@ import {
     Component,
     CUSTOM_ELEMENTS_SCHEMA,
     ElementRef,
+    inject,
     Input,
     OnDestroy,
     OnInit,
@@ -9,7 +10,13 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ModalController, IonicModule } from '@ionic/angular';
-import { DailyWorkDoc, DateTimeService, SearcheableSelectModel } from '@shared';
+import {
+    AnimatedArrowsComponent,
+    DailyWorkDoc,
+    DateTimeService,
+    FormCanDeactivateService,
+    SearcheableSelectModel,
+} from '@shared';
 import {
     combineLatest,
     forkJoin,
@@ -48,6 +55,7 @@ const initSwiper = () => register();
         WorkItemComponent,
         CommonModule,
         TimeTrackingComponent,
+        AnimatedArrowsComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -75,6 +83,9 @@ export class SwiperComponent implements OnInit, OnDestroy {
 
     protected breadcrumbs = [];
     private ngOnDestroy$: Subject<void> = new Subject<void>();
+    private formCanDeactivateService: FormCanDeactivateService = inject(
+        FormCanDeactivateService
+    );
 
     constructor(
         private modalController: ModalController,
@@ -187,6 +198,7 @@ export class SwiperComponent implements OnInit, OnDestroy {
         const isFormValid = this.formService.getForm().valid;
         const formValue = this.formService.getForm().value;
 
+        this.formCanDeactivateService.setCanDeactivate(true);
         return await this.modalController.dismiss({
             formValue,
             dismissed: isFormValid,

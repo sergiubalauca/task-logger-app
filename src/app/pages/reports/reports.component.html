@@ -5,68 +5,151 @@
 ></app-header>
 
 <ion-content class="app-inner-padding">
-    <ion-card *ngFor="let report of reports$ | async" mode="ios">
-        <ion-card-header>
-            <ion-card-title>{{ report.monthlyReports.month }} </ion-card-title>
-        </ion-card-header>
+    <ng-container *ngIf="reports$ | async; let reports; else: loading">
+        <ion-list>
+            <ion-card *ngFor="let report of reports" mode="ios">
+                <ion-card-header>
+                    <ion-card-title
+                        >{{ report.monthlyReports.month }}
+                    </ion-card-title>
+                </ion-card-header>
 
-        <ion-card-content>
-            <ion-grid>
-                <ion-row>
-                    <ion-col>
-                        <ion-label></ion-label>
-                    </ion-col>
-                    <ion-col>
-                        <ion-label>Amount</ion-label>
-                    </ion-col>
-                    <ion-col>
-                        <ion-label>No of items</ion-label>
-                    </ion-col>
-                </ion-row>
+                <ion-card-content>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <ion-label></ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>Amount</ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>No of items</ion-label>
+                            </ion-col>
+                        </ion-row>
 
-                <ion-row>
-                    <ion-col>
-                        <ion-label>Worked Hours</ion-label>
-                    </ion-col>
-                    <ion-col>
-                        <ion-label>{{
-                            report.monthlyReports.workedHours
-                        }}</ion-label>
-                    </ion-col>
-                    <ion-col> </ion-col>
-                </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <ion-label>Worked Hours</ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>{{
+                                    report.monthlyReports.workedHours
+                                }}</ion-label>
+                            </ion-col>
+                            <ion-col> </ion-col>
+                        </ion-row>
 
-                <ion-row>
-                    <ion-col>
-                        <ion-label>Earnings</ion-label>
-                    </ion-col>
-                    <ion-col>
-                        <ion-label>{{
-                            report.monthlyReports.totalPrice
-                        }}</ion-label>
-                    </ion-col>
-                    <ion-col>
-                        <ion-label>{{
-                            report.monthlyReports.numberOfElements
-                        }}</ion-label>
-                    </ion-col>
-                </ion-row>
-                <ion-row
-                    *ngFor="let workItem of report.monthlyReports.workItem"
-                >
-                    <ion-col>
-                        <ion-label>{{ workItem.name }}</ion-label>
-                    </ion-col>
-                    <ion-col>
-                        <ion-label>{{
-                            workItem.totalPriceOfElements
-                        }}</ion-label>
-                    </ion-col>
-                    <ion-col>
-                        <ion-label>{{ workItem.numberOfElements }}</ion-label>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-card-content>
-    </ion-card>
+                        <ion-row>
+                            <ion-col>
+                                <ion-label>Earnings</ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>{{
+                                    report.monthlyReports.totalPrice
+                                }}</ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>{{
+                                    report.monthlyReports.numberOfElements
+                                }}</ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row
+                            *ngFor="
+                                let workItem of report.monthlyReports.workItem
+                            "
+                        >
+                            <ion-col>
+                                <ion-label>{{ workItem.name }}</ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>{{
+                                    workItem.totalPriceOfElements
+                                }}</ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>{{
+                                    workItem.numberOfElements
+                                }}</ion-label>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card-content>
+            </ion-card>
+        </ion-list>
+    </ng-container>
+    <ng-template #loading>
+        <ion-list>
+            <ion-card *ngFor="let report of dummyReports" mode="ios">
+                <ion-card-header>
+                    <ion-card-title>
+                        <ion-skeleton-text
+                            [animated]="true"
+                            style="width: 30vw"
+                        ></ion-skeleton-text>
+                    </ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <ion-label></ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>
+                                    <ion-skeleton-text [animated]="true" style="width: 15vw"></ion-skeleton-text>
+                                </ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>
+                                    <ion-skeleton-text [animated]="true" style="width: 15vw"></ion-skeleton-text>
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row>
+                            <ion-col>
+                                <ion-label>
+                                    <ion-skeleton-text [animated]="true" style="width: 15vw"></ion-skeleton-text>
+                                </ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-skeleton-text [animated]="true" style="width: 15vw"></ion-skeleton-text>
+                            </ion-col>
+                            <ion-col> </ion-col>
+                        </ion-row>
+
+                        <ion-row>
+                            <ion-col>
+                                <ion-skeleton-text [animated]="true" style="width: 15vw"></ion-skeleton-text>
+                            </ion-col>
+                            <ion-col>
+                                <ion-skeleton-text [animated]="true" style="width: 15vw"></ion-skeleton-text>
+                            </ion-col>
+                            <ion-col>
+                                <ion-skeleton-text [animated]="true" style="width: 15vw"></ion-skeleton-text>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row
+                            *ngFor="
+                                let workItem of report.monthlyReports.workItem
+                            "
+                        >
+                            <ion-col>
+                                <ion-skeleton-text [animated]="true" style="width: 15vw"></ion-skeleton-text>
+                            </ion-col>
+                            <ion-col>
+                                <ion-skeleton-text [animated]="true" style="width: 15vw"></ion-skeleton-text>
+                            </ion-col>
+                            <ion-col>
+                                <ion-skeleton-text [animated]="true" style="width: 15vw"></ion-skeleton-text>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card-content>
+            </ion-card>
+        </ion-list>
+    </ng-template>
 </ion-content>

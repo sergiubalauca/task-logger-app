@@ -1,5 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    inject,
+} from '@angular/core';
+import {
+    FormCanDeactivateService,
     HeaderComponent,
     ModalService,
     ThrottleButtonDirective,
@@ -17,6 +26,8 @@ import {
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
+import { map, startWith } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-add-edit-work-item',
@@ -39,6 +50,10 @@ export class AddEditWorkItemComponent implements OnInit {
     public workItemForm: FormGroup;
     @Input() private workItem: WorkItem;
 
+    private destroyRef = inject(DestroyRef);
+    private readonly formCanDeactivateService: FormCanDeactivateService =
+        inject(FormCanDeactivateService);
+
     constructor(
         private readonly modalCtrl: ModalController,
         private formBuilder: FormBuilder
@@ -59,9 +74,22 @@ export class AddEditWorkItemComponent implements OnInit {
                 this.workItem ? this.workItem.description : ''
             ),
         });
+
+        this.workItemForm.statusChanges
+            .pipe(
+                map((_status) => {
+                    return this.workItemForm.pristine;
+                }),
+                takeUntilDestroyed(this.destroyRef),
+                startWith(true)
+            )
+            .subscribe((canDeactivate: boolean) => {
+                this.formCanDeactivateService.setCanDeactivate(canDeactivate);
+            });
     }
 
     public async onSubmit(): Promise<boolean> {
+        this.formCanDeactivateService.setCanDeactivate(true);
         return await this.modalCtrl.dismiss(
             {
                 workItem: this.workItemForm.value,

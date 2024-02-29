@@ -1,6 +1,7 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import {
     Doctor,
+    FormCanDeactivateService,
     HeaderComponent,
     ModalService,
     ThrottleButtonDirective,
@@ -17,6 +18,8 @@ import {
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
+import { map, Observable, of, startWith } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-add-edit-doctor',
@@ -40,6 +43,10 @@ export class AddEditDoctorComponent implements OnInit {
     @Input() private doctor: Doctor;
 
     private readonly modalCtrl: ModalController = inject(ModalController);
+    private readonly formCanDeactivateService: FormCanDeactivateService =
+        inject(FormCanDeactivateService);
+    private destroyRef = inject(DestroyRef);
+
     constructor(private formBuilder: FormBuilder) {}
 
     public ngOnInit(): void {
@@ -52,9 +59,22 @@ export class AddEditDoctorComponent implements OnInit {
                 this.doctor ? this.doctor.phone : ''
             ),
         });
+
+        this.doctorForm.statusChanges
+            .pipe(
+                map((_status) => {
+                    return this.doctorForm.pristine;
+                }),
+                takeUntilDestroyed(this.destroyRef),
+                startWith(true)
+            )
+            .subscribe((canDeactivate: boolean) => {
+                this.formCanDeactivateService.setCanDeactivate(canDeactivate);
+            });
     }
 
     public async onSubmit(): Promise<boolean> {
+        this.formCanDeactivateService.setCanDeactivate(true);
         return await this.modalCtrl.dismiss(
             {
                 doctor: this.doctorForm.value,
@@ -64,7 +84,7 @@ export class AddEditDoctorComponent implements OnInit {
         );
     }
 
-    public closeModal() {
-        this.modalCtrl.dismiss();
+    public async closeModal() {
+        await this.modalCtrl.dismiss();
     }
 }

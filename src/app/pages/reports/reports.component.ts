@@ -15,6 +15,52 @@ import { CommonModule } from '@angular/common';
 })
 export class ReportsComponent {
     private readonly reportsService = inject(ReportsService);
+    protected readonly dummyReports: ReportDto[] = [
+        {
+            monthlyReports: {
+                month: 'January',
+                numberOfElements: 1,
+                totalPrice: 100,
+                workedHours: 10,
+                workItem: [
+                    {
+                        name: 'Work Item 1',
+                        numberOfElements: 1,
+                        totalPriceOfElements: 100,
+                        id: '1',
+                    },
+                    {
+                        name: 'Work Item 2',
+                        numberOfElements: 2,
+                        totalPriceOfElements: 100,
+                        id: '2',
+                    }
+                ],
+            },
+        },
+        {
+            monthlyReports: {
+                month: 'February',
+                numberOfElements: 2,
+                totalPrice: 200,
+                workedHours: 20,
+                workItem: [
+                    {
+                        name: 'Work Item 3',
+                        numberOfElements: 2,
+                        totalPriceOfElements: 200,
+                        id: '3',
+                    },
+                    {
+                        name: 'Work Item 4',
+                        numberOfElements: 4,
+                        totalPriceOfElements: 200,
+                        id: '4',
+                    }
+                ],
+            },
+        },
+    ];
     // eslint-disable-next-line @typescript-eslint/member-ordering
     protected readonly reports$: Observable<ReportDto[]> = this.reportsService
         .getReports({

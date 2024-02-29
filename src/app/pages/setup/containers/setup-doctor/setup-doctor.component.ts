@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnInit,
+    inject,
+} from '@angular/core';
 import {
     Doctor,
+    FormCanDeactivateService,
     ItemSlidingCardComponent,
     ItemSlidingProps,
     ModalService,
@@ -11,7 +17,6 @@ import { HeaderComponent } from '../../../../shared/components/header/header.com
 import { firstValueFrom, map, Observable, take } from 'rxjs';
 import { AddEditDoctorComponent } from './add-edit-doctor.ts/add-edit-doctor.component';
 import { DoctorApiServce, DoctorFacade } from '@abstraction';
-import { ConnectivityStateService } from '@core';
 
 @Component({
     selector: 'app-setup-doctor',
@@ -30,14 +35,14 @@ import { ConnectivityStateService } from '@core';
 })
 export class SetupDoctorComponent implements OnInit {
     public doctors$: Observable<ItemSlidingProps[]>;
-    public isOffline$ = this.connectivityStateService.connectivity$.pipe(
-        map((status) => status)
+    private formCanDeactivateService: FormCanDeactivateService = inject(
+        FormCanDeactivateService
     );
+
     constructor(
         private readonly doctorFacade: DoctorFacade,
         private readonly modalService: ModalService,
-        private readonly doctorApiService: DoctorApiServce,
-        private readonly connectivityStateService: ConnectivityStateService
+        private readonly doctorApiService: DoctorApiServce
     ) {}
 
     ngOnInit() {
@@ -60,7 +65,8 @@ export class SetupDoctorComponent implements OnInit {
             AddEditDoctorComponent,
             '',
             {},
-            true
+            true,
+            this.formCanDeactivateService.canDeactivateFn
         );
 
         const modalData = await this.modalService.onDidDismiss();
@@ -74,7 +80,6 @@ export class SetupDoctorComponent implements OnInit {
 
             await this.doctorFacade.addOne({
                 ...modalData.data.doctor,
-                // eslint-disable-next-line no-underscore-dangle
                 mongoId: apiDoc._id,
             });
         }
@@ -101,7 +106,8 @@ export class SetupDoctorComponent implements OnInit {
             {
                 doctor,
             },
-            true
+            true,
+            this.formCanDeactivateService.canDeactivateFn
         );
 
         const modalData = await this.modalService.onDidDismiss();

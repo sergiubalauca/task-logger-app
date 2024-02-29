@@ -1,15 +1,20 @@
-import { Injectable, inject } from '@angular/core';
+import { DestroyRef, Injectable, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DailyWorkDoc } from '@shared';
+import { DailyWorkDoc, FormCanDeactivateService } from '@shared';
 import { FormReducer } from '../custom-state/reducer/form.reducer';
 import {
     dateCompareAgainstValidator,
     overlappingBreaksValidator,
 } from '../validators';
+import { map, startWith } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class MultiStepFormService {
     private multiStepLogWorkForm: FormGroup;
+    private destroyRef = inject(DestroyRef);
+    private readonly formCanDeactivateService: FormCanDeactivateService =
+        inject(FormCanDeactivateService);
 
     constructor(private fb: FormBuilder, private formStore: FormReducer) {
         this.getForm()?.valueChanges.subscribe((changes) => {
@@ -118,8 +123,20 @@ export class MultiStepFormService {
         if (dailyWork) {
             this.formStore.setFormAlreadySavedForDate(true);
             this.buildFormWithData(dailyWork);
-            return this.multiStepLogWorkForm;
         }
+
+        this.multiStepLogWorkForm.statusChanges
+            .pipe(
+                map((_status) => {
+                    return this.multiStepLogWorkForm.pristine;
+                }),
+                takeUntilDestroyed(this.destroyRef),
+                startWith(true)
+            )
+            .subscribe((canDeactivate: boolean) => {
+                this.formCanDeactivateService.setCanDeactivate(canDeactivate);
+            });
+
         return this.multiStepLogWorkForm;
     }
 

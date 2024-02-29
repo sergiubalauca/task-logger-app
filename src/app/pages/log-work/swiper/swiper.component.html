@@ -43,6 +43,9 @@
                     (goToDoctor)="onGoToDoctor($event)"
                     (navigateTimeTracking)="onNavigateTimeTracking()"
                 ></app-doctor>
+                <div id="animated-rows">
+                    <app-animated-arrows></app-animated-arrows>
+                </div>
             </swiper-slide>
             <swiper-slide [ngSwitch]="swiperPageTwoComponent">
                 <app-pacient
@@ -51,12 +54,19 @@
                     (goToWorkItem)="onGoToWorkItem()"
                 ></app-pacient>
                 <app-time-tracking
+                    style="height: 100%"
                     *ngSwitchCase="'app-time-tracking'"
                     [chosenDate]="chosenDate"
                 ></app-time-tracking>
+                <div id="animated-rows">
+                    <app-animated-arrows></app-animated-arrows>
+                </div>
             </swiper-slide>
             <swiper-slide>
                 <app-work-item style="height: 100%"></app-work-item>
+                <div id="animated-rows">
+                    <app-animated-arrows></app-animated-arrows>
+                </div>
             </swiper-slide>
         </ng-container>
     </swiper-container>

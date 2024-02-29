@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnInit,
+    inject,
+} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import {
+    FormCanDeactivateService,
     ItemSlidingCardComponent,
     ItemSlidingProps,
     ModalService,
@@ -28,6 +34,9 @@ import { WorkItemApiServce, WorkItemFacade } from '@abstraction';
 })
 export class SetupWorkItemComponent implements OnInit {
     public workItems$: Observable<ItemSlidingProps[]>;
+    private formCanDeactivateService: FormCanDeactivateService = inject(
+        FormCanDeactivateService
+    );
 
     constructor(
         private readonly workItemFacade: WorkItemFacade,
@@ -58,7 +67,8 @@ export class SetupWorkItemComponent implements OnInit {
             AddEditWorkItemComponent,
             '',
             {},
-            true
+            true,
+            this.formCanDeactivateService.canDeactivateFn
         );
 
         const modalData = await this.modalService.onDidDismiss();
@@ -72,7 +82,6 @@ export class SetupWorkItemComponent implements OnInit {
 
             this.workItemFacade.addOne({
                 ...modalData.data.workItem,
-                // eslint-disable-next-line no-underscore-dangle
                 mongoId: apiDoc._id,
             });
         }
@@ -100,7 +109,8 @@ export class SetupWorkItemComponent implements OnInit {
             {
                 workItem,
             },
-            true
+            true,
+            this.formCanDeactivateService.canDeactivateFn
         );
 
         const modalData = await this.modalService.onDidDismiss();
@@ -113,7 +123,7 @@ export class SetupWorkItemComponent implements OnInit {
             await this.workItemFacade.editOne(workItemToEdit);
             await firstValueFrom(
                 this.workItemApiService
-                    .updateWorkItem({...workItemToEdit, id: workItem.mongoId,})
+                    .updateWorkItem({ ...workItemToEdit, id: workItem.mongoId })
                     .pipe(take(1))
             );
         }

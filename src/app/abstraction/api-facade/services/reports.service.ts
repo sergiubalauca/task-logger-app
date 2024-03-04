@@ -6,6 +6,20 @@ import { Observable, map } from 'rxjs';
 @Injectable()
 export class ReportsService {
     private readonly httpService = inject(HttpService);
+    protected monthIndices = {
+        January: 0,
+        February: 1,
+        March: 2,
+        April: 3,
+        May: 4,
+        June: 5,
+        July: 6,
+        August: 7,
+        September: 8,
+        October: 9,
+        November: 10,
+        December: 11,
+    };
 
     public getReports(options: {
         query: string;
@@ -30,5 +44,17 @@ export class ReportsService {
                     return res.data?.reports || [];
                 })
             );
+    }
+
+    public sortReportsByMonth(
+        reports: ReportDto[],
+        order: 'desc' | 'asc' = 'desc'
+    ): ReportDto[] {
+        return reports.sort((a, b) => {
+            const aMonth = this.monthIndices[a['monthlyReports']['month']];
+            const bMonth = this.monthIndices[b['monthlyReports']['month']];
+
+            return order === 'desc' ? bMonth - aMonth : aMonth - bMonth;
+        });
     }
 }

@@ -34,7 +34,7 @@ export class ReportsComponent {
                         numberOfElements: 2,
                         totalPriceOfElements: 100,
                         id: '2',
-                    }
+                    },
                 ],
             },
         },
@@ -56,7 +56,7 @@ export class ReportsComponent {
                         numberOfElements: 4,
                         totalPriceOfElements: 200,
                         id: '4',
-                    }
+                    },
                 ],
             },
         },
@@ -85,48 +85,53 @@ export class ReportsComponent {
         })
         .pipe(
             map((reports) => {
-                console.log(reports);
-                return reports.map((report) => {
-                    return {
-                        ...report,
-                        monthlyReports: {
-                            ...report.monthlyReports,
-                            numberOfElements:
-                                Number(
-                                    report.monthlyReports.numberOfElements.toFixed(
-                                        2
-                                    )
-                                ) || 0,
-                            totalPrice:
-                                Number(
-                                    report.monthlyReports.totalPrice.toFixed(2)
-                                ) || 0,
-                            workedHours:
-                                Number(
-                                    report.monthlyReports.workedHours.toFixed(2)
-                                ) || 0,
-                            workItem: report.monthlyReports.workItem.map(
-                                (workItem) => {
-                                    return {
-                                        ...workItem,
-                                        numberOfElements:
-                                            Number(
-                                                workItem.numberOfElements.toFixed(
-                                                    2
-                                                )
-                                            ) || 0,
-                                        totalPriceOfElements:
-                                            Number(
-                                                workItem.totalPriceOfElements.toFixed(
-                                                    2
-                                                )
-                                            ) || 0,
-                                    };
-                                }
-                            ),
-                        },
-                    };
-                });
+                return this.reportsService
+                    .sortReportsByMonth(reports)
+                    .map((report) => {
+                        return {
+                            ...report,
+                            monthlyReports: {
+                                ...report.monthlyReports,
+                                numberOfElements:
+                                    Number(
+                                        report.monthlyReports.numberOfElements.toFixed(
+                                            2
+                                        )
+                                    ) || 0,
+                                totalPrice:
+                                    Number(
+                                        report.monthlyReports.totalPrice.toFixed(
+                                            2
+                                        )
+                                    ) || 0,
+                                workedHours:
+                                    Number(
+                                        report.monthlyReports.workedHours.toFixed(
+                                            2
+                                        )
+                                    ) || 0,
+                                workItem: report.monthlyReports.workItem.map(
+                                    (workItem) => {
+                                        return {
+                                            ...workItem,
+                                            numberOfElements:
+                                                Number(
+                                                    workItem.numberOfElements.toFixed(
+                                                        2
+                                                    )
+                                                ) || 0,
+                                            totalPriceOfElements:
+                                                Number(
+                                                    workItem.totalPriceOfElements.toFixed(
+                                                        2
+                                                    )
+                                                ) || 0,
+                                        };
+                                    }
+                                ),
+                            },
+                        };
+                    });
             })
         );
 

@@ -158,7 +158,7 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
     public observeDatetimeMonthChange2() {
         const daysInMonth: Map<string, number[]> = new Map([
             ['January', Array.from(Array(31).keys())],
-            ['February', Array.from(Array(28).keys())],
+            ['February', Array.from(Array(29).keys())],
             ['March', Array.from(Array(31).keys())],
             ['April', Array.from(Array(30).keys())],
             ['May', Array.from(Array(31).keys())],

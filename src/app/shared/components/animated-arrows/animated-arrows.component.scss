@@ -33,8 +33,14 @@
             opacity: 1;
             transform: rotate(-45deg) translate(60px, 60px);
         }
+        25% {
+            opacity: 0.1;
+        }
         50% {
             opacity: 0;
+        }
+        75% {
+            opacity: 0.1;
         }
         100% {
             opacity: 1;

@@ -125,7 +125,7 @@ export class MultiStepFormService {
             this.buildFormWithData(dailyWork);
         }
 
-        this.multiStepLogWorkForm.statusChanges
+        this.multiStepLogWorkForm.valueChanges
             .pipe(
                 map((_status) => {
                     return this.multiStepLogWorkForm.pristine;
@@ -156,6 +156,7 @@ export class MultiStepFormService {
     public addDoctorControl() {
         this.getdoctorArray().push(this.newDoctor());
         this.getdoctorArray().updateValueAndValidity();
+        this.getForm().updateValueAndValidity();
     }
 
     public removeDoctorControl(doctorIndex: number) {
@@ -166,6 +167,7 @@ export class MultiStepFormService {
         this.getPatientArray(doctorIndex).updateValueAndValidity();
         this.getdoctorArray().controls.splice(doctorIndex, 1);
         this.getdoctorArray().updateValueAndValidity();
+        this.getForm().updateValueAndValidity();
 
         console.log('GSB form: ', this.multiStepLogWorkForm);
     }
@@ -275,11 +277,13 @@ export class MultiStepFormService {
     public addBreak() {
         this.getBreaksArray().push(this.newBreak());
         this.getBreaksArray().updateValueAndValidity();
+        this.getForm().updateValueAndValidity();
     }
 
     public deleteBreak(index: number) {
         this.getBreaksArray().controls.splice(index, 1);
         this.getBreaksArray().updateValueAndValidity();
+        this.getForm().updateValueAndValidity();
     }
 
     public getPatientGroupFormGroup(doctorIndex?: number) {
@@ -306,6 +310,7 @@ export class MultiStepFormService {
     public addPatientControl(index: number) {
         this.getPatientArray(index).push(this.newPatient());
         this.getPatientArray(index).updateValueAndValidity();
+        this.getForm().updateValueAndValidity();
     }
 
     public removePatientControl(doctorIndex: number, pacientIndex: number) {
@@ -320,6 +325,7 @@ export class MultiStepFormService {
         ).updateValueAndValidity();
         this.getPatientArray(doctorIndex).controls.splice(pacientIndex, 1);
         this.getPatientArray(doctorIndex).updateValueAndValidity();
+        this.getForm().updateValueAndValidity();
     }
 
     public newPatientWithoutWorkItems = () =>
@@ -404,6 +410,7 @@ export class MultiStepFormService {
             doctorIndex,
             patientIndex
         ).updateValueAndValidity();
+        this.getForm().updateValueAndValidity();
     }
 
     public removeWorkItemControl(
@@ -419,6 +426,7 @@ export class MultiStepFormService {
             doctorIndex,
             patientIndex
         ).updateValueAndValidity();
+        this.getForm().updateValueAndValidity();
     }
 
     public newWorkItem = () =>

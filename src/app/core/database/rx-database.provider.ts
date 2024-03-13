@@ -12,9 +12,8 @@ import { LOGWORK_SCHEMA_LITERAL, RxLogWorkDocumentType } from './schemas';
 import { isRxDatabase } from 'rxdb';
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { DOCTOR_SCHEMA_LITERAL } from './schemas/doctor.schema';
-import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder';
-import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
 import { WORKITEM_SCHEMA_LITERAL } from './schemas/work-item.schema';
+import { migration1 } from '../database/migration-strategies/';
 
 @Injectable()
 export class RxDatabaseProvider {
@@ -31,7 +30,9 @@ export class RxDatabaseProvider {
             //         // return (rxDoc.hp / 100) * 100;
             //     },
             // },
-            // sync: true,
+            migrationStrategies: {
+                1: migration1,
+            },
         },
         [DOCTOR_COLLECTION_NAME]: {
             schema: DOCTOR_SCHEMA_LITERAL,
@@ -58,21 +59,20 @@ export class RxDatabaseProvider {
             return this.rxDatabaseInstance;
         }
 
-        
         try {
-            if (isDevMode()){
+            if (isDevMode()) {
                 this.toastService.presentSuccess('Dev Mode', 3000);
-                await import('rxdb/plugins/dev-mode').then(
-                    module => addRxPlugin(module.RxDBDevModePlugin)
+                await import('rxdb/plugins/dev-mode').then((module) =>
+                    addRxPlugin(module.RxDBDevModePlugin)
                 );
             }
-            await import('rxdb/plugins/query-builder').then(
-                module => addRxPlugin(module.RxDBQueryBuilderPlugin)
+            await import('rxdb/plugins/query-builder').then((module) =>
+                addRxPlugin(module.RxDBQueryBuilderPlugin)
             );
-            // if (isDevMode()) {
-            //     addRxPlugin(RxDBDevModePlugin);
-            //     addRxPlugin(RxDBQueryBuilderPlugin);
-            // }
+
+            await import('rxdb/plugins/migration').then((module) =>
+                addRxPlugin(module.RxDBMigrationPlugin)
+            );
 
             const database = await createRxDatabase<RxLogWorkCollections>({
                 name: DATABASE_NAME,

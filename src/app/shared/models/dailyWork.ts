@@ -12,6 +12,7 @@ export interface DailyWork {
                             numberOfWorkItems: number;
                             workItem: string;
                             color: string;
+                            comment?: string;
                         }[];
                     };
                 }[];
@@ -44,6 +45,7 @@ export interface DailyWorkDto {
                                 numberOfWorkItems: number;
                                 workItem: string;
                                 color: string;
+                                comment?: string;
                             }[];
                         };
                     }[];
@@ -72,6 +74,7 @@ export interface DailyWorkDto {
                             numberOfWorkItems: number;
                             workItem: string;
                             color: string;
+                            comment?: string;
                         }[];
                     };
                 }[];
@@ -105,6 +108,7 @@ export interface DailyWorkDoc {
                     };
                     numberOfWorkItems?: string;
                     color?: string;
+                    comment?: string;
                 }[];
             }[];
         };

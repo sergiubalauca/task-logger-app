@@ -47,6 +47,7 @@ export class MultiStepFormService {
                         workItem: workItem.workItem.name,
                         numberOfWorkItems: workItem.numberOfWorkItems,
                         color: workItem.color,
+                        comment: workItem.comment,
                     });
                 });
             });
@@ -222,6 +223,11 @@ export class MultiStepFormService {
                                                     Validators.required,
                                                 ],
                                             }),
+                                            comment: this.fb.control(null, {
+                                                validators: [
+                                                    Validators.maxLength(1000),
+                                                ],
+                                            }),
                                         }),
                                     ],
                                     { validators: [Validators.required] }
@@ -364,6 +370,9 @@ export class MultiStepFormService {
                             color: this.fb.control(null, {
                                 validators: [Validators.required],
                             }),
+                            comment: this.fb.control(null, {
+                                validators: [Validators.maxLength(1000)],
+                            }),
                         }),
                     ],
                     {
@@ -443,6 +452,9 @@ export class MultiStepFormService {
             }),
             color: this.fb.control(null, {
                 validators: [Validators.required],
+            }),
+            comment: this.fb.control(null, {
+                validators: [Validators.maxLength(1000)],
             }),
         });
 

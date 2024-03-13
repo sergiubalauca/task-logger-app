@@ -109,7 +109,7 @@
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "3053550261093936711"
+        "hash": "17081706072524956906"
       },
       {
         "file": ".nx/cache/lockfile.hash",
@@ -133,11 +133,11 @@
       },
       {
         "file": "android/app/build.gradle",
-        "hash": "1402095173689043411"
+        "hash": "1549394778961681350"
       },
       {
         "file": "android/app/capacitor.build.gradle",
-        "hash": "13872626804887977872"
+        "hash": "8344103539449766854"
       },
       {
         "file": "android/app/proguard-rules.pro",
@@ -401,7 +401,7 @@
       },
       {
         "file": "android/capacitor.settings.gradle",
-        "hash": "11681827746701313387"
+        "hash": "16715562615399675977"
       },
       {
         "file": "android/gradle/wrapper/gradle-wrapper.jar",
@@ -529,11 +529,11 @@
       },
       {
         "file": "ios/App/App/Info.plist",
-        "hash": "319846392316228846"
+        "hash": "17758134254044015199"
       },
       {
         "file": "ios/App/App.xcodeproj/project.pbxproj",
-        "hash": "15894520216736659331"
+        "hash": "152808670116315714"
       },
       {
         "file": "ios/App/App.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
@@ -549,11 +549,11 @@
       },
       {
         "file": "ios/App/Podfile",
-        "hash": "189430482693353307"
+        "hash": "2394436053955444284"
       },
       {
         "file": "ios/App/Podfile.lock",
-        "hash": "14833555767393293011"
+        "hash": "259135510782062873"
       },
       {
         "file": "jest.config.ts",
@@ -613,7 +613,7 @@
       },
       {
         "file": "src/app/abstraction/api-facade/services/reports.service.ts",
-        "hash": "8162260185592514715"
+        "hash": "10560169574203588219"
       },
       {
         "file": "src/app/abstraction/api-facade/services/user.service.ts",
@@ -1105,7 +1105,7 @@
       },
       {
         "file": "src/app/pages/log-work/form/services/multi-step-form.service.ts",
-        "hash": "12440545926847480575"
+        "hash": "1154342498147437643"
       },
       {
         "file": "src/app/pages/log-work/form/validators/clean-validators.ts",
@@ -1141,7 +1141,7 @@
       },
       {
         "file": "src/app/pages/log-work/log-work.component.ts",
-        "hash": "17916797129947485051"
+        "hash": "15214886375620121148"
       },
       {
         "file": "src/app/pages/log-work/log-work.module.ts",
@@ -1153,7 +1153,7 @@
       },
       {
         "file": "src/app/pages/log-work/swiper/swiper.component.scss",
-        "hash": "15854115570165753953"
+        "hash": "4180118941152496750"
       },
       {
         "file": "src/app/pages/log-work/swiper/swiper.component.spec.ts",
@@ -1373,7 +1373,7 @@
       },
       {
         "file": "src/app/pages/reports/reports.component.ts",
-        "hash": "10569712437526751460"
+        "hash": "3685766891260448121"
       },
       {
         "file": "src/app/pages/reports/reports.module.ts",
@@ -1481,7 +1481,7 @@
       },
       {
         "file": "src/app/shared/components/animated-arrows/animated-arrows.component.scss",
-        "hash": "16463287042991758046"
+        "hash": "9029394157235316806"
       },
       {
         "file": "src/app/shared/components/animated-arrows/animated-arrows.component.ts",

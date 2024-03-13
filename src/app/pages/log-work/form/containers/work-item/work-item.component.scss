@@ -6,14 +6,9 @@
 
             ion-row {
                 &.outer-slide {
-                    &:last-of-type {
-                        margin-bottom: 20px;
-                    }
+                    margin-bottom: 15px;
 
                     ion-col {
-                        // display: flex;
-                        // justify-content: center;
-                        // align-items: center;
                         app-search-select-input {
                             width: 100%;
                         }
@@ -29,7 +24,6 @@
         ion-buttons {
             display: flex;
             justify-content: center;
-            // margin-top: 15px;
 
             ion-button {
                 padding: 11px;

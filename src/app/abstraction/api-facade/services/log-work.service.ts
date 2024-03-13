@@ -42,6 +42,7 @@ export class LogWorkApiService extends SyncBaseService {
                                       numberOfWorkItems
                                       workItem
                                       color
+                                      comment
                                     }
                                   }
                                 }

@@ -6,7 +6,7 @@ import {
 export const LOGWORK_SCHEMA_LITERAL = {
     title: 'log work schema',
     description: 'describes a simple log work',
-    version: 0,
+    version: 1,
     keyCompression: false,
     // primaryKey: {
     //     key: 'id',
@@ -73,6 +73,11 @@ export const LOGWORK_SCHEMA_LITERAL = {
                                                         type: 'string',
                                                         default: '',
                                                         maxLength: 100,
+                                                    },
+                                                    comment: {
+                                                        type: 'string',
+                                                        default: '',
+                                                        maxLength: 1000,
                                                     },
                                                 },
                                             },

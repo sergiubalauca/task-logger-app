@@ -59,9 +59,30 @@
                                             workItemControl.get('color')
                                         "
                                     ></app-search-select-input>
-                                </ion-item>
-                            </ion-col
+                                </ion-item> </ion-col
                         ></ion-row>
+
+                        <ion-row>
+                            <ion-col size="12">
+                                <ion-item [formGroupName]="j" lines="none">
+                                    <ion-textarea
+                                        type="number"
+                                        formControlName="comment"
+                                        label="Comment"
+                                        [counter]="true"
+                                        maxlength="1000"
+                                        [autoGrow]="true"
+                                        labelPlacement="floating"
+                                        errorText="{{
+                                            workItemControl.get(
+                                                'comment'
+                                            )?.errors | translateError
+                                        }}"
+                                    >
+                                    </ion-textarea>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
                     </ion-grid>
                 </app-item-sliding-card>
             </ion-row>

@@ -74,6 +74,7 @@ export class LogWorkRepository {
                                                 workItem?.numberOfWorkItems?.toString() ??
                                                 '',
                                             color: workItem.color,
+                                            comment: workItem.comment,
                                         })
                                     ),
                             })

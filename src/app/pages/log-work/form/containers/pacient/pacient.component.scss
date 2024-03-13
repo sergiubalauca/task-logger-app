@@ -4,9 +4,8 @@
         overflow-y: auto;
 
         ion-row {
-            &:last-of-type {
-                margin-bottom: 20px;
-            }
+            margin-bottom: 15px;
+
             ion-note {
                 font-size: 13px;
             }
@@ -15,7 +14,6 @@
     ion-buttons {
         display: flex;
         justify-content: center;
-        // margin-top: 15px;
 
         ion-button {
             padding: 11px;

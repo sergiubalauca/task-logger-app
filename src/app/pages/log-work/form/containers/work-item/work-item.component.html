@@ -66,6 +66,7 @@
                             <ion-col size="12">
                                 <ion-item [formGroupName]="j" lines="none">
                                     <ion-textarea
+                                        appUppercase
                                         type="number"
                                         formControlName="comment"
                                         label="Comment"
@@ -74,9 +75,8 @@
                                         [autoGrow]="true"
                                         labelPlacement="floating"
                                         errorText="{{
-                                            workItemControl.get(
-                                                'comment'
-                                            )?.errors | translateError
+                                            workItemControl.get('comment')
+                                                ?.errors | translateError
                                         }}"
                                     >
                                     </ion-textarea>
@@ -87,11 +87,11 @@
                 </app-item-sliding-card>
             </ion-row>
             <ion-buttons>
-                <ion-button
-                    (click)="addWorkItemControl(wig.doctorIdx, wig.pacientIdx)"
-                >
-                    <ion-icon name="add"></ion-icon>
-                </ion-button>
+                <app-add-button
+                    (emitButtonPressed)="
+                        addWorkItemControl(wig.doctorIdx, wig.pacientIdx)
+                    "
+                />
             </ion-buttons>
         </ion-grid>
     </form>

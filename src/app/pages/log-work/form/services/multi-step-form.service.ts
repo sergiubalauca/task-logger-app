@@ -219,9 +219,7 @@ export class MultiStepFormService {
                                                 }
                                             ),
                                             color: this.fb.control(null, {
-                                                validators: [
-                                                    Validators.required,
-                                                ],
+                                                validators: [],
                                             }),
                                             comment: this.fb.control(null, {
                                                 validators: [
@@ -368,7 +366,7 @@ export class MultiStepFormService {
                                 ],
                             }),
                             color: this.fb.control(null, {
-                                validators: [Validators.required],
+                                validators: [],
                             }),
                             comment: this.fb.control(null, {
                                 validators: [Validators.maxLength(1000)],
@@ -451,7 +449,7 @@ export class MultiStepFormService {
                 ],
             }),
             color: this.fb.control(null, {
-                validators: [Validators.required],
+                validators: [],
             }),
             comment: this.fb.control(null, {
                 validators: [Validators.maxLength(1000)],

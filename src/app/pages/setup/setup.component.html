@@ -1,13 +1,13 @@
 <app-header [title]="'Setup'" [backBtnEnabled]="true"></app-header>
 
 <ion-content class="app-inner-padding">
-    <ion-card (click)="goToDoctorsList()" mode="ios">
+    <ion-card (click)="goToDoctorsList()" mode="ios" [style.--i]="0">
         <ion-card-header>
             <ion-card-title>Doctors</ion-card-title>
         </ion-card-header>
     </ion-card>
 
-    <ion-card (click)="goToWorkItemsList()" mode="ios">
+    <ion-card (click)="goToWorkItemsList()" mode="ios" [style.--i]="1">
         <ion-card-header>
             <ion-card-title>Services</ion-card-title>
         </ion-card-header>

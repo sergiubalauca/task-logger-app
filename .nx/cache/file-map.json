@@ -109,7 +109,7 @@
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "17081706072524956906"
+        "hash": "16580868361956231211"
       },
       {
         "file": ".nx/cache/lockfile.hash",
@@ -133,7 +133,7 @@
       },
       {
         "file": "android/app/build.gradle",
-        "hash": "1549394778961681350"
+        "hash": "12847176687162612469"
       },
       {
         "file": "android/app/capacitor.build.gradle",
@@ -529,11 +529,11 @@
       },
       {
         "file": "ios/App/App/Info.plist",
-        "hash": "17758134254044015199"
+        "hash": "4268439217049099657"
       },
       {
         "file": "ios/App/App.xcodeproj/project.pbxproj",
-        "hash": "152808670116315714"
+        "hash": "6715592255305923829"
       },
       {
         "file": "ios/App/App.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
@@ -609,7 +609,7 @@
       },
       {
         "file": "src/app/abstraction/api-facade/services/log-work.service.ts",
-        "hash": "18165385124266767380"
+        "hash": "2772706222073717727"
       },
       {
         "file": "src/app/abstraction/api-facade/services/reports.service.ts",
@@ -832,6 +832,14 @@
         "hash": "12811264529592344473"
       },
       {
+        "file": "src/app/core/database/migration-strategies/index.ts",
+        "hash": "16042248328452720192"
+      },
+      {
+        "file": "src/app/core/database/migration-strategies/log-work-migrations.ts",
+        "hash": "13707523865672949402"
+      },
+      {
         "file": "src/app/core/database/repositories/doctor.repository.ts",
         "hash": "6994142461455047486"
       },
@@ -841,7 +849,7 @@
       },
       {
         "file": "src/app/core/database/repositories/logwork.repository.ts",
-        "hash": "236715543989409776"
+        "hash": "16717668292653424521"
       },
       {
         "file": "src/app/core/database/repositories/work-item.repository.ts",
@@ -861,7 +869,7 @@
       },
       {
         "file": "src/app/core/database/rx-database.provider.ts",
-        "hash": "9771240315372876236"
+        "hash": "2659954667780608376"
       },
       {
         "file": "src/app/core/database/schemas/doctor.schema.ts",
@@ -873,7 +881,7 @@
       },
       {
         "file": "src/app/core/database/schemas/logwork.schema.ts",
-        "hash": "7068258315772734219"
+        "hash": "4246319135404500060"
       },
       {
         "file": "src/app/core/database/schemas/work-item.schema.ts",
@@ -1029,7 +1037,7 @@
       },
       {
         "file": "src/app/pages/log-work/form/containers/pacient/pacient.component.scss",
-        "hash": "16638980937983770761"
+        "hash": "10066023206347496775"
       },
       {
         "file": "src/app/pages/log-work/form/containers/pacient/pacient.component.spec.ts",
@@ -1053,11 +1061,11 @@
       },
       {
         "file": "src/app/pages/log-work/form/containers/work-item/work-item.component.html",
-        "hash": "1207145478427200078"
+        "hash": "5609210140272311147"
       },
       {
         "file": "src/app/pages/log-work/form/containers/work-item/work-item.component.scss",
-        "hash": "12228464778706928679"
+        "hash": "4492110762848062353"
       },
       {
         "file": "src/app/pages/log-work/form/containers/work-item/work-item.component.spec.ts",
@@ -1105,7 +1113,7 @@
       },
       {
         "file": "src/app/pages/log-work/form/services/multi-step-form.service.ts",
-        "hash": "1154342498147437643"
+        "hash": "11028526265596487347"
       },
       {
         "file": "src/app/pages/log-work/form/validators/clean-validators.ts",
@@ -1613,7 +1621,7 @@
       },
       {
         "file": "src/app/shared/models/dailyWork.ts",
-        "hash": "4654621194509643430"
+        "hash": "13603006936524144598"
       },
       {
         "file": "src/app/shared/models/doctor.ts",

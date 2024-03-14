@@ -1,0 +1,6 @@
+<ion-button (click)="emitButtonPressed.emit()" [disabled]="disabled">
+    <ng-container *ngIf="buttonLabel">
+        <ion-label>{{ buttonLabel }}</ion-label>
+    </ng-container>
+    <ion-icon [name]="buttonIcon ?? 'add'"></ion-icon>
+</ion-button>

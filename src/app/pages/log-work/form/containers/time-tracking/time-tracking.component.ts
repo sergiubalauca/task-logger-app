@@ -12,6 +12,7 @@ import {
     ReactiveFormsModule,
 } from '@angular/forms';
 import {
+    AddButtonComponent,
     ItemSlidingCardComponent,
     LongPressDirective,
     SuppressTouchMoveDirective,
@@ -42,6 +43,7 @@ import { FormReducer } from '../../custom-state/reducer/form.reducer';
         LongPressDirective,
         ItemSlidingCardComponent,
         SuppressTouchMoveDirective,
+        AddButtonComponent,
     ],
     providers: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,10 +62,7 @@ export class TimeTrackingComponent {
 
     private cdr = inject(ChangeDetectorRef);
 
-    constructor(
-        private multiStepFormService: MultiStepFormService,
-        private formStore: FormReducer
-    ) {
+    constructor(private multiStepFormService: MultiStepFormService) {
         setInterval(() => {
             this.cdr.markForCheck();
         }, 1000);

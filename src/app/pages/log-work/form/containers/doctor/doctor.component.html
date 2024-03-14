@@ -29,41 +29,37 @@
                             </ion-item>
 
                             <ion-buttons>
-                                <ion-button
+                                <app-add-button
                                     [disabled]="
                                         !dgc.doctorFormGroupControls[i]?.value
                                             ?.doctor
                                     "
-                                    (click)="
+                                    [buttonIcon]="'arrow-forward-outline'"
+                                    (emitButtonPressed)="
                                         onGoToDoctor(
                                             i,
                                             dgc.doctorFormGroupControls[i]
                                                 ?.value?.doctor
                                         )
                                     "
-                                >
-                                    <ion-icon
-                                        name="arrow-forward-outline"
-                                    ></ion-icon>
-                                </ion-button>
+                                />
                             </ion-buttons>
                         </ion-col>
                     </app-item-sliding-card>
                 </ion-row>
 
                 <ion-buttons>
-                    <ion-button (click)="addDoctorControl()">
-                        <ion-icon name="add"></ion-icon>
-                    </ion-button>
+                    <app-add-button (emitButtonPressed)="addDoctorControl()" />
                 </ion-buttons>
             </ion-grid>
         </ion-item-group>
 
         <ion-buttons>
-            <ion-button (click)="goToTimeTracking()">
-                <ion-label>Time Tracking</ion-label>
-                <ion-icon name="arrow-forward-outline"> </ion-icon>
-            </ion-button>
+            <app-add-button
+                [buttonIcon]="'arrow-forward-outline'"
+                [buttonLabel]="'Time Tracking'"
+                (emitButtonPressed)="goToTimeTracking()"
+            />
         </ion-buttons>
     </form>
 </div>

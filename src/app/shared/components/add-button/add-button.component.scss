@@ -1,0 +1,12 @@
+:host {
+    ion-button {
+        padding: 11px;
+        margin: 0 5px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: var(--ion-font-family-semibold);
+        --color: var(--ion-color-dark-02);
+        background-color: transparent;
+        box-shadow: 0px 2px 10px 1px var(--ion-color-shadow01);
+    }
+}

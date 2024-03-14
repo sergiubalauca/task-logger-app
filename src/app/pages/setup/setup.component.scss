@@ -2,5 +2,10 @@
     ion-content {
         --background: transparent;
         --padding-top: 130px !important;
+
+        ion-card {
+            border-radius: 15px;
+            box-shadow: 2px 2px 15px 2px var(--ion-color-shadow01);
+        }
     }
 }

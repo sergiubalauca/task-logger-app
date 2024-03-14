@@ -2,19 +2,19 @@
 
 <ion-content [fullscreen]="true" class="app-inner-padding">
     <ion-list>
-        <ion-card color="primary" (click)="openLogWork()" mode="ios">
+        <ion-card (click)="openLogWork()" mode="ios" [style.--i]="0">
             <ion-card-header>
                 <ion-card-title>Log Work</ion-card-title>
             </ion-card-header>
         </ion-card>
 
-        <ion-card color="secondary" (click)="openSetup()" mode="ios">
+        <ion-card (click)="openSetup()" mode="ios" [style.--i]="1">
             <ion-card-header>
                 <ion-card-title>Setup</ion-card-title>
             </ion-card-header>
         </ion-card>
 
-        <ion-card color="tertiary" (click)="openReports()" mode="ios">
+        <ion-card (click)="openReports()" mode="ios" [style.--i]="2">
             <ion-card-header>
                 <ion-card-title>Reports</ion-card-title>
             </ion-card-header>

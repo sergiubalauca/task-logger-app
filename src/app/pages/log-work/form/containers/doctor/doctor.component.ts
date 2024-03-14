@@ -17,6 +17,7 @@ import {
     ReactiveFormsModule,
 } from '@angular/forms';
 import {
+    AddButtonComponent,
     DOCTOR_COLLECTION_NAME,
     ItemSlidingCardComponent,
     SearcheableSelectModel,
@@ -56,6 +57,7 @@ import { TimeTrackingComponent } from '../time-tracking/time-tracking.component'
         TimeTrackingComponent,
         ItemSlidingCardComponent,
         SuppressTouchMoveDirective,
+        AddButtonComponent
     ],
     providers: [],
     changeDetection: ChangeDetectionStrategy.OnPush,

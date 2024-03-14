@@ -71,9 +71,9 @@
                     </app-item-sliding-card>
                 </ion-row>
 
-                <ion-button (click)="addBreak()">
-                    <ion-icon name="add"></ion-icon>
-                </ion-button>
+                <ion-buttons>
+                    <app-add-button (emitButtonPressed)="addBreak()" />
+                </ion-buttons>
             </ion-grid>
         </ion-item-group>
     </form>

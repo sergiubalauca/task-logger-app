@@ -33,24 +33,23 @@
                     </ion-item>
 
                     <ion-buttons>
-                        <ion-button
-                            (click)="
+                        <app-add-button
+                            [buttonIcon]="'arrow-forward-outline'"
+                            (emitButtonPressed)="
                                 onGoToWorkItem(
                                     pgc.doctorIdx,
                                     j,
                                     pacientControl.get('patient').value
                                 )
                             "
-                        >
-                            <ion-icon name="arrow-forward-outline"></ion-icon>
-                        </ion-button>
+                        />
                     </ion-buttons>
                 </app-item-sliding-card>
             </ion-row>
             <ion-buttons>
-                <ion-button (click)="addPatientControl(pgc.doctorIdx)">
-                    <ion-icon name="add"></ion-icon>
-                </ion-button>
+                <app-add-button
+                    (emitButtonPressed)="addPatientControl(pgc.doctorIdx)"
+                />
             </ion-buttons>
         </ion-grid>
     </form>

@@ -22,6 +22,7 @@ import {
     SuppressTouchMoveDirective,
     TranslateErrorPipe,
     UppercaseDirective,
+    AddButtonComponent,
     WORK_ITEM_COLLECTION_NAME,
 } from '@shared';
 import { FormSelector } from '../../custom-state/selector/form.selector';
@@ -44,6 +45,7 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
         CommonModule,
         TranslateErrorPipe,
         UppercaseDirective,
+        AddButtonComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

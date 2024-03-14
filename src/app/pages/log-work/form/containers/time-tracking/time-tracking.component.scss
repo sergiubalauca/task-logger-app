@@ -4,10 +4,12 @@
         flex-direction: column;
 
         ion-item-group {
-            // &:first-of-type {
-            //     max-height: 35vh;
-            //     overflow-y: auto;
-            // }
+            ion-item-divider {
+                font-size: 14px;
+                font-weight: bold;
+                --color: var(--ion-color-dark-02);
+                background: transparent;
+            }
             ion-grid {
                 &:last-of-type {
                     max-height: 32vh;
@@ -30,6 +32,11 @@
                             flex: 1;
                         }
                     }
+                }
+
+                ion-buttons {
+                    display: flex;
+                    justify-content: center;
                 }
             }
         }

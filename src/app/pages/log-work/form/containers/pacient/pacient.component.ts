@@ -20,6 +20,7 @@ import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormReducer } from '../../custom-state/reducer/form.reducer';
 import { FormSelector } from '../../custom-state/selector/form.selector';
 import {
+    AddButtonComponent,
     ItemSlidingCardComponent,
     SuppressTouchMoveDirective,
     TranslateErrorPipe,
@@ -42,6 +43,7 @@ import {
         SuppressTouchMoveDirective,
         TranslateErrorPipe,
         UppercaseDirective,
+        AddButtonComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

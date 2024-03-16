@@ -3,6 +3,15 @@
         ion-buttons {
             display: flex;
             justify-content: center;
+
+            &.timeTracking {
+                width: 100%;
+
+                app-add-button {
+                    width: 100%;
+                    font-size: 20px;
+                }
+            }
         }
     }
 

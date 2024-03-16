@@ -80,7 +80,8 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
                             const logOutModel: LogOutModel = {
                                 email: loggedInUser,
                             };
-                            await this.authService.forceLogout(logOutModel);
+                            if (loggedInUser)
+                                await this.authService.forceLogout(logOutModel);
                             await this.showSessionExpiredAlert();
                             this.refreshTokenInProgress = false;
 

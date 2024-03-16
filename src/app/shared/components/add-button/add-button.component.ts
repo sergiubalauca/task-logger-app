@@ -20,6 +20,7 @@ export class AddButtonComponent {
     @Input() buttonLabel: string;
     @Input() buttonIcon: string;
     @Input() disabled = false;
+    @Input() isExpanded = false;
 
     @Output() emitButtonPressed: EventEmitter<void> = new EventEmitter<void>();
 }

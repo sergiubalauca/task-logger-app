@@ -112,19 +112,19 @@
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "5104105515245420599"
+        "hash": "7315897912906643640"
       },
       {
         "file": ".nx/cache/lockfile.hash",
-        "hash": "9398218539371718779"
+        "hash": "9139024951719308191"
       },
       {
         "file": ".nx/cache/parsed-lock-file.json",
-        "hash": "4097930842834339872"
+        "hash": "14726485317138169537"
       },
       {
         "file": ".nx/cache/project-graph.json",
-        "hash": "731696574083865405"
+        "hash": "8312755346393172267"
       },
       {
         "file": "android/.gitignore",
@@ -136,7 +136,7 @@
       },
       {
         "file": "android/app/build.gradle",
-        "hash": "14925586314768916157"
+        "hash": "15599388729579740583"
       },
       {
         "file": "android/app/capacitor.build.gradle",
@@ -532,11 +532,11 @@
       },
       {
         "file": "ios/App/App/Info.plist",
-        "hash": "12534833360925153249"
+        "hash": "4550287757512028078"
       },
       {
         "file": "ios/App/App.xcodeproj/project.pbxproj",
-        "hash": "5720749854610733449"
+        "hash": "5638667896405918673"
       },
       {
         "file": "ios/App/App.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
@@ -568,11 +568,11 @@
       },
       {
         "file": "package-lock.json",
-        "hash": "17157576194982068456"
+        "hash": "367421510171088014"
       },
       {
         "file": "package.json",
-        "hash": "11706535894816856339"
+        "hash": "3124865877412838393"
       },
       {
         "file": "resources/icon-background.png",
@@ -700,7 +700,7 @@
       },
       {
         "file": "src/app/app.component.ts",
-        "hash": "1629130044173029260"
+        "hash": "3838968085916972578"
       },
       {
         "file": "src/app/core/api/api.module.ts",
@@ -1152,7 +1152,7 @@
       },
       {
         "file": "src/app/pages/log-work/log-work.component.ts",
-        "hash": "15214886375620121148"
+        "hash": "17211766513209474424"
       },
       {
         "file": "src/app/pages/log-work/log-work.module.ts",
@@ -1392,15 +1392,15 @@
       },
       {
         "file": "src/app/pages/setup/containers/setup-doctor/add-edit-doctor.ts/add-edit-doctor.component.html",
-        "hash": "12206585989277945619"
+        "hash": "7480845924625818399"
       },
       {
         "file": "src/app/pages/setup/containers/setup-doctor/add-edit-doctor.ts/add-edit-doctor.component.scss",
-        "hash": "5831428964173220403"
+        "hash": "8347395868344656542"
       },
       {
         "file": "src/app/pages/setup/containers/setup-doctor/add-edit-doctor.ts/add-edit-doctor.component.ts",
-        "hash": "11312079194960360577"
+        "hash": "15262093471736176284"
       },
       {
         "file": "src/app/pages/setup/containers/setup-doctor/setup-doctor.component.html",
@@ -1696,11 +1696,15 @@
       },
       {
         "file": "src/app/shared/services/index.ts",
-        "hash": "11525930380601602864"
+        "hash": "10840351223334631717"
       },
       {
         "file": "src/app/shared/services/modal.service.ts",
         "hash": "4454681599080794499"
+      },
+      {
+        "file": "src/app/shared/services/phone-number-mask.service.ts",
+        "hash": "9492447829183808036"
       },
       {
         "file": "src/app/shared/services/platform.provider.ts",
@@ -1876,7 +1880,7 @@
       },
       {
         "file": "src/global.scss",
-        "hash": "4542977620010052790"
+        "hash": "8354015520413046535"
       },
       {
         "file": "src/index.html",

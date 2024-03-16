@@ -54,10 +54,11 @@
             </ion-grid>
         </ion-item-group>
 
-        <ion-buttons>
+        <ion-buttons class="timeTracking">
             <app-add-button
                 [buttonIcon]="'arrow-forward-outline'"
                 [buttonLabel]="'Time Tracking'"
+                [isExpanded]="true"
                 (emitButtonPressed)="goToTimeTracking()"
             />
         </ion-buttons>

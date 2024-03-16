@@ -1,4 +1,8 @@
-<ion-button (click)="emitButtonPressed.emit()" [disabled]="disabled">
+<ion-button
+    (click)="emitButtonPressed.emit()"
+    [disabled]="disabled"
+    [attr.expand]="isExpanded ? 'block' : null"
+>
     <ng-container *ngIf="buttonLabel">
         <ion-label>{{ buttonLabel }}</ion-label>
     </ng-container>

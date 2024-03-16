@@ -459,6 +459,15 @@
         "hash": "sha512-06I5JdTgAgKTby+VG+3sQF5+z4RNCEyVl6y7tz2rICx8MURL1biuh3oGGN1rCQQjsuMZcX5siMBr0NF/OHqxLQ=="
       }
     },
+    "npm:@awesome-cordova-plugins/mobile-accessibility": {
+      "type": "npm",
+      "name": "npm:@awesome-cordova-plugins/mobile-accessibility",
+      "data": {
+        "version": "6.6.0",
+        "packageName": "@awesome-cordova-plugins/mobile-accessibility",
+        "hash": "sha512-3rkK7olFCG8McYaY2gbm6P/o2oCf9prEJiUYU2SK+vo1uBmqCYQrqKfu2L/snnf53RXeJoJ5dF3z8kgNR2nCPQ=="
+      }
+    },
     "npm:@awesome-cordova-plugins/network": {
       "type": "npm",
       "name": "npm:@awesome-cordova-plugins/network",
@@ -3553,6 +3562,24 @@
         "version": "2.3.11",
         "packageName": "@ljharb/through",
         "hash": "sha512-ccfcIDlogiXNq5KcbAwbaO7lMh3Tm1i3khMPYpxlK8hH/W53zN81KM9coerRLOnTGu3nfXIniAmQbRI9OxbC0w=="
+      }
+    },
+    "npm:@maskito/angular": {
+      "type": "npm",
+      "name": "npm:@maskito/angular",
+      "data": {
+        "version": "2.2.0",
+        "packageName": "@maskito/angular",
+        "hash": "sha512-YlSktRPgcgQE4lZKquST4p6dxOXD28kN3ycQ6CG37btQ5y+Zb36lUar0JWURzgTN69b4pgsqPVJ3maavRMilIQ=="
+      }
+    },
+    "npm:@maskito/core": {
+      "type": "npm",
+      "name": "npm:@maskito/core",
+      "data": {
+        "version": "2.2.0",
+        "packageName": "@maskito/core",
+        "hash": "sha512-5FRtl62j2qW89u8RoOVYLHAAmFAy0wFcEga4eO9PaNuqVBuNJpaPA0EtZ67yKPffOivso0b3rMjSkgvYEscz+w=="
       }
     },
     "npm:@mongodb-js/saslprep": {
@@ -16131,6 +16158,16 @@
       "type": "static"
     },
     {
+      "source": "npm:@awesome-cordova-plugins/mobile-accessibility",
+      "target": "npm:@awesome-cordova-plugins/core",
+      "type": "static"
+    },
+    {
+      "source": "npm:@awesome-cordova-plugins/mobile-accessibility",
+      "target": "npm:rxjs",
+      "type": "static"
+    },
+    {
       "source": "npm:@awesome-cordova-plugins/network",
       "target": "npm:@awesome-cordova-plugins/core",
       "type": "static"
@@ -20888,6 +20925,26 @@
     {
       "source": "npm:@ljharb/through",
       "target": "npm:call-bind",
+      "type": "static"
+    },
+    {
+      "source": "npm:@maskito/angular",
+      "target": "npm:@angular/core",
+      "type": "static"
+    },
+    {
+      "source": "npm:@maskito/angular",
+      "target": "npm:@angular/forms",
+      "type": "static"
+    },
+    {
+      "source": "npm:@maskito/angular",
+      "target": "npm:@maskito/core",
+      "type": "static"
+    },
+    {
+      "source": "npm:@maskito/angular",
+      "target": "npm:tslib",
       "type": "static"
     },
     {

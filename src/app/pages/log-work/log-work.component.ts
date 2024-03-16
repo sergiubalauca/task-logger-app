@@ -25,7 +25,11 @@ import {
 } from 'rxjs';
 import { StateSubject } from './form/custom-state/models';
 import { CommonModule } from '@angular/common';
-import { DatetimeHighlight } from '@ionic/core';
+import {
+    DatetimeChangeEventDetail,
+    DatetimeHighlight,
+    IonDatetimeCustomEvent,
+} from '@ionic/core';
 
 @Component({
     selector: 'app-log-work',
@@ -107,12 +111,16 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
         this.observeDatetimeMonthChange2();
     }
 
-    public async selectDate(event: any) {
+    public async selectDate(
+        event: IonDatetimeCustomEvent<DatetimeChangeEventDetail>
+    ) {
+        const chosenDate = event.detail.value as string;
+
         await this.modalService.createAndShow(
             SwiperComponent,
             '',
             {
-                chosenDate: event.detail.value,
+                chosenDate,
             },
             true,
             this.formCanDeactivateService.canDeactivateFn
@@ -121,7 +129,7 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
         const modalData = await this.modalService.onDidDismiss();
 
         const docId = this.dailyWorkIdService.getDailyWorkId(
-            new Date(event.detail.value)
+            new Date(chosenDate)
         );
         if (modalData.data) {
             if (modalData.data.isDelete) {

@@ -25,9 +25,23 @@
         <ion-item>
             <ion-input
                 label="Phone"
+                [maskito]="phoneMaskObs$ | async"
+                [maskitoElement]="maskPredicate"
                 labelPlacement="floating"
                 formControlName="phone"
             >
+                <ion-select
+                    aria-label="Country"
+                    [value]="selectedValue.value"
+                    interface="alert"
+                    (ionChange)="setPhoneMask($event)"
+                >
+                    <ion-select-option
+                        [value]="country.value"
+                        *ngFor="let country of countryListIcons"
+                        >{{ country.name }}</ion-select-option
+                    >
+                </ion-select>
             </ion-input>
         </ion-item>
     </form>

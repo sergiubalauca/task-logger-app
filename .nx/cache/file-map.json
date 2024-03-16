@@ -9,6 +9,7 @@
     "@angular/platform-browser": "^17.0.8",
     "@angular/platform-browser-dynamic": "^17.0.8",
     "@angular/router": "^17.0.8",
+    "@awesome-cordova-plugins/mobile-accessibility": "^6.6.0",
     "@awesome-cordova-plugins/network": "^6.4.0",
     "@babel/polyfill": "^7.12.1",
     "@capacitor/android": "^5.0.0",
@@ -24,6 +25,8 @@
     "@ionic/angular": "^7.7.0",
     "@ionic/core": "^7.0.7",
     "@ionic/storage-angular": "^4.0.0",
+    "@maskito/angular": "^2.2.0",
+    "@maskito/core": "^2.2.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "@types/jest": "^29.5.5",
@@ -109,7 +112,7 @@
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "16580868361956231211"
+        "hash": "5104105515245420599"
       },
       {
         "file": ".nx/cache/lockfile.hash",
@@ -133,7 +136,7 @@
       },
       {
         "file": "android/app/build.gradle",
-        "hash": "12847176687162612469"
+        "hash": "14925586314768916157"
       },
       {
         "file": "android/app/capacitor.build.gradle",
@@ -529,11 +532,11 @@
       },
       {
         "file": "ios/App/App/Info.plist",
-        "hash": "4268439217049099657"
+        "hash": "12534833360925153249"
       },
       {
         "file": "ios/App/App.xcodeproj/project.pbxproj",
-        "hash": "6715592255305923829"
+        "hash": "5720749854610733449"
       },
       {
         "file": "ios/App/App.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
@@ -925,11 +928,11 @@
       },
       {
         "file": "src/app/pages/home/home.component.html",
-        "hash": "3764175713125319327"
+        "hash": "9655044879518625917"
       },
       {
         "file": "src/app/pages/home/home.component.scss",
-        "hash": "7207326929959120876"
+        "hash": "3277582627510585610"
       },
       {
         "file": "src/app/pages/home/home.component.spec.ts",
@@ -965,7 +968,7 @@
       },
       {
         "file": "src/app/pages/log-work/form/components/date-picker-modal/date-picker-modal.component.scss",
-        "hash": "1293935297545933632"
+        "hash": "3130302796390567939"
       },
       {
         "file": "src/app/pages/log-work/form/components/date-picker-modal/date-picker-modal.component.ts",
@@ -1005,11 +1008,11 @@
       },
       {
         "file": "src/app/pages/log-work/form/containers/doctor/doctor.component.html",
-        "hash": "9872473832103930597"
+        "hash": "15998855315584715974"
       },
       {
         "file": "src/app/pages/log-work/form/containers/doctor/doctor.component.scss",
-        "hash": "15050124510739593378"
+        "hash": "6401391089795299938"
       },
       {
         "file": "src/app/pages/log-work/form/containers/doctor/doctor.component.spec.ts",
@@ -1017,7 +1020,7 @@
       },
       {
         "file": "src/app/pages/log-work/form/containers/doctor/doctor.component.ts",
-        "hash": "10110690739186883503"
+        "hash": "11568191268337744000"
       },
       {
         "file": "src/app/pages/log-work/form/containers/doctor/index.ts",
@@ -1033,11 +1036,11 @@
       },
       {
         "file": "src/app/pages/log-work/form/containers/pacient/pacient.component.html",
-        "hash": "8540421355223732211"
+        "hash": "6114810620173963875"
       },
       {
         "file": "src/app/pages/log-work/form/containers/pacient/pacient.component.scss",
-        "hash": "10066023206347496775"
+        "hash": "8891078332876065365"
       },
       {
         "file": "src/app/pages/log-work/form/containers/pacient/pacient.component.spec.ts",
@@ -1045,27 +1048,27 @@
       },
       {
         "file": "src/app/pages/log-work/form/containers/pacient/pacient.component.ts",
-        "hash": "9400558394808462475"
+        "hash": "16660315936267460772"
       },
       {
         "file": "src/app/pages/log-work/form/containers/time-tracking/time-tracking.component.html",
-        "hash": "10283193729864287461"
+        "hash": "16712977737841328646"
       },
       {
         "file": "src/app/pages/log-work/form/containers/time-tracking/time-tracking.component.scss",
-        "hash": "2292417043958379372"
+        "hash": "2597863530677545166"
       },
       {
         "file": "src/app/pages/log-work/form/containers/time-tracking/time-tracking.component.ts",
-        "hash": "14936661931326991257"
+        "hash": "11754417330169056129"
       },
       {
         "file": "src/app/pages/log-work/form/containers/work-item/work-item.component.html",
-        "hash": "5609210140272311147"
+        "hash": "3832541992061785785"
       },
       {
         "file": "src/app/pages/log-work/form/containers/work-item/work-item.component.scss",
-        "hash": "4492110762848062353"
+        "hash": "1716017621064000123"
       },
       {
         "file": "src/app/pages/log-work/form/containers/work-item/work-item.component.spec.ts",
@@ -1073,7 +1076,7 @@
       },
       {
         "file": "src/app/pages/log-work/form/containers/work-item/work-item.component.ts",
-        "hash": "2287930021600822708"
+        "hash": "12352307796092574195"
       },
       {
         "file": "src/app/pages/log-work/form/custom-state/models/form-state.ts",
@@ -1113,7 +1116,7 @@
       },
       {
         "file": "src/app/pages/log-work/form/services/multi-step-form.service.ts",
-        "hash": "11028526265596487347"
+        "hash": "4378801881155762564"
       },
       {
         "file": "src/app/pages/log-work/form/validators/clean-validators.ts",
@@ -1157,11 +1160,11 @@
       },
       {
         "file": "src/app/pages/log-work/swiper/swiper.component.html",
-        "hash": "194639404110133248"
+        "hash": "5046600851452227959"
       },
       {
         "file": "src/app/pages/log-work/swiper/swiper.component.scss",
-        "hash": "4180118941152496750"
+        "hash": "11583225951348037492"
       },
       {
         "file": "src/app/pages/log-work/swiper/swiper.component.spec.ts",
@@ -1393,7 +1396,7 @@
       },
       {
         "file": "src/app/pages/setup/containers/setup-doctor/add-edit-doctor.ts/add-edit-doctor.component.scss",
-        "hash": "16135133391096662704"
+        "hash": "5831428964173220403"
       },
       {
         "file": "src/app/pages/setup/containers/setup-doctor/add-edit-doctor.ts/add-edit-doctor.component.ts",
@@ -1449,11 +1452,11 @@
       },
       {
         "file": "src/app/pages/setup/setup.component.html",
-        "hash": "638721584012278175"
+        "hash": "1237933381901078094"
       },
       {
         "file": "src/app/pages/setup/setup.component.scss",
-        "hash": "1357186318835911952"
+        "hash": "11545233884504610345"
       },
       {
         "file": "src/app/pages/setup/setup.component.spec.ts",
@@ -1482,6 +1485,22 @@
       {
         "file": "src/app/shared/animations/page-routing.animations.ts",
         "hash": "6172786914792366037"
+      },
+      {
+        "file": "src/app/shared/components/add-button/add-button.component.html",
+        "hash": "10270788348347301604"
+      },
+      {
+        "file": "src/app/shared/components/add-button/add-button.component.scss",
+        "hash": "8146207954035997555"
+      },
+      {
+        "file": "src/app/shared/components/add-button/add-button.component.ts",
+        "hash": "6413887545681266290"
+      },
+      {
+        "file": "src/app/shared/components/add-button/index.ts",
+        "hash": "8096912969719255301"
       },
       {
         "file": "src/app/shared/components/animated-arrows/animated-arrows.component.html",
@@ -1517,7 +1536,7 @@
       },
       {
         "file": "src/app/shared/components/index.ts",
-        "hash": "11739504978932378522"
+        "hash": "14472156763660192077"
       },
       {
         "file": "src/app/shared/components/item-sliding-card/index.ts",
@@ -1857,7 +1876,7 @@
       },
       {
         "file": "src/global.scss",
-        "hash": "16322401260976637535"
+        "hash": "4542977620010052790"
       },
       {
         "file": "src/index.html",
@@ -1893,7 +1912,7 @@
       },
       {
         "file": "src/theme/variables.scss",
-        "hash": "12841644611186214303"
+        "hash": "12424156240019878142"
       },
       {
         "file": "src/zone-flags.ts",

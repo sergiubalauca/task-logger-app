@@ -34,12 +34,14 @@ export class LogWorkApiService extends SyncBaseService {
                           doctorGroup {
                             doctorArray{
                               doctor
+                              mongoId
                               patientGroup{
                                 patientArray{
                                   patient
                                   workItemGroup{
                                     workItemProps{
                                       numberOfWorkItems
+                                      mongoId
                                       workItem
                                       color
                                       comment
@@ -70,8 +72,6 @@ export class LogWorkApiService extends SyncBaseService {
                 dailyId: dailyWork.rxdbId,
                 dailyWork: dailyWork.dailyWork,
                 mongoId: dailyWork.id,
-                // ...dailyWork,
-                // mongoId: dailyWork.id,
             });
         }
         this.doneSubject.next(true);
@@ -145,7 +145,7 @@ export class LogWorkApiService extends SyncBaseService {
         return await firstValueFrom(
             this.httpService
                 .makeGraphqlPost<
-                DailyWorkDto[],
+                    DailyWorkDto[],
                     {
                         query: string;
                         filters?: { [key: string]: any };

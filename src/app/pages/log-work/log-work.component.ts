@@ -30,6 +30,7 @@ import {
     DatetimeHighlight,
     IonDatetimeCustomEvent,
 } from '@ionic/core';
+import { DoctorRepository, WorkItemRepository } from '@database';
 
 @Component({
     selector: 'app-log-work',
@@ -51,7 +52,9 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
         private modalService: ModalService,
         private logWorkFacade: LogWorkFacade,
         private dailyWorkIdService: DateTimeService,
-        private logWorkApiService: LogWorkApiService
+        private logWorkApiService: LogWorkApiService,
+        private workItemRepository: WorkItemRepository,
+        private doctorRepository: DoctorRepository
     ) {}
 
     ngOnInit() {
@@ -147,6 +150,9 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
                     id: docId,
                     isPartiallySaved: !isFormValid,
                 };
+
+                await this.mapWorkItemsAndDoctorsNameToId(dailyWork);
+
                 const apiDoc = await firstValueFrom(
                     this.logWorkApiService.createDailyWork(dailyWork)
                 );
@@ -163,7 +169,57 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
         }
     }
 
-    public observeDatetimeMonthChange2() {
+    private async mapWorkItemsAndDoctorsNameToId(
+        dailyWork: DailyWork
+    ): Promise<DailyWork> {
+        const workItems: string[] = dailyWork.doctorGroup.doctorArray
+            .map((doctor) => {
+                return doctor.patientGroup.patientArray.map((patient) => {
+                    return patient.workItemGroup.workItemProps.map(
+                        (workItem) => {
+                            return workItem.workItem;
+                        }
+                    );
+                });
+            })
+            .flat(2);
+
+        const doctors: string[] = dailyWork.doctorGroup.doctorArray.map(
+            (doctor) => doctor.doctor
+        );
+
+        const doctorsIdToName: Map<string, string> = new Map();
+
+        for (const doctor of doctors) {
+            const doctorDoc = await this.doctorRepository.getOneByName({
+                name: doctor,
+            });
+
+            doctorsIdToName.set(doctor, doctorDoc.mongoId);
+        }
+
+        const workItemsIdToName: Map<string, string> = new Map();
+        for (const workItem of workItems) {
+            const workItemDoc = await this.workItemRepository.getOneByName({
+                name: workItem,
+            });
+
+            workItemsIdToName.set(workItem, workItemDoc.mongoId);
+        }
+
+        dailyWork.doctorGroup.doctorArray.forEach((doctor) => {
+            doctor.mongoId = doctorsIdToName.get(doctor.doctor);
+            doctor.patientGroup.patientArray.forEach((patient) => {
+                patient.workItemGroup.workItemProps.forEach((workItem) => {
+                    workItem.mongoId = workItemsIdToName.get(workItem.workItem);
+                });
+            });
+        });
+
+        return dailyWork;
+    }
+
+    private observeDatetimeMonthChange2() {
         const daysInMonth: Map<string, number[]> = new Map([
             ['January', Array.from(Array(31).keys())],
             ['February', Array.from(Array(29).keys())],

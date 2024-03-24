@@ -1,9 +1,23 @@
 :host {
     ion-header {
-        // transparent background
         --background: transparent;
         ion-toolbar {
             --background: transparent;
+            max-height: 60px;
+            padding-top: 7px;
+
+            &.title {
+                max-height: 20px;
+                padding: 0;
+
+                ion-title {
+                    font-size: 13px;
+                    max-height: 20px;
+                    padding: 0;
+                    margin: 0;
+                    --color: var(--ion-color-accent);
+                }
+            }
 
             ion-buttons {
                 ion-button,
@@ -31,14 +45,24 @@
             }
 
             ion-breadcrumbs {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-evenly;
                 padding: 0;
+                max-height: 40px;
+
                 ion-breadcrumb {
                     font-size: small;
+                    max-width: 50%;
+                    max-height: 40px;
                 }
             }
         }
     }
     ion-content {
+        --padding-top: 10px;
+
         #animated-rows {
             position: absolute;
             top: 95.5%;
@@ -48,9 +72,6 @@
         }
 
         ion-buttons {
-            // display: flex;
-            // justify-content: center;
-
             ion-button {
                 width: 100%;
                 padding: 11px;

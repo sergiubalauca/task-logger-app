@@ -3,6 +3,7 @@ export interface WorkItem {
     name: string;
     price: number;
     description: string;
+    mongoId: string;
 }
 
 export interface WorkItemDto {
@@ -11,4 +12,5 @@ export interface WorkItemDto {
     description: string;
     _id: string;
     id: string;
+    mongoId: string;
 }

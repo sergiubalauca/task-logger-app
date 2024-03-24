@@ -29,20 +29,17 @@
                     </ion-grid>
                 </ion-card-content>
             </ion-card-content>
-
-            <!-- <ion-card-content class="ngContent">
-                <ng-content></ng-content>
-            </ion-card-content> -->
         </ion-card>
     </ion-item>
     <ion-item-options side="end" class="ion-no-border">
         <ng-container>
-            <ion-item-option *ngIf="canDelete" class="ion-no-border delete">
-                <ion-icon
-                    (eventTriggered)="deleteItem($event)"
-                    name="trash-outline"
-                    appThrottleButtonDirective
-                ></ion-icon>
+            <ion-item-option
+                *ngIf="canDelete"
+                class="ion-no-border delete"
+                appThrottleButtonDirective
+                (eventTriggered)="deleteItem($event)"
+            >
+                <ion-icon name="trash-outline"></ion-icon>
             </ion-item-option>
         </ng-container>
     </ion-item-options>

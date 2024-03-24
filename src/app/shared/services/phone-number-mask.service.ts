@@ -72,7 +72,6 @@ export class PhoneNumberMaskService {
                 ],
             },
         },
-        // for the rest of the countries listed in countryListIcons, generate mask using country's phone prefix for mobile phones
         {
             countryCode: countryListIcons.find((c) => c.value === 'FR').value,
             mask: {

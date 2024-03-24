@@ -4,6 +4,7 @@ export interface DailyWork {
     doctorGroup: {
         doctorArray: {
             doctor: string;
+            mongoId: string;
             patientGroup: {
                 patientArray: {
                     patient: string;
@@ -11,6 +12,7 @@ export interface DailyWork {
                         workItemProps: {
                             numberOfWorkItems: number;
                             workItem: string;
+                            mongoId: string;
                             color: string;
                             comment?: string;
                         }[];
@@ -37,6 +39,7 @@ export interface DailyWorkDto {
         doctorGroup: {
             doctorArray: {
                 doctor: string;
+                mongoId: string;
                 patientGroup: {
                     patientArray: {
                         patient: string;
@@ -44,6 +47,7 @@ export interface DailyWorkDto {
                             workItemProps: {
                                 numberOfWorkItems: number;
                                 workItem: string;
+                                mongoId: string;
                                 color: string;
                                 comment?: string;
                             }[];
@@ -100,11 +104,13 @@ export interface DailyWorkDoc {
     doctorGroup?: {
         doctor?: {
             name?: string;
+            mongoId?: string;
             pacient?: {
                 name?: string;
                 workItemProps?: {
                     workItem?: {
                         name?: string;
+                        mongoId?: string;
                     };
                     numberOfWorkItems?: string;
                     color?: string;

@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { CRUDParams, WorkItem } from '@shared';
 import { DeepReadonlyObject, RxDocument } from 'rxdb';
 import { Observable } from 'rxjs';
 import { RxDatabaseProvider } from '../rx-database.provider';
 import { RxWorkItemDocumentType } from '../schemas/work-item.schema';
+import { LogWorkRepository } from './logwork.repository';
 
 @Injectable()
 export class WorkItemRepository {
+    private readonly logWorkRepository = inject(LogWorkRepository);
+
     constructor(private readonly databaseProvider: RxDatabaseProvider) {}
 
     public async getOne(
@@ -30,6 +33,27 @@ export class WorkItemRepository {
         return null;
     }
 
+    public async getOneByName(
+        params: Pick<CRUDParams, 'name'>
+    ): Promise<DeepReadonlyObject<WorkItem>> {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database && params.name) {
+            const docCollection =
+                this.databaseProvider?.rxDatabaseInstance.workitem;
+            const workItemToUpdate: WorkItem = await docCollection
+                .findOne()
+                .where('name')
+                .eq(params.name)
+                .exec();
+
+            const res = workItemToUpdate as DeepReadonlyObject<WorkItem>;
+            return res ?? null;
+        }
+
+        return null;
+    }
+
     public getAll$(): Observable<RxWorkItemDocumentType[]> {
         const database = this.databaseProvider.rxDatabaseInstance;
 
@@ -43,7 +67,15 @@ export class WorkItemRepository {
     public async addOne(workItem: any): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
 
-        if (database) {
+        const alreadyExistingWorkItem = await this.getOneByName({
+            name: workItem.name,
+        });
+
+        if (alreadyExistingWorkItem) {
+            throw new Error('Work item already exists');
+        }
+
+        if (database && !alreadyExistingWorkItem) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.workitem;
 
@@ -77,7 +109,15 @@ export class WorkItemRepository {
     public async editOne(workItem: WorkItem): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
 
-        if (database) {
+        const alreadyExistingWorkItem = await this.getOneByName({
+            name: workItem.name,
+        });
+
+        if (alreadyExistingWorkItem) {
+            throw new Error('Work item already exists');
+        }
+
+        if (database && !alreadyExistingWorkItem) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.workitem;
             const workItemToUpdate: RxDocument = await docCollection
@@ -87,6 +127,11 @@ export class WorkItemRepository {
                 .exec();
 
             if (workItemToUpdate) {
+                await this.logWorkRepository.updateLogWorksWithService(
+                    workItemToUpdate.toJSON() as WorkItem,
+                    workItem
+                );
+
                 await workItemToUpdate.incrementalPatch({
                     ...workItem,
                 });

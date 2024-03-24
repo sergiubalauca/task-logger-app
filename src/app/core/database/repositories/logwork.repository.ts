@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CRUDParams, DailyWork, DailyWorkDoc } from '@shared';
+import { CRUDParams, DailyWork, DailyWorkDoc, Doctor, WorkItem } from '@shared';
 import { DeepReadonlyObject, RxDocument } from 'rxdb';
 import { map, Observable } from 'rxjs';
 import { RxDatabaseProvider } from '../rx-database.provider';
@@ -60,6 +60,7 @@ export class LogWorkRepository {
             workItemToUpdate1.doctorGroup.push(
                 ...dailyWork.doctorGroup.doctorArray.map((doctor) => ({
                     doctor: {
+                        mongoId: doctor.mongoId,
                         name: doctor.doctor,
                         pacient: doctor.patientGroup.patientArray.map(
                             (patient) => ({
@@ -69,6 +70,7 @@ export class LogWorkRepository {
                                         (workItem) => ({
                                             workItem: {
                                                 name: workItem.workItem,
+                                                mongoId: workItem.mongoId,
                                             },
                                             numberOfWorkItems:
                                                 workItem?.numberOfWorkItems?.toString() ??
@@ -91,6 +93,218 @@ export class LogWorkRepository {
             await logWorkCollection.upsert({
                 ...workItemToUpdate1,
             });
+        }
+    }
+
+    public async updateLogWorksWithService(
+        oldWorkItem: WorkItem,
+        newWorkItem: WorkItem
+    ) {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database) {
+            const logWorkCollection =
+                this.databaseProvider?.rxDatabaseInstance.logwork;
+
+            const logWorkToUpdate = await this.getAll();
+            const logWorksLinkedToWorkItem = logWorkToUpdate.filter(
+                (logWork) => {
+                    return logWork.doctorGroup.map((doctor) => {
+                        return doctor.doctor.pacient.map((patient) => {
+                            return patient.workItemProps.map((workItemProp) => {
+                                return (
+                                    workItemProp.workItem === oldWorkItem.name
+                                );
+                            });
+                        });
+                    });
+                }
+            );
+
+            for (const logWork of logWorksLinkedToWorkItem) {
+                let canUpdate = false;
+
+                const workItemToUpdate: RxLogWorkDocumentType = {
+                    doctorGroup: Array.from(logWork.doctorGroup).map(
+                        (doctor) => {
+                            return {
+                                doctor: {
+                                    name: doctor.doctor.name,
+                                    mongoId: doctor.doctor.mongoId,
+
+                                    pacient: Array.from(
+                                        doctor.doctor.pacient
+                                    ).map((patient) => {
+                                        return {
+                                            name: patient.name,
+                                            workItemProps: Array.from(
+                                                patient.workItemProps
+                                            ).map((workItemProp) => {
+                                                if (
+                                                    workItemProp.workItem
+                                                        .mongoId ===
+                                                    oldWorkItem.mongoId
+                                                ) {
+                                                    canUpdate = true;
+                                                    return {
+                                                        workItem: {
+                                                            name: newWorkItem.name,
+                                                            mongoId:
+                                                                workItemProp
+                                                                    .workItem
+                                                                    .mongoId,
+                                                        },
+                                                        numberOfWorkItems:
+                                                            workItemProp.numberOfWorkItems,
+                                                        color: workItemProp.color,
+                                                        comment:
+                                                            workItemProp.comment,
+                                                    };
+                                                }
+                                                return {
+                                                    workItem: {
+                                                        name: workItemProp
+                                                            .workItem.name,
+                                                        mongoId:
+                                                            workItemProp
+                                                                .workItem
+                                                                .mongoId,
+                                                    },
+                                                    numberOfWorkItems:
+                                                        workItemProp.numberOfWorkItems,
+                                                    color: workItemProp.color,
+                                                    comment:
+                                                        workItemProp.comment,
+                                                };
+                                            }),
+                                        };
+                                    }),
+                                },
+                            };
+                        }
+                    ),
+                    id: logWork.id,
+                    endTime: logWork.endTime,
+                    startTime: logWork.startTime,
+                    breaks: Array.from(logWork.breaks),
+                    mongoId: logWork.mongoId,
+                    isPartiallySaved: logWork.isPartiallySaved,
+                };
+
+                if (canUpdate) {
+                    await logWorkCollection.upsert({
+                        ...workItemToUpdate,
+                    });
+                }
+            }
+        }
+    }
+
+    public async updateLogWorksWithDoctor(
+        oldDoctor: Doctor,
+        newDoctor: Doctor
+    ) {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database) {
+            const logWorkCollection =
+                this.databaseProvider?.rxDatabaseInstance.logwork;
+
+            const logWorkToUpdate = await this.getAll();
+            const logWorksLinkedToWorkItem = logWorkToUpdate.filter(
+                (logWork) => {
+                    return logWork.doctorGroup.map((doctor) => {
+                        return doctor.doctor.name === oldDoctor.name;
+                    });
+                }
+            );
+
+            for (const logWork of logWorksLinkedToWorkItem) {
+                let canUpdate = false;
+
+                const workItemToUpdate: RxLogWorkDocumentType = {
+                    doctorGroup: Array.from(logWork.doctorGroup).map(
+                        (doctor) => {
+                            if (doctor.doctor.mongoId === oldDoctor.mongoId) {
+                                canUpdate = true;
+
+                                return {
+                                    doctor: {
+                                        name: newDoctor.name,
+                                        mongoId: doctor.doctor.mongoId,
+
+                                        pacient: Array.from(
+                                            doctor.doctor.pacient
+                                        ).map((patient) => {
+                                            return {
+                                                name: patient.name,
+                                                workItemProps: Array.from(
+                                                    patient.workItemProps
+                                                ).map((workItemProp) => {
+                                                    return {
+                                                        workItem: {
+                                                            name: workItemProp
+                                                                .workItem.name,
+                                                            mongoId:
+                                                                workItemProp
+                                                                    .workItem
+                                                                    .mongoId,
+                                                        },
+                                                        numberOfWorkItems:
+                                                            workItemProp.numberOfWorkItems,
+                                                        color: workItemProp.color,
+                                                        comment:
+                                                            workItemProp.comment,
+                                                    };
+                                                }),
+                                            };
+                                        }),
+                                    },
+                                };
+                            }
+                            return {
+                                doctor: {
+                                    name: doctor.doctor.name,
+                                    pacient: Array.from(
+                                        doctor.doctor.pacient
+                                    ).map((patient) => {
+                                        return {
+                                            name: patient.name,
+                                            workItemProps: Array.from(
+                                                patient.workItemProps
+                                            ).map((workItemProp) => {
+                                                return {
+                                                    workItem: {
+                                                        name: workItemProp
+                                                            .workItem.name,
+                                                    },
+                                                    numberOfWorkItems:
+                                                        workItemProp.numberOfWorkItems,
+                                                    color: workItemProp.color,
+                                                    comment:
+                                                        workItemProp.comment,
+                                                };
+                                            }),
+                                        };
+                                    }),
+                                },
+                            };
+                        }
+                    ),
+                    id: logWork.id,
+                    endTime: logWork.endTime,
+                    startTime: logWork.startTime,
+                    breaks: Array.from(logWork.breaks),
+                    mongoId: logWork.mongoId,
+                    isPartiallySaved: logWork.isPartiallySaved,
+                };
+
+                if (canUpdate) {
+                    await logWorkCollection.upsert({
+                        ...workItemToUpdate,
+                    });
+                }
+            }
         }
     }
 
@@ -142,6 +356,23 @@ export class LogWorkRepository {
 
         if (database) {
             return database.logwork.find().$;
+        }
+
+        return null;
+    }
+
+    public async getAll(): Promise<DeepReadonlyObject<DailyWorkDoc>[]> {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database) {
+            const docCollection =
+                this.databaseProvider?.rxDatabaseInstance.logwork;
+            const logworks: RxDocument[] = await docCollection.find().exec();
+
+            return logworks.map(
+                (workItem) =>
+                    workItem.toJSON() as DeepReadonlyObject<DailyWorkDoc>
+            );
         }
 
         return null;

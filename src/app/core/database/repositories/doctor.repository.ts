@@ -1,13 +1,37 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { CRUDParams, Doctor } from '@shared';
 import { DeepReadonlyObject, RxDocument } from 'rxdb';
 import { Observable } from 'rxjs';
 import { RxDatabaseProvider } from '../rx-database.provider';
 import { RxDoctorDocumentType } from '../schemas';
+import { LogWorkRepository } from './logwork.repository';
 
 @Injectable()
 export class DoctorRepository {
+    private readonly logWorkRepository = inject(LogWorkRepository);
+
     constructor(private readonly databaseProvider: RxDatabaseProvider) {}
+
+    public async getOneByName(
+        params: Pick<CRUDParams, 'name'>
+    ): Promise<DeepReadonlyObject<Doctor>> {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database && params.name) {
+            const docCollection =
+                this.databaseProvider?.rxDatabaseInstance.doctor;
+            const doctorToUpdate: Doctor = await docCollection
+                .findOne()
+                .where('name')
+                .eq(params.name)
+                .exec();
+
+            const res = doctorToUpdate as DeepReadonlyObject<Doctor>;
+            return res ?? null;
+        }
+
+        return null;
+    }
 
     public async getOne(
         params: Pick<CRUDParams, 'id'>
@@ -40,7 +64,16 @@ export class DoctorRepository {
     // gsb solve this any issue, use appropriate type
     public async addOne(doctor: any): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
-        if (database) {
+
+        const alreadyExistingDoctor = await this.getOneByName({
+            name: doctor.name,
+        });
+
+        if (alreadyExistingDoctor) {
+            throw new Error('Doctor already exists');
+        }
+
+        if (database && !alreadyExistingDoctor) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.doctor;
 
@@ -55,7 +88,16 @@ export class DoctorRepository {
 
     public async editOne(doctor: Doctor): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
-        if (database) {
+
+        const alreadyExistingDoctor = await this.getOne({
+            id: doctor.id,
+        });
+
+        if (alreadyExistingDoctor) {
+            throw new Error('Doctor already exists');
+        }
+
+        if (database && !alreadyExistingDoctor) {
             const docCollection =
                 this.databaseProvider?.rxDatabaseInstance.doctor;
             const docToUpdate: RxDocument = await docCollection
@@ -65,6 +107,11 @@ export class DoctorRepository {
                 .exec();
 
             if (docToUpdate) {
+                await this.logWorkRepository.updateLogWorksWithDoctor(
+                    docToUpdate.toJSON() as Doctor,
+                    doctor
+                );
+
                 await docToUpdate.incrementalPatch({
                     ...doctor,
                 });

@@ -9,7 +9,7 @@
     "@angular/platform-browser": "^17.0.8",
     "@angular/platform-browser-dynamic": "^17.0.8",
     "@angular/router": "^17.0.8",
-    "@awesome-cordova-plugins/mobile-accessibility": "^6.6.0",
+    "@awesome-cordova-plugins/core": "^6.6.0",
     "@awesome-cordova-plugins/network": "^6.4.0",
     "@babel/polyfill": "^7.12.1",
     "@capacitor/android": "^5.0.0",
@@ -22,6 +22,7 @@
     "@capacitor/network": "^5.0.6",
     "@capacitor/splash-screen": "^5.0.7",
     "@capacitor/status-bar": "^5.0.0",
+    "@capacitor/text-zoom": "^5.0.7",
     "@ionic/angular": "^7.7.0",
     "@ionic/core": "^7.0.7",
     "@ionic/storage-angular": "^4.0.0",
@@ -112,23 +113,35 @@
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "7315897912906643640"
+        "hash": "15103045407533615114"
       },
       {
         "file": ".nx/cache/lockfile.hash",
-        "hash": "9139024951719308191"
+        "hash": "10527242340500516044"
       },
       {
         "file": ".nx/cache/parsed-lock-file.json",
-        "hash": "14726485317138169537"
+        "hash": "1383294344646657057"
       },
       {
         "file": ".nx/cache/project-graph.json",
-        "hash": "8312755346393172267"
+        "hash": "598591280334601305"
       },
       {
         "file": "android/.gitignore",
         "hash": "16088808965373471785"
+      },
+      {
+        "file": "android/.idea/compiler.xml",
+        "hash": "12858061433111393087"
+      },
+      {
+        "file": "android/.idea/jarRepositories.xml",
+        "hash": "1685772098436791136"
+      },
+      {
+        "file": "android/.idea/misc.xml",
+        "hash": "681446667397568097"
       },
       {
         "file": "android/app/.gitignore",
@@ -136,11 +149,11 @@
       },
       {
         "file": "android/app/build.gradle",
-        "hash": "15599388729579740583"
+        "hash": "4688935829346126275"
       },
       {
         "file": "android/app/capacitor.build.gradle",
-        "hash": "8344103539449766854"
+        "hash": "8542587232036432863"
       },
       {
         "file": "android/app/proguard-rules.pro",
@@ -404,7 +417,7 @@
       },
       {
         "file": "android/capacitor.settings.gradle",
-        "hash": "16715562615399675977"
+        "hash": "9497184562393922549"
       },
       {
         "file": "android/gradle/wrapper/gradle-wrapper.jar",
@@ -532,11 +545,11 @@
       },
       {
         "file": "ios/App/App/Info.plist",
-        "hash": "4550287757512028078"
+        "hash": "226701959705082542"
       },
       {
         "file": "ios/App/App.xcodeproj/project.pbxproj",
-        "hash": "5638667896405918673"
+        "hash": "2146508970899427497"
       },
       {
         "file": "ios/App/App.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
@@ -552,11 +565,11 @@
       },
       {
         "file": "ios/App/Podfile",
-        "hash": "2394436053955444284"
+        "hash": "6471839567534268509"
       },
       {
         "file": "ios/App/Podfile.lock",
-        "hash": "259135510782062873"
+        "hash": "14461494346943451393"
       },
       {
         "file": "jest.config.ts",
@@ -568,11 +581,11 @@
       },
       {
         "file": "package-lock.json",
-        "hash": "367421510171088014"
+        "hash": "16118264485224656031"
       },
       {
         "file": "package.json",
-        "hash": "3124865877412838393"
+        "hash": "11673631450417746717"
       },
       {
         "file": "resources/icon-background.png",
@@ -612,7 +625,7 @@
       },
       {
         "file": "src/app/abstraction/api-facade/services/log-work.service.ts",
-        "hash": "2772706222073717727"
+        "hash": "12500992846302265587"
       },
       {
         "file": "src/app/abstraction/api-facade/services/reports.service.ts",
@@ -700,7 +713,7 @@
       },
       {
         "file": "src/app/app.component.ts",
-        "hash": "3838968085916972578"
+        "hash": "1861177531569853778"
       },
       {
         "file": "src/app/core/api/api.module.ts",
@@ -784,7 +797,7 @@
       },
       {
         "file": "src/app/core/auth/providers/refresh-token.interceptor.ts",
-        "hash": "7717595854811077482"
+        "hash": "5486305404378916510"
       },
       {
         "file": "src/app/core/auth/providers/token-provider.ts",
@@ -840,11 +853,11 @@
       },
       {
         "file": "src/app/core/database/migration-strategies/log-work-migrations.ts",
-        "hash": "13707523865672949402"
+        "hash": "5390980225569677509"
       },
       {
         "file": "src/app/core/database/repositories/doctor.repository.ts",
-        "hash": "6994142461455047486"
+        "hash": "8626253799769708228"
       },
       {
         "file": "src/app/core/database/repositories/index.ts",
@@ -852,11 +865,11 @@
       },
       {
         "file": "src/app/core/database/repositories/logwork.repository.ts",
-        "hash": "16717668292653424521"
+        "hash": "561583726377602058"
       },
       {
         "file": "src/app/core/database/repositories/work-item.repository.ts",
-        "hash": "10563515189182603229"
+        "hash": "17909246724844998946"
       },
       {
         "file": "src/app/core/database/rx-custom-types.ts/index.ts",
@@ -872,7 +885,7 @@
       },
       {
         "file": "src/app/core/database/rx-database.provider.ts",
-        "hash": "2659954667780608376"
+        "hash": "13283473710092888083"
       },
       {
         "file": "src/app/core/database/schemas/doctor.schema.ts",
@@ -884,7 +897,7 @@
       },
       {
         "file": "src/app/core/database/schemas/logwork.schema.ts",
-        "hash": "4246319135404500060"
+        "hash": "8516020865817857529"
       },
       {
         "file": "src/app/core/database/schemas/work-item.schema.ts",
@@ -1008,11 +1021,11 @@
       },
       {
         "file": "src/app/pages/log-work/form/containers/doctor/doctor.component.html",
-        "hash": "15998855315584715974"
+        "hash": "8970523267909003004"
       },
       {
         "file": "src/app/pages/log-work/form/containers/doctor/doctor.component.scss",
-        "hash": "6401391089795299938"
+        "hash": "13107527064301456363"
       },
       {
         "file": "src/app/pages/log-work/form/containers/doctor/doctor.component.spec.ts",
@@ -1152,7 +1165,7 @@
       },
       {
         "file": "src/app/pages/log-work/log-work.component.ts",
-        "hash": "17211766513209474424"
+        "hash": "18036785292344441351"
       },
       {
         "file": "src/app/pages/log-work/log-work.module.ts",
@@ -1160,11 +1173,11 @@
       },
       {
         "file": "src/app/pages/log-work/swiper/swiper.component.html",
-        "hash": "5046600851452227959"
+        "hash": "13309096908607590901"
       },
       {
         "file": "src/app/pages/log-work/swiper/swiper.component.scss",
-        "hash": "11583225951348037492"
+        "hash": "11936558666826909396"
       },
       {
         "file": "src/app/pages/log-work/swiper/swiper.component.spec.ts",
@@ -1488,15 +1501,15 @@
       },
       {
         "file": "src/app/shared/components/add-button/add-button.component.html",
-        "hash": "10270788348347301604"
+        "hash": "15787932948182779953"
       },
       {
         "file": "src/app/shared/components/add-button/add-button.component.scss",
-        "hash": "8146207954035997555"
+        "hash": "13918463122063334834"
       },
       {
         "file": "src/app/shared/components/add-button/add-button.component.ts",
-        "hash": "6413887545681266290"
+        "hash": "14081852689658040782"
       },
       {
         "file": "src/app/shared/components/add-button/index.ts",
@@ -1544,7 +1557,7 @@
       },
       {
         "file": "src/app/shared/components/item-sliding-card/item-sliding-card.component.html",
-        "hash": "11282885873511070331"
+        "hash": "16931487533656776857"
       },
       {
         "file": "src/app/shared/components/item-sliding-card/item-sliding-card.component.scss",
@@ -1640,7 +1653,7 @@
       },
       {
         "file": "src/app/shared/models/dailyWork.ts",
-        "hash": "13603006936524144598"
+        "hash": "4914630231592247601"
       },
       {
         "file": "src/app/shared/models/doctor.ts",
@@ -1664,7 +1677,7 @@
       },
       {
         "file": "src/app/shared/models/rxdb-crud.params.ts",
-        "hash": "6332449909424520212"
+        "hash": "3510085893945373163"
       },
       {
         "file": "src/app/shared/models/searcheable-select.model.ts",
@@ -1676,7 +1689,7 @@
       },
       {
         "file": "src/app/shared/models/work-item.ts",
-        "hash": "8039706684788756286"
+        "hash": "15005835177279621035"
       },
       {
         "file": "src/app/shared/pipes/error-mapper.ts",
@@ -1704,7 +1717,7 @@
       },
       {
         "file": "src/app/shared/services/phone-number-mask.service.ts",
-        "hash": "9492447829183808036"
+        "hash": "14842211344826654302"
       },
       {
         "file": "src/app/shared/services/platform.provider.ts",
@@ -1876,7 +1889,7 @@
       },
       {
         "file": "src/environments/environment.ts",
-        "hash": "11816224156562335160"
+        "hash": "16978669758781673196"
       },
       {
         "file": "src/global.scss",
@@ -1928,7 +1941,7 @@
       },
       {
         "file": "tsconfig.json",
-        "hash": "4999362686210317777"
+        "hash": "7323767247397336925"
       },
       {
         "file": "tsconfig.spec.json",

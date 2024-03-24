@@ -1,5 +1,5 @@
 <ion-header [translucent]="true" no-border no-shadow class="ion-no-border">
-    <ion-toolbar>
+    <ion-toolbar mode="ios">
         <ion-buttons slot="start">
             <ion-button
                 [disabled]="isDeleteButtonEnabled"
@@ -25,6 +25,12 @@
                 }}</ion-breadcrumb>
             </ion-breadcrumbs>
         </ng-container>
+    </ion-toolbar>
+
+    <ion-toolbar class="title" mode="ios">
+        <ion-title mode="ios">
+            {{ chosenDate | date : "dd.MM.yyyy" }}
+        </ion-title>
     </ion-toolbar>
 </ion-header>
 <ion-content class="app-inner-padding">

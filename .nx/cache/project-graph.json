@@ -455,18 +455,9 @@
       "type": "npm",
       "name": "npm:@awesome-cordova-plugins/core",
       "data": {
-        "version": "6.4.0",
-        "packageName": "@awesome-cordova-plugins/core",
-        "hash": "sha512-06I5JdTgAgKTby+VG+3sQF5+z4RNCEyVl6y7tz2rICx8MURL1biuh3oGGN1rCQQjsuMZcX5siMBr0NF/OHqxLQ=="
-      }
-    },
-    "npm:@awesome-cordova-plugins/mobile-accessibility": {
-      "type": "npm",
-      "name": "npm:@awesome-cordova-plugins/mobile-accessibility",
-      "data": {
         "version": "6.6.0",
-        "packageName": "@awesome-cordova-plugins/mobile-accessibility",
-        "hash": "sha512-3rkK7olFCG8McYaY2gbm6P/o2oCf9prEJiUYU2SK+vo1uBmqCYQrqKfu2L/snnf53RXeJoJ5dF3z8kgNR2nCPQ=="
+        "packageName": "@awesome-cordova-plugins/core",
+        "hash": "sha512-mr2oI+qIoxgoccG57VMkkQdedvulIFJ+kyDeXZvrA1CSkFu1RzTwRvM6QuyA01f9i9G9hSSONpAp4v94h45LNA=="
       }
     },
     "npm:@awesome-cordova-plugins/network": {
@@ -1817,6 +1808,15 @@
         "version": "5.0.6",
         "packageName": "@capacitor/status-bar",
         "hash": "sha512-7od8CxsBnot1XMK3IeOkproFL4hgoKoWAc3pwUvmDOkQsXoxwQm4SR9mLwQavv1XfxtHbFV9Ukd7FwMxOPSViw=="
+      }
+    },
+    "npm:@capacitor/text-zoom": {
+      "type": "npm",
+      "name": "npm:@capacitor/text-zoom",
+      "data": {
+        "version": "5.0.7",
+        "packageName": "@capacitor/text-zoom",
+        "hash": "sha512-gq3nUxeWsa54cNzfVifneiMB5LfkmfX8l33Ey6jS2bu+6g5n11qzd20hqAQPeaD3IOQ1vCMBJTi6wM2j7ArZ5g=="
       }
     },
     "npm:@colors/colors": {
@@ -16134,18 +16134,6 @@
         "type": "static"
       }
     ],
-    "npm:@awesome-cordova-plugins/mobile-accessibility": [
-      {
-        "source": "npm:@awesome-cordova-plugins/mobile-accessibility",
-        "target": "npm:@awesome-cordova-plugins/core",
-        "type": "static"
-      },
-      {
-        "source": "npm:@awesome-cordova-plugins/mobile-accessibility",
-        "target": "npm:rxjs",
-        "type": "static"
-      }
-    ],
     "npm:@awesome-cordova-plugins/network": [
       {
         "source": "npm:@awesome-cordova-plugins/network",
@@ -18575,6 +18563,13 @@
     "npm:@capacitor/status-bar": [
       {
         "source": "npm:@capacitor/status-bar",
+        "target": "npm:@capacitor/core",
+        "type": "static"
+      }
+    ],
+    "npm:@capacitor/text-zoom": [
+      {
+        "source": "npm:@capacitor/text-zoom",
         "target": "npm:@capacitor/core",
         "type": "static"
       }

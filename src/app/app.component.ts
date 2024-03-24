@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { MobileAccessibility } from '@awesome-cordova-plugins/mobile-accessibility';
+import { TextZoom } from '@capacitor/text-zoom';
+
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
@@ -26,14 +27,17 @@ export class AppComponent implements OnInit {
             if (isPlatformReady) {
                 await this.setTextZoom();
             }
-        } catch (error) {}
+        } catch (error) {
+            throw new Error('Failed to set zoom level');
+        }
     }
 
     private async setTextZoom() {
-        const textZoom = await MobileAccessibility.getTextZoom();
+        const currentZoomLevel = await TextZoom.get();
+        const preferedZoomLevel = await TextZoom.getPreferred();
 
-        if (textZoom > 100) {
-            MobileAccessibility.setTextZoom(100);
+        if (currentZoomLevel.value > 1 || preferedZoomLevel.value > 1) { 
+            await TextZoom.set({ value: 1 });
         }
     }
 }

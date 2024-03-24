@@ -8,21 +8,25 @@ import {
 } from '@shared';
 import { addRxPlugin, createRxDatabase, RxDatabase } from 'rxdb';
 import { RxLogWorkCollections, RxLogWorkDatabase } from './rx-custom-types.ts';
-import { LOGWORK_SCHEMA_LITERAL, RxLogWorkDocumentType } from './schemas';
+import { LOGWORK_SCHEMA_LITERAL } from './schemas';
 import { isRxDatabase } from 'rxdb';
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { DOCTOR_SCHEMA_LITERAL } from './schemas/doctor.schema';
 import { WORKITEM_SCHEMA_LITERAL } from './schemas/work-item.schema';
-import { migration1 } from '../database/migration-strategies/';
+import { migration1, migration2 } from '../database/migration-strategies/';
 
 @Injectable()
 export class RxDatabaseProvider {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     private DB_INSTANCE: RxLogWorkDatabase;
     private toastService: ToastService = inject(ToastService);
+
     private readonly collectionSettings = {
         [LOGWORK_COLLECTION_NAME]: {
             schema: LOGWORK_SCHEMA_LITERAL,
+            migrationStrategies: {
+                1: migration1,
+                2: migration2,
+            },
             // methods: {
             //     // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
             //     hpPercent(rxDoc: RxLogWorkDocument): any {
@@ -30,9 +34,6 @@ export class RxDatabaseProvider {
             //         // return (rxDoc.hp / 100) * 100;
             //     },
             // },
-            migrationStrategies: {
-                1: migration1,
-            },
         },
         [DOCTOR_COLLECTION_NAME]: {
             schema: DOCTOR_SCHEMA_LITERAL,

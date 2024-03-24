@@ -89,8 +89,8 @@ export class DoctorRepository {
     public async editOne(doctor: Doctor): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
 
-        const alreadyExistingDoctor = await this.getOne({
-            id: doctor.id,
+        const alreadyExistingDoctor = await this.getOneByName({
+            name: doctor.name,
         });
 
         if (alreadyExistingDoctor) {

@@ -33,6 +33,29 @@ export class DoctorRepository {
         return null;
     }
 
+    public async getOneByNameWithDifferentId(
+        params: Pick<CRUDParams, 'name' | 'id'>
+    ): Promise<DeepReadonlyObject<Doctor>> {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database && params.name) {
+            const docCollection =
+                this.databaseProvider?.rxDatabaseInstance.doctor;
+            const doctorToUpdate: Doctor = await docCollection
+                .findOne()
+                .where('name')
+                .eq(params.name)
+                .where('id')
+                .ne(params.id)
+                .exec();
+
+            const res = doctorToUpdate as DeepReadonlyObject<Doctor>;
+            return res ?? null;
+        }
+
+        return null;
+    }
+
     public async getOne(
         params: Pick<CRUDParams, 'id'>
     ): Promise<DeepReadonlyObject<Doctor>> {
@@ -89,8 +112,9 @@ export class DoctorRepository {
     public async editOne(doctor: Doctor): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
 
-        const alreadyExistingDoctor = await this.getOneByName({
+        const alreadyExistingDoctor = await this.getOneByNameWithDifferentId({
             name: doctor.name,
+            id: doctor.id,
         });
 
         if (alreadyExistingDoctor) {

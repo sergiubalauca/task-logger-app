@@ -33,6 +33,29 @@ export class WorkItemRepository {
         return null;
     }
 
+    public async getOneByNameWithDifferentId(
+        params: Pick<CRUDParams, 'name' | 'id'>
+    ): Promise<DeepReadonlyObject<WorkItem>> {
+        const database = this.databaseProvider.rxDatabaseInstance;
+
+        if (database && params.name) {
+            const docCollection =
+                this.databaseProvider?.rxDatabaseInstance.workitem;
+            const workItemToUpdate: WorkItem = await docCollection
+                .findOne()
+                .where('name')
+                .eq(params.name)
+                .where('id')
+                .ne(params.id)
+                .exec();
+
+            const res = workItemToUpdate as DeepReadonlyObject<WorkItem>;
+            return res ?? null;
+        }
+
+        return null;
+    }
+
     public async getOneByName(
         params: Pick<CRUDParams, 'name'>
     ): Promise<DeepReadonlyObject<WorkItem>> {
@@ -109,8 +132,9 @@ export class WorkItemRepository {
     public async editOne(workItem: WorkItem): Promise<void> {
         const database = this.databaseProvider.rxDatabaseInstance;
 
-        const alreadyExistingWorkItem = await this.getOneByName({
+        const alreadyExistingWorkItem = await this.getOneByNameWithDifferentId({
             name: workItem.name,
+            id: workItem.id,
         });
 
         if (alreadyExistingWorkItem) {

@@ -82,7 +82,7 @@ export class SetupWorkItemComponent implements OnInit {
 
             this.workItemFacade.addOne({
                 ...modalData.data.workItem,
-                mongoId: apiDoc._id,
+                mongoId: apiDoc?._id ?? '',
             });
         }
     }

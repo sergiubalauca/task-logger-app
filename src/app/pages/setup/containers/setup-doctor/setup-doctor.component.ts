@@ -80,7 +80,7 @@ export class SetupDoctorComponent implements OnInit {
 
             await this.doctorFacade.addOne({
                 ...modalData.data.doctor,
-                mongoId: apiDoc._id,
+                mongoId: apiDoc?._id ?? '',
             });
         }
     }

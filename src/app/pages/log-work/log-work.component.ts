@@ -195,6 +195,9 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
                 name: doctor,
             });
 
+            if (!doctorDoc) {
+                continue;
+            }
             doctorsIdToName.set(doctor, doctorDoc.mongoId);
         }
 
@@ -204,14 +207,17 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
                 name: workItem,
             });
 
+            if (!workItemDoc) {
+                continue;
+            }
             workItemsIdToName.set(workItem, workItemDoc.mongoId);
         }
 
         dailyWork.doctorGroup.doctorArray.forEach((doctor) => {
-            doctor.mongoId = doctorsIdToName.get(doctor.doctor);
+            doctor.mongoId = doctorsIdToName.get(doctor.doctor) ?? '';
             doctor.patientGroup.patientArray.forEach((patient) => {
                 patient.workItemGroup.workItemProps.forEach((workItem) => {
-                    workItem.mongoId = workItemsIdToName.get(workItem.workItem);
+                    workItem.mongoId = workItemsIdToName.get(workItem.workItem) ?? '';
                 });
             });
         });

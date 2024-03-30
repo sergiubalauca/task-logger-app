@@ -113,7 +113,7 @@
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "15029962734221446117"
+        "hash": "7073880128674503162"
       },
       {
         "file": ".nx/cache/lockfile.hash",
@@ -132,12 +132,24 @@
         "hash": "16088808965373471785"
       },
       {
+        "file": "android/.idea/compiler.xml",
+        "hash": "12858061433111393087"
+      },
+      {
+        "file": "android/.idea/jarRepositories.xml",
+        "hash": "1685772098436791136"
+      },
+      {
+        "file": "android/.idea/misc.xml",
+        "hash": "1533796106089862"
+      },
+      {
         "file": "android/app/.gitignore",
         "hash": "3800628318224317187"
       },
       {
         "file": "android/app/build.gradle",
-        "hash": "15021233866607706963"
+        "hash": "16768122661455866221"
       },
       {
         "file": "android/app/capacitor.build.gradle",
@@ -533,11 +545,11 @@
       },
       {
         "file": "ios/App/App/Info.plist",
-        "hash": "14943937733792337673"
+        "hash": "11500310220594748381"
       },
       {
         "file": "ios/App/App.xcodeproj/project.pbxproj",
-        "hash": "6570135088901178513"
+        "hash": "5969705865234360714"
       },
       {
         "file": "ios/App/App.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
@@ -845,7 +857,7 @@
       },
       {
         "file": "src/app/core/database/repositories/doctor.repository.ts",
-        "hash": "2528981360934981057"
+        "hash": "8662228632705356840"
       },
       {
         "file": "src/app/core/database/repositories/index.ts",
@@ -857,7 +869,7 @@
       },
       {
         "file": "src/app/core/database/repositories/work-item.repository.ts",
-        "hash": "12005061222195809848"
+        "hash": "5833592861251690936"
       },
       {
         "file": "src/app/core/database/rx-custom-types.ts/index.ts",
@@ -1153,7 +1165,7 @@
       },
       {
         "file": "src/app/pages/log-work/log-work.component.ts",
-        "hash": "18036785292344441351"
+        "hash": "13187680965414431163"
       },
       {
         "file": "src/app/pages/log-work/log-work.module.ts",
@@ -1417,7 +1429,7 @@
       },
       {
         "file": "src/app/pages/setup/containers/setup-doctor/setup-doctor.component.ts",
-        "hash": "9821893792492157846"
+        "hash": "5435018821064159577"
       },
       {
         "file": "src/app/pages/setup/containers/setup-work-item/add-edit-work-item/add-edit-work-item.component.html",
@@ -1445,7 +1457,7 @@
       },
       {
         "file": "src/app/pages/setup/containers/setup-work-item/setup-work-item.component.ts",
-        "hash": "5485400507415718716"
+        "hash": "15428875972399447934"
       },
       {
         "file": "src/app/pages/setup/setup-routing.module.ts",

@@ -3,6 +3,7 @@ import {
     DATABASE_NAME,
     DOCTOR_COLLECTION_NAME,
     LOGWORK_COLLECTION_NAME,
+    NEW_DATABASE_NAME,
     ToastService,
     WORK_ITEM_COLLECTION_NAME,
 } from '@shared';
@@ -14,6 +15,10 @@ import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { DOCTOR_SCHEMA_LITERAL } from './schemas/doctor.schema';
 import { WORKITEM_SCHEMA_LITERAL } from './schemas/work-item.schema';
 import { migration1, migration2 } from '../database/migration-strategies/';
+import {
+    AfterMigrateBatchHandlerInput,
+    migrateStorage,
+} from 'rxdb/plugins/migration-storage';
 
 @Injectable()
 export class RxDatabaseProvider {
@@ -71,13 +76,29 @@ export class RxDatabaseProvider {
                 addRxPlugin(module.RxDBQueryBuilderPlugin)
             );
 
-            await import('rxdb/plugins/migration').then((module) =>
+            await import('rxdb/plugins/migration-schema').then((module) =>
                 addRxPlugin(module.RxDBMigrationPlugin)
             );
 
             const database = await createRxDatabase<RxLogWorkCollections>({
-                name: DATABASE_NAME,
+                name: NEW_DATABASE_NAME,
                 storage: getRxStorageDexie(),
+            });
+
+            await migrateStorage({
+                database: database as any,
+                /**
+                 * Name of the old database,
+                 * using the storage migration requires that the
+                 * new database has a different name.
+                 */
+                oldDatabaseName: DATABASE_NAME,
+                oldStorage: getRxStorageDexie(), // RxStorage of the old database
+                batchSize: 500, // batch size
+                parallel: false, // <- true if it should migrate all collections in parallel. False (default) if should migrate in serial
+                afterMigrateBatch: (input: AfterMigrateBatchHandlerInput) => {
+                    console.log('storage migration: batch processed');
+                },
             });
 
             await database.addCollections(this.collectionSettings);

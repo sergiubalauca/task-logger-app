@@ -5,6 +5,7 @@ import {
     ConnectivityStateService,
     HttpService,
     OfflineManagerService,
+    StoredRequestInput,
 } from '@core';
 import { WorkItem, WorkItemDto, WORK_ITEM_COLLECTION_NAME } from '@shared';
 import { Observable, firstValueFrom, map, switchMap } from 'rxjs';
@@ -65,12 +66,18 @@ export class WorkItemApiServce extends SyncBaseService {
                         description: workItem.description,
                     });
                 } else {
-                    return this.offlineManager.storeRequest(route, 'POST', {
-                        name: workItem.name,
-                        price: workItem.price,
-                        description: workItem.description,
-                        collection: WORK_ITEM_COLLECTION_NAME,
-                    });
+                    const storedRequest: StoredRequestInput = {
+                        url: route,
+                        type: 'POST',
+                        data: {
+                            name: workItem.name,
+                            price: workItem.price,
+                            description: workItem.description,
+                            collection: WORK_ITEM_COLLECTION_NAME,
+                        },
+                    };
+
+                    return this.offlineManager.storeRequest(storedRequest);
                 }
             })
         );
@@ -87,12 +94,18 @@ export class WorkItemApiServce extends SyncBaseService {
                         description: workItem.description,
                     });
                 } else {
-                    return this.offlineManager.storeRequest(route, 'POST', {
-                        name: workItem.name,
-                        price: workItem.price,
-                        description: workItem.description,
-                        collection: WORK_ITEM_COLLECTION_NAME,
-                    });
+                    const storedRequest: StoredRequestInput = {
+                        url: route,
+                        type: 'POST',
+                        data: {
+                            name: workItem.name,
+                            price: workItem.price,
+                            description: workItem.description,
+                            collection: WORK_ITEM_COLLECTION_NAME,
+                        },
+                    };
+
+                    return this.offlineManager.storeRequest(storedRequest);
                 }
             })
         );
@@ -106,9 +119,15 @@ export class WorkItemApiServce extends SyncBaseService {
                 if (status.isConnected) {
                     return this.httpService.makeDelete(route);
                 } else {
-                    return this.offlineManager.storeRequest(route, 'DELETE', {
-                        collection: WORK_ITEM_COLLECTION_NAME,
-                    });
+                    const storedRequest: StoredRequestInput = {
+                        url: route,
+                        type: 'DELETE',
+                        data: {
+                            collection: WORK_ITEM_COLLECTION_NAME,
+                        },
+                    };
+
+                    return this.offlineManager.storeRequest(storedRequest);
                 }
             })
         );

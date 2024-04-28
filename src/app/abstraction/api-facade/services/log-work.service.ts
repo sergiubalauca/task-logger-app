@@ -5,6 +5,7 @@ import {
     ConnectivityStateService,
     HttpService,
     OfflineManagerService,
+    StoredRequestInput,
 } from '@core';
 import { DailyWork, DailyWorkDto, LOGWORK_COLLECTION_NAME } from '@shared';
 import { Observable, firstValueFrom, map, switchMap } from 'rxjs';
@@ -96,10 +97,16 @@ export class LogWorkApiService extends SyncBaseService {
                         dailyWork,
                     });
                 } else {
-                    return this.offlineManager.storeRequest(route, 'POST', {
-                        dailyWork,
-                        collection: LOGWORK_COLLECTION_NAME,
-                    });
+                    const storedRequest: StoredRequestInput = {
+                        url: route,
+                        type: 'POST',
+                        data: {
+                            dailyWork,
+                            collection: LOGWORK_COLLECTION_NAME,
+                        },
+                    };
+
+                    return this.offlineManager.storeRequest(storedRequest);
                 }
             })
         );
@@ -112,9 +119,15 @@ export class LogWorkApiService extends SyncBaseService {
                 if (status.isConnected) {
                     return this.httpService.makeDelete(route);
                 } else {
-                    return this.offlineManager.storeRequest(route, 'DELETE', {
-                        collection: LOGWORK_COLLECTION_NAME,
-                    });
+                    const storedRequest: StoredRequestInput = {
+                        url: route,
+                        type: 'DELETE',
+                        data: {
+                            collection: LOGWORK_COLLECTION_NAME,
+                        },
+                    };
+
+                    return this.offlineManager.storeRequest(storedRequest);
                 }
             })
         );
@@ -129,10 +142,16 @@ export class LogWorkApiService extends SyncBaseService {
                         dailyWork,
                     });
                 } else {
-                    return this.offlineManager.storeRequest(route, 'POST', {
-                        dailyWork,
-                        collection: LOGWORK_COLLECTION_NAME,
-                    });
+                    const storedRequest: StoredRequestInput = {
+                        url: route,
+                        type: 'POST',
+                        data: {
+                            dailyWork,
+                            collection: LOGWORK_COLLECTION_NAME,
+                        },
+                    };
+
+                    return this.offlineManager.storeRequest(storedRequest);
                 }
             })
         );

@@ -14,10 +14,13 @@ interface StoredRequest {
     type: string;
     data: {
         collection: string;
+        [key: string]: unknown;
     };
     time: number;
     id: string;
 }
+
+export type StoredRequestInput = Omit<StoredRequest, 'time' | 'id'>;
 
 @Injectable({
     providedIn: 'root',
@@ -26,14 +29,14 @@ export class OfflineManagerService {
     private localRxDBStrategies = {
         doctor: this.doctorRepository,
         workItem: 'workItem',
-        logWork: 'logWork'
+        logWork: 'logWork',
     };
     constructor(
         private storage: Storage,
         private http: HttpClient,
         private httpService: HttpService,
         private toastService: ToastService,
-        private doctorRepository: DoctorRepository,
+        private doctorRepository: DoctorRepository
     ) {}
 
     public checkForEvents(): Observable<any> {
@@ -59,23 +62,22 @@ export class OfflineManagerService {
         );
     }
 
-    public async storeRequest(url, type, data) {
+    public async storeRequest(inputReq: StoredRequestInput) {
         await this.toastService.presentError(
             'Your data is stored locally because you seem to be offline.',
             3000
         );
 
         const action: StoredRequest = {
-            url,
-            type,
-            data,
+            url: inputReq.url,
+            type: inputReq.type,
+            data: inputReq.data,
             time: new Date().getTime(),
             id: Math.random()
                 .toString(36)
                 .replace(/[^a-z]+/g, '')
-                .substr(0, 5),
+                .slice(0, 5),
         };
-        // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
 
         const storeOperations = await this.storage.get(STORAGE_REQ_KEY);
         let storedObj = JSON.parse(storeOperations);
@@ -101,7 +103,10 @@ export class OfflineManagerService {
                 case HttpOperations.GET:
                     break;
                 case HttpOperations.POST:
-                    obs.push(this.httpService.makePost(op.url, op.data)
+                    // mongo id is not available in the local db so we need to make a sync request after each local request
+                    // or we need to use rxdb instead of mongo id
+                    obs.push(
+                        this.httpService.makePost(op.url, op.data)
                         // .pipe(
                         //     switchMap((res) => {
                         //         // return this.localRxDBStrategies[op.data.collection].

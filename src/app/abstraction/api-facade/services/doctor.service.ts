@@ -5,6 +5,7 @@ import {
     ConnectivityStateService,
     HttpService,
     OfflineManagerService,
+    StoredRequestInput,
 } from '@core';
 import { Doctor, DoctorDto, DOCTOR_COLLECTION_NAME } from '@shared';
 import { Observable, Subject, firstValueFrom, map, of, switchMap } from 'rxjs';
@@ -65,11 +66,17 @@ export class DoctorApiServce extends SyncBaseService {
                         phone: doctor.phone,
                     });
                 } else {
-                    return this.offlineManager.storeRequest(route, 'POST', {
-                        name: doctor.name,
-                        phone: doctor.phone,
-                        collection: DOCTOR_COLLECTION_NAME,
-                    });
+                    const storedRequest: StoredRequestInput = {
+                        url: route,
+                        type: 'POST',
+                        data: {
+                            name: doctor.name,
+                            phone: doctor.phone,
+                            collection: DOCTOR_COLLECTION_NAME,
+                        },
+                    };
+
+                    return this.offlineManager.storeRequest(storedRequest);
                 }
             })
         );
@@ -86,11 +93,17 @@ export class DoctorApiServce extends SyncBaseService {
                         phone: doctor.phone,
                     });
                 } else {
-                    return this.offlineManager.storeRequest(route, 'POST', {
-                        name: doctor.name,
-                        phone: doctor.phone,
-                        collection: DOCTOR_COLLECTION_NAME,
-                    });
+                    const storedRequest: StoredRequestInput = {
+                        url: route,
+                        type: 'POST',
+                        data: {
+                            name: doctor.name,
+                            phone: doctor.phone,
+                            collection: DOCTOR_COLLECTION_NAME,
+                        },
+                    };
+
+                    return this.offlineManager.storeRequest(storedRequest);
                 }
             })
         );
@@ -104,9 +117,15 @@ export class DoctorApiServce extends SyncBaseService {
                 if (status.isConnected) {
                     return this.httpService.makeDelete(route);
                 } else {
-                    return this.offlineManager.storeRequest(route, 'DELETE', {
-                        collection: DOCTOR_COLLECTION_NAME,
-                    });
+                    const storedRequest: StoredRequestInput = {
+                        url: route,
+                        type: 'DELETE',
+                        data: {
+                            collection: DOCTOR_COLLECTION_NAME,
+                        },
+                    };
+
+                    return this.offlineManager.storeRequest(storedRequest);
                 }
             })
         );

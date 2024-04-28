@@ -78,12 +78,16 @@
         <!-- checkbox for terms and conditions with external link to page -->
         <ion-item lines="none">
             <ion-checkbox
+                label-placement="end"
                 formControlName="termsAndConditions"
                 style="margin-right: 10px"
-            ></ion-checkbox>
-            <ion-label (click)="openTaCSite()">
+            >
+                I agree to the
+                <a (click)="openTaCSite()">Terms and Conditions</a>
+            </ion-checkbox>
+            <!-- <ion-label (click)="openTaCSite()">
                 I agree to the <a>Terms and Conditions</a>
-            </ion-label>
+            </ion-label> -->
         </ion-item>
     </form>
 </ion-content>

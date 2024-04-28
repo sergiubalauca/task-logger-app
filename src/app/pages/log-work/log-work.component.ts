@@ -111,7 +111,7 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
     }
 
     ngAfterContentChecked() {
-        this.observeDatetimeMonthChange2();
+        this.observeDatetimeMonthChange();
     }
 
     public async selectDate(
@@ -217,7 +217,8 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
             doctor.mongoId = doctorsIdToName.get(doctor.doctor) ?? '';
             doctor.patientGroup.patientArray.forEach((patient) => {
                 patient.workItemGroup.workItemProps.forEach((workItem) => {
-                    workItem.mongoId = workItemsIdToName.get(workItem.workItem) ?? '';
+                    workItem.mongoId =
+                        workItemsIdToName.get(workItem.workItem) ?? '';
                 });
             });
         });
@@ -225,7 +226,7 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
         return dailyWork;
     }
 
-    private observeDatetimeMonthChange2() {
+    private observeDatetimeMonthChange() {
         const daysInMonth: Map<string, number[]> = new Map([
             ['January', Array.from(Array(31).keys())],
             ['February', Array.from(Array(29).keys())],
@@ -267,9 +268,16 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
         ): string[] => {
             for (const mutation of mutationsList) {
                 if (mutation.type === 'attributes') {
+                    const a = document.querySelector('ion-datetime');
+                    const b =
+                        document.querySelector('ion-datetime')?.shadowRoot;
+                    const c = document
+                        .querySelector('ion-datetime')
+                        ?.shadowRoot?.querySelector('button');
+
                     const e = document
                         .querySelector('ion-datetime')
-                        ?.shadowRoot?.querySelector('ion-label')?.textContent;
+                        ?.shadowRoot?.querySelector('button')?.textContent;
                     if (e && e !== previous) {
                         previous = e;
 

@@ -4,6 +4,8 @@ import {
     Input,
     ViewChild,
     AfterViewInit,
+    inject,
+    ChangeDetectorRef,
 } from '@angular/core';
 import {
     ModalController,
@@ -46,6 +48,7 @@ export class SearcheableSelectComponent implements OnInit, AfterViewInit {
     private displayedOptionsSub$: BehaviorSubject<SearcheableSelectModel[]> =
         new BehaviorSubject([]);
     public displayedOptions$ = this.displayedOptionsSub$.asObservable();
+    private readonly cdr = inject(ChangeDetectorRef);
 
     public constructor(private modalCtrl: ModalController) {}
 
@@ -180,19 +183,22 @@ export class SearcheableSelectComponent implements OnInit, AfterViewInit {
         // expand the accordion where the search result is found
         const group =
             searchTerm && searchTerm !== ''
-                ? this.selectOptions.find(
-                      (item) =>
-                          item.description
-                              .toString()
-                              .toLowerCase()
-                              .includes(searchTerm.toLowerCase()) ||
-                          item.value
-                              .toString()
-                              .toLowerCase()
-                              .includes(searchTerm.toLowerCase())
-                  )?.group
+                ? this.selectOptions
+                      .filter(
+                          (item) =>
+                              item.description
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                              item.value
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase())
+                      )
+                      ?.map((s) => s.group)
                 : undefined;
 
+        this.cdr.detectChanges();
         if (group && this.ionAccordionGroup) {
             this.ionAccordionGroup.value = group;
         }

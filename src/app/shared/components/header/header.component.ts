@@ -2,21 +2,18 @@ import {
     ChangeDetectionStrategy,
     Component,
     HostListener,
-    Inject,
     Input,
     OnDestroy,
     OnInit,
-    Output,
+    input,
 } from '@angular/core';
 import { NavController, IonicModule, PopoverController } from '@ionic/angular';
-import { DOCUMENT, NgIf, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { SettingsPopoverComponent } from '../settings-popover/settings-popover.component';
 import { AuthFacade } from '@abstraction';
 import { LogOutModel } from '../../models';
 import { PlatformName, PlatformProvider } from '../../services';
 import { AlertService } from '../../alert';
-import { firstValueFrom } from 'rxjs';
-import { AuthenticationTokenProvider } from '@core';
 
 @Component({
     selector: 'app-header',
@@ -24,11 +21,15 @@ import { AuthenticationTokenProvider } from '@core';
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [IonicModule, NgIf, NgStyle],
+    imports: [IonicModule, NgStyle],
     providers: [AuthFacade, PlatformProvider, AlertService],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-    @Input() title: string;
+    title = input.required({
+        transform: (value: string) => {
+            return value.charAt(0).toUpperCase() + value.slice(1);
+        },
+    });
     @Input() public headerSubtitle: string;
     @Input() public backBtnEnabled: boolean;
     @Input() public backBtnIconClose: boolean;
@@ -38,8 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private navController: NavController,
         public popoverController: PopoverController,
         private authFacade: AuthFacade,
-        private platformProvider: PlatformProvider,
-        private authenticationTokenProvider: AuthenticationTokenProvider
+        private platformProvider: PlatformProvider
     ) {}
 
     public ngOnInit(): void {}

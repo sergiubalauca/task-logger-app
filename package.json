@@ -12,7 +12,9 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "ionic-run-ios":"ionic build --prod && ionic cap sync ios && ionic cap run ios -l --external",
+    "ionic-run-android":"ionic build --prod && ionic cap sync android && ionic cap run android -l --external"
   },
   "private": true,
   "dependencies": {

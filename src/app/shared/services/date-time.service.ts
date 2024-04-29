@@ -6,6 +6,14 @@ export class DateTimeService {
         return new Date();
     }
 
+    public isLeapYear(): boolean {
+        const currentYear = this.getCurrentDateTime().getFullYear();
+        return (
+            (currentYear % 4 === 0 && currentYear % 100 !== 0) ||
+            currentYear % 400 === 0
+        );
+    }
+
     public getDailyWorkId(date: Date): string {
         if (!date) {
             return null;

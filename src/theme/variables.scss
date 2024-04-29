@@ -1,77 +1,77 @@
-:root {
-    --ion-font-family: "Poppins-Regular", sans-serif;
-    --ion-font-family-italic: "Poppins-Italic", sans-serif;
-    --ion-font-family-medium: "Poppins-Medium", sans-serif;
-    --ion-font-family-mediumitalic: "Poppins-MediumItalic", sans-serif;
-    --ion-font-family-semibold: "Poppins-SemiBold", sans-serif;
-    --ion-font-family-semibolditalic: "Poppins-SemiBoldItalic", sans-serif;
-    --ion-font-family-bold: "Poppins-Bold", sans-serif;
-    --ion-font-family-bolditalic: "Poppins-BoldItalic", sans-serif;
-    --ion-font-family-extrabold: "Poppins-ExtraBold", sans-serif;
-    --ion-font-family-extrabolditalic: "Poppins-ExtraBoldItalic", sans-serif;
-    --ion-font-family-thin: "Poppins-Thin", sans-serif;
-    --ion-font-family-thinitalic: "Poppins-ThinItalic", sans-serif;
-    --ion-font-family-black: "Poppins-Black", sans-serif;
-    --ion-font-family-blackitalic: "Poppins-BlackItalic", sans-serif;
-    --ion-font-family-light: "Poppins-Light", sans-serif;
-    --ion-font-family-lightitalic: "Poppins-LightItalic", sans-serif;
-    --ion-font-family-extralight: "Poppins-ExtraLight", sans-serif;
-    --ion-font-family-extralightitalic: "Poppins-ExtraLightItalic", sans-serif;
+// :root {
+//     --ion-font-family: "Poppins-Regular", sans-serif;
+//     --ion-font-family-italic: "Poppins-Italic", sans-serif;
+//     --ion-font-family-medium: "Poppins-Medium", sans-serif;
+//     --ion-font-family-mediumitalic: "Poppins-MediumItalic", sans-serif;
+//     --ion-font-family-semibold: "Poppins-SemiBold", sans-serif;
+//     --ion-font-family-semibolditalic: "Poppins-SemiBoldItalic", sans-serif;
+//     --ion-font-family-bold: "Poppins-Bold", sans-serif;
+//     --ion-font-family-bolditalic: "Poppins-BoldItalic", sans-serif;
+//     --ion-font-family-extrabold: "Poppins-ExtraBold", sans-serif;
+//     --ion-font-family-extrabolditalic: "Poppins-ExtraBoldItalic", sans-serif;
+//     --ion-font-family-thin: "Poppins-Thin", sans-serif;
+//     --ion-font-family-thinitalic: "Poppins-ThinItalic", sans-serif;
+//     --ion-font-family-black: "Poppins-Black", sans-serif;
+//     --ion-font-family-blackitalic: "Poppins-BlackItalic", sans-serif;
+//     --ion-font-family-light: "Poppins-Light", sans-serif;
+//     --ion-font-family-lightitalic: "Poppins-LightItalic", sans-serif;
+//     --ion-font-family-extralight: "Poppins-ExtraLight", sans-serif;
+//     --ion-font-family-extralightitalic: "Poppins-ExtraLightItalic", sans-serif;
 
-    // app inner padding
-    --ion-app-inner-padding: 30px;
+//     // app inner padding
+//     --ion-app-inner-padding: 30px;
 
-    //primary
-    --ion-color-secondary: #117796;
-    --ion-color-primary-tint: #4ea3bd;
-    --ion-color-primary-shade: #3c90a9;
-    // --ion-color-background: #72bacc;
-    --ion-color-background: #8f73a7;
-    --ion-color-selected-shade: #b9dbe5;
-    --ion-color-selected-tint: #e7f1f5;
-    --ion-color-grey: #5b5b5b;
-    --ion-color-warning: #ffe58a;
+//     //primary
+//     --ion-color-secondary: #117796;
+//     --ion-color-primary-tint: #4ea3bd;
+//     --ion-color-primary-shade: #3c90a9;
+//     // --ion-color-background: #72bacc;
+//     --ion-color-background: #8f73a7;
+//     --ion-color-selected-shade: #b9dbe5;
+//     --ion-color-selected-tint: #e7f1f5;
+//     --ion-color-grey: #5b5b5b;
+//     --ion-color-warning: #ffe58a;
 
-    //accent colors
-    --ion-color-accent: #fd8f59;
-    --ion-color-accent-background: #ffdac7;
+//     //accent colors
+//     --ion-color-accent: #fd8f59;
+//     --ion-color-accent-background: #ffdac7;
 
-    //semantic colors
-    --ion-color-error: #f88881;
-    --ion-color-approval: #89daa9;
+//     //semantic colors
+//     --ion-color-error: #f88881;
+//     --ion-color-approval: #89daa9;
 
-    //neutral colors
-    --ion-color-dark-01: black;
-    --ion-color-dark-02: #3d3d3d;
-    --ion-color-dark-03: #5b5b5b;
-    --ion-color-dark-04: #797979;
-    --ion-color-dark-05: #020202;
-    --ion-color-dark-06: #010708;
-    --ion-color-dark-07: #a9a9a9;
-    --ion-color-dark-08: #6c6c6c;
-    --ion-color-light-01: #9b9b9b;
-    --ion-color-light-02: #dbdbdb;
-    --ion-color-light-04: #bcbcbc;
-    --ion-color-light-05: #d6d6d6;
-    --ion-color-light-07: #eeeeee;
-    --ion-color-light-08: #ffffff;
-    --ion-color-light-09: #dddddd;
-    --ion-color-light-10: #acd4e0;
-    --ion-color-light-11: #dadada;
+//     //neutral colors
+//     --ion-color-dark-01: black;
+//     --ion-color-dark-02: #3d3d3d;
+//     --ion-color-dark-03: #5b5b5b;
+//     --ion-color-dark-04: #797979;
+//     --ion-color-dark-05: #020202;
+//     --ion-color-dark-06: #010708;
+//     --ion-color-dark-07: #a9a9a9;
+//     --ion-color-dark-08: #6c6c6c;
+//     --ion-color-light-01: #9b9b9b;
+//     --ion-color-light-02: #dbdbdb;
+//     --ion-color-light-04: #bcbcbc;
+//     --ion-color-light-05: #d6d6d6;
+//     --ion-color-light-07: #eeeeee;
+//     --ion-color-light-08: #ffffff;
+//     --ion-color-light-09: #dddddd;
+//     --ion-color-light-10: #acd4e0;
+//     --ion-color-light-11: #dadada;
 
-    //shadow colors
-    --ion-color-shadow01: #8d8d8d40;
-    --ion-color-shadow02: #8d8d8d4d;
-    --ion-color-shadow03: #bfbfbf40;
+//     //shadow colors
+//     --ion-color-shadow01: #8d8d8d40;
+//     --ion-color-shadow02: #8d8d8d4d;
+//     --ion-color-shadow03: #bfbfbf40;
 
-    // theme
-    --ion-color-primary: #9a81b0;
-    --ion-color-theme: #8f73a7;
-    --ion-color-theme-warning: #c9765f;
-    --ion-color-theme-rgb: 143, 115, 167;
-    --ion-color-theme-contrast: #000000;
-    --ion-color-theme-contrast-rgb: 0, 0, 0;
-    --ion-color-theme-shade: #7e6593;
-    --ion-color-theme-tint: #9a81b0;
-    --ion-color-theme-light: #77c9d1;
-}
+//     // theme
+//     --ion-color-primary: #9a81b0;
+//     --ion-color-theme: #8f73a7;
+//     --ion-color-theme-warning: #c9765f;
+//     --ion-color-theme-rgb: 143, 115, 167;
+//     --ion-color-theme-contrast: #000000;
+//     --ion-color-theme-contrast-rgb: 0, 0, 0;
+//     --ion-color-theme-shade: #7e6593;
+//     --ion-color-theme-tint: #9a81b0;
+//     --ion-color-theme-light: #77c9d1;
+// }

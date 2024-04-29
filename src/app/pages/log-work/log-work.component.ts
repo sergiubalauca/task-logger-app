@@ -51,7 +51,7 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
     constructor(
         private modalService: ModalService,
         private logWorkFacade: LogWorkFacade,
-        private dailyWorkIdService: DateTimeService,
+        private dateTimeService: DateTimeService,
         private logWorkApiService: LogWorkApiService,
         private workItemRepository: WorkItemRepository,
         private doctorRepository: DoctorRepository
@@ -131,9 +131,7 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
 
         const modalData = await this.modalService.onDidDismiss();
 
-        const docId = this.dailyWorkIdService.getDailyWorkId(
-            new Date(chosenDate)
-        );
+        const docId = this.dateTimeService.getDailyWorkId(new Date(chosenDate));
         if (modalData.data) {
             if (modalData.data.isDelete) {
                 const mongoIdOfDoc =
@@ -229,7 +227,12 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
     private observeDatetimeMonthChange() {
         const daysInMonth: Map<string, number[]> = new Map([
             ['January', Array.from(Array(31).keys())],
-            ['February', Array.from(Array(29).keys())],
+            [
+                'February',
+                this.dateTimeService.isLeapYear()
+                    ? Array.from(Array(29).keys())
+                    : Array.from(Array(28).keys()),
+            ],
             ['March', Array.from(Array(31).keys())],
             ['April', Array.from(Array(30).keys())],
             ['May', Array.from(Array(31).keys())],
@@ -261,20 +264,17 @@ export class LogWorkComponent implements OnInit, AfterContentChecked {
         let datesToQuery: string[] = [];
 
         const targetNode = document.querySelector('ion-datetime');
-        const config = { attributes: true, childList: true, subtree: true };
+        const config: MutationObserverInit = {
+            attributes: true,
+            childList: true,
+            subtree: true,
+        };
         const callbackProcess = (
             mutationsList: { type: string }[],
             _observer: unknown
         ): string[] => {
             for (const mutation of mutationsList) {
                 if (mutation.type === 'attributes') {
-                    const a = document.querySelector('ion-datetime');
-                    const b =
-                        document.querySelector('ion-datetime')?.shadowRoot;
-                    const c = document
-                        .querySelector('ion-datetime')
-                        ?.shadowRoot?.querySelector('button');
-
                     const e = document
                         .querySelector('ion-datetime')
                         ?.shadowRoot?.querySelector('button')?.textContent;

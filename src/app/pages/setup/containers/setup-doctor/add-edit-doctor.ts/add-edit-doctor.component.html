@@ -36,11 +36,11 @@
                     interface="alert"
                     (ionChange)="setPhoneMask($event)"
                 >
-                    <ion-select-option
-                        [value]="country.value"
-                        *ngFor="let country of countryListIcons"
-                        >{{ country.name }}</ion-select-option
-                    >
+                    @for (country of countryListIcons; track $index) {
+                    <ion-select-option [value]="country.value">{{
+                        country.name
+                    }}</ion-select-option>
+                    }
                 </ion-select>
             </ion-input>
         </ion-item>

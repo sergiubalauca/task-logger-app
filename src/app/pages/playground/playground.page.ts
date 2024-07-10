@@ -112,3 +112,144 @@ export class PlaygroundPage implements OnInit, AfterViewInit {
         { id }: RandomUser
     ) => id.value;
 }
+
+const greatestNumberOfRepeatedCharacters = (s: string): string => {
+    const separateCharacters = s.split(' ');
+    const maxWordMap = new Map<string, number>();
+
+    separateCharacters.forEach((word) => {
+        const wordMap = new Map<string, number>();
+        const characters = word.split('');
+
+        characters.forEach((char) => {
+            if (wordMap.has(char)) {
+                wordMap.set(char, wordMap.get(char) + 1);
+            } else {
+                wordMap.set(char, 1);
+            }
+        });
+
+        const maxChar = Array.from(wordMap.entries()).reduce((a, b) =>
+            a[1] > b[1] ? a : b
+        );
+        maxWordMap.set(word, maxChar[1]);
+    });
+
+    return Array.from(maxWordMap.entries()).reduce((a, b) =>
+        a[1] > b[1] ? a : b
+    )[0];
+};
+
+const smallestDifferenceBetweenDates = (strArr: string[]) => {
+    // str = ['1:10pm', '4:40am', '5:00pm']
+    const dates = strArr.map((date) => {
+        const [time, ampm] = date.split(' ');
+        const [hours, minutes] = time.split(':').map(Number);
+
+        return {
+            hours: hours + (ampm === 'pm' ? 12 : 0),
+            minutes,
+        };
+    });
+
+    for (let i = 0; i < dates.length; i++) {
+        for (let j = i + 1; j < dates.length; j++) {
+            const date: Date = new Date();
+            date.setHours(dates[i].hours);
+            date.setMinutes(dates[i].minutes);
+
+            const nextDate: Date = new Date();
+            nextDate.setHours(dates[j].hours);
+            nextDate.setMinutes(dates[j].minutes);
+
+            const difference = Math.abs(date.getTime() - nextDate.getTime());
+
+            if (i === 0 && j === 1) {
+                var minDiff = difference;
+            } else {
+                minDiff = Math.min(minDiff, difference);
+            }
+        }
+    }
+
+    return minDiff;
+};
+
+// ===========
+// function StringChallenge(strArr) {
+//     const mappedDates = strArr.map((date) => {
+//       const indexOfA = date.indexOf('a');
+//       const indexOfP = date.indexOf('p');
+
+//       const idx = indexOfA > indexOfP ? indexOfA : indexOfP;
+
+//       const { hm, merid } = { hm: date.substring(0, idx), merid: date.substring(idx) };
+//       const [hour, min] = hm.split(':');
+//       let meridHour = hour;
+
+//       // console.log('GSB merid === "pm": ', merid === "pm")
+//       // console.log('GSB merid === "am": ', merid === "am")
+//       // console.log('GSB hour === 12: ', hour === '12')
+
+//       // console.log('GSB hour, min, merid: ', hour, min, merid)
+//       // ===================================
+//       if (merid === "pm" && hour !== '12') {
+//         meridHour = Number(meridHour) + 12;
+//       }
+//       if (merid === "am" && hour === '12') {
+//         meridHour = 0
+//       }
+//       // ===================================
+
+//     // console.log('GSB meridHour: ', meridHour);
+
+//       // const meridHour = merid === 'pm' ? 12 : 0; // add extra 12 hours if post merid
+//       const parseHours = Number(meridHour);
+
+//       return {
+//         hours: parseHours,
+//         min
+//       }
+//     });
+
+//     let smallestDiff;
+
+//     // one loop is not enough, I need to re iterate each element over the entire list, not sequentially 2 at a time
+//     for (let i = 0; i < mappedDates.length; i++) {
+//       for (let j = i + 1; j < mappedDates.length; j++) {
+//         const date = new Date();
+//         const nextDate = new Date();
+
+//         date.setHours(mappedDates[i].hours);
+//         date.setMinutes(mappedDates[i].min);
+
+//         // based on failing test case ["10:00am", "11:45pm", "5:00am", "12:01am"],
+//         // I adapted the logic for when the hour is 0, to increment the day.
+//         // I still feel it'a a bit odd, since there was no such specification.
+//         // I initially assumed that all hours are within the same day.
+//         if (mappedDates[i].hours === 0) {
+//           date.setDate(date.getDate() + 1);
+//         }
+
+//         nextDate.setHours(mappedDates[j].hours);
+//         nextDate.setMinutes(mappedDates[j].min);
+//         if (mappedDates[j].hours === 0) {
+//           nextDate.setDate(nextDate.getDate() + 1);
+//         }
+
+//         const diff = Math.abs(date.getTime() - nextDate.getTime());
+
+//         // initialize smallestDiff on first iteration
+//         if (i === 0 && j === 1) smallestDiff = diff;
+
+//         smallestDiff = Math.min(smallestDiff, diff);
+//       }
+//     }
+
+//     const smallestDiffInMinutes = smallestDiff / 60000;
+//     return smallestDiffInMinutes;
+
+//   }
+
+//   // keep this function call here
+//   console.log(StringChallenge(readline()));

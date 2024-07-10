@@ -277,6 +277,10 @@ export class LogWorkRepository {
                                                     workItem: {
                                                         name: workItemProp
                                                             .workItem.name,
+                                                        mongoId:
+                                                            workItemProp
+                                                                .workItem
+                                                                .mongoId,
                                                     },
                                                     numberOfWorkItems:
                                                         workItemProp.numberOfWorkItems,

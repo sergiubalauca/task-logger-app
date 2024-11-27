@@ -31,7 +31,6 @@ import {
     selector: 'app-pacient',
     templateUrl: './pacient.component.html',
     styleUrls: ['./pacient.component.scss'],
-    standalone: true,
     imports: [
         NgIf,
         FormsModule,
@@ -45,7 +44,7 @@ import {
         UppercaseDirective,
         AddButtonComponent
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PacientComponent implements OnInit {
     @Output() goToWorkItem: EventEmitter<{

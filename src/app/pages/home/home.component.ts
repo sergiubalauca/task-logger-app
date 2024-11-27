@@ -6,8 +6,7 @@ import { HeaderComponent } from '../../shared/components/header/header.component
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
-    standalone: true,
-    imports: [HeaderComponent, IonicModule],
+    imports: [HeaderComponent, IonicModule]
 })
 export class HomeComponent implements OnInit {
     constructor(private navController: NavController) {}

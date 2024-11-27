@@ -41,8 +41,7 @@ import { ColorFacade, DoctorFacade, WorkItemFacade } from '@abstraction';
             multi: true,
         },
     ],
-    standalone: true,
-    imports: [IonicModule, FormsModule, CommonModule, TranslateErrorPipe],
+    imports: [IonicModule, FormsModule, CommonModule, TranslateErrorPipe]
 })
 export class SearcheableSelectInputComponent
     implements ControlValueAccessor, OnDestroy

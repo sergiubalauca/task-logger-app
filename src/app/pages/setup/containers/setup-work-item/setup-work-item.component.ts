@@ -22,7 +22,6 @@ import { WorkItemApiServce, WorkItemFacade } from '@abstraction';
     selector: 'app-setup-work-item',
     templateUrl: './setup-work-item.component.html',
     styleUrls: ['./setup-work-item.component.scss'],
-    standalone: true,
     imports: [
         HeaderComponent,
         IonicModule,
@@ -30,7 +29,7 @@ import { WorkItemApiServce, WorkItemFacade } from '@abstraction';
         ItemSlidingCardComponent,
     ],
     providers: [ModalService, WorkItemApiServce],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SetupWorkItemComponent implements OnInit {
     public workItems$: Observable<ItemSlidingProps[]>;

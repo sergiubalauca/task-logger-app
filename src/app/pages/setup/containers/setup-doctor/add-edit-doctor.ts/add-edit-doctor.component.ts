@@ -31,7 +31,6 @@ import { IonSelectCustomEvent, SelectChangeEventDetail } from '@ionic/core';
     selector: 'app-add-edit-doctor',
     templateUrl: './add-edit-doctor.component.html',
     styleUrls: ['./add-edit-doctor.component.scss'],
-    standalone: true,
     providers: [ModalService, ModalController, PhoneNumberMaskService],
     imports: [
         MaskitoDirective,
@@ -43,7 +42,7 @@ import { IonSelectCustomEvent, SelectChangeEventDetail } from '@ionic/core';
         ThrottleButtonDirective,
         UppercaseDirective,
         TranslateErrorPipe,
-    ],
+    ]
 })
 export class AddEditDoctorComponent implements OnInit {
     public doctorForm: FormGroup;

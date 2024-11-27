@@ -29,7 +29,6 @@ import { FormReducer } from '../../custom-state/reducer/form.reducer';
     selector: 'app-time-tracking',
     templateUrl: './time-tracking.component.html',
     styleUrls: ['./time-tracking.component.scss'],
-    standalone: true,
     imports: [
         NgIf,
         FormsModule,
@@ -46,7 +45,7 @@ import { FormReducer } from '../../custom-state/reducer/form.reducer';
         AddButtonComponent,
     ],
     providers: [],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimeTrackingComponent {
     @Input() public chosenDate: string;

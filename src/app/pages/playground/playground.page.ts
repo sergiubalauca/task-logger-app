@@ -33,15 +33,13 @@ import { ActivatedRoute, Router } from '@angular/router';
     selector: 'app-home',
     templateUrl: 'playground.page.html',
     styleUrls: ['playground.page.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         TestComponent,
         CommonModule,
         Test2Component,
         Test3Component,
-    ],
-    // providers: [UserService],
+    ]
 })
 export class PlaygroundPage implements OnInit, AfterViewInit {
     // public users$: Observable<RandomUser[]> = of([]);

@@ -20,9 +20,8 @@ import { UserService } from '../../services';
     selector: 'app-test3-child',
     templateUrl: './test3-child.component.html',
     styleUrls: ['./test3-child.component.scss'],
-    standalone: true,
     imports: [CommonModule, IonicModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Test3ChildComponent implements OnInit {
     public user$: Observable<RandomUser> = this.activatedRoute.data.pipe(

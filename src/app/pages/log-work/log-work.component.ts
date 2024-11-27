@@ -36,10 +36,9 @@ import { DoctorRepository, WorkItemRepository } from '@database';
     selector: 'app-log-work',
     templateUrl: './log-work.component.html',
     styleUrls: ['./log-work.component.scss'],
-    standalone: true,
     imports: [HeaderComponent, IonicModule, CommonModule],
     providers: [],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LogWorkComponent implements OnInit, AfterContentChecked {
     public newMonthChangedEvent: StateSubject<string[]> = new StateSubject([]);

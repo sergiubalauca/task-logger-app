@@ -7,7 +7,6 @@ import { NgIf, NgStyle } from '@angular/common';
     templateUrl: './animated-arrows.component.html',
     styleUrls: ['./animated-arrows.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [IonicModule, NgIf, NgStyle],
+    imports: [IonicModule, NgIf, NgStyle]
 })
 export class AnimatedArrowsComponent {}

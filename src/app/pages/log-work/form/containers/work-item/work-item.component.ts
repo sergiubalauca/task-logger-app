@@ -31,7 +31,6 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
     selector: 'app-work-item',
     templateUrl: './work-item.component.html',
     styleUrls: ['./work-item.component.scss'],
-    standalone: true,
     imports: [
         NgIf,
         FormsModule,
@@ -47,7 +46,7 @@ import { FormSelector } from '../../custom-state/selector/form.selector';
         UppercaseDirective,
         AddButtonComponent,
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkItemComponent implements OnInit {
     protected readonly workItemStrategy = WORK_ITEM_COLLECTION_NAME;

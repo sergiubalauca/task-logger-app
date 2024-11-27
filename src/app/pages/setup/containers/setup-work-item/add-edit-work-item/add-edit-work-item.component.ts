@@ -33,7 +33,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: 'app-add-edit-work-item',
     templateUrl: './add-edit-work-item.component.html',
     styleUrls: ['./add-edit-work-item.component.scss'],
-    standalone: true,
     providers: [ModalService, ModalController],
     imports: [
         IonicModule,
@@ -44,7 +43,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         ThrottleButtonDirective,
         UppercaseDirective,
         TranslateErrorPipe,
-    ],
+    ]
 })
 export class AddEditWorkItemComponent implements OnInit {
     public workItemForm: FormGroup;

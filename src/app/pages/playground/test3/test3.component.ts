@@ -14,9 +14,8 @@ import { RandomUser } from 'src/app/shared/models/random-user';
     selector: 'app-test3',
     templateUrl: './test3.component.html',
     styleUrls: ['./test3.component.scss'],
-    standalone: true,
     imports: [CommonModule, IonicModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Test3Component implements OnInit {
     @Input({ required: true }) public user!: RandomUser;

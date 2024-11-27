@@ -25,7 +25,6 @@ import { Browser } from '@capacitor/browser';
     selector: 'app-register',
     templateUrl: './register.page.html',
     styleUrls: ['./register.page.scss'],
-    standalone: true,
     imports: [
         CommonModule,
         IonicModule,
@@ -34,7 +33,7 @@ import { Browser } from '@capacitor/browser';
         TranslateModule,
     ],
     providers: [AuthFacade, UserStorageService],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RegisterPage implements OnInit {
     public form: FormGroup;

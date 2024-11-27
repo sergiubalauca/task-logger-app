@@ -43,7 +43,6 @@ import { TimeTrackingComponent } from '../time-tracking/time-tracking.component'
     selector: 'app-doctor',
     templateUrl: './doctor.component.html',
     styleUrls: ['./doctor.component.scss'],
-    standalone: true,
     imports: [
         NgIf,
         FormsModule,
@@ -60,7 +59,7 @@ import { TimeTrackingComponent } from '../time-tracking/time-tracking.component'
         AddButtonComponent
     ],
     providers: [],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DoctorComponent {
     @Input() public chosenDate: string;

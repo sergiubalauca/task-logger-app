@@ -19,7 +19,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     selector: 'app-log-in',
     templateUrl: './log-in.page.html',
     styleUrls: ['./log-in.page.scss'],
-    standalone: true,
     imports: [
         CommonModule,
         IonicModule,
@@ -28,7 +27,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
         TranslateModule,
     ],
     providers: [AuthFacade, UserStorageService],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LogInPage implements OnInit {
     public form: FormGroup;

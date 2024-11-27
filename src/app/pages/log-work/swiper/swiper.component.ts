@@ -47,7 +47,6 @@ const initSwiper = () => register();
     templateUrl: './swiper.component.html',
     styleUrls: ['./swiper.component.scss'],
     providers: [MultiStepFormService],
-    standalone: true,
     imports: [
         IonicModule,
         DoctorComponent,
@@ -57,7 +56,7 @@ const initSwiper = () => register();
         TimeTrackingComponent,
         AnimatedArrowsComponent,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SwiperComponent implements OnInit, OnDestroy {
     @Input() public chosenDate: string;

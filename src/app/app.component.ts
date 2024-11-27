@@ -7,8 +7,7 @@ import { TextZoom } from '@capacitor/text-zoom';
     selector: 'app-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
-    standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule]
 })
 export class AppComponent implements OnInit {
     public title = 'demo-angular-jest';

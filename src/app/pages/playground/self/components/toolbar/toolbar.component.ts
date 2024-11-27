@@ -9,8 +9,7 @@ import { PayLocationService } from '../../services/pay-location.service';
     selector: 'app-toolbar',
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
-    standalone: true,
-    imports: [CommonModule, IonicModule],
+    imports: [CommonModule, IonicModule]
 })
 export class ToolbarComponent implements OnInit {
     public saveButtonEnabled$: Observable<boolean> = of(false);

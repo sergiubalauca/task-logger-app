@@ -20,7 +20,6 @@ import { BehaviorSubject, map } from 'rxjs';
     selector: 'app-search-select',
     templateUrl: './searcheable-select.component.html',
     styleUrls: ['./searcheable-select.component.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         NgIf,
@@ -28,7 +27,7 @@ import { BehaviorSubject, map } from 'rxjs';
         NgClass,
         AsyncPipe,
         SuppressTouchMoveDirective,
-    ],
+    ]
 })
 export class SearcheableSelectComponent implements OnInit, AfterViewInit {
     @Input() public selectOptions: SearcheableSelectModel[];

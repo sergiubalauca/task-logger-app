@@ -15,9 +15,8 @@ import { ItemSlidingProps } from './item-sliding-props.interface';
     selector: 'app-item-sliding-card',
     templateUrl: './item-sliding-card.component.html',
     styleUrls: ['./item-sliding-card.component.scss'],
-    standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, IonicModule, ThrottleButtonDirective],
+    imports: [CommonModule, IonicModule, ThrottleButtonDirective]
 })
 export class ItemSlidingCardComponent implements OnInit {
     @Input() itemSlidingProps: ItemSlidingProps;

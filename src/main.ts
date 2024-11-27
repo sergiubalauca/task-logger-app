@@ -1,9 +1,4 @@
-import {
-    APP_INITIALIZER,
-    enableProdMode,
-    importProvidersFrom,
-    Injector,
-} from '@angular/core';
+import { enableProdMode, importProvidersFrom, Injector, inject, provideAppInitializer } from '@angular/core';
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
 import { CommonModule, LOCATION_INITIALIZED } from '@angular/common';
@@ -92,24 +87,18 @@ bootstrapApplication(AppComponent, {
         ),
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         provideHttpClient(withInterceptorsFromDi()),
-        {
-            provide: APP_INITIALIZER,
-            useFactory: initUserProviderFactory,
-            deps: [ConnectivityService, Network, ConnectivityStateService],
-            multi: true,
-        },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: appInitializerTranslateFactory,
-            deps: [TranslateService, Injector],
-            multi: true,
-        },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: appIonicStoragesInitializer,
-            deps: [Storage],
-            multi: true,
-        },
+        provideAppInitializer(() => {
+        const initializerFn = (initUserProviderFactory)(inject(ConnectivityService));
+        return initializerFn();
+      }),
+        provideAppInitializer(() => {
+        const initializerFn = (appInitializerTranslateFactory)(inject(TranslateService), inject(Injector));
+        return initializerFn();
+      }),
+        provideAppInitializer(() => {
+        const initializerFn = (appIonicStoragesInitializer)(inject(Storage));
+        return initializerFn();
+      }),
 
         Storage,
         TranslateService,

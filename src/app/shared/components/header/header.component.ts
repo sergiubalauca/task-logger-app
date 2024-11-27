@@ -20,9 +20,8 @@ import { AlertService } from '../../alert';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [IonicModule, NgStyle],
-    providers: [AuthFacade, PlatformProvider, AlertService],
+    providers: [AuthFacade, PlatformProvider, AlertService]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
     title = input.required({

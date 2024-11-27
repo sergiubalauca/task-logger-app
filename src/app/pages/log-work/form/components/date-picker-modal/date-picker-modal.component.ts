@@ -9,8 +9,7 @@ import {
     selector: 'app-date-picker-modal',
     templateUrl: './date-picker-modal.component.html',
     styleUrls: ['./date-picker-modal.component.scss'],
-    standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule]
 })
 export class DatePickerModalComponent {
     @Input() public date: string;

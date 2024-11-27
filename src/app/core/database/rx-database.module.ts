@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RxDatabaseProvider } from './rx-database.provider';
 import { DoctorRepository } from './repositories/doctor.repository';
@@ -23,12 +23,10 @@ const syncWithServer =
         DoctorRepository,
         WorkItemRepository,
         LogWorkRepository,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: appInitializer,
-            multi: true,
-            deps: [RxDatabaseProvider, SyncConfigurationService],
-        },
+        provideAppInitializer(() => {
+        const initializerFn = (appInitializer)(inject(RxDatabaseProvider), inject(SyncConfigurationService));
+        return initializerFn();
+      }),
         // {
         //     provide: APP_INITIALIZER,
         //     useFactory: syncWithServer,

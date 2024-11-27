@@ -6,8 +6,7 @@ import { HeaderComponent } from '../../shared/components/header/header.component
     selector: 'app-setup',
     templateUrl: './setup.component.html',
     styleUrls: ['./setup.component.scss'],
-    standalone: true,
-    imports: [HeaderComponent, IonicModule],
+    imports: [HeaderComponent, IonicModule]
 })
 export class SetupComponent implements OnInit {
     constructor(private navController: NavController) {}

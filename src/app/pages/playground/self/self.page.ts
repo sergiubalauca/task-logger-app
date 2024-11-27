@@ -8,13 +8,12 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     selector: 'app-self',
     templateUrl: './self.page.html',
     styleUrls: ['./self.page.scss'],
-    standalone: true,
     imports: [
         CommonModule,
         IonicModule,
         LocationSelectorComponent,
         ToolbarComponent,
-    ],
+    ]
 })
 export class SelfPage implements OnInit {
     constructor() {}

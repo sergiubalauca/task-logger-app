@@ -14,12 +14,11 @@ import { IonicModule } from '@ionic/angular';
     templateUrl: './test2.component.html',
     styleUrls: ['./test2.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [
         IonicModule,
         NgFor,
         AsyncPipe,
-    ],
+    ]
 })
 export class Test2Component implements OnInit {
   @Input() data: Observable<any>;

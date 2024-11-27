@@ -6,8 +6,7 @@ import { PayLocation } from '../../models/pay-location.interface';
     selector: 'app-location',
     templateUrl: './location.component.html',
     styleUrls: ['./location.component.scss'],
-    standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule]
 })
 export class LocationComponent implements OnInit {
     @Input({

@@ -8,9 +8,8 @@ import { Browser } from '@capacitor/browser';
     templateUrl: './settings-popover.component.html',
     styleUrls: ['./settings-popover.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [IonicModule, NgIf, NgStyle],
-    providers: [],
+    providers: []
 })
 export class SettingsPopoverComponent {
     public constructor(private popoverController: PopoverController) {}

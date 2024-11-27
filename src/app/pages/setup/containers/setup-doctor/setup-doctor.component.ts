@@ -22,7 +22,6 @@ import { DoctorApiServce, DoctorFacade } from '@abstraction';
     selector: 'app-setup-doctor',
     templateUrl: './setup-doctor.component.html',
     styleUrls: ['./setup-doctor.component.scss'],
-    standalone: true,
     imports: [
         HeaderComponent,
         IonicModule,
@@ -31,7 +30,7 @@ import { DoctorApiServce, DoctorFacade } from '@abstraction';
         ItemSlidingCardComponent,
     ],
     providers: [ModalService, DoctorApiServce],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SetupDoctorComponent implements OnInit {
     public doctors$: Observable<ItemSlidingProps[]>;

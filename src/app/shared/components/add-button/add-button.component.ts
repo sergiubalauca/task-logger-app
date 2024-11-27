@@ -13,8 +13,7 @@ import { NgIf, NgStyle } from '@angular/common';
     templateUrl: './add-button.component.html',
     styleUrls: ['./add-button.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [IonicModule, NgIf, NgStyle],
+    imports: [IonicModule, NgIf, NgStyle]
 })
 export class AddButtonComponent {
     @Input() buttonLabel: string;

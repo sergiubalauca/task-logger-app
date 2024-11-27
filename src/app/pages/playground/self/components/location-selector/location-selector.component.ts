@@ -10,8 +10,7 @@ import { LocationComponent } from '../location/location.component';
     selector: 'app-location-selector',
     templateUrl: './location-selector.component.html',
     styleUrls: ['./location-selector.component.scss'],
-    standalone: true,
-    imports: [CommonModule, IonicModule, LocationComponent],
+    imports: [CommonModule, IonicModule, LocationComponent]
 })
 export class LocationSelectorComponent implements OnInit {
     public paymentLocations$: Observable<PayLocation[]> = of(null);

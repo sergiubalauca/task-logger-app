@@ -10,8 +10,7 @@ import { CommonModule } from '@angular/common';
     selector: 'app-reports',
     templateUrl: './reports.component.html',
     styleUrls: ['./reports.component.scss'],
-    standalone: true,
-    imports: [HeaderComponent, IonicModule, CommonModule],
+    imports: [HeaderComponent, IonicModule, CommonModule]
 })
 export class ReportsComponent {
     private readonly reportsService = inject(ReportsService);

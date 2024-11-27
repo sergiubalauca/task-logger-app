@@ -27,8 +27,7 @@ import { CommonModule, NgIf } from '@angular/common';
             multi: true,
         },
     ],
-    standalone: true,
-    imports: [IonicModule, TranslateErrorPipe, CommonModule],
+    imports: [IonicModule, TranslateErrorPipe, CommonModule]
 })
 export class DatePickerComponent implements OnInit, ControlValueAccessor {
     @Input() public attachedFormControl: AbstractControl;

@@ -7,11 +7,7 @@ import {
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
 import { CommonModule, LOCATION_INITIALIZED } from '@angular/common';
-import {
-    withInterceptorsFromDi,
-    provideHttpClient,
-    HttpClient,
-} from '@angular/common/http';
+import { withInterceptorsFromDi, provideHttpClient, HttpClient } from '@angular/common/http';
 import { AppRoutingModule } from './app/app-routing.module';
 import { pageTransitionAnimations } from '@shared';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';

@@ -1,15 +1,12 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpService } from './services';
 import { HttpErrorInterceptor } from './interceptors';
 import { ToastService } from '@shared';
 import { EnvironmentConfig, ENV_CONFIG } from './environment-config.interface';
 
-@NgModule({
-    declarations: [],
-    imports: [CommonModule, HttpClientModule],
-})
+@NgModule({ declarations: [], imports: [CommonModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class ApiModule {
     public static forRoot(
         config: EnvironmentConfig

@@ -1,4 +1,4 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { UserStorageService } from '@shared';
 import { AuthenticationTokenProvider } from './providers';
@@ -8,11 +8,7 @@ import { TokenInterceptor } from './providers/token.interceptor';
 import { TokenProvider } from './providers/token-provider';
 import { AuthGuardService, AuthService } from './services';
 
-@NgModule({
-    declarations: [],
-
-    imports: [HttpClientModule],
-})
+@NgModule({ declarations: [], imports: [], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AuthModule {
     public static forRoot(config: {
         tokenProvider: Type<TokenProvider>;

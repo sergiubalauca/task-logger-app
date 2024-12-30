@@ -8,3 +8,7 @@ $ npx cap migrate
 ```
 $ ./gradlew bundleRelease
 ```
+
+## Update all dependencies
+```
+$ ncu -u

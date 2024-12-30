@@ -6,8 +6,8 @@ import {
     ControlValueAccessor,
     NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import format from 'date-fns/format';
-import formatISO from 'date-fns/formatISO';
+import { format } from 'date-fns';
+import { formatISO } from 'date-fns';
 import { DatePickerModalComponent } from '../date-picker-modal';
 import {
     DatePickerPresentationTypeEnum,

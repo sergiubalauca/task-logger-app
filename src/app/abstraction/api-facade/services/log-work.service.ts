@@ -20,7 +20,7 @@ export class LogWorkApiService extends SyncBaseService {
     public async startSyncing(): Promise<void> {
         this.doneSubject.next(false);
 
-        console.time('Work Items rxdb duration');
+        console.time('Daily Works rxdb duration');
 
         const dailyWorks = await this.graphqlQuery({
             query: `
@@ -77,7 +77,7 @@ export class LogWorkApiService extends SyncBaseService {
         }
         this.doneSubject.next(true);
 
-        console.timeEnd('Work Items rxdb duration');
+        console.timeEnd('Daily Works rxdb duration');
     }
     constructor(
         private httpService: HttpService,

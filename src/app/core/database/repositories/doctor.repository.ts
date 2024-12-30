@@ -172,10 +172,10 @@ export class DoctorRepository {
                 .find()
                 .exec();
 
-            if (doctorsToDelete) {
-                doctorsToDelete.forEach((workItem) => {
-                    workItem.remove();
-                });
+            if (doctorsToDelete && doctorsToDelete.length) {
+                for (const doctor of doctorsToDelete) {
+                    await doctor.remove();
+                }
             }
         }
     }

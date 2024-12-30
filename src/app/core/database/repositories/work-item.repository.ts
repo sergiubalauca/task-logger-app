@@ -173,10 +173,10 @@ export class WorkItemRepository {
                 .find()
                 .exec();
 
-            if (workItemsToDelete) {
-                workItemsToDelete.forEach((workItem) => {
-                    workItem.remove();
-                });
+            if (workItemsToDelete && workItemsToDelete.length > 0) {
+                for (const workItem of workItemsToDelete) {
+                    await workItem.remove();
+                }
             }
         }
     }

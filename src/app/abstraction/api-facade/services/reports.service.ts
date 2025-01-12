@@ -46,15 +46,22 @@ export class ReportsService {
             );
     }
 
-    public sortReportsByMonth(
+    public sortReportsByYearAndMonth(
         reports: ReportDto[],
         order: 'desc' | 'asc' = 'desc'
     ): ReportDto[] {
         return reports.sort((a, b) => {
-            const aMonth = this.monthIndices[a['monthlyReports']['month']];
-            const bMonth = this.monthIndices[b['monthlyReports']['month']];
+            const aYear = parseInt(a['monthlyReports']['year']);
+            const bYear = parseInt(b['monthlyReports']['year']);
 
-            return order === 'desc' ? bMonth - aMonth : aMonth - bMonth;
+            if (aYear === bYear) {
+                const aMonth = this.monthIndices[a['monthlyReports']['month']];
+                const bMonth = this.monthIndices[b['monthlyReports']['month']];
+
+                return order === 'desc' ? bMonth - aMonth : aMonth - bMonth;
+            }
+
+            return order === 'desc' ? bYear - aYear : aYear - bYear;
         });
     }
 }

@@ -18,6 +18,7 @@ export class ReportsComponent {
         {
             monthlyReports: {
                 month: 'January',
+                year: '2021',
                 numberOfElements: 1,
                 totalPrice: 100,
                 workedHours: 10,
@@ -40,6 +41,7 @@ export class ReportsComponent {
         {
             monthlyReports: {
                 month: 'February',
+                year: '2021',
                 numberOfElements: 2,
                 totalPrice: 200,
                 workedHours: 20,
@@ -68,6 +70,7 @@ export class ReportsComponent {
                     reports (filters:{  }){
                         monthlyReports{
                             month,
+                            year,
                             numberOfElements,
                             totalPrice,
                             workedHours,
@@ -85,7 +88,7 @@ export class ReportsComponent {
         .pipe(
             map((reports) => {
                 return this.reportsService
-                    .sortReportsByMonth(reports)
+                    .sortReportsByYearAndMonth(reports)
                     .map((report) => {
                         return {
                             ...report,

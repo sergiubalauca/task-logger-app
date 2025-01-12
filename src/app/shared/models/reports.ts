@@ -1,6 +1,7 @@
 export interface ReportDto {
     monthlyReports: {
         month: string;
+        year: string;
         workItem: {
             id: string;
             name: string;

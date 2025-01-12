@@ -2,7 +2,6 @@
     <ion-toolbar>
         <ion-title> Home Comp </ion-title>
     </ion-toolbar>
-    <!-- <ion-button>Press me</ion-button> -->
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -12,22 +11,28 @@
         </ion-toolbar>
     </ion-header>
 
-    <!-- <app-test *ngIf="data$ | async; let d" [data]="d"></app-test> -->
-    <!-- <app-test2 [data]="data2$"></app-test2> -->
+    <div>{{myNumber()}}</div>
 
-    <ng-container *ngIf="users$ | async; let users">
-    <app-test3
-        *ngFor="let user of users"
-        [user]="user"
-        (editUser)="editUser($event)"
-        (deleteUser)="deleteUser($event)"
-        (goToUser)="loadChild($event)"
-    ></app-test3>
-    </ng-container>
-    <ion-fab horizontal="end" vertical="bottom" slot="fixed" class="ion-margin">
-        <ion-fab-button (click)="addOne()">
-            <!-- <ion-icon class="add-outline"></ion-icon> -->
-            <ion-icon name="add-outline"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
+    {{ summarizedCount() }}
+    <!-- <button (click)="incrementOne()">Increment counter one</button>
+    <button (click)="incrementTwo()">Increment counter two</button> -->
+
+    <button (click)="updateSubjectValue()">Update subject</button>
+    <button (click)="updateSignalValue()">Update signal</button>
+
+    <form [formGroup]="favoriteFood">
+        <select formControlName="category">
+            <option>Food</option>
+            <option>Beverages</option>
+        </select>
+        <select *ngIf="products().length" formControlName="products">
+            <option *ngFor="let product of products()">{{ product }}</option>
+        </select>
+    </form>
+
+    <ion-buttons>
+        <ion-button (click)="updateSignal('gsb')"
+            >GSB {{stringSignal()}}</ion-button
+        >
+    </ion-buttons>
 </ion-content>

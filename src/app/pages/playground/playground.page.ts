@@ -13,12 +13,19 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
+import { Test4Component } from './test4/test4.component';
 
 @Component({
-    selector: 'app-home',
+    selector: 'app-playground',
     templateUrl: 'playground.page.html',
     styleUrls: ['playground.page.scss'],
-    imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        Test4Component,
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaygroundPage implements OnInit {

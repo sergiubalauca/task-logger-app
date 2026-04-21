@@ -141,7 +141,6 @@ export class PlaygroundPage implements OnInit {
     }
 
     protected updateSignal(val: string): void {
-        // this.stringSignal.update((v) => v + val);
         this.stringSignal.set(val);
     }
 

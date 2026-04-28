@@ -29,4 +29,15 @@ end
 
 post_install do |installer|
   assertDeploymentTarget(installer)
+
+  # Xcode 16+ blocks private SDK header imports used by older Reachability sources.
+  reachability_file = File.join(__dir__, '../capacitor-cordova-ios-plugins/sources/CordovaPluginNetworkInformation/CDVReachability.m')
+  if File.exist?(reachability_file)
+    content = File.read(reachability_file)
+    patched = content.gsub('#import <netinet6/in6.h>' + "\n", '')
+    if patched != content
+      File.write(reachability_file, patched)
+      Pod::UI.puts('Patched CDVReachability.m to remove private netinet6 header import.')
+    end
+  end
 end
